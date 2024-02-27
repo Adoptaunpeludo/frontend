@@ -2,13 +2,13 @@ import { Link } from 'react-router-dom';
 
 const LandingPage = () => {
   return (
-    <div className="container">
+    <div className='container h-max'>
       <h1>Landing Page</h1>
       <br />
-      <Link to="/register">Register</Link>
+      <Link to='/register'>Register</Link>
       <br />
       <br />
-      <Link to="/login">Login</Link>
+      <Link to='/login'>Login</Link>
     </div>
   );
 };
