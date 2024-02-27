@@ -10,9 +10,9 @@ import {
   NavbarMenuToggle
 } from '@nextui-org/react';
 import React from 'react';
-
-import LoginIcon from '../../assets/icons/LoginIcon.jsx';
 import BrandNavLogo from '../../assets/logos/BrandNavLogo.jsx';
+
+import { IconLogin2 as LoginIcon } from '@tabler/icons-react';
 
 const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = React.useState(false);
