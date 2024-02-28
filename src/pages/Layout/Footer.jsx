@@ -7,7 +7,7 @@ import Copyright from '../../assets/copyright.svg?react';
 
 const Footer = () => {
   return (
-    <div className='absolute bottom-0 h-16 w-dvw bg-primary'>
+    <div className=' h-16 w-full bg-primary'>
       <div className='max-w-screen-lg w-full mx-auto flex justify-between items-center h-full'>
         <div id='DevelopedBy' className=''>
           <Copyright className='w-60' />
