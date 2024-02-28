@@ -4,6 +4,12 @@
 @tailwind components;
 @tailwind utilities;
 
+/*============== Custom css classes ========*/
+
+.background-panel {
+  background-color: rgba(0, 0, 0, 0.1);
+}
+
 /* ============= GLOBAL CSS =============== */
 
 *,
