@@ -15,7 +15,7 @@ const GetInvolved = () => {
           >
             Salva un peludo
           </div>
-          <div className='font-poppins text-3xl flex justify-center font-bold'>
+          <div className='font-poppins text-2xl flex justify-center font-bold'>
             Adopta una mascota
           </div>
 
