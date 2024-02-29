@@ -2,7 +2,7 @@ const GetInvolved = () => {
   return (
     <section
       id='get-involved'
-      className=' h-max flex justify-center items-center py-12'
+      className=' h-max flex justify-center items-center py-12 bg-white'
     >
       <main className='max-w-screen-xl w-full flex flex-col gap-3 h-full items-center  mx-auto px-5'>
         <div
