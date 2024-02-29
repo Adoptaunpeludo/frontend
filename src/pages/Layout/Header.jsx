@@ -47,6 +47,11 @@ const Header = () => {
             Gatos
           </Link>
         </NavbarItem>
+        <NavbarItem>
+          <Link color='foreground' href='#'>
+            Asociaciones
+          </Link>
+        </NavbarItem>
       </NavbarContent>
       <NavbarContent justify='end'>
         <NavbarItem>
