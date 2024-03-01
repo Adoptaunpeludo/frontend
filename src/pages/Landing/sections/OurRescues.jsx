@@ -1,6 +1,9 @@
-import AdoptedIcon from '../../../assets/adopted.svg?react';
-import FosterIcon from '../../../assets/foster.svg?react';
-import WaitingIcon from '../../../assets/waiting.svg?react';
+import RescuesIcons from '../components/RescuesIcons';
+const rescues = [
+  { image: 'adopted.svg', number: 99, label: 'Adoptados' },
+  { image: 'foster.svg', number: 99, label: 'En acogida' },
+  { image: 'waiting.svg', number: 99, label: 'Esperando un hogar' }
+];
 const OurRescues = () => {
   return (
     <section id='our-rescues' className='bg-[#E4E4E7] '>
@@ -23,33 +26,13 @@ const OurRescues = () => {
             id='goals'
             className='my-4 max-w-screen-xl w-full flex max-lg:flex-col  justify-evenly px-12 py-12 gap-5'
           >
-            <div id='adopted-frame' className='flex flex-col items-center'>
-              <div id='adopted-icon'>
-                <AdoptedIcon />
-              </div>
-              <div id='adopted-text' className='flex flex-col items-center'>
-                <div className='font-lobster text-8xl'>99</div>
-                <div className='text-1xl font-bold'>Adoptados</div>
-              </div>
-            </div>
-            <div id='foster-frame' className='flex flex-col items-center'>
-              <div id='foster-icon'>
-                <FosterIcon />
-              </div>
-              <div id='foster-text' className='flex flex-col items-center'>
-                <div className='font-lobster text-8xl'>99</div>
-                <div className='text-1xl font-bold'>En acogida</div>
-              </div>
-            </div>
-            <div id='waiting-frame' className='flex flex-col items-center'>
-              <div id='waiting-icon'>
-                <WaitingIcon />
-              </div>
-              <div id='waiting-text' className='flex flex-col items-center'>
-                <div className='font-lobster text-8xl'>99</div>
-                <div className='text-1xl font-bold'>Esperando un hogar</div>
-              </div>
-            </div>
+            {rescues.map(rescue => (
+              <RescuesIcons
+                image={rescue.image}
+                number={rescue.number}
+                label={rescue.label}
+              />
+            ))}
           </div>
         </div>
       </main>
