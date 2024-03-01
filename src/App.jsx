@@ -7,15 +7,18 @@ import {
   ErrorPage,
   LandingPage,
   LoginPage,
-  RegisterPage
+  RegisterPage,
 } from './pages';
+import CatsPage from './pages/Cats/CatsPage';
+import DogsPage from './pages/Dogs/DogsPage';
+import SheltersPage from './pages/Shelters/SheltersPage';
 
 const queryClient = new QueryClient({
   defaultOptions: {
     queries: {
-      staleTime: 60 * 60 * 15
-    }
-  }
+      staleTime: 60 * 60 * 15,
+    },
+  },
 });
 
 const router = createBrowserRouter([
@@ -26,24 +29,32 @@ const router = createBrowserRouter([
     children: [
       {
         index: true,
-        element: <LandingPage />
+        element: <LandingPage />,
       },
       {
         path: 'register',
-        element: <RegisterPage />
+        element: <RegisterPage />,
         // action:
       },
       {
         path: 'login',
-        element: <LoginPage />
+        element: <LoginPage />,
         // action:
-      }
-      // {
-      //   path: "dashboard"
-      //   ...
-      // }
-    ]
-  }
+      },
+      {
+        path: 'cats',
+        element: <CatsPage />,
+      },
+      {
+        path: 'dogs',
+        element: <DogsPage />,
+      },
+      {
+        path: 'shelters',
+        element: <SheltersPage />,
+      },
+    ],
+  },
 ]);
 
 function App() {
