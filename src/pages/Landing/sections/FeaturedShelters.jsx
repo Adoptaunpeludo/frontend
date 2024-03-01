@@ -1,3 +1,13 @@
+import SheltersIcons from '../components/SheltersIcons';
+
+const shelters = [
+  { image: 'rescates-peludos.svg', name: 'rescates peludos' },
+  { image: 'patitas-salvadoras.svg', name: 'Patitas salvadoras' },
+  { image: 'colitas-rescatadas.svg', name: 'Colitas rescatadas' },
+  { image: 'peludos-solidarios.svg', name: 'Peludos solidarios' },
+  { image: 'salva-patas.svg', name: 'Salva patas' }
+];
+
 const FeaturedShelters = () => {
   return (
     <section id='featured-shelters' className='bg-[#E4E4E7] '>
@@ -17,63 +27,9 @@ const FeaturedShelters = () => {
             id='goals'
             className='my-4 max-w-screen-xl w-full flex max-lg:flex-col  justify-evenly px-12 py-12 gap-5'
           >
-            <div
-              id='shelters-frame'
-              className='flex flex-col items-center gap-3'
-            >
-              <div>
-                <img
-                  src='/public/shelters/rescates-peludos.svg'
-                  alt='rescates peludos'
-                />
-              </div>
-              <div className='text-lg font-medium'>Rescates peludos</div>
-            </div>
-            <div
-              id='shelters-frame'
-              className='flex flex-col items-center gap-3'
-            >
-              <div>
-                <img
-                  src='/public/shelters/patitas-salvadoras.svg'
-                  alt='Patitas salvadoras'
-                />
-              </div>
-              <div className='text-lg font-medium'>Patitas salvadoras</div>
-            </div>
-            <div
-              id='shelters-frame'
-              className='flex flex-col items-center gap-3'
-            >
-              <div>
-                <img
-                  src='/public/shelters/colitas-rescatadas.svg'
-                  alt='Colitas rescatadas'
-                />
-              </div>
-              <div className='text-lg font-medium'>Colitas rescatadas</div>
-            </div>
-            <div
-              id='shelters-frame'
-              className='flex flex-col items-center gap-3'
-            >
-              <div>
-                <img
-                  src='/public/shelters/peludos-solidarios.svg'
-                  alt='Peludos solidarios'
-                />
-              </div>
-              <div className='text-lg font-medium'>Peludos solidarios</div>
-            </div>
-            <div
-              id='shelters-frame'
-              className='flex flex-col items-center gap-3'
-            >
-              <div>
-                <img src='/public/shelters/salva-patas.svg' alt='Salva patas' />
-              </div>
-              <div className='text-lg font-medium'>Salva patas</div>
-            </div>
+            {shelters.map(shelter => (
+              <SheltersIcons image={shelter.image} name={shelter.name} />
+            ))}
           </div>
         </div>
       </main>
