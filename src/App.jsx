@@ -1,17 +1,7 @@
 import { NextUIProvider } from '@nextui-org/react';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
-import { RouterProvider, createBrowserRouter } from 'react-router-dom';
-import {
-  AppLayout,
-  ErrorPage,
-  LandingPage,
-  LoginPage,
-  RegisterPage,
-} from './pages';
-import CatsPage from './pages/Cats/CatsPage';
-import DogsPage from './pages/Dogs/DogsPage';
-import SheltersPage from './pages/Shelters/SheltersPage';
+import { Outlet, useNavigate } from 'react-router-dom';
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -21,48 +11,14 @@ const queryClient = new QueryClient({
   },
 });
 
-const router = createBrowserRouter([
-  {
-    path: '/',
-    element: <AppLayout />,
-    errorElement: <ErrorPage />,
-    children: [
-      {
-        index: true,
-        element: <LandingPage />,
-      },
-      {
-        path: 'register',
-        element: <RegisterPage />,
-        // action:
-      },
-      {
-        path: 'login',
-        element: <LoginPage />,
-        // action:
-      },
-      {
-        path: 'cats',
-        element: <CatsPage />,
-      },
-      {
-        path: 'dogs',
-        element: <DogsPage />,
-      },
-      {
-        path: 'shelters',
-        element: <SheltersPage />,
-      },
-    ],
-  },
-]);
-
 function App() {
+  const navigate = useNavigate();
+
   return (
-    <NextUIProvider>
+    <NextUIProvider navigate={navigate}>
       <QueryClientProvider client={queryClient}>
         <ReactQueryDevtools initialIsOpen={false} />
-        <RouterProvider router={router} />
+        <Outlet />
       </QueryClientProvider>
     </NextUIProvider>
   );

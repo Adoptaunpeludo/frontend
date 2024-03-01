@@ -9,13 +9,17 @@ import {
   NavbarMenuItem,
   NavbarMenuToggle,
 } from '@nextui-org/react';
-import React from 'react';
+import { useState } from 'react';
 import BrandNavLogo from '../../assets/logos/BrandNavLogo.jsx';
 
 import { IconLogin2 as LoginIcon } from '@tabler/icons-react';
 
 const Header = () => {
-  const [isMenuOpen, setIsMenuOpen] = React.useState(false);
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
+
+  const handleMenuOpenChange = (open) => {
+    setIsMenuOpen(open);
+  };
 
   const menuItems = [
     {
@@ -41,7 +45,11 @@ const Header = () => {
   ];
 
   return (
-    <Navbar onMenuOpenChange={setIsMenuOpen} maxWidth="xl">
+    <Navbar
+      isMenuOpen={isMenuOpen}
+      onMenuOpenChange={handleMenuOpenChange}
+      maxWidth="xl"
+    >
       <NavbarContent>
         <NavbarMenuToggle
           aria-label={isMenuOpen ? 'Close menu' : 'Open menu'}
@@ -77,9 +85,14 @@ const Header = () => {
       </NavbarContent>
       <NavbarMenu>
         {menuItems.map((item, index) => (
-          <NavbarMenuItem key={`${item}-${index}`}>
-            <Link className="w-full" href="#" size="lg" color="foreground">
-              {item}
+          <NavbarMenuItem key={`${item.name}-${index}`}>
+            <Link
+              className="w-full"
+              href={item.href}
+              size="lg"
+              color={item.color}
+            >
+              {item.name}
             </Link>
           </NavbarMenuItem>
         ))}
