@@ -4,20 +4,20 @@ const JoinNewsletter = () => {
   return (
     <section
       id='join-newsletter'
-      className="w-full bg-[url('/public/backgrounds/join-newsletter.jpg')] h-max bg-bottom bg-cover bg-no-repeat py-40"
+      className="w-full bg-[url('/public/backgrounds/join-newsletter.jpg')] h-max bg-bottom bg-cover bg-no-repeat py-40 px-5"
     >
       <main
         id='newsletter-background'
-        className='max-w-screen-xl w-full flex flex-col h-96  background-panel-newsletter mx-auto'
+        className='max-w-screen-xl w-full flex flex-col h-96  background-panel-newsletter mx-auto '
       >
         <form
           action=''
           id='form-newsletter'
-          className='flex flex-col max-w-9xl h-max my-auto gap-8 items-center '
+          className='flex flex-col max-w-9xl h-max my-auto gap-4 items-center px-10 py-5 max-md:items-center '
         >
           <div
             id='newsletter title'
-            className='text-primary font-lobster text-7xl '
+            className='text-primary font-lobster text-7xl max-lg:text-center'
           >
             Únete a nuestra newsletter
           </div>
