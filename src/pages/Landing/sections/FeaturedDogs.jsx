@@ -7,9 +7,7 @@ const FeaturedDogs = () => {
       <main
         id='featured-dogs-content'
         className='max-w-screen-xl w-full flex flex-col gap-3 justify-start  mx-auto px-5 h-96 '
-      >
-        gdfgdf <h1>fsdf</h1>
-      </main>
+      ></main>
       <div id='vector' className='absolute bottom-0 w-full'>
         <img
           src='/public/backgrounds/featured-dogs-vector.png'
