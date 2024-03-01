@@ -8,6 +8,6 @@ import './index.css';
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
     <App />
-    <ToastContainer position='top-center' className={'toast-message'} />
+    <ToastContainer position="top-center" className={'toast-message'} />
   </React.StrictMode>
 );
