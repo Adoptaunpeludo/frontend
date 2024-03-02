@@ -1,3 +1,6 @@
+import PropTypes from 'prop-types';
+
+
 export const UnderlineVector = ({color = "white"}) => {
   return (
     <svg
@@ -13,4 +16,9 @@ export const UnderlineVector = ({color = "white"}) => {
       />
     </svg>
   );
+};
+
+
+UnderlineVector.propTypes = {
+  color: PropTypes.string
 };
