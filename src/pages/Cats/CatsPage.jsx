@@ -1,7 +1,7 @@
-import { Spinner, Divider } from "@nextui-org/react";
+import { Spinner } from "@nextui-org/react";
 import ErrorPage from "../Error/ErrorPage";
 import { catsQuery, useCats } from "./useCats";
-import { FilterBar, PetCard } from "@shared";
+import { FilterBar, PetCard, TitleSection } from "@shared";
 
 export const loader = (queryClient) => async () => {
   await queryClient.ensureQueryData(catsQuery());
@@ -22,9 +22,7 @@ const CatsPage = () => {
 
   return (
     <>
-      <Divider />
-      <h1 className=" flex justify-center m-10 w-full font-lobster">Gatetes</h1>
-      <Divider />
+      <TitleSection title="Gatetes" />
 
       <FilterBar></FilterBar>
 
