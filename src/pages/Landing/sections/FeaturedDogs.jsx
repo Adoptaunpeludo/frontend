@@ -2,9 +2,18 @@ const FeaturedDogs = () => {
   return (
     <section
       id='featured-dogs'
-      className='bg-red-300 h-60 flex justify-center items-center'
+      className="w-full  max-h-screen  bg-right-bottom bg-auto bg-no-repeat h-screen bg-white bg-[url('/backgrounds/featured-dogs.jpg')] relative"
     >
-      <h1>Featured Dogs</h1>
+      <main
+        id='featured-dogs-content'
+        className='max-w-screen-xl w-full flex flex-col gap-3 justify-start  mx-auto px-5 h-96 '
+      ></main>
+      <div id='vector' className='absolute bottom-0 w-full'>
+        <img
+          src='/backgrounds/featured-dogs-vector.png'
+          className='w-screen'
+        ></img>
+      </div>
     </section>
   );
 };

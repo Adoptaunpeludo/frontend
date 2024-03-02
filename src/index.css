@@ -9,6 +9,9 @@
 .background-panel {
   background-color: rgba(0, 0, 0, 0.1);
 }
+.background-panel-newsletter {
+  background-color: rgba(0, 0, 0, 0.5);
+}
 
 /* ============= GLOBAL CSS =============== */
 
