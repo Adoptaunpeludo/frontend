@@ -1,5 +1,6 @@
-export const MinimalLogo = ({size = 100,
-color = '#3E73C7'}) => {
+import PropTypes from 'prop-types';
+
+export const MinimalLogo = ({ size = 100, color = "#3E73C7" }) => {
   return (
     <svg
       version="1.0"
@@ -59,4 +60,9 @@ l24 30 21 -48 c36 -84 54 -159 60 -252 l6 -90 55 -28 c51 -26 62 -28 145 -25
       </g>
     </svg>
   );
+};
+
+MinimalLogo.propTypes = {
+  size: PropTypes.number,
+  color: PropTypes.string,
 };
