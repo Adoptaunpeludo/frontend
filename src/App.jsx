@@ -59,9 +59,8 @@ const router = createBrowserRouter([
         path: 'shelters',
         element: <SheltersPage />,
       },
-      //! TODO: Change static redirection
       {
-        path: 'animal-details',
+        path: 'animal-details/:id',
         element: <AnimalDetailsPage />,
       },
     ],

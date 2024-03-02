@@ -6,6 +6,7 @@ import {
   CardHeader,
   Divider,
   Image,
+  Link
 } from "@nextui-org/react";
 
 import {
@@ -20,9 +21,8 @@ import PropTypes from "prop-types";
 import { HeartIcon, UnderlineVector, PetSize } from "@assets/svg/";
 import { MinimalLogo } from "@assets/logos/";
 
-
-export const PetCard = ({ animal }) => {
-
+export const PetCard = ({animal} ) => {
+  console.log({animal});
   return (
     <Card className="max-w-80">
       {/* Header */}
@@ -94,9 +94,14 @@ export const PetCard = ({ animal }) => {
 
       {/* Footer */}
       <CardFooter className=" px-5 flex w-full flex-row justify-between items-center">
-        <HeartIcon/>
-        <Button color="primary">
-          <span className="font-bold">Ver</span>
+        <HeartIcon />
+
+        <Button
+          href={`/animal-details/${animal.id}`}
+          as={Link}
+          color="primary"
+        >
+          <span className=" z-10 black font-bold">Ver</span>
           <UilPlay />
         </Button>
       </CardFooter>
