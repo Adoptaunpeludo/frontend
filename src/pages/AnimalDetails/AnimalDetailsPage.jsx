@@ -3,6 +3,7 @@ import ErrorPage from "../Error/ErrorPage";
 import { useAnimalDetails, animalDetailsQuery } from "./useAnimalDetails";
 import { TitleSection } from "@shared";
 import { HeartIcon } from "@assets/svg";
+import { MinimalLogo } from "@assets/logos";
 
 const InfoRow = ({ label, value }) => (
   <div>
@@ -14,7 +15,7 @@ const InfoRow = ({ label, value }) => (
   </div>
 );
 
-const SectionTitle = ({ title }) => <h2 className="my-5 font-bold">{title}</h2>;
+const SectionTitle = ({ title }) => <h3 className="my-5 font-bold">{title}</h3>;
 
 export const loader = (queryClient) => async () => {
   await queryClient.ensureQueryData(animalDetailsQuery());
@@ -33,13 +34,14 @@ const AnimalDetailsPage = () => {
     <>
       <TitleSection title={data.name} />
 
-      <div className="flex flex-row">
+      <main className="flex flex-row justify-center">
         {/* Images */}
         {/* //! TODO: Change Static Data */}
-        <div className="p-3">
-          <div className="relative">
+        <section className=" w-[1000px] p-3">
+          <div className="relative ">
             <Image src="https://s3-alpha-sig.figma.com/img/e86a/7a7f/9cb102669303457d2dd17b768a004b0f?Expires=1710115200&Key-Pair-Id=APKAQ4GOSFWCVNEHN3O4&Signature=Qje1i22imZUgybd9Tp2893wPVb26cLl19mz31mJynwEnPQ7CbtmFOxCHgu3ji-Y2dOVxwH8n4lyOlPzV6EKxb9JZJaZxR3b~~SFXp6mY244ylXLk68RV810TuwvU9XkjpMof0KJKHvRMxqwQS4oxsXKc9u4sbGSgkUfiiuyx00qs--bsluM43jVqoN1WOv5MOu66cmBiW6WrwyDQADP5StEHAJN3eo3XmuT3Qqrfa1AuVwEmWJ2PFY3yLcyfoYkojq49U6fuJWRcGKUsgvOkgi8NT9-FPf9OQGmo6NdBOvww5gmDL7Sug5JG4P9BEUZVQEikM7lIqp0OaZqi0b6y3w__"></Image>
-            <HeartIcon className="absolute left-3 bottom-3 z-10"></HeartIcon>
+            <HeartIcon size={40} className="absolute left-3 bottom-3 z-10" />
+            <MinimalLogo size={60} className="absolute right-3 top-3 z-10" />
             <Button className="absolute right-3 bottom-3 z-10" color="primary">
               Adoptar
             </Button>
@@ -55,7 +57,7 @@ const AnimalDetailsPage = () => {
             Donec egestas urna sed vulputate malesuada.
           </p>
           {/*<p className="p-2">{data.description} </p>*/}
-        </div>
+        </section>
 
         {/* Info */}
         <section className="p-3">
@@ -89,7 +91,7 @@ const AnimalDetailsPage = () => {
             value={data.toiletTrained ? "Si" : "No"}
           />
         </section>
-      </div>
+      </main>
     </>
   );
 };
