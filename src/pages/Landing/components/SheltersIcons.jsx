@@ -2,7 +2,7 @@ const SheltersIcons = ({ image, name }) => {
   return (
     <div className='shelters-frame flex flex-col items-center gap-3'>
       <div>
-        <img src={`/public/shelters/${image}`} alt={name} />
+        <img src={`/shelters/${image}`} alt={name} />
       </div>
       <div className='text-lg font-medium'>{name}</div>
     </div>

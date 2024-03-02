@@ -9,10 +9,7 @@ const FeaturedCats = () => {
         className='max-w-screen-xl w-full flex flex-col gap-3 justify-start  mx-auto px-5 h-96 '
       ></main>
       <div id='vector' className='absolute bottom-0 w-full'>
-        <img
-          src='/public/backgrounds/featured-cats-vector.png'
-          className='w-screen'
-        ></img>
+        <img src='/backgrounds/featured-cats-vector.png' className='w-screen' />
       </div>
     </section>
   );

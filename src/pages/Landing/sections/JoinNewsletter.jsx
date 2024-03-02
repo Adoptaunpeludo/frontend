@@ -4,7 +4,7 @@ const JoinNewsletter = () => {
   return (
     <section
       id='join-newsletter'
-      className="w-full bg-[url('/public/backgrounds/join-newsletter.jpg')] h-max bg-bottom bg-cover bg-no-repeat py-40 px-5"
+      className="w-full bg-[url('/backgrounds/join-newsletter.jpg')] h-max bg-bottom bg-cover bg-no-repeat py-40 px-5"
     >
       <main
         id='newsletter-background'

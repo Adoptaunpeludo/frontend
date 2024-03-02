@@ -10,7 +10,7 @@ const FeaturedDogs = () => {
       ></main>
       <div id='vector' className='absolute bottom-0 w-full'>
         <img
-          src='/public/backgrounds/featured-dogs-vector.png'
+          src='/backgrounds/featured-dogs-vector.png'
           className='w-screen'
         ></img>
       </div>
