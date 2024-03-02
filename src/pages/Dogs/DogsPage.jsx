@@ -24,7 +24,7 @@ const DogsPage = () => {
     <>
       <TitleSection title="Perretes"/>
 
-      <ul className="flex gap-4 flex-wrap p-6 ">
+      <ul className="flex justify-center gap-4 flex-wrap p-6 ">
         {animals.map((animal) => (
           <PetCard key={animal.id} animal={animal} />
         ))}

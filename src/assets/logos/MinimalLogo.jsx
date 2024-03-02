@@ -1,5 +1,6 @@
 import PropTypes from "prop-types";
 
+//! TODO: Chanche Static Color
 export const MinimalLogo = ({ size = 100, color = "#3E73C7", className}) => {
   return (
     <div className={className}>
@@ -67,4 +68,5 @@ l24 30 21 -48 c36 -84 54 -159 60 -252 l6 -90 55 -28 c51 -26 62 -28 145 -25
 MinimalLogo.propTypes = {
   size: PropTypes.number,
   color: PropTypes.string,
+  className: PropTypes.string
 };
