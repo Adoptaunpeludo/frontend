@@ -29,17 +29,17 @@ const Header = () => {
     },
     {
       name: 'Perros',
-      href: 'dogs',
+      href: '/dogs',
       color: 'foreground',
     },
     {
       name: 'Gatos',
-      href: 'cats',
+      href: '/cats',
       color: 'foreground',
     },
     {
       name: 'Asociaciones',
-      href: 'shelters',
+      href: '/shelters',
       color: 'foreground',
     },
   ];
@@ -56,7 +56,10 @@ const Header = () => {
           className="sm:hidden"
         />
         <NavbarBrand>
-          <BrandNavLogo />
+          <Link href='/'>
+            <BrandNavLogo />
+
+          </Link>
         </NavbarBrand>
       </NavbarContent>
 
