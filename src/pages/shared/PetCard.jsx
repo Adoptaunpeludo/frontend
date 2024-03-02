@@ -17,7 +17,7 @@ import {
 } from "@iconscout/react-unicons";
 
 import PropTypes from "prop-types";
-import { HeartIcon, UnderlineVector } from "@assets/svg/";
+import { HeartIcon, UnderlineVector, PetSize } from "@assets/svg/";
 import { MinimalLogo } from "@assets/logos/";
 
 import { useState } from "react";
@@ -62,26 +62,34 @@ export const PetCard = ({ animal }) => {
         </p>
         {/* Icons */}
         <div className="flex flex-row justify-center gap-3">
+          {/* Size */}
+          <div className="flex flex-row justify-center items-center">
+            <PetSize></PetSize>
+            <span className="m-1">{animal.size}</span>
+          </div>
+
           <div>
             {/* Gender */}
             {animal.gender === "male" ? (
-              <div className="flex flex-row">
+              <div className="flex flex-row justify-center items-center">
                 <UilMars color="#3E73C7" />
                 <span>{animal.gender}</span>
               </div>
             ) : (
-              <div className="flex flex-row">
+              <div className="flex flex-row justify-center items-center">
                 <UilVenus color="#3E73C7" />
                 <span>{animal.gender}</span>
               </div>
             )}
           </div>
-          <div className="flex flex-row justify-center">
+          {/* City */}
+          <div className="flex flex-row justify-center items-center">
             <UilMapMarker color="#3E73C7" />
-            {/* TODO: Conect to clobal state */}
+            {/* TODO: Conect to global state */}
             <span>City</span>
           </div>
-          <div className="flex flex-row justify-center">
+          {/* Age */}
+          <div className="flex flex-row justify-center items-center">
             <UilSchedule color="#3E73C7" />
             <span>{animal.age}</span>
           </div>
@@ -111,6 +119,7 @@ PetCard.propTypes = {
   animal: PropTypes.shape({
     id: PropTypes.string.isRequired,
     slug: PropTypes.string.isRequired,
+    size: PropTypes.string.isRequired,
     name: PropTypes.string.isRequired,
     age: PropTypes.number.isRequired,
     gender: PropTypes.oneOf(["male", "female", "unknown"]).isRequired,
