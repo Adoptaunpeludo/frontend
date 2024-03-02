@@ -1,8 +1,7 @@
 import { Spinner, Divider } from "@nextui-org/react";
 import ErrorPage from "../Error/ErrorPage";
 import { catsQuery, useCats } from "./useCats";
-import { PetCard } from "@shared/PetCard";
-import { FilterBar } from "@shared/FilterBar";
+import { FilterBar, PetCard } from "@shared";
 
 export const loader = (queryClient) => async () => {
   await queryClient.ensureQueryData(catsQuery());
