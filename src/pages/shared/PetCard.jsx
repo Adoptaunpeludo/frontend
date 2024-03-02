@@ -20,14 +20,8 @@ import PropTypes from "prop-types";
 import { HeartIcon, UnderlineVector, PetSize } from "@assets/svg/";
 import { MinimalLogo } from "@assets/logos/";
 
-import { useState } from "react";
 
 export const PetCard = ({ animal }) => {
-  const [liked, setLiked] = useState(false);
-
-  const toggleLike = () => {
-    setLiked(!liked);
-  };
 
   return (
     <Card className="max-w-80">
@@ -100,12 +94,7 @@ export const PetCard = ({ animal }) => {
 
       {/* Footer */}
       <CardFooter className=" px-5 flex w-full flex-row justify-between items-center">
-        <HeartIcon
-          onClick={toggleLike}
-          className={liked ? "[&>path]:stroke-transparent" : ""}
-          // TODO: Change reference color and connect to global state
-          fill={liked ? "#A5C73D" : "none"}
-        ></HeartIcon>
+        <HeartIcon/>
         <Button color="primary">
           <span className="font-bold">Ver</span>
           <UilPlay />
