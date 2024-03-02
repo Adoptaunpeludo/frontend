@@ -12,6 +12,7 @@ import {
   LoginPage,
   RegisterPage,
   SheltersPage,
+  AnimalDetailsPage
 } from './pages/index.js';
 import { QueryClient } from '@tanstack/react-query';
 
@@ -57,6 +58,11 @@ const router = createBrowserRouter([
       {
         path: 'shelters',
         element: <SheltersPage />,
+      },
+      //! TODO: Change static redirection
+      {
+        path: 'animal-details',
+        element: <AnimalDetailsPage />,
       },
     ],
   },

@@ -6,3 +6,5 @@ export { default as LoginPage } from './Auth/Login/LoginPage';
 export { default as CatsPage } from './Cats/CatsPage';
 export { default as DogsPage } from './Dogs/DogsPage';
 export { default as SheltersPage } from './Shelters/SheltersPage';
+export { default as AnimalDetailsPage } from './AnimalDetails/AnimalDetailsPage';
+
