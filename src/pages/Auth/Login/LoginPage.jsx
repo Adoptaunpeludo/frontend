@@ -2,7 +2,7 @@ import { Button, Input } from "@nextui-org/react";
 import { IconLogin2 as LoginIcon } from "@tabler/icons-react";
 import { Link } from "react-router-dom";
 
-import { Hero, LogoHeader, Panel } from "@shared";
+import { Hero, LogoHeader, Panel } from "../../shared";
 
 const LoginPage = () => {
   return (

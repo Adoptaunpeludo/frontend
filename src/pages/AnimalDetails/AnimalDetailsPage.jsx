@@ -1,9 +1,9 @@
 import { Divider, Spinner, Image, Button } from "@nextui-org/react";
 import ErrorPage from "../Error/ErrorPage";
 import { useAnimalDetails, animalDetailsQuery } from "./useAnimalDetails";
-import { TitleSection } from "@shared";
-import { HeartIcon } from "@assets/svg";
-import { MinimalLogo } from "@assets/logos";
+import { TitleSection } from "../shared/";
+import { HeartIcon } from "../../assets/svg";
+import { MinimalLogo } from "../../assets/logos";
 
 const InfoRow = ({ label, value }) => (
   <div>
