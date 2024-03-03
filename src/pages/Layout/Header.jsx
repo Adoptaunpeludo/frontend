@@ -77,7 +77,7 @@ const Header = () => {
           <Button
             as={Link}
             color="primary"
-            href="#"
+            href="/login"
             variant="solid"
             size="sm"
             endContent={<LoginIcon />}
