@@ -14,10 +14,8 @@ const RegisterPage = () => {
           className="max-w-screen-xl w-full flex flex-col gap-3 h-full justify-center py-12 mx-auto "
         >
           <LogoHeader />
-
-          <Panel className='max-w-2xl mx-auto'>
-            <form className='flex flex-col gap-6 max-w-4xl mx-auto px-10 py-8'>
-
+          <Panel>
+            <form className="flex flex-col gap-6 max-w-4xl mx-auto px-10 py-8">
               <div>Regístrate</div>
               <div id="profile">
                 {/* TODO: useRadio hook to custom all inputs with the same styles  */}
