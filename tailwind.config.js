@@ -1,17 +1,20 @@
-const { nextui } = require('@nextui-org/react');
+// const { nextui } = require('@nextui-org/react');
+
+import { nextui } from '@nextui-org/react';
+
 /** @type {import('tailwindcss').Config} */
 export default {
   content: [
     './index.html',
     './src/**/*.{js,ts,jsx,tsx}',
-    './node_modules/@nextui-org/theme/dist/**/*.{js,ts,jsx,tsx}'
+    './node_modules/@nextui-org/theme/dist/**/*.{js,ts,jsx,tsx}',
   ],
   theme: {
     fontFamily: {
       lobster: ['Lobster'],
-      poppins: ['Poppins']
+      poppins: ['Poppins'],
     },
-    extend: {}
+    extend: {},
   },
   darkMode: 'class',
   plugins: [
@@ -35,9 +38,9 @@ export default {
               700: '#4c4d58',
               800: '#41414b',
               900: '#393941',
-              950: '#18181b'
-            }
-          }
+              950: '#18181b',
+            },
+          },
         },
         dark: {
           colors: {
@@ -57,9 +60,9 @@ export default {
               700: '#525252',
               800: '#464646',
               900: '#3d3d3d',
-              950: '#292929'
-            }
-          }
+              950: '#292929',
+            },
+          },
           // ... rest of the colors
         },
         mytheme: {
@@ -68,12 +71,12 @@ export default {
           colors: {
             primary: {
               DEFAULT: '#BEF264',
-              foreground: '#000000'
+              foreground: '#000000',
             },
-            focus: '#BEF264'
-          }
-        }
-      }
-    })
-  ]
+            focus: '#BEF264',
+          },
+        },
+      },
+    }),
+  ],
 };

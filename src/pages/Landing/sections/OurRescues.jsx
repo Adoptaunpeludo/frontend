@@ -26,9 +26,11 @@ const OurRescues = () => {
             id='goals'
             className='my-4 max-w-screen-xl w-full flex max-lg:flex-col  justify-evenly px-12 py-12 gap-5'
           >
+
             {rescues.map((rescue, index) => (
               <RescuesIcons
                 key={index}
+
                 image={rescue.image}
                 number={rescue.number}
                 label={rescue.label}
