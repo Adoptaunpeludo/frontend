@@ -1,4 +1,4 @@
-import { Spinner } from "@nextui-org/react";
+import { Spinner, Pagination } from "@nextui-org/react";
 import ErrorPage from "../Error/ErrorPage";
 import { catsQuery, useCats } from "./useCats";
 import { FilterBar, PetCard, TitleSection } from "../shared";
@@ -31,6 +31,10 @@ const CatsPage = () => {
           <PetCard key={animal.id} animal={animal} />
         ))}
       </ul>
+      <div className=" flex justify-center my-8">
+        {/* //! TODO: Connect to Query */}
+        <Pagination total={10} initialPage={1} />
+      </div>
     </>
   );
 };

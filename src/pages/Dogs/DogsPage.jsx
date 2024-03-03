@@ -1,4 +1,4 @@
-import { Spinner, Divider } from "@nextui-org/react";
+import { Spinner, Pagination } from "@nextui-org/react";
 import ErrorPage from "../Error/ErrorPage";
 import { catsQuery, useDogs } from "./useDogs";
 import { PetCard, TitleSection } from "../shared";
@@ -22,13 +22,17 @@ const DogsPage = () => {
 
   return (
     <>
-      <TitleSection title="Perretes"/>
+      <TitleSection title="Perretes" />
 
       <ul className="flex justify-center gap-4 flex-wrap p-6 ">
         {animals.map((animal) => (
           <PetCard key={animal.id} animal={animal} />
         ))}
       </ul>
+      <div className=" flex justify-center my-8">
+        {/* //! TODO: Connect to Query */}
+        <Pagination total={10} initialPage={1} />
+      </div>
     </>
   );
 };
