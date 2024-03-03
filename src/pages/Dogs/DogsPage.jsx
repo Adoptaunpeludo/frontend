@@ -1,7 +1,7 @@
 import { Spinner, Pagination } from "@nextui-org/react";
 import ErrorPage from "../Error/ErrorPage";
 import { catsQuery, useDogs } from "./useDogs";
-import { PetCard, TitleSection } from "../shared";
+import { PetCard, TitleSection, Banner } from "../shared";
 
 export const loader = (queryClient) => async () => {
   await queryClient.ensureQueryData(catsQuery());
@@ -22,6 +22,7 @@ const DogsPage = () => {
 
   return (
     <>
+      <Banner src={"/backgrounds/banner-dogs.jpg"} />
       <TitleSection title="Perretes" />
 
       <ul className="flex justify-center gap-4 flex-wrap p-6 ">

@@ -16,13 +16,12 @@ import {
   UilSchedule,
   UilPlay,
 } from "@iconscout/react-unicons";
-
 import PropTypes from "prop-types";
 import { HeartIcon, UnderlineVector, PetSize } from "../../assets/svg/";
 import { MinimalLogo } from "../../assets/logos/";
 
 export const PetCard = ({animal} ) => {
-  console.log({animal});
+  
   return (
     <Card className="max-w-80">
       {/* Header */}
@@ -79,8 +78,7 @@ export const PetCard = ({animal} ) => {
           {/* City */}
           <div className="flex flex-row justify-center items-center">
             <UilMapMarker color="#3E73C7" />
-            {/* TODO: Conect to global state */}
-            <span>City</span>
+            <span>{animal.city}</span>
           </div>
           {/* Age */}
           <div className="flex flex-row justify-center items-center">
@@ -117,6 +115,6 @@ PetCard.propTypes = {
     name: PropTypes.string.isRequired,
     age: PropTypes.number.isRequired,
     gender: PropTypes.oneOf(["male", "female", "unknown"]).isRequired,
-    cityId: PropTypes.number.isRequired,
+    city: PropTypes.string.isRequired,
   }),
 };

@@ -2,6 +2,7 @@ import { Spinner, Pagination } from "@nextui-org/react";
 import ErrorPage from "../Error/ErrorPage";
 import { catsQuery, useCats } from "./useCats";
 import { FilterBar, PetCard, TitleSection } from "../shared";
+import { Banner } from "../shared/Banner";
 
 export const loader = (queryClient) => async () => {
   await queryClient.ensureQueryData(catsQuery());
@@ -16,12 +17,15 @@ const CatsPage = () => {
 
   const { currentPage, limit, maxPages, next, prev, total, animals } = data;
 
-  console.log({ animals });
+  console.log({ data });
+  console.log(animals.currentPage);
 
   if (animals.lengto === 0) return;
 
   return (
-    <>
+    <main>
+    
+      <Banner src={"/backgrounds/banner-cats.jpg"}/>
       <TitleSection title="Gatetes" />
 
       <FilterBar></FilterBar>
@@ -32,10 +36,10 @@ const CatsPage = () => {
         ))}
       </ul>
       <div className=" flex justify-center my-8">
-        {/* //! TODO: Connect to Query */}
-        <Pagination total={10} initialPage={1} />
+        {/* //! TODO: Change Page */}
+        <Pagination total={maxPages} initialPage={currentPage} />
       </div>
-    </>
+    </main>
   );
 };
 
