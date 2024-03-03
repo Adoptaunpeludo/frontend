@@ -12,11 +12,12 @@ import {
   LoginPage,
   RegisterPage,
   SheltersPage,
-  AnimalDetailsPage
+  AnimalDetailsPage,
 } from './pages/index.js';
 import { QueryClient } from '@tanstack/react-query';
 
 import { loader as catsLoader } from './pages/Cats/CatsPage.jsx';
+import { loader as animalDetailsLoader } from './pages/AnimalDetails/AnimalDetailsPage.jsx';
 
 export const queryClient = new QueryClient({
   defaultOptions: {
@@ -60,8 +61,14 @@ const router = createBrowserRouter([
         element: <SheltersPage />,
       },
       {
-        path: 'animal-details/:id',
+        path: 'cats/:slug',
         element: <AnimalDetailsPage />,
+        loader: animalDetailsLoader(queryClient),
+      },
+      {
+        path: 'dogs/:slug',
+        element: <AnimalDetailsPage />,
+        loader: animalDetailsLoader(queryClient),
       },
     ],
   },
