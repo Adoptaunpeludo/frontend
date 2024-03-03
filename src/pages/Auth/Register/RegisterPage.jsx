@@ -83,7 +83,7 @@ const RegisterPage = () => {
               <div className="flex justify-center gap-2">
                 <div>¿Ya tienes una cuenta?</div>
                 <div>
-                  <Link>Inicia sesión</Link>
+                  <Link to="/login">Inicia sesión</Link>
                 </div>
               </div>
             </form>

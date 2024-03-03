@@ -49,7 +49,7 @@ const LoginPage = () => {
               <div className="flex justify-between">
                 <div>¿Necesitas crear una cuenta?</div>
                 <div>
-                  <Link>Regístrate</Link>
+                  <Link to="/register">Regístrate</Link>
                 </div>
               </div>
             </form>
