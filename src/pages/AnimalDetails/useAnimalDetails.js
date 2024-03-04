@@ -1,15 +1,17 @@
 import { useQuery } from '@tanstack/react-query';
 import { getAnimalDetails } from './service';
 
-export const animalDetailsQuery = () => {
+export const animalDetailsQuery = (slug) => {
+  console.log(slug);
+
   return {
-    queryKey: ['animalDetails'],
-    queryFn: async () => getAnimalDetails(),
+    queryKey: ['animalDetails', slug],
+    queryFn: async () => getAnimalDetails(slug),
   };
 };
 
-export const useAnimalDetails = () => {
-  const { data, isLoading, isError } = useQuery(animalDetailsQuery());
+export const useAnimalDetails = (slug) => {
+  const { data, isLoading, isError } = useQuery(animalDetailsQuery(slug));
 
   return { data, isLoading, isError };
 };

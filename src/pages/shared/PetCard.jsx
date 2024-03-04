@@ -6,8 +6,8 @@ import {
   CardHeader,
   Divider,
   Image,
-  Link
-} from "@nextui-org/react";
+  Link,
+} from '@nextui-org/react';
 
 import {
   UilMapMarker,
@@ -15,14 +15,13 @@ import {
   UilMars,
   UilSchedule,
   UilPlay,
-} from "@iconscout/react-unicons";
+} from '@iconscout/react-unicons';
 
-import PropTypes from "prop-types";
-import { HeartIcon, UnderlineVector, PetSize } from "../../assets/svg/";
-import { MinimalLogo } from "../../assets/logos/";
+import PropTypes from 'prop-types';
+import { HeartIcon, UnderlineVector, PetSize } from '../../assets/svg/';
+import { MinimalLogo } from '../../assets/logos/';
 
-export const PetCard = ({animal} ) => {
-  console.log({animal});
+export const PetCard = ({ animal }) => {
   return (
     <Card className="max-w-80">
       {/* Header */}
@@ -64,7 +63,7 @@ export const PetCard = ({animal} ) => {
 
           <div>
             {/* Gender */}
-            {animal.gender === "male" ? (
+            {animal.gender === 'male' ? (
               <div className="flex flex-row justify-center items-center">
                 <UilMars color="#3E73C7" />
                 <span>{animal.gender}</span>
@@ -97,7 +96,7 @@ export const PetCard = ({animal} ) => {
         <HeartIcon />
 
         <Button
-          href={`/animal-details/${animal.id}`}
+          href={`/${animal.type}s/${animal.slug}`}
           as={Link}
           color="primary"
         >
@@ -116,7 +115,8 @@ PetCard.propTypes = {
     size: PropTypes.string.isRequired,
     name: PropTypes.string.isRequired,
     age: PropTypes.number.isRequired,
-    gender: PropTypes.oneOf(["male", "female", "unknown"]).isRequired,
-    cityId: PropTypes.number.isRequired,
+    gender: PropTypes.oneOf(['male', 'female', 'unknown']).isRequired,
+    city: PropTypes.string.isRequired,
+    type: PropTypes.string.isRequired,
   }),
 };
