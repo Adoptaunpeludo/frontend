@@ -1,4 +1,3 @@
-
 import { Panel } from '../../shared';
 import FeaturedPets from '../components/FeaturedPets';
 const pets = [
@@ -12,12 +11,11 @@ const FeaturedDogs = () => {
   return (
     <section
       id='featured-dogs'
-      className="w-full  max-h-screen  bg-right-bottom bg-auto bg-no-repeat h-screen bg-white bg-[url('/backgrounds/featured-dogs.jpg')] relative"
+      className='w-full bg-white  relative flex justify-center'
     >
       <main
         id='featured-dogs-content'
-
-        className='max-w-screen-xl w-full flex gap-3 justify-start max-sm:justify-center  px-5  h-max '
+        className="max-w-screen-xl w-full flex gap-3 justify-start bg-[url('/backgrounds/featured-dogs.jpg')] bg-no-repeat bg-right-bottom max-sm:justify-center  px-5  h-max "
       >
         <Panel className='max-w-2xl px-4 py-4 mb-72 '>
           <FeaturedPets title={'Perretes'} pets={pets}></FeaturedPets>
