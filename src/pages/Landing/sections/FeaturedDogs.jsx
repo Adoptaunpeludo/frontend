@@ -1,3 +1,13 @@
+
+import { Panel } from '../../shared';
+import FeaturedPets from '../components/FeaturedPets';
+const pets = [
+  { image: 'perrete-01.jpg', name: 'Max', age: 'Cachorro', breed: 'Lebrel' },
+  { image: 'perrete-01.jpg', name: 'Max', age: 'Cachorro', breed: 'Lebrel' },
+  { image: 'perrete-01.jpg', name: 'Max', age: 'Cachorro', breed: 'Lebrel' },
+  { image: 'perrete-01.jpg', name: 'Max', age: 'Cachorro', breed: 'Lebrel' }
+];
+
 const FeaturedDogs = () => {
   return (
     <section
@@ -6,8 +16,14 @@ const FeaturedDogs = () => {
     >
       <main
         id='featured-dogs-content'
-        className='max-w-screen-xl w-full flex flex-col gap-3 justify-start  mx-auto px-5 h-96 '
-      ></main>
+
+        className='max-w-screen-xl w-full flex gap-3 justify-start max-sm:justify-center  px-5  h-max '
+      >
+        <Panel className='max-w-2xl px-4 py-4 mb-72 '>
+          <FeaturedPets title={'Perretes'} pets={pets}></FeaturedPets>
+        </Panel>
+      </main>
+
       <div id='vector' className='absolute bottom-0 w-full'>
         <img
           src='/backgrounds/featured-dogs-vector.png'
