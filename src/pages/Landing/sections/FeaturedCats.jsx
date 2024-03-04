@@ -1,4 +1,4 @@
-import Panel from '../../shared/Panel';
+import { Panel } from '../../shared';
 import FeaturedPets from '../components/FeaturedPets';
 const pets = [
   {
@@ -36,7 +36,7 @@ const FeaturedCats = () => {
         id='featured-cats-content'
         className='max-w-screen-xl w-full flex gap-3 justify-end max-sm:justify-center  px-5  h-max '
       >
-        <Panel className='max-w-2xl px-4 py-4 mb-52 background-panel-cats'>
+        <Panel className='max-w-2xl px-4 py-4 mb-80 background-panel-cats'>
           <FeaturedPets title={'Gatetes'} pets={pets}></FeaturedPets>
         </Panel>
       </main>
