@@ -18,6 +18,7 @@ import { QueryClient } from '@tanstack/react-query';
 
 import { loader as catsLoader } from './pages/Cats/CatsPage.jsx';
 import { loader as animalDetailsLoader } from './pages/AnimalDetails/AnimalDetailsPage.jsx';
+import ChatPage from './pages/Chat/ChatPage.jsx';
 
 export const queryClient = new QueryClient({
   defaultOptions: {
@@ -69,6 +70,10 @@ const router = createBrowserRouter([
         path: 'dogs/:slug',
         element: <AnimalDetailsPage />,
         loader: animalDetailsLoader(queryClient),
+      },
+      {
+        path: 'chat/:id',
+        element: <ChatPage />,
       },
     ],
   },
