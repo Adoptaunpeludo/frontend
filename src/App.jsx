@@ -1,9 +1,10 @@
-import { QueryClientProvider } from '@tanstack/react-query';
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
+import { RouterProvider, createBrowserRouter } from 'react-router-dom';
 import 'react-toastify/dist/ReactToastify.css';
 import './index.css';
-import { RouterProvider, createBrowserRouter } from 'react-router-dom';
 import {
+  AnimalDetailsPage,
   AppLayout,
   CatsPage,
   DogsPage,
@@ -12,19 +13,18 @@ import {
   LoginPage,
   RegisterPage,
   SheltersPage,
-  AnimalDetailsPage,
+  SheltersProfile
 } from './pages/index.js';
-import { QueryClient } from '@tanstack/react-query';
 
-import { loader as catsLoader } from './pages/Cats/CatsPage.jsx';
 import { loader as animalDetailsLoader } from './pages/AnimalDetails/AnimalDetailsPage.jsx';
+import { loader as catsLoader } from './pages/Cats/CatsPage.jsx';
 
 export const queryClient = new QueryClient({
   defaultOptions: {
     queries: {
-      staleTime: 60 * 60 * 15,
-    },
-  },
+      staleTime: 60 * 60 * 15
+    }
+  }
 });
 
 const router = createBrowserRouter([
@@ -35,43 +35,49 @@ const router = createBrowserRouter([
     children: [
       {
         index: true,
-        element: <LandingPage />,
+        element: <LandingPage />
       },
       {
         path: 'register',
-        element: <RegisterPage />,
+        element: <RegisterPage />
         // action:
       },
       {
         path: 'login',
-        element: <LoginPage />,
+        element: <LoginPage />
         // action:
       },
       {
         path: 'cats',
         element: <CatsPage />,
-        loader: catsLoader(queryClient),
+        loader: catsLoader(queryClient)
       },
       {
         path: 'dogs',
-        element: <DogsPage />,
+        element: <DogsPage />
       },
       {
         path: 'shelters',
-        element: <SheltersPage />,
+        //for test only
+        element: <SheltersProfile />
+      },
+      {
+        //path: 'shelters',
+        //for test only
+        element: <SheltersPage />
       },
       {
         path: 'cats/:slug',
         element: <AnimalDetailsPage />,
-        loader: animalDetailsLoader(queryClient),
+        loader: animalDetailsLoader(queryClient)
       },
       {
         path: 'dogs/:slug',
         element: <AnimalDetailsPage />,
-        loader: animalDetailsLoader(queryClient),
-      },
-    ],
-  },
+        loader: animalDetailsLoader(queryClient)
+      }
+    ]
+  }
 ]);
 
 function App() {
