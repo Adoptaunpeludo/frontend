@@ -1,10 +1,12 @@
 import PropTypes from 'prop-types';
 
-export const TitleSection = ({ title }) => {
+export const TitleSection = ({ title, className }) => {
   return (
-    <header className=' border-solid border-t-1 border-b-1 border-t-primary border-b-primary py-8 h-100'>
+    <header
+      className={` ${className} border-solid border-t-1 border-b-1 border-t-primary border-b-primary py-8 h-100 `}
+    >
       <h1
-        className='font-lobster text-7xl flex justify-center'
+        className='font-lobster text-7xl flex justify-center text-center'
         name='Rescates Peludos'
       >
         {title}
