@@ -6,5 +6,5 @@ export { default as DogsPage } from './Dogs/DogsPage';
 export { default as ErrorPage } from './Error/ErrorPage';
 export { default as LandingPage } from './Landing/LandingPage';
 export { default as AppLayout } from './Layout/AppLayout';
-export { default as SheltersProfile } from './Private/SheltersProfile';
+export { default as ShelterProfile } from './Private/ShelterProfile/ShelterProfile.jsx';
 export { default as SheltersPage } from './Shelters/SheltersPage';
