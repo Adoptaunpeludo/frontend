@@ -13,19 +13,17 @@ import {
   Hero,
   ProfileAsideField,
   TitleSection
-} from '../shared';
+} from '../../shared';
+import { useShelterProfile } from './useShelterProfile';
 
-const SheltersProfile = ({
-  cif = 'X.99.999.999',
-  legalForm = 'Asociacion',
-  veterinarianFacilities = 'si',
-  ownVet = 'si',
-  description = 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis ultricies dapibus leo, sed tempus dolor commodo vel. Cras non metus in ex condimentum congue id eu lacus. Etiam eleifend interdum mollis. Nunc ante erat, laoreet nec ante gravida, mattis euismod turpis. Aliquam dictum egestas lectus vitae rutrum. Curabitur ornare faucibus sapien nec semper. Nam eget fringilla velit.'
-}) => {
+const ShelterProfile = () => {
+  const { data, isLoading, isError } = useShelterProfile();
+  if (isError) return <ErrorPage />;
+  if (isLoading) return <Spinner />;
+  const { cif, legalForm, veterinarianFacilities, ownVet, description } = data;
   return (
     <main className='bg-default-100'>
       <Hero />
-
       <section
         id='SheltersProfile'
         className='max-w-screen-xl w-full flex  flex-col justify-center  gap-12 h-full  py-12  mx-auto '
@@ -40,7 +38,7 @@ const SheltersProfile = ({
               <H2Title title='Protectora' />
               <div id='legalFrame' className='flex gap-5 mx-3'>
                 <span id='cif'>CIF: {cif}</span>
-                <span id='legalForm'>Forma legal: {legalForm}</span>
+                <span id='legalForm'>Forma legal: {legalForms}</span>
               </div>
               <div id='facilities' className='flex flex-col gap-2 mx-3'>
                 <H3Title title='Instalaciones' />
@@ -187,4 +185,4 @@ const SheltersProfile = ({
   );
 };
 
-export default SheltersProfile;
+export default ShelterProfile;
