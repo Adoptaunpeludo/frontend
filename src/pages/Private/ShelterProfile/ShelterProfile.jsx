@@ -1,26 +1,36 @@
-import { Avatar, Button, Checkbox, User } from '@nextui-org/react';
+import { Avatar, Button, User } from '@nextui-org/react';
 import {
   IconBrandFacebook,
   IconBrandInstagram,
   IconBrandX,
-  IconEdit,
   IconTrashXFilled
 } from '@tabler/icons-react';
 import {
+  EditButton,
   H2Title,
   H3Title,
-  H4Title,
   Hero,
-  ProfileAsideField,
-  TitleSection
+  TitleSection,
+  UserInformation
 } from '../../shared';
+import { ImagesFrame } from '../../shared/ImagesFrame';
+import Accommodations from './components/Acommodations';
 import { useShelterProfile } from './useShelterProfile';
 
 const ShelterProfile = () => {
   const { data, isLoading, isError } = useShelterProfile();
   if (isError) return <ErrorPage />;
   if (isLoading) return <Spinner />;
-  const { cif, legalForm, veterinarianFacilities, ownVet, description } = data;
+  const {
+    cif,
+    legalForms,
+    veterinarianFacilities,
+    ownVet,
+    description,
+    facilities,
+    images
+  } = data;
+
   return (
     <main className='bg-default-100'>
       <Hero />
@@ -44,49 +54,18 @@ const ShelterProfile = () => {
                 <H3Title title='Instalaciones' />
                 <div id='veterinarianFacilities' className='flex gap-5 mx-3'>
                   <span>
-                    Instalaciones veterinarias: {veterinarianFacilities}
+                    Instalaciones veterinarias:{' '}
+                    {veterinarianFacilities ? 'si' : 'no'}
                   </span>
-                  <span>Veterinario propio: {ownVet}</span>
+                  <span>Veterinario propio: {ownVet ? 'si' : 'no'}</span>
                 </div>
               </div>
-              <div id='accommodations' className='flex flex-col gap-2 mx-3'>
-                <H4Title title='Alojamientos' />
-                <div
-                  id='accommodationsCheck'
-                  className='flex flex-wrap gap-5 mx-7'
-                >
-                  <Checkbox radius='none' size='sm'>
-                    Hogares de acogida
-                  </Checkbox>
-                  <Checkbox radius='none' size='sm'>
-                    Instalaciones municipales o públicas
-                  </Checkbox>
-                  <Checkbox radius='none' size='sm'>
-                    Instalaciones arrendadas
-                  </Checkbox>
-                  <Checkbox radius='none' size='sm'>
-                    Instalaciones propias
-                  </Checkbox>
-                  <Checkbox radius='none' size='sm'>
-                    Residencias privadas (arrendadas)
-                  </Checkbox>
-                </div>
-              </div>
+              <Accommodations facilities={facilities} />
               <div id='description' className='flex flex-col gap-3 mx-3 py-3'>
                 <H3Title title='Descripción:' />
                 <div>{description}</div>
               </div>
-              <div id='images' className='flex flex-col gap-5 mx-3'>
-                <H3Title title='Imágenes:' />
-                <div className='grid grid-cols-3 max-sm:grid-cols-1 max-md:grid-cols-2 max-sm:justify-items-center gap-x-5 gap-y-5 '>
-                  <div className=' imageProfile w-60 h-32 border-solid border-3 border-primary'></div>
-                  <div className=' imageProfile w-60 h-32 border-solid border-3 border-secondary'></div>
-                  <div className=' imageProfile w-60 h-32 border-solid border-3 border-secondary'></div>
-                  <div className=' imageProfile w-60 h-32 border-solid border-3 border-secondary'></div>
-                  <div className=' imageProfile w-60 h-32 border-solid border-3 border-secondary'></div>
-                  <div className=' imageProfile w-60 h-32 border-solid border-3 border-secondary'></div>
-                </div>
-              </div>
+              <ImagesFrame images={images} />
               <div id='socialMedia' className='flex flex-col gap-3 mx-3 py-3 '>
                 <H3Title title='Redes sociales:' />
                 <div className='flex gap-4 justify-between max-sm:flex-col max-sm:mx-auto'>
@@ -94,7 +73,6 @@ const ShelterProfile = () => {
                     <IconBrandInstagram />
                     @peludos_felices
                   </div>
-
                   <div className='flex items-center gap-2'>
                     <IconBrandFacebook />
                     @peludos_felices
@@ -106,11 +84,7 @@ const ShelterProfile = () => {
                 </div>
               </div>
             </div>
-            <div id='edit-button' className='py-4 mx-2'>
-              <Button color='primary' size='md' startContent={<IconEdit />}>
-                Editar
-              </Button>
-            </div>
+            <EditButton />
           </main>
           <aside className='w-96 flex flex-col order-2 max-lg:order-1 mx-auto'>
             <div id='profileAside' className=' flex flex-col gap-5'>
@@ -125,41 +99,12 @@ const ShelterProfile = () => {
                 className='flex flex-col justify-start gap-4'
               >
                 <H2Title title='Información' />
-
-                <ProfileAsideField
-                  fieldName='Fecha de entrada:'
-                  fieldValue='01/01/2024'
-                />
-                <ProfileAsideField
-                  fieldName='Fecha de entrada:'
-                  fieldValue='01/01/2024'
-                />
-                <ProfileAsideField
-                  fieldName='Fecha de entrada:'
-                  fieldValue='01/01/2024'
-                />
-                <ProfileAsideField
-                  fieldName='Fecha de entrada:'
-                  fieldValue='01/01/2024'
-                />
-                <ProfileAsideField
-                  fieldName='Fecha de entrada:'
-                  fieldValue='01/01/2024'
-                />
-                <ProfileAsideField
-                  fieldName='Fecha de entrada:'
-                  fieldValue='01/01/2024'
-                />
+                <UserInformation {...data} />
               </div>
             </div>
-            <div id='editButtonAside' className='py-4 mx-4'>
-              <Button color='primary' size='md' startContent={<IconEdit />}>
-                Editar
-              </Button>
-            </div>
+            <EditButton />
             <div id='NotificationsAside'>
               <H2Title title='Mensajes' className='pb-5' />
-
               <div className='flex justify-between border-solid border-b-1 border-b-primary pb-3'>
                 <User
                   name='Jane Doe'
