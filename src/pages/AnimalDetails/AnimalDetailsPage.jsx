@@ -1,9 +1,10 @@
-import { Divider, Spinner, Image, Button } from "@nextui-org/react";
-import ErrorPage from "../Error/ErrorPage";
-import { useAnimalDetails, animalDetailsQuery } from "./useAnimalDetails";
-import { TitleSection } from "../shared/";
-import { HeartIcon } from "../../assets/svg";
-import { MinimalLogo } from "../../assets/logos";
+import { Divider, Spinner, Image, Button } from '@nextui-org/react';
+import ErrorPage from '../Error/ErrorPage';
+import { useAnimalDetails, animalDetailsQuery } from './useAnimalDetails';
+import { TitleSection } from '../shared/';
+import { HeartIcon } from '../../assets/svg';
+import { MinimalLogo } from '../../assets/logos';
+import { useLoaderData } from 'react-router-dom';
 
 const InfoRow = ({ label, value }) => (
   <div>
@@ -17,13 +18,20 @@ const InfoRow = ({ label, value }) => (
 
 const SectionTitle = ({ title }) => <h3 className="my-5 font-bold">{title}</h3>;
 
-export const loader = (queryClient) => async () => {
-  await queryClient.ensureQueryData(animalDetailsQuery());
-  return null;
-};
+export const loader =
+  (queryClient) =>
+  async ({ params }) => {
+    const { slug } = params;
+    await queryClient.ensureQueryData(animalDetailsQuery(slug));
+    return params;
+  };
 
 const AnimalDetailsPage = () => {
-  const { data, isLoading, isError } = useAnimalDetails();
+  const params = useLoaderData();
+
+  const { slug } = params;
+
+  const { data, isLoading, isError } = useAnimalDetails(slug);
 
   if (isError) return <ErrorPage />;
   if (isLoading) return <Spinner />;
@@ -76,19 +84,19 @@ const AnimalDetailsPage = () => {
           <SectionTitle title="Otras características" />
           <InfoRow
             label="Fácil de entrenar"
-            value={data.easyTrain ? "Si" : "No"}
+            value={data.easyTrain ? 'Si' : 'No'}
           />
           <InfoRow label="Nivel de energía" value={data.energyLevel} />
           <InfoRow label="Cantidad de muda" value={data.moltingAmount} />
           <InfoRow label="Nivel de Juego" value={data.playLevel} />
           <InfoRow
             label="Sociable con Niños"
-            value={data.kidsFriendly ? "Si" : "No"}
+            value={data.kidsFriendly ? 'Si' : 'No'}
           />
           <InfoRow label="Tendencia a arañar" value={data.scratchPotential} />
           <InfoRow
             label="Entrenado en el arenero"
-            value={data.toiletTrained ? "Si" : "No"}
+            value={data.toiletTrained ? 'Si' : 'No'}
           />
         </section>
       </main>

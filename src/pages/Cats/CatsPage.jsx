@@ -1,8 +1,7 @@
-import { Spinner, Pagination } from "@nextui-org/react";
-import ErrorPage from "../Error/ErrorPage";
-import { catsQuery, useCats } from "./useCats";
-import { FilterBar, PetCard, TitleSection } from "../shared";
-import { Banner } from "../shared/Banner";
+import { Spinner } from '@nextui-org/react';
+import ErrorPage from '../Error/ErrorPage';
+import { catsQuery, useCats } from './useCats';
+import { FilterBar, PetCard, TitleSection } from '../shared';
 
 export const loader = (queryClient) => async () => {
   await queryClient.ensureQueryData(catsQuery());
@@ -16,9 +15,6 @@ const CatsPage = () => {
   if (isLoading) return <Spinner />;
 
   const { currentPage, limit, maxPages, next, prev, total, animals } = data;
-
-  console.log({ data });
-  console.log(animals.currentPage);
 
   if (animals.lengto === 0) return;
 

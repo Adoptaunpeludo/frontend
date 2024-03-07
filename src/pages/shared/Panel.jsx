@@ -1,6 +1,12 @@
-export const Panel = ({ children }) => {
+
+export const Panel = ({ className, children }) => {
   return (
-    <div id="formContainer" className=" mx-auto background-panel rounded-xl">
+    <div
+      id='panelContainer'
+      className={`${className} flex justify-center background-panel rounded-xl`}
+    >
+
+
       {children}
     </div>
   );
