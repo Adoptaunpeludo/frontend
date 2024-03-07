@@ -12,8 +12,8 @@ import {
   LandingPage,
   LoginPage,
   RegisterPage,
-  SheltersPage,
-  SheltersProfile
+  ShelterProfile,
+  SheltersPage
 } from './pages/index.js';
 
 import { loader as animalDetailsLoader } from './pages/AnimalDetails/AnimalDetailsPage.jsx';
@@ -59,7 +59,7 @@ const router = createBrowserRouter([
       {
         path: 'shelters',
         //for test only
-        element: <SheltersProfile />
+        element: <ShelterProfile />
       },
       {
         //path: 'shelters',
