@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types';
 
-export function H4Title({ title }) {
+export function H4Title({ title, className }) {
   return (
     <h4 className={`${className} font-poppins text-base font-medium mx-3`}>
       {title}
