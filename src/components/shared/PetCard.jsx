@@ -7,7 +7,7 @@ import {
   Divider,
   Image,
   Link,
-} from '@nextui-org/react';
+} from "@nextui-org/react";
 
 import {
   UilMapMarker,
@@ -15,14 +15,14 @@ import {
   UilMars,
   UilSchedule,
   UilPlay,
-} from '@iconscout/react-unicons';
+} from "@iconscout/react-unicons";
 
-import PropTypes from 'prop-types';
-import { HeartIcon, UnderlineVector, PetSize } from '../../assets/svg/';
-import { MinimalLogo } from '../../assets/logos/';
+import PropTypes from "prop-types";
+import { HeartIcon, UnderlineVector, PetSize } from "../../assets/svg";
+import { MinimalLogo } from "../../assets/logos";
 
-export const PetCard = ({animal} ) => {
-  console.log({animal});
+export const PetCard = ({ animal }) => {
+  console.log({ animal });
   return (
     <Card className="max-w-80">
       {/* Header */}
@@ -64,7 +64,7 @@ export const PetCard = ({animal} ) => {
 
           <div>
             {/* Gender */}
-            {animal.gender === 'male' ? (
+            {animal.gender === "male" ? (
               <div className="flex flex-row justify-center items-center">
                 <UilMars color="#3E73C7" />
                 <span>{animal.gender}</span>

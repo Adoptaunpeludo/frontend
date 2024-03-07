@@ -1,7 +1,12 @@
-import { Spinner } from '@nextui-org/react';
-import ErrorPage from '../Error/ErrorPage';
-import { catsQuery, useCats } from './useCats';
-import { FilterBar, PetCard, TitleSection } from '../shared';
+import { Spinner, Pagination } from "@nextui-org/react";
+import ErrorPage from "../Error/ErrorPage";
+import { catsQuery, useCats } from "./useCats";
+import {
+  FilterBar,
+  PetCard,
+  TitleSection,
+  Banner,
+} from "../../components/shared";
 
 export const loader = (queryClient) => async () => {
   await queryClient.ensureQueryData(catsQuery());
@@ -20,8 +25,7 @@ const CatsPage = () => {
 
   return (
     <main>
-    
-      <Banner src={"/backgrounds/banner-cats.jpg"}/>
+      <Banner src={"/backgrounds/banner-cats.jpg"} />
       <TitleSection title="Gatetes" />
 
       <FilterBar></FilterBar>

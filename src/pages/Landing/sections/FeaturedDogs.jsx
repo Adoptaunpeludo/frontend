@@ -1,4 +1,4 @@
-import { Panel } from '../../shared';
+import { Panel } from '../../../components/shared';
 import FeaturedPets from '../components/FeaturedPets';
 const pets = [
   { image: 'perrete-01.jpg', name: 'Max', age: 'Cachorro', breed: 'Lebrel' },

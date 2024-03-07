@@ -1,5 +1,4 @@
 import { Image } from "@nextui-org/react";
-import PropTypes from "prop-types";
 
 export const Banner = ({ src }) => {
   return (
@@ -8,7 +7,3 @@ export const Banner = ({ src }) => {
     </div>
   );
 };
-
-Banner.propTypes = {
-    src: PropTypes.string.isRequired
-}

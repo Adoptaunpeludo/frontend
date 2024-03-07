@@ -1,4 +1,4 @@
-import { Panel } from '../../shared';
+import { Panel } from '../../../components/shared';
 import FeaturedPets from '../components/FeaturedPets';
 const pets = [
   {
