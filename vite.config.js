@@ -4,18 +4,17 @@ import svgr from 'vite-plugin-svgr';
 
 // https://vitejs.dev/config/
 export default defineConfig({
-  
   plugins: [react(), svgr()],
   server: {
     server: {
       proxy: {
         '/api': {
-          target: 'https://backend.adoptaupeludo.com/api',
+          target: 'https://backend.adoptaunpeludo.com/api',
           changeOrigin: true,
           rewrite: (path) => path.replace(/^\/api/, ''),
+          secure: true,
         },
       },
     },
   },
 });
-
