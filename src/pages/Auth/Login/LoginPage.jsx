@@ -4,30 +4,25 @@ import { Link } from "react-router-dom";
 import { Hero, LogoHeader, Panel } from "../../../components/shared";
 import { useState } from "react";
 import { login } from "../../Auth/authService";
-import { useNavigate } from 'react-router-dom';
+import { useNavigate } from "react-router-dom";
 
 //import { useNavigate } from "react-router-dom";
 
 //import { useAuthHandlers } from "../../Auth/AuthContextProvider";
 
 const LoginPage = () => {
-
   const [credentials, setCredentials] = useState({
     email: "foyone@gmail.es",
     password: "P@ssw0rd",
   });
 
-  const navigate = useNavigate(); 
-
+  const navigate = useNavigate();
 
   const handleSubmit = async (event) => {
-    try {
-      event.preventDefault();
-      await login(credentials);
-      navigate("/")
-
-    } catch (error) {
-      console.log(error);
+    event.preventDefault();
+    const response = await login(credentials);
+    if (response.success) {
+      navigate("/");
     }
   };
 
