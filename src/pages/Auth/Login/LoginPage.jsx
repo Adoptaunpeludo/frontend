@@ -23,6 +23,8 @@ const LoginPage = () => {
     const response = await login(credentials);
     if (response.success) {
       navigate("/");
+    } else {
+      console.log(response);
     }
   };
 

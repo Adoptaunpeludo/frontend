@@ -1,34 +1,43 @@
-import { createContext, useContext, useMemo, useState } from 'react';
+import { createContext, useContext, useMemo } from "react";
+import { useQuery } from "@tanstack/react-query";
+import { fetchAuthStatus } from "./authService";
 
-const AuthContext = createContext(false);
-const AuthContextHandlers = createContext(undefined);
+const AuthContext = createContext();
+const AuthContextHandlers = createContext();
 
-export const useIsLogged = () => {
-  const isLogged = useContext(AuthContext);
-  return isLogged;
-};
+export const useIsLogged = () => useContext(AuthContext);
+export const useAuthHandlers = () => useContext(AuthContextHandlers);
 
-export const useAuthHandlers = () => {
-  const authHandlers = useContext(AuthContextHandlers);
-  return authHandlers;
-};
+export const AuthContextProvider = ({ children }) => {
+  const {
+    data: userData,
+    //isLoading,
+    //isError,
+  } = useQuery({
+    queryKey: ["authStatus"],
+    queryFn: fetchAuthStatus,
+  });
 
-export const AuthContextProvider = ({ initiallyLogged, children }) => {
-  const [isLogged, setIsLogged] = useState(initiallyLogged);
+  const isLogged = userData;
+  console.log({ isLogged });
 
   const authHandlers = useMemo(
     () => ({
-      onLogin: () => setIsLogged(true),
-      onLogout: () => setIsLogged(false),
+      onLogin: () => {
+        // Opción 1: Utiliza una mutación o actualización manual para cambiar el estado de React Query
+        // Opción 2: Configura tu cache de React Query para actualizar el estado aquí
+      },
+      onLogout: () => {
+        // Opción 1: Utiliza una mutación o actualización manual para cambiar el estado de React Query
+        // Opción 2: Configura tu cache de React Query para actualizar el estado aquí
+      },
     }),
-    [],
+    []
   );
 
   return (
     <AuthContextHandlers.Provider value={authHandlers}>
-      <AuthContext.Provider value={isLogged}>
-        {children}
-      </AuthContext.Provider>
+      <AuthContext.Provider value={isLogged}>{children}</AuthContext.Provider>
     </AuthContextHandlers.Provider>
   );
 };

@@ -11,6 +11,7 @@ import {
 } from '@nextui-org/react';
 import { useState } from 'react';
 import BrandNavLogo from '../../assets/logos/BrandNavLogo.jsx';
+import { logout } from "../Auth/authService.js";
 
 import { IconLogin2 as LoginIcon } from '@tabler/icons-react';
 
@@ -83,6 +84,17 @@ const Header = () => {
             endContent={<LoginIcon />}
           >
             Login
+          </Button>
+          {/* //! TODO: Manage State */}
+          <Button
+            onClick={()=> {logout()}}
+            color="primary"
+            href="/login"
+            variant="solid"
+            size="sm"
+            endContent={<LoginIcon />}
+          >
+            Logout
           </Button>
         </NavbarItem>
       </NavbarContent>

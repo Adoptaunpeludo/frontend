@@ -6,6 +6,16 @@ import svgr from 'vite-plugin-svgr';
 export default defineConfig({
   
   plugins: [react(), svgr()],
-
+  server: {
+    server: {
+      proxy: {
+        '/api': {
+          target: 'https://backend.adoptaupeludo.com/api',
+          changeOrigin: true,
+          rewrite: (path) => path.replace(/^\/api/, ''),
+        },
+      },
+    },
+  },
 });
 

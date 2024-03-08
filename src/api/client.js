@@ -1,10 +1,11 @@
 import axios from 'axios';
 
 const client = axios.create({
-  baseURL: 'https://backend.adoptaunpeludo.com',
+  baseURL: '/api/',
   headers: {
     'Content-Type': 'application/json',
   },
+  // withCredentials: true 
 });
 
 // GET
