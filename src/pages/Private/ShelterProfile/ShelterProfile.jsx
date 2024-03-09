@@ -13,9 +13,9 @@ import {
   TitleSection,
   UserInformation
 } from '../../shared';
-import { ImagesFrame } from '../../shared/ImagesFrame';
+import { ImagesFrame } from '../shared/ImagesFrame';
+import { StatusAnimalsTable } from '../shared/StatusAnimalsTable';
 import Accommodations from './components/Acommodations';
-import { ShelterProfileAnimals } from './components/ShelterProfileAnimals';
 import { useShelterProfile } from './useShelterProfile';
 
 const ShelterProfile = () => {
@@ -106,7 +106,7 @@ const ShelterProfile = () => {
             <EditButton />
             <div id='NotificationsAside'>
               <H2Title title='Mensajes' className='pb-5' />
-              <div className='flex justify-between border-solid border-b-1 border-b-primary pb-3'>
+              <div className='flex justify-between border-solid border-b-1 border-b-primary pb-3 items-center'>
                 <User
                   name='Jane Doe'
                   avatarProps={{
@@ -121,7 +121,7 @@ const ShelterProfile = () => {
           </aside>
         </section>
         <section id='petsTable' className='px-4'>
-          <ShelterProfileAnimals />
+          <StatusAnimalsTable role={'shelter'} />
         </section>
         <footer className='border-solid border-t-1 border-t-danger py-8 h-100 flex justify-center'>
           <Button color='danger' size='lg' startContent={<IconTrashXFilled />}>
