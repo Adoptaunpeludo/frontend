@@ -15,6 +15,7 @@ import {
 } from '../../shared';
 import { ImagesFrame } from '../../shared/ImagesFrame';
 import Accommodations from './components/Acommodations';
+import { ShelterProfileAnimals } from './components/ShelterProfileAnimals';
 import { useShelterProfile } from './useShelterProfile';
 
 const ShelterProfile = () => {
@@ -119,7 +120,9 @@ const ShelterProfile = () => {
             </div>
           </aside>
         </section>
-        <section id='petsTable'></section>
+        <section id='petsTable' className='px-4'>
+          <ShelterProfileAnimals />
+        </section>
         <footer className='border-solid border-t-1 border-t-danger py-8 h-100 flex justify-center'>
           <Button color='danger' size='lg' startContent={<IconTrashXFilled />}>
             Borrar Usuario
