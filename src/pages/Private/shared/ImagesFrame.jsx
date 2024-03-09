@@ -1,4 +1,4 @@
-import { H3Title } from './H3Title';
+import { H3Title } from '../../shared/H3Title';
 
 export const ImagesFrame = ({ images }) => {
   return (
