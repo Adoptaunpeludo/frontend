@@ -1,20 +1,22 @@
 import { Avatar, Button, User } from '@nextui-org/react';
 import { IconTrashXFilled } from '@tabler/icons-react';
 import {
+  AsideDataColumn,
   EditButton,
   H2Title,
   Hero,
-  TitleSection,
-  UserInformation
+  TitleSection
 } from '../../shared';
 import { useAdopterProfile } from '../AdopterProfile/useAdopterProfile';
 import { StatusAnimalsTable } from '../shared/StatusAnimalsTable';
+import { userInformation } from '../shared/useDataUser';
 
 const AdopterProfile = () => {
   const { data, isLoading, isError } = useAdopterProfile();
   if (isError) return <ErrorPage />;
   if (isLoading) return <Spinner />;
   const { userName, avatar } = data;
+  const userData = userInformation(data);
 
   return (
     <main className='bg-default-100'>
@@ -43,7 +45,8 @@ const AdopterProfile = () => {
                 className='flex flex-col justify-start gap-4'
               >
                 <H2Title title='Información' />
-                <UserInformation {...data} />
+
+                <AsideDataColumn dataColumn={userData} />
               </div>
             </div>
             <EditButton />
