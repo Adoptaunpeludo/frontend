@@ -6,15 +6,16 @@ import {
   IconTrashXFilled
 } from '@tabler/icons-react';
 import {
+  AsideDataColumn,
   EditButton,
   H2Title,
   H3Title,
   Hero,
-  TitleSection,
-  UserInformation
+  TitleSection
 } from '../../shared';
 import { ImagesFrame } from '../shared/ImagesFrame';
 import { StatusAnimalsTable } from '../shared/StatusAnimalsTable';
+import { userInformation } from '../shared/useDataUser';
 import Accommodations from './components/Acommodations';
 import { useShelterProfile } from './useShelterProfile';
 
@@ -33,6 +34,7 @@ const ShelterProfile = () => {
     facilities,
     images
   } = data;
+  const userData = userInformation(data);
 
   return (
     <main className='bg-default-100'>
@@ -102,7 +104,7 @@ const ShelterProfile = () => {
                 className='flex flex-col justify-start gap-4'
               >
                 <H2Title title='Información' />
-                <UserInformation {...data} />
+                <AsideDataColumn dataColumn={userData} />
               </div>
             </div>
             <EditButton />
