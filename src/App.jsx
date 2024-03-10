@@ -4,7 +4,6 @@ import { RouterProvider, createBrowserRouter } from 'react-router-dom';
 import 'react-toastify/dist/ReactToastify.css';
 import './index.css';
 import {
-  AdopterProfile,
   AnimalDetailsPage,
   AppLayout,
   CatsPage,
@@ -13,6 +12,7 @@ import {
   LandingPage,
   LoginPage,
   RegisterPage,
+  ShelterProfile,
   SheltersPage
 } from './pages/index.js';
 
@@ -65,7 +65,7 @@ const router = createBrowserRouter([
       {
         path: 'testPage',
         //for test only
-        element: <AdopterProfile />
+        element: <ShelterProfile />
       },
       {
         path: 'cats/:slug',
