@@ -12,7 +12,6 @@ import {
   LandingPage,
   LoginPage,
   RegisterPage,
-  ShelterProfile,
   SheltersPage
 } from './pages/index.js';
 
@@ -56,15 +55,16 @@ const router = createBrowserRouter([
         path: 'dogs',
         element: <DogsPage />
       },
+
       {
         path: 'shelters',
-        //for test only
-        element: <ShelterProfile />
+        element: <SheltersPage />
+        // action:
       },
       {
-        //path: 'shelters',
+        path: 'testPage',
         //for test only
-        element: <SheltersPage />
+        element: <AdopterProfile />
       },
       {
         path: 'cats/:slug',
