@@ -8,7 +8,7 @@ import {
 } from '@nextui-org/react';
 import { IconCircleX, IconSend2 } from '@tabler/icons-react';
 import { H2Title, Hero, Panel } from '../../shared';
-import { cities } from '../../shared/data/locations';
+import { cities } from '../../shared/data/enumData';
 import { useFormBio } from './useFormBio';
 export const UserFormBio = () => {
   const { data, isLoading, isError } = useFormBio();
