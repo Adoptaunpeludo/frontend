@@ -7,6 +7,7 @@ export { default as ErrorPage } from './Error/ErrorPage';
 export { default as LandingPage } from './Landing/LandingPage';
 export { default as AppLayout } from './Layout/AppLayout';
 export { default as AdopterProfile } from './Private/AdopterProfile/AdopterProfile.jsx';
+export { default as ShelterForm } from './Private/ShelterForm/ShelterForm.jsx';
 export { default as ShelterProfile } from './Private/ShelterProfile/ShelterProfile.jsx';
 export { default as UserFormBio } from './Private/UserFormBio/UserFormBio.jsx';
 export { default as SheltersPage } from './Shelters/SheltersPage';
