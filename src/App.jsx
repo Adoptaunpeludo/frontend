@@ -12,8 +12,8 @@ import {
   LandingPage,
   LoginPage,
   RegisterPage,
-  SheltersPage,
-  UserFormBio
+  ShelterForm,
+  SheltersPage
 } from './pages/index.js';
 
 import { loader as animalDetailsLoader } from './pages/AnimalDetails/AnimalDetailsPage.jsx';
@@ -65,7 +65,7 @@ const router = createBrowserRouter([
       {
         path: 'testPage',
         //for test only
-        element: <UserFormBio />
+        element: <ShelterForm />
       },
       {
         path: 'cats/:slug',
