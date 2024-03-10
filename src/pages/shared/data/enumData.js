@@ -50,3 +50,15 @@ export const cities = [
   { label: 'Zamora', value: 'Zamora' },
   { label: 'Zaragoza', value: 'Zaragoza' }
 ];
+
+export const legalFormEnum = [
+  { label: 'Asociación', value: 'Association' },
+  {
+    label: 'Asociación de utilidad pública',
+    value: 'Public Utility Association'
+  },
+  { label: 'Fundación autonómica', value: 'Autonomous Foundation' },
+  { label: 'Fundación nacional', value: 'National Foundation' },
+  { label: 'Otro', value: 'Other' },
+  { label: 'Seleccionar...', value: ' ' }
+];
