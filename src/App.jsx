@@ -4,6 +4,7 @@ import { RouterProvider, createBrowserRouter } from 'react-router-dom';
 import 'react-toastify/dist/ReactToastify.css';
 import './index.css';
 import {
+  AdopterProfile,
   AnimalDetailsPage,
   AppLayout,
   CatsPage,
