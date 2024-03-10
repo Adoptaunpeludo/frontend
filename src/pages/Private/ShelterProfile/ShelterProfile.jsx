@@ -26,6 +26,8 @@ const ShelterProfile = () => {
     cif,
     legalForms,
     veterinarianFacilities,
+    userName,
+    avatar,
     ownVet,
     description,
     facilities,
@@ -39,7 +41,7 @@ const ShelterProfile = () => {
         id='SheltersProfile'
         className='max-w-screen-xl w-full flex  flex-col justify-center  gap-12 h-full  py-12  mx-auto '
       >
-        <TitleSection title='Rescates Peludos' id=' shelterTitle' />
+        <TitleSection title={userName} id=' shelterTitle' />
         <section id='sheltersProfile' className='flex gap-12 max-lg:flex-col '>
           <main className='flex flex-col max-w-3xl order-1 max-lg:order-2'>
             <div
@@ -93,7 +95,7 @@ const ShelterProfile = () => {
                 isBordered
                 color='success'
                 className='w-40 h-40 bg-white self-center'
-                src='/avatar/rescates-peludos.png'
+                src={`/avatar/${avatar}`}
               />
               <div
                 id='personalData'
