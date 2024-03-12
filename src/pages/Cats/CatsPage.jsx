@@ -14,7 +14,7 @@ const CatsPage = () => {
   if (isError) return <ErrorPage />;
   if (isLoading) return <Spinner />;
 
-  const { currentPage, limit, maxPages, next, prev, total, animals } = data;
+  const { animals } = data;
 
   if (animals.lengto === 0) return;
 
