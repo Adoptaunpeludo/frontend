@@ -1,7 +1,6 @@
 import {
   Button,
   Input,
-  Link,
   Select,
   SelectItem,
   Spinner,
@@ -91,7 +90,6 @@ const ShelterForm = () => {
 
             <div className='flex justify-center gap-4'>
               <Button
-                as={Link}
                 color='primary'
                 href='#'
                 variant='solid'
@@ -102,7 +100,6 @@ const ShelterForm = () => {
                 Cancelar
               </Button>
               <Button
-                as={Link}
                 color='primary'
                 href='#'
                 variant='solid'
