@@ -2,18 +2,18 @@ import { useQuery } from '@tanstack/react-query';
 import { getCats, getDogs } from './service';
 
 export const animalsQuery = (type) => {
+  const queryFn = type === 'cats' ? getCats : getDogs;
+
   return {
     queryKey: ['animals', type],
-    queryFn: () => (type === 'cats' ? getCats() : getDogs()),
+    queryFn: () => queryFn(),
   };
 };
 
 export const useAnimals = (type) => {
-  let query;
+  const { data, isLoading, isError } = useQuery(animalsQuery(type));
 
-  query = type === 'cats' ? getCats() : getDogs();
-
-  const { data, isLoading, isError } = useQuery(query());
+  console.log({ data });
 
   return { data, isLoading, isError };
 };

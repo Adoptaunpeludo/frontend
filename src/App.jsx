@@ -23,7 +23,7 @@ import { loader as animalsLoader } from './pages/Landing/LandingPage.jsx';
 export const queryClient = new QueryClient({
   defaultOptions: {
     queries: {
-      staleTime: 60 * 60 * 15,
+      staleTime: 1000 * 60 * 15,
     },
   },
 });

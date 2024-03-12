@@ -1,4 +1,3 @@
-import { useLoaderData } from 'react-router-dom';
 import {
   AdoptVsBuy,
   FeaturedCats,
@@ -19,10 +18,6 @@ export const loader = (queryClient) => () => {
 };
 
 const LandingPage = () => {
-  const { cats, dogs } = useLoaderData();
-
-  console.log({ cats, dogs });
-
   return (
     <main>
       <HeroHome />

@@ -16,7 +16,7 @@ const CatsPage = () => {
 
   const { animals } = data;
 
-  if (animals.lengto === 0) return;
+  if (animals.length === 0) return;
 
   return (
     <>
