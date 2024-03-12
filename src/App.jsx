@@ -18,6 +18,7 @@ import { QueryClient } from '@tanstack/react-query';
 
 import { loader as catsLoader } from './pages/Cats/CatsPage.jsx';
 import { loader as animalDetailsLoader } from './pages/AnimalDetails/AnimalDetailsPage.jsx';
+import { loader as animalsLoader } from './pages/Landing/LandingPage.jsx';
 
 export const queryClient = new QueryClient({
   defaultOptions: {
@@ -36,6 +37,7 @@ const router = createBrowserRouter([
       {
         index: true,
         element: <LandingPage />,
+        loader: animalsLoader(queryClient),
       },
       {
         path: 'register',
