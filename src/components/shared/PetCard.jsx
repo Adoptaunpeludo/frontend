@@ -28,9 +28,10 @@ export const PetCard = ({ animal }) => {
       {/* Header */}
       <CardHeader className="relative p-0 overflow-hidden">
         <Image
-          //! TODO: Change Mocked Url
-          src="https://s3-alpha-sig.figma.com/img/9053/de43/cc5c8aef9e705befe6c91c5768a661e8?Expires=1710115200&Key-Pair-Id=APKAQ4GOSFWCVNEHN3O4&Signature=Ls1JgnoqYvdQNjw-Hlqvl99TciVtlEXPeRzFZRdXm4NwR9jnbJPGyrNGnh00tBcOkxO6nMn2Uvpfp-DKxkAvSBiwvPMv~z48Gm4SI8mGarr2c0L5zQDMl~Sd-0gEbpFZsHeu1639b7D~O5ZYHvFKdC9nvCFMfTSf51NtmP54-caWDlgfLoSrlSxTrtlHvo2d675VRdZ~k--~ni516gLCwFJW-YsYvU7Gx-zT13w4gf8DZdizfCV5d6gdBletJByBVSAaZYYBiLhaCzm4hVn28NNNK2Vw0pY9j-~fcNpt0RHOXlQ2NcxltkAbQMxkwNnufv0c~ZIbr2RZGAK0FKYa6g__"
-          alt="Nera"
+          src={`${import.meta.env.VITE_ANIMALS_IMAGES_BASE_URL}/${
+            animal.images[0]
+          }`}
+          alt={animal.name}
           className="w-80 h-full object-cover"
         />
 

@@ -1,27 +1,9 @@
-import { Spinner, Pagination } from "@nextui-org/react";
-import ErrorPage from "../Error/ErrorPage";
-import { catsQuery, useCats } from "./useCats";
-import {
-  FilterBar,
-  PetCard,
-  TitleSection,
-  Banner,
-} from "../../components/shared";
-
-export const loader = (queryClient) => async () => {
-  await queryClient.ensureQueryData(catsQuery());
-  return null;
-};
+import { FilterBar, PetCard, TitleSection } from '../shared';
+import { useAnimals } from '../Landing/useAnimals';
+import { Spinner } from '@nextui-org/react';
 
 const CatsPage = () => {
-  const { data, isLoading, isError } = useCats();
-
-  if (isError) return <ErrorPage />;
-  if (isLoading) return <Spinner />;
-
-  const { currentPage, limit, maxPages, next, prev, total, animals } = data;
-
-  if (animals.lengto === 0) return;
+  const { data, isLoading } = useAnimals('cats');
 
   return (
     <main>
@@ -35,11 +17,7 @@ const CatsPage = () => {
           <PetCard key={animal.id} animal={animal} />
         ))}
       </ul>
-      <div className=" flex justify-center my-8">
-        {/* //! TODO: Change Page */}
-        <Pagination total={maxPages} initialPage={currentPage} />
-      </div>
-    </main>
+    </>
   );
 };
 
