@@ -2,8 +2,6 @@ import { useQuery } from '@tanstack/react-query';
 import { getAnimalDetails } from './service';
 
 export const animalDetailsQuery = (slug) => {
-  console.log(slug);
-
   return {
     queryKey: ['animalDetails', slug],
     queryFn: async () => getAnimalDetails(slug),
