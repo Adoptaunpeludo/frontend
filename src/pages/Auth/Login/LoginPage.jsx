@@ -1,7 +1,7 @@
 import { Button, Input } from "@nextui-org/react";
 import { IconLogin2 as LoginIcon } from "@tabler/icons-react";
 import { Link } from "react-router-dom";
-import { Hero, LogoHeader, Panel } from "../../../components/shared";
+import { Hero, LogoHeader, Panel } from "../../../components";
 import { useState } from "react";
 import { login } from "../../Auth/authService";
 import { useNavigate } from "react-router-dom";

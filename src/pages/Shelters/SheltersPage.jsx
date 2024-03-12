@@ -1,4 +1,4 @@
-import { TitleSection, Banner } from "../../components/shared";
+import { TitleSection, Banner } from "../../components";
 
 const SheltersPage = () => {
   return (

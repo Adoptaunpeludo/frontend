@@ -18,8 +18,8 @@ import {
 } from "@iconscout/react-unicons";
 
 import PropTypes from "prop-types";
-import { HeartIcon, UnderlineVector, PetSize } from "../../assets/svg";
-import { MinimalLogo } from "../../assets/logos";
+import { HeartIcon, UnderlineVector, PetSize } from "../assets/svg";
+import { MinimalLogo } from "../assets/logos";
 
 export const PetCard = ({ animal }) => {
   console.log({ animal });

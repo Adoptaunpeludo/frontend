@@ -1,5 +1,5 @@
 import { Spinner } from '@nextui-org/react';
-import { Panel } from '../../shared';
+import { Panel } from '../../../components';
 import FeaturedPets from '../components/FeaturedPets';
 import { useAnimals } from '../useAnimals';
 
