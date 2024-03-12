@@ -7,7 +7,7 @@ const FeaturedPets = ({ title, pets }) => {
         <h2 className="font-lobster text-5xl text-secondary">{title}</h2>
       </header>
       <main className="flex flex-col gap-2">
-        {pets.map(({ images, name, age, breed }, index) => (
+        {pets.map(({ images, name, age, breed, slug, type }, index) => (
           <PetCardLanding
             key={index}
             image={`${import.meta.env.VITE_ANIMALS_IMAGES_BASE_URL}/${
@@ -16,6 +16,8 @@ const FeaturedPets = ({ title, pets }) => {
             name={name}
             age={age}
             breed={breed}
+            slug={slug}
+            type={type}
           />
         ))}
       </main>
