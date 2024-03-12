@@ -13,7 +13,10 @@ const Accommodations = ({ facilities, isDisable = true }) => {
     { fieldName: 'Residencias privadas (arrendadas)', value: facilities[4] }
   ];
   return (
-    <div id='accommodations' className='flex flex-col gap-2 mx-3'>
+    <div
+      id='accommodations'
+      className='flex flex-col gap-2 mx- rounded-lg bg-default-100 py-2'
+    >
       <H4Title title='Alojamientos' />
       <div id='accommodationsCheck' className='flex flex-wrap gap-5 mx-7'>
         {facilitiesInformation.map((facility, index) => (
