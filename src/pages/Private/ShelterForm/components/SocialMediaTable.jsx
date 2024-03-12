@@ -13,6 +13,7 @@ import {
   IconBrandInstagram,
   IconBrandX,
   IconEdit,
+  IconLink,
   IconTrashXFilled
 } from '@tabler/icons-react';
 
@@ -27,7 +28,7 @@ export const SocialMediaTable = ({ socialMedia = [] }) => {
         return <IconBrandX />;
 
       default:
-        break;
+        return <IconLink />;
     }
   };
   return (
