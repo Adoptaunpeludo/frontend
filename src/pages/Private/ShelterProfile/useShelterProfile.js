@@ -18,9 +18,17 @@ export const useShelterProfile = () => {
     veterinaryFacilities: true,
     facilities: [true, false, false, true, true],
     images: [],
-    socialMedia: [],
+    socialMedia: [
+      {
+        name: 'facebook',
+        url: 'string'
+      },
+      { name: 'xtweet', url: 'string' },
+      { name: 'instagram', url: 'string' }
+    ],
     phone_number: '666-666-666',
-    city: 'Sevilla'
+    city: 'Sevilla',
+    ownVet: false
   };
 
   const isLoading = false;
