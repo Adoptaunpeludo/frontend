@@ -16,13 +16,13 @@ import {
 } from './pages/index.js';
 import { QueryClient } from '@tanstack/react-query';
 
-import { loader as catsLoader } from './pages/Cats/CatsPage.jsx';
 import { loader as animalDetailsLoader } from './pages/AnimalDetails/AnimalDetailsPage.jsx';
+import { loader as animalsLoader } from './pages/Landing/LandingPage.jsx';
 
 export const queryClient = new QueryClient({
   defaultOptions: {
     queries: {
-      staleTime: 60 * 60 * 15,
+      staleTime: 1000 * 60 * 15,
     },
   },
 });
@@ -36,6 +36,7 @@ const router = createBrowserRouter([
       {
         index: true,
         element: <LandingPage />,
+        loader: animalsLoader(queryClient),
       },
       {
         path: 'register',
@@ -50,7 +51,6 @@ const router = createBrowserRouter([
       {
         path: 'cats',
         element: <CatsPage />,
-        loader: catsLoader(queryClient),
       },
       {
         path: 'dogs',
