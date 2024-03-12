@@ -16,7 +16,6 @@ import {
 } from './pages/index.js';
 import { QueryClient } from '@tanstack/react-query';
 
-import { loader as catsLoader } from './pages/Cats/CatsPage.jsx';
 import { loader as animalDetailsLoader } from './pages/AnimalDetails/AnimalDetailsPage.jsx';
 import { loader as animalsLoader } from './pages/Landing/LandingPage.jsx';
 
@@ -52,7 +51,6 @@ const router = createBrowserRouter([
       {
         path: 'cats',
         element: <CatsPage />,
-        loader: catsLoader(queryClient),
       },
       {
         path: 'dogs',
