@@ -18,7 +18,7 @@ import { PetSize } from '../../../assets/svg';
 
 // ***************************  Array for shelters table Header **************************
 
-export const columnsShelter = [
+export const ColumnsShelter = [
   {
     name: (
       <span className='text-tertiary font-semibold font-poppins uppercase'>
@@ -68,7 +68,7 @@ export const columnsShelter = [
 
 // ***************************  Array for adopters table Header **************************
 
-export const columnsAdopter = [
+export const ColumnsAdopter = [
   {
     name: (
       <span className='text-tertiary font-semibold font-poppins uppercase'>

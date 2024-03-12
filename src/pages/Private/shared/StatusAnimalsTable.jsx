@@ -19,13 +19,13 @@ import {
 } from '@tabler/icons-react';
 import React from 'react';
 import {
-  columnsAdopter,
-  columnsShelter,
+  ColumnsAdopter,
+  ColumnsShelter,
   statusColorMap
-} from './configAnimalsTable';
+} from './ConfigAnimalsTable';
 import { useDataAnimalsMe } from './useDataAnimalsMe';
 export const StatusAnimalsTable = ({ role }) => {
-  const headerColumn = role === 'shelter' ? columnsShelter : columnsAdopter;
+  const headerColumn = role === 'shelter' ? ColumnsShelter : ColumnsAdopter;
   const { data, isLoading, isError } = useDataAnimalsMe();
   if (isError) return <ErrorPage />;
   if (isLoading) return <Spinner />;
