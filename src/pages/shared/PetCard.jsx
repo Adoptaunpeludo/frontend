@@ -76,11 +76,9 @@ export const PetCard = ({ animal }) => {
               </div>
             )}
           </div>
-          {/* City */}
           <div className="flex flex-row justify-center items-center">
             <UilMapMarker color="#3E73C7" />
-            {/* TODO: Conect to global state */}
-            <span>City</span>
+            <span>{animal.city}</span>
           </div>
           {/* Age */}
           <div className="flex flex-row justify-center items-center">
