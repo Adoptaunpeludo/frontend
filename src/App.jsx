@@ -14,6 +14,10 @@ import {
   SheltersPage,
   AnimalDetailsPage,
 } from "./pages/index.js";
+import { action as registerAction } from "./pages/Auth/Register/RegisterPage.jsx"
+import { action as loginAction } from "./pages/Auth/Login/LoginPage.jsx"
+
+
 import { QueryClient } from "@tanstack/react-query";
 
 import { loader as animalDetailsLoader } from './pages/AnimalDetails/AnimalDetailsPage.jsx';
@@ -41,12 +45,12 @@ const router = createBrowserRouter([
       {
         path: "register",
         element: <RegisterPage />,
-        // action:
+        action: registerAction,
       },
       {
         path: "login",
         element: <LoginPage />,
-        // action:
+        action: loginAction,
       },
       {
         path: "cats",

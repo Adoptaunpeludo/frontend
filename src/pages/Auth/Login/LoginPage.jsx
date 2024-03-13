@@ -1,84 +1,62 @@
 import { Button, Input } from "@nextui-org/react";
 import { IconLogin2 as LoginIcon } from "@tabler/icons-react";
-import { Link } from "react-router-dom";
-import { Hero, LogoHeader, Panel } from "../../../components";
-import { useState } from "react";
+import { Link, Form, redirect } from "react-router-dom";
 import { login } from "../../Auth/authService";
-import { useNavigate } from "react-router-dom";
+import { Hero, LogoHeader, Panel } from "../../../components";
 
-//import { useNavigate } from "react-router-dom";
+export const action = async ({ request }) => {
+  const formData = await request.formData();
+  const credentials = Object.fromEntries(formData);
 
-//import { useAuthHandlers } from "../../Auth/AuthContextProvider";
+  try {
+    await login(credentials);
+    return redirect("/");
+    
+  } catch (error) {
+    console.error(error.message);
+    return redirect("/login");
+  }
+};
 
 const LoginPage = () => {
-  const [credentials, setCredentials] = useState({
-    email: "foyone@gmail.es",
-    password: "P@ssw0rd",
-  });
-
-  const navigate = useNavigate();
-
-  const handleSubmit = async (event) => {
-    event.preventDefault();
-    const response = await login(credentials);
-    if (response.success) {
-      navigate("/");
-    } else {
-      console.log(response);
-    }
-  };
-
-  const handleCredentials = (event) => {
-    setCredentials((currentCredentials) => ({
-      ...currentCredentials,
-      [event.target.name]: event.target.value, // Name prop needed on inputs
-    }));
-    console.log(credentials);
-  };
-
   return (
     <>
       <main className="bg-default-100">
         <Hero />
         <section
           id="login"
-          className="max-w-screen-xl w-full flex flex-col gap-3 h-full justify-center py-12 mx-auto "
+          className="max-w-screen-xl w-full flex flex-col gap-3 h-full justify-center py-12 mx-auto"
         >
           <LogoHeader />
           <Panel>
-            <form
+            <Form
+              method="post"
               className="flex flex-col gap-6 max-w-lg mx-auto px-10 py-8"
-              onSubmit={handleSubmit}
             >
               <div>Inicia sesión en tu cuenta para continuar</div>
               <div className="flex flex-col gap-3">
-                {/* TODO: useInput hook to custom all inputs with the same styles */}
                 <Input
-                  onChange={handleCredentials}
                   type="email"
                   label="email"
                   name="email"
                   placeholder="Introduce tu email"
-                  value={credentials.email}
+                  required
                 ></Input>
                 <Input
-                  onChange={handleCredentials}
                   type="password"
                   name="password"
                   label="Password"
                   placeholder="Introduce tu password"
-                  value={credentials.password}
+                  required
                 ></Input>
               </div>
               <div className="flex justify-end">
-                <Link>¿Olvidaste tu password?</Link>
+                <Link to="#">¿Olvidaste tu password?</Link>
               </div>
               <div className="flex justify-center">
                 <Button
-                  //as={Link}
                   type="submit"
                   color="primary"
-                  href="#"
                   variant="solid"
                   size="lg"
                   endContent={<LoginIcon />}
@@ -93,7 +71,7 @@ const LoginPage = () => {
                   <Link to="/register">Regístrate</Link>
                 </div>
               </div>
-            </form>
+            </Form>
           </Panel>
         </section>
       </main>
