@@ -1,4 +1,5 @@
-import { FilterBar, PetCard, TitleSection, Banner} from '../../components';
+import { Spinner } from '@nextui-org/spinner';
+import { FilterBar, PetCard, TitleSection, Banner } from '../../components';
 import { useAnimals } from '../Landing/useAnimals';
 //import { Spinner } from '@nextui-org/react';
 
@@ -7,15 +8,17 @@ const CatsPage = () => {
 
   return (
     <main>
-      <Banner src={"/backgrounds/banner-cats.jpg"} />
+      <Banner src={'/backgrounds/banner-cats.jpg'} />
       <TitleSection title="Gatetes" />
 
       <FilterBar></FilterBar>
 
       <ul className="flex justify-center gap-4 flex-wrap p-6 ">
-        {data.map((animal) => (
-          <PetCard key={animal.id} animal={animal} />
-        ))}
+        {isLoading ? (
+          <Spinner />
+        ) : (
+          data.map((animal) => <PetCard key={animal.id} animal={animal} />)
+        )}
       </ul>
     </main>
   );
