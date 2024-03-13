@@ -1,7 +1,7 @@
 import { Spinner, Image, Button } from '@nextui-org/react';
 import ErrorPage from '../Error/ErrorPage';
 import { useAnimalDetails, animalDetailsQuery } from './useAnimalDetails';
-import { TitleSection } from '../shared/';
+import { TitleSection } from '../../components';
 import { HeartIcon } from '../../assets/svg';
 import { MinimalLogo } from '../../assets/logos';
 import { useLoaderData } from 'react-router-dom';

@@ -1,8 +1,36 @@
 import { Button, Checkbox, Input, Radio, RadioGroup } from "@nextui-org/react";
 import { IconLogin2 as LoginIcon } from "@tabler/icons-react";
-import { Link } from "react-router-dom";
+import { Form, Link, redirect } from "react-router-dom";
+import { register, verifyEmail } from "../authService";
+import { Hero, LogoHeader, Panel } from "../../../components";
+import { toast } from "react-toastify";
 
-import { Hero, LogoHeader, Panel } from "../../shared";
+export const action = async (data) => {
+  const { request } = data;
+  const formData = await request.formData();
+  const registerData = Object.fromEntries(formData);
+
+
+  try {
+    const isEqualPass = registerData.password === registerData.repeatPassword;
+
+    if (!isEqualPass) {
+      throw new Error("Los passwords no coinciden!");
+    }
+
+    delete registerData.repeatPassword;
+
+    const data = await register(registerData);
+    await verifyEmail(data.totken)
+
+    toast.success("Usuario creado");
+
+    return redirect("/login");
+  } catch (error) {
+    toast.error(error.message);
+    return redirect("/register");
+  }
+};
 
 const RegisterPage = () => {
   return (
@@ -15,11 +43,14 @@ const RegisterPage = () => {
         >
           <LogoHeader />
           <Panel>
-            <form className="flex flex-col gap-6 max-w-4xl mx-auto px-10 py-8">
+            <Form
+              method="post"
+              className="flex flex-col gap-6 max-w-4xl mx-auto px-10 py-8"
+            >
               <div>Regístrate</div>
               <div id="profile">
                 {/* TODO: useRadio hook to custom all inputs with the same styles  */}
-                <RadioGroup label="Perfil" orientation="horizontal">
+                <RadioGroup name="role" label="Perfil" orientation="horizontal">
                   <Radio value="shelter">Protectora</Radio>
                   <Radio value="adopter">Adoptante</Radio>
                 </RadioGroup>
@@ -29,12 +60,14 @@ const RegisterPage = () => {
                 {/* TODO: useInput hook to custom all inputs with the same styles  */}
                 <div className="flex w-full flex-wrap md:flex-nowrap gap-4">
                   <Input
+                    name="username"
                     className="min-w-72 "
                     type="text"
                     label="Nombre de la protectora / adoptante" //TODO: toggle by profile
                     placeholder="Introduce un nombre"
                   ></Input>
                   <Input
+                    name="email"
                     className="min-w-72 "
                     type="email"
                     label="Email"
@@ -43,12 +76,14 @@ const RegisterPage = () => {
                 </div>
                 <div className="flex w-full flex-wrap md:flex-nowrap gap-4">
                   <Input
+                    name="password"
                     className="min-w-72 "
                     type="password"
                     label="Password"
                     placeholder="Introduce tu password"
                   ></Input>
                   <Input
+                    name="repeatPassword"
                     className="min-w-72 "
                     type="password"
                     label="confirm password"
@@ -69,7 +104,7 @@ const RegisterPage = () => {
               </div>
               <div className="flex justify-center">
                 <Button
-                  as={Link}
+                  type="submit"
                   color="primary"
                   href="#"
                   variant="solid"
@@ -83,10 +118,10 @@ const RegisterPage = () => {
               <div className="flex justify-center gap-2">
                 <div>¿Ya tienes una cuenta?</div>
                 <div>
-                  <Link>Inicia sesión</Link>
+                  <Link to="/login">Inicia sesión</Link>
                 </div>
               </div>
-            </form>
+            </Form>
           </Panel>
         </section>
       </main>

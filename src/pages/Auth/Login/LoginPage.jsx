@@ -1,8 +1,22 @@
 import { Button, Input } from "@nextui-org/react";
 import { IconLogin2 as LoginIcon } from "@tabler/icons-react";
-import { Link } from "react-router-dom";
+import { Link, Form, redirect } from "react-router-dom";
+import { login } from "../../Auth/authService";
+import { Hero, LogoHeader, Panel } from "../../../components";
 
-import { Hero, LogoHeader, Panel } from "../../shared";
+export const action = async ({ request }) => {
+  const formData = await request.formData();
+  const credentials = Object.fromEntries(formData);
+
+  try {
+    await login(credentials);
+    return redirect("/");
+    
+  } catch (error) {
+    console.error(error.message);
+    return redirect("/login");
+  }
+};
 
 const LoginPage = () => {
   return (
@@ -11,33 +25,38 @@ const LoginPage = () => {
         <Hero />
         <section
           id="login"
-          className="max-w-screen-xl w-full flex flex-col gap-3 h-full justify-center py-12 mx-auto "
+          className="max-w-screen-xl w-full flex flex-col gap-3 h-full justify-center py-12 mx-auto"
         >
           <LogoHeader />
           <Panel>
-            <form className="flex flex-col gap-6 max-w-lg mx-auto px-10 py-8">
+            <Form
+              method="post"
+              className="flex flex-col gap-6 max-w-lg mx-auto px-10 py-8"
+            >
               <div>Inicia sesión en tu cuenta para continuar</div>
               <div className="flex flex-col gap-3">
-                {/* TODO: useInput hook to custom all inputs with the same styles */}
                 <Input
                   type="email"
                   label="email"
+                  name="email"
                   placeholder="Introduce tu email"
+                  required
                 ></Input>
                 <Input
                   type="password"
+                  name="password"
                   label="Password"
                   placeholder="Introduce tu password"
+                  required
                 ></Input>
               </div>
               <div className="flex justify-end">
-                <Link>¿Olvidaste tu password?</Link>
+                <Link to="#">¿Olvidaste tu password?</Link>
               </div>
               <div className="flex justify-center">
                 <Button
-                  as={Link}
+                  type="submit"
                   color="primary"
-                  href="#"
                   variant="solid"
                   size="lg"
                   endContent={<LoginIcon />}
@@ -49,22 +68,13 @@ const LoginPage = () => {
               <div className="flex justify-between">
                 <div>¿Necesitas crear una cuenta?</div>
                 <div>
-                  <Link>Regístrate</Link>
+                  <Link to="/register">Regístrate</Link>
                 </div>
               </div>
-            </form>
+            </Form>
           </Panel>
         </section>
       </main>
-      {/* TODO: remove div and links */}
-      <div className="container">
-        <h1>Login Page</h1>
-        <br />
-        <Link to="/register">Register</Link>
-        <br />
-        <br />
-        <Link to="/">Landing</Link>
-      </div>
     </>
   );
 };

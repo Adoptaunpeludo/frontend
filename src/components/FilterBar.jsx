@@ -5,7 +5,7 @@ export function FilterBar() {
 
   return (
     <div className="bg-gray-100 p-4 rounded-lg flex items-center space-x-2">
-      <Input clearable bordered labelPlaceholder="Nombre" className="flex-1" />
+      <Input clearable bordered labelPlaceholder="Nombre" className="flex-1" aria-label="Nombre" />
       <Spacer x={0.5} />
       <Select
         placeholder="Tamaño"
@@ -15,27 +15,15 @@ export function FilterBar() {
         {/* Opciones del select */}
       </Select>
       <Spacer x={0.5} />
-      <Select
-        placeholder="Sexo"
-        aria-label="Filtrar por sexo"
-        className="flex-1"
-      >
+      <Select placeholder="Sexo" className="flex-1">
         {/* Opciones del select */}
       </Select>
       <Spacer x={0.5} />
-      <Select
-        placeholder="Edad"
-        aria-label="Filtrar por edad"
-        className="flex-1"
-      >
+      <Select placeholder="Edad" className="flex-1">
         {/* Opciones del select */}
       </Select>
       <Spacer x={0.5} />
-      <Select
-        placeholder="Provincia"
-        aria-label="Filtrar por provincia"
-        className="flex-1"
-      >
+      <Select placeholder="Provincia" className="flex-1">
         {/* Opciones del select */}
       </Select>
     </div>

@@ -1,8 +1,8 @@
-import { QueryClientProvider } from '@tanstack/react-query';
-import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
-import 'react-toastify/dist/ReactToastify.css';
-import './index.css';
-import { RouterProvider, createBrowserRouter } from 'react-router-dom';
+import { QueryClientProvider } from "@tanstack/react-query";
+import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
+import "react-toastify/dist/ReactToastify.css";
+import "./index.css";
+import { RouterProvider, createBrowserRouter } from "react-router-dom";
 import {
   AppLayout,
   CatsPage,
@@ -13,8 +13,12 @@ import {
   RegisterPage,
   SheltersPage,
   AnimalDetailsPage,
-} from './pages/index.js';
-import { QueryClient } from '@tanstack/react-query';
+} from "./pages/index.js";
+import { action as registerAction } from "./pages/Auth/Register/RegisterPage.jsx"
+import { action as loginAction } from "./pages/Auth/Login/LoginPage.jsx"
+
+
+import { QueryClient } from "@tanstack/react-query";
 
 import { loader as animalDetailsLoader } from './pages/AnimalDetails/AnimalDetailsPage.jsx';
 import { loader as animalsLoader } from './pages/Landing/LandingPage.jsx';
@@ -29,7 +33,7 @@ export const queryClient = new QueryClient({
 
 const router = createBrowserRouter([
   {
-    path: '/',
+    path: "/",
     element: <AppLayout />,
     errorElement: <ErrorPage />,
     children: [
@@ -39,34 +43,34 @@ const router = createBrowserRouter([
         loader: animalsLoader(queryClient),
       },
       {
-        path: 'register',
+        path: "register",
         element: <RegisterPage />,
-        // action:
+        action: registerAction,
       },
       {
-        path: 'login',
+        path: "login",
         element: <LoginPage />,
-        // action:
+        action: loginAction,
       },
       {
-        path: 'cats',
+        path: "cats",
         element: <CatsPage />,
       },
       {
-        path: 'dogs',
+        path: "dogs",
         element: <DogsPage />,
       },
       {
-        path: 'shelters',
+        path: "shelters",
         element: <SheltersPage />,
       },
       {
-        path: 'cats/:slug',
+        path: "cats/:slug",
         element: <AnimalDetailsPage />,
         loader: animalDetailsLoader(queryClient),
       },
       {
-        path: 'dogs/:slug',
+        path: "dogs/:slug",
         element: <AnimalDetailsPage />,
         loader: animalDetailsLoader(queryClient),
       },
@@ -77,8 +81,8 @@ const router = createBrowserRouter([
 function App() {
   return (
     <QueryClientProvider client={queryClient}>
-      <ReactQueryDevtools initialIsOpen={false} />
-      <RouterProvider router={router} />
+\        <ReactQueryDevtools initialIsOpen={false} />
+        <RouterProvider router={router} />
     </QueryClientProvider>
   );
 }

@@ -1,5 +1,13 @@
+import { TitleSection, Banner } from "../../components";
+
 const SheltersPage = () => {
-  return <div>SheltersPage</div>;
+  return (
+    
+  <main>
+        <Banner src={"/backgrounds/banner-shelter.jpg"} />
+        <TitleSection title="SheltersPage"/>
+  
+  </main>);
 };
 
 export default SheltersPage;
