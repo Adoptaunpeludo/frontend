@@ -52,13 +52,86 @@ export const cities = [
 ];
 
 export const legalFormEnum = [
-  { label: 'Asociación', value: 'Association' },
+  { label: 'Asociación', value: 'association' },
   {
     label: 'Asociación de utilidad pública',
-    value: 'Public Utility Association'
+    value: 'public_utility_association'
   },
-  { label: 'Fundación autonómica', value: 'Autonomous Foundation' },
-  { label: 'Fundación nacional', value: 'National Foundation' },
-  { label: 'Otro', value: 'Other' },
+  { label: 'Fundación autonómica', value: 'autonomous_foundation' },
+  { label: 'Fundación nacional', value: 'national_foundation' },
+  { label: 'Otro', value: 'other' },
   { label: 'Seleccionar...', value: ' ' }
 ];
+
+//Enums de backend
+
+// enum user_roles {
+//   adopter
+//   shelter
+//   admin
+// }
+
+// enum gender_enum {
+//   male
+//   female
+// }
+
+// enum adoption_publish_status {
+//   pending
+//   rejected
+//   published
+// }
+
+// enum social_media_enum {
+//   facebook
+//   xtweet
+//   instagram
+// }
+
+// enum animal_size {
+//   small
+//   medium
+//   big
+//   very_big
+// }
+
+// enum facilities {
+//   foster_homes
+//   municipal_or_public_facilities
+//   leased_facilities
+//   owned_facilities
+//   private_residences
+// }
+
+// enum status_pet {
+//   adopted
+//   fostered
+//   reserved
+//   awaiting_home
+// }
+
+// enum molting {
+//   light
+//   moderate
+//   heavy
+//   no_shedding
+// }
+
+// enum energy {
+//   light
+//   moderate
+//   high
+// }
+
+// enum potential {
+//   none
+//   low
+//   moderate
+//   high
+//   excessive
+// }
+
+// enum animal_type {
+//   cat
+//   dog
+// }
