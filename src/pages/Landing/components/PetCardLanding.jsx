@@ -1,6 +1,6 @@
-import { Button, Card, CardBody, Image } from '@nextui-org/react';
+import { Button, Card, CardBody, Image, Link } from '@nextui-org/react';
 import { IconPawFilled } from '@tabler/icons-react';
-const PetCardLanding = ({ image, name, age, breed }) => {
+const PetCardLanding = ({ image, name, age, breed, slug, type }) => {
   return (
     <Card
       className="bg-white max-w-xl rounded-2xl flex gap-3 py-2 px-4"
@@ -31,6 +31,8 @@ const PetCardLanding = ({ image, name, age, breed }) => {
             <div className="flex flex-col justify-center mx-auto">
               <Button
                 size="sm"
+                as={Link}
+                href={`/${type}s/${slug}`}
                 color="primary"
                 endContent={<IconPawFilled />}
                 className="px-5"
