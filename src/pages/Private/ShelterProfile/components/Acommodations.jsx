@@ -15,7 +15,7 @@ const Accommodations = ({ facilities, isDisable = true }) => {
   return (
     <div
       id='accommodations'
-      className='flex flex-col gap-2 mx- rounded-lg bg-default-100 py-2'
+      className='flex flex-col gap-2 rounded-lg bg-default-100 py-2'
     >
       <H4Title title='Alojamientos' />
       <div id='accommodationsCheck' className='flex flex-wrap gap-5 mx-7'>
