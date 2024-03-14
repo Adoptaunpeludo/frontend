@@ -6,8 +6,6 @@ import { useAnimals } from '../useAnimals';
 const FeaturedCats = () => {
   const { data, isLoading } = useAnimals('cats');
 
-  console.log({ data });
-
   return (
     <section
       id="featured-cats"

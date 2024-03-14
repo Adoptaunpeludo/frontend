@@ -4,7 +4,7 @@ import { getAnimalDetails } from './service';
 export const animalDetailsQuery = (slug) => {
   return {
     queryKey: ['animalDetails', slug],
-    queryFn: async () => getAnimalDetails(slug),
+    queryFn: () => getAnimalDetails(slug),
   };
 };
 
