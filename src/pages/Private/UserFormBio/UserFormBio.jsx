@@ -1,14 +1,7 @@
-import {
-  Avatar,
-  Button,
-  Input,
-  Link,
-  Select,
-  SelectItem
-} from '@nextui-org/react';
+import { Avatar, Button, Input, Link } from '@nextui-org/react';
 import { IconCircleX, IconSend2 } from '@tabler/icons-react';
-import { H2Title, Hero, Panel } from '../../shared';
-import { cities } from '../../shared/data/enumData';
+import { cities } from '../../../utils/enumData';
+import { H2Title, Hero, Panel, SelectField } from '../../shared';
 import { useFormBio } from './useFormBio';
 export const UserFormBio = () => {
   const { data, isLoading, isError } = useFormBio();
@@ -81,17 +74,12 @@ export const UserFormBio = () => {
                     firstName === '' ? 'Introduce tu teléfono' : phone_number
                   }
                 />
-                <Select
-                  className='min-w-72 '
+                <SelectField
                   label='Ciudad'
-                  defaultSelectedKeys={[city === '' ? '' : city]}
-                >
-                  {cities.map(city => (
-                    <SelectItem key={city.value} value={city.value}>
-                      {city.label}
-                    </SelectItem>
-                  ))}
-                </Select>
+                  className='min-w-72'
+                  dataField={city}
+                  dataEnum={cities}
+                />
               </div>
             </div>
 
