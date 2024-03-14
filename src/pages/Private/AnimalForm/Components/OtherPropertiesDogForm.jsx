@@ -23,17 +23,20 @@ const OtherPropertiesDogForm = ({ data }) => {
           label='Fácil de entrenar'
           className=''
           dataField={easyTrain}
+          name='easyTrain'
           dataEnum={boolDataEnum}
         />
         <SelectField
           label='Cantidad de muda'
           className=''
+          name='moltingAmount'
           dataField={moltingAmount}
           dataEnum={moltingEnum}
         />
         <SelectField
           label='Nivel de energía'
           className=''
+          name='energyLevel'
           dataField={energyLevel}
           dataEnum={energyEnum}
         />
@@ -42,18 +45,21 @@ const OtherPropertiesDogForm = ({ data }) => {
         <SelectField
           label='Potencial de Babeo'
           className=''
+          name='droolingPotential'
           dataField={droolingPotential}
           dataEnum={potentialEnum}
         />
         <SelectField
           label='Tendencia a ladrar'
           className=''
+          name='bark'
           dataField={bark}
           dataEnum={potentialEnum}
         />
         <SelectField
           label='Acostumbrado a un piso'
           className=''
+          name='departmentAdapted'
           dataField={departmentAdapted}
           dataEnum={boolDataEnum}
         />
