@@ -59,8 +59,7 @@ export const legalFormEnum = [
   },
   { label: 'Fundación autonómica', value: 'autonomous_foundation' },
   { label: 'Fundación nacional', value: 'national_foundation' },
-  { label: 'Otro', value: 'other' },
-  { label: 'Seleccionar...', value: ' ' }
+  { label: 'Otro', value: 'other' }
 ];
 
 export const genderEnum = [
