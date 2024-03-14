@@ -34,12 +34,14 @@ const AnimalBioForm = ({ data }) => {
         <SelectField
           label='Sexo'
           className=''
+          name='gender'
           dataField={gender}
           dataEnum={genderEnum}
         />
         <SelectField
           label='Tamaño'
           className=''
+          name='size'
           dataField={size}
           dataEnum={animalSizeEnum}
         />
