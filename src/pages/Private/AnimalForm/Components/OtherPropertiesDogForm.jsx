@@ -1,5 +1,10 @@
-import { Input } from '@nextui-org/react';
-import { H3Title } from '../../../shared';
+import {
+  boolDataEnum,
+  energyEnum,
+  moltingEnum,
+  potentialEnum
+} from '../../../../utils/enumData';
+import { H3Title, SelectField } from '../../../shared';
 
 const OtherPropertiesDogForm = ({ data }) => {
   const {
@@ -14,50 +19,43 @@ const OtherPropertiesDogForm = ({ data }) => {
     <div className='flex flex-col gap-2'>
       <H3Title title='Otras Características' />
       <div className='flex w-full flex-wrap md:flex-nowrap gap-2 border-primary border-t-1 pt-3'>
-        <Input
+        <SelectField
+          label='Fácil de entrenar'
           className=''
-          type='text'
-          label='Facil de entrenar'
-          name='easyTrain'
-          placeholder={easyTrain === '' ? '' : easyTrain}
+          dataField={easyTrain}
+          dataEnum={boolDataEnum}
         />
-
-        <Input
-          className=' '
-          type='text'
-          label='Nivel de energía'
-          name='energyLevel'
-          placeholder={energyLevel === '' ? '' : energyLevel}
-        />
-        <Input
-          className=''
-          type='text'
+        <SelectField
           label='Cantidad de muda'
-          name='moltingAmount'
-          placeholder={moltingAmount === '' ? '' : moltingAmount}
+          className=''
+          dataField={moltingAmount}
+          dataEnum={moltingEnum}
+        />
+        <SelectField
+          label='Nivel de energía'
+          className=''
+          dataField={energyLevel}
+          dataEnum={energyEnum}
         />
       </div>
       <div className='flex w-full flex-wrap md:flex-nowrap gap-2 border-primary border-t-1 pt-3'>
-        <Input
-          className=''
-          type='text'
+        <SelectField
           label='Potencial de Babeo'
-          name='droolingPotential'
-          placeholder={droolingPotential === '' ? '' : droolingPotential}
-        />
-        <Input
           className=''
-          type='text'
-          label='Tendencia a ladrar'
-          name='bark'
-          placeholder={bark === '' ? '' : bark}
+          dataField={droolingPotential}
+          dataEnum={potentialEnum}
         />
-        <Input
-          className=' '
-          type='text'
+        <SelectField
+          label='Tendencia a ladrar'
+          className=''
+          dataField={bark}
+          dataEnum={potentialEnum}
+        />
+        <SelectField
           label='Acostumbrado a un piso'
-          name='departmentAdapted'
-          placeholder={departmentAdapted === '' ? '' : departmentAdapted}
+          className=''
+          dataField={departmentAdapted}
+          dataEnum={boolDataEnum}
         />
       </div>
     </div>
