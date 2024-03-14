@@ -1,5 +1,6 @@
 import { Input } from '@nextui-org/react';
-import { H3Title } from '../../../shared';
+import { animalSizeEnum, genderEnum } from '../../../../utils/enumData';
+import { H3Title, SelectField } from '../../../shared';
 
 const AnimalBioForm = ({ data }) => {
   const { name, age, breed, size, gender } = data;
@@ -26,23 +27,21 @@ const AnimalBioForm = ({ data }) => {
         <Input
           className=''
           type='text'
-          label='Edad'
+          label='Edad en años'
           name='age'
           placeholder={age === '' ? '' : age}
         />
-        <Input
-          className=''
-          type='text'
+        <SelectField
           label='Sexo'
-          name='gender'
-          placeholder={gender === '' ? '' : gender}
+          className=''
+          dataField={gender}
+          dataEnum={genderEnum}
         />
-        <Input
-          className=' '
-          type='text'
+        <SelectField
           label='Tamaño'
-          name='size'
-          placeholder={size === '' ? '' : size}
+          className=''
+          dataField={size}
+          dataEnum={animalSizeEnum}
         />
       </div>
     </div>
