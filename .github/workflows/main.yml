@@ -1,0 +1,79 @@
+name: Frontend CI/CD
+
+on:
+  push:
+    branches: 
+      - main
+  pull_request:
+    branches: 
+      - main
+    
+env:
+  AWS_PRIVATE_KEY: ${{ secrets.AWS_PRIVATE_KEY }}
+
+jobs:
+
+  # test:
+  #   runs-on: ubuntu-latest
+  #   steps:
+  #     - name: Checkout code
+  #       uses: actions/checkout@v3
+  #       with:
+  #         fetch-depth: 0
+
+  #     - name: Install dependencies
+  #       run: npm install
+
+  #     - name: Run tests
+  #       run: npm test
+
+  build_and_deploy:
+    # needs: test
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+
+      - name: Generate private key
+        run: |
+          echo "${AWS_PRIVATE_KEY}" > key.pem
+          chmod 600 key.pem
+          
+      # - name: Generate environment file
+      #   run: |
+      #     echo "${{ secrets.ENVIRONMENT }}" > .env
+
+      - name: Cache dependencies
+        uses: actions/cache@v4
+        id: cache-node-modules
+        with:
+          path: 'node_modules'
+          key: deps-node-modules-${{ hashFiles('**/package-lock.json') }}
+
+      - name: Install Vite globally
+        run: npm install -g vite
+        
+      - name: Install dependencies if cache not found
+        if: steps.cache-node-modules.outputs.cache-hit != 'true'
+        run: npm install
+
+      - name: Build app
+        run: npm run build
+        
+      - name: Sync files to production server
+        run: |
+          rsync -avz --delete -e "ssh -o StrictHostKeyChecking=no -i key.pem" ./dist/ ubuntu@3.228.164.55:~/var/www/html/
+
+  # deploy:
+  #   needs: build
+  #   runs-on: ubuntu-latest
+  #   steps:
+  #     - name: Set permissions for private key
+  #       run: |
+  #         echo "${AWS_PRIVATE_KEY}" > key.pem
+  #         chmod 600 key.pem
+    
+  #     - name: Restart app
+  #       run: ssh -o StrictHostKeyChecking=no -i key.pem ubuntu@34.193.64.56 "pm2 restart nodepop"
