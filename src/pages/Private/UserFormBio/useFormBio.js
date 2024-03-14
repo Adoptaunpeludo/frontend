@@ -10,7 +10,7 @@ export const useFormBio = () => {
     firstName: 'Junior',
     isOnline: false,
     lastName: 'García',
-    phone_number: '666-666-666',
+    phoneNumber: '666-666-666',
     city: 'Sevilla'
   };
 
