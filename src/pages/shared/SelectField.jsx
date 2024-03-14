@@ -9,7 +9,9 @@ export const SelectField = ({ label, dataField, dataEnum, className }) => {
       placeholder={
         dataField === '' || dataField === null ? 'Seleccionar...' : ''
       }
-      defaultSelectedKeys={dataField !== '' && [dataField]}
+      defaultSelectedKeys={
+        dataField !== '' && dataField !== null && [dataField]
+      }
     >
       {dataEnum.map(({ label, value }) => (
         <SelectItem key={value} value={value}>
