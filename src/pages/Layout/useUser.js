@@ -10,7 +10,5 @@ export const userQuery = {
 export const useUser = () => {
   const { data, isLoading, isError } = useQuery(userQuery);
 
-  console.log({ data });
-
   return { data, isLoading, isError };
 };

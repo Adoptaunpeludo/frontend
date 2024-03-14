@@ -4,6 +4,7 @@ import { Form, Link, redirect } from 'react-router-dom';
 import { register, verifyEmail } from '../authService';
 import { Hero, LogoHeader, Panel } from '../../../components';
 import { toast } from 'react-toastify';
+import { handleAuthError } from '../../../utils/handleAuthError';
 
 export const action = async (data) => {
   const { request } = data;
@@ -26,7 +27,8 @@ export const action = async (data) => {
 
     return redirect('/login');
   } catch (error) {
-    toast.error(error.message);
+    const message = handleAuthError(error);
+    toast.error(message);
     return redirect('/register');
   }
 };
