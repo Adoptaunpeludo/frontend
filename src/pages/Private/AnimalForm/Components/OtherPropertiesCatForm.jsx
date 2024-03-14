@@ -1,5 +1,10 @@
-import { Input } from '@nextui-org/react';
-import { H3Title } from '../../../shared';
+import {
+  boolDataEnum,
+  energyEnum,
+  moltingEnum,
+  potentialEnum
+} from '../../../../utils/enumData';
+import { H3Title, SelectField } from '../../../shared';
 
 const OtherPropertiesCatForm = ({ data }) => {
   const {
@@ -15,56 +20,50 @@ const OtherPropertiesCatForm = ({ data }) => {
     <div className='flex flex-col gap-2'>
       <H3Title title='Otras Características' />
       <div className='flex w-full flex-wrap md:flex-nowrap gap-2 border-primary border-t-1 pt-3'>
-        <Input
-          className=''
-          type='text'
+        <SelectField
           label='Entrenado en el arenero'
-          name='toiletTrained'
-          placeholder={toiletTrained === '' ? '' : toiletTrained}
-        />
-        <Input
           className=''
-          type='text'
-          label='Facil de entrenar'
-          name='easyTrain'
-          placeholder={easyTrain === '' ? '' : easyTrain}
+          dataField={toiletTrained}
+          dataEnum={boolDataEnum}
         />
-        <Input
-          className=' '
-          type='text'
+        <SelectField
+          label='Fácil de entrenar'
+          className=''
+          dataField={easyTrain}
+          dataEnum={boolDataEnum}
+        />
+        <SelectField
           label='Cantidad de muda'
-          name='moltingAmount'
-          placeholder={moltingAmount === '' ? '' : moltingAmount}
+          className=''
+          dataField={moltingAmount}
+          dataEnum={moltingEnum}
         />
-        <Input
-          className=' '
-          type='text'
+        <SelectField
           label='Nivel de energía'
-          name='energyLevel'
-          placeholder={energyLevel === '' ? '' : energyLevel}
+          className=''
+          dataField={energyLevel}
+          dataEnum={energyEnum}
         />
       </div>
       <div className='flex w-full flex-wrap md:flex-nowrap gap-2 border-primary border-t-1 pt-3'>
-        <Input
-          className=''
-          type='text'
+        <SelectField
           label='Nivel de juego'
-          name='playLevel'
-          placeholder={playLevel === '' ? '' : playLevel}
-        />
-        <Input
           className=''
-          type='text'
-          label='Tendencia a arañar'
-          name='scratchPotential'
-          placeholder={scratchPotential === '' ? '' : scratchPotential}
+          dataField={playLevel}
+          dataEnum={potentialEnum}
         />
-        <Input
-          className=' '
-          type='text'
+
+        <SelectField
+          label='Tendencia a arañar'
+          className=''
+          dataField={scratchPotential}
+          dataEnum={potentialEnum}
+        />
+        <SelectField
           label='Sociable con niños'
-          name='kidsFriendly'
-          placeholder={kidsFriendly === '' ? '' : kidsFriendly}
+          className=''
+          dataField={kidsFriendly}
+          dataEnum={boolDataEnum}
         />
       </div>
     </div>
