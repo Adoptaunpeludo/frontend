@@ -1,34 +1,33 @@
-import { Button, Checkbox, Input, Radio, RadioGroup } from "@nextui-org/react";
-import { IconLogin2 as LoginIcon } from "@tabler/icons-react";
-import { Form, Link, redirect } from "react-router-dom";
-import { register, verifyEmail } from "../authService";
-import { Hero, LogoHeader, Panel } from "../../../components";
-import { toast } from "react-toastify";
+import { Button, Checkbox, Input, Radio, RadioGroup } from '@nextui-org/react';
+import { IconLogin2 as LoginIcon } from '@tabler/icons-react';
+import { Form, Link, redirect } from 'react-router-dom';
+import { register, verifyEmail } from '../authService';
+import { Hero, LogoHeader, Panel } from '../../../components';
+import { toast } from 'react-toastify';
 
 export const action = async (data) => {
   const { request } = data;
   const formData = await request.formData();
   const registerData = Object.fromEntries(formData);
 
-
   try {
     const isEqualPass = registerData.password === registerData.repeatPassword;
 
     if (!isEqualPass) {
-      throw new Error("Los passwords no coinciden!");
+      throw new Error('Los passwords no coinciden!');
     }
 
     delete registerData.repeatPassword;
 
     const data = await register(registerData);
-    await verifyEmail(data.totken)
+    await verifyEmail(data.token);
 
-    toast.success("Usuario creado");
+    toast.success('Usuario creado');
 
-    return redirect("/login");
+    return redirect('/login');
   } catch (error) {
     toast.error(error.message);
-    return redirect("/register");
+    return redirect('/register');
   }
 };
 

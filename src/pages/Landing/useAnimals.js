@@ -13,7 +13,5 @@ export const animalsQuery = (type) => {
 export const useAnimals = (type) => {
   const { data, isLoading, isError } = useQuery(animalsQuery(type));
 
-  console.log({ data });
-
   return { data, isLoading, isError };
 };
