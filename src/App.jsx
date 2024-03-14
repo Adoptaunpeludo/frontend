@@ -5,7 +5,6 @@ import 'react-toastify/dist/ReactToastify.css';
 import './index.css';
 import {
   AnimalDetailsPage,
-  AnimalForm,
   AppLayout,
   CatsPage,
   DogsPage,
@@ -13,7 +12,8 @@ import {
   LandingPage,
   LoginPage,
   RegisterPage,
-  SheltersPage
+  SheltersPage,
+  UserFormBio
 } from './pages/index.js';
 
 import { loader as animalDetailsLoader } from './pages/AnimalDetails/AnimalDetailsPage.jsx';
@@ -65,7 +65,7 @@ const router = createBrowserRouter([
       {
         path: 'testPage',
         //for test only
-        element: <AnimalForm />
+        element: <UserFormBio />
       },
       {
         path: 'cats/:slug',
