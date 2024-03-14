@@ -53,7 +53,7 @@ const AnimalForm = () => {
               <H4Title title='Descripción:' className='mx-2' />
               <Textarea
                 className='w-full '
-                type='tel'
+                name='description'
                 label='Descripción'
                 placeholder={
                   description === '' ? 'Describe tu protectora' : description
@@ -65,6 +65,7 @@ const AnimalForm = () => {
                   color='primary'
                   variant='solid'
                   size='sm'
+                  type='reset'
                   startContent={<IconCircleX />}
                   className='px-10 font-poppins font-semibold text-sm'
                 >
@@ -75,6 +76,7 @@ const AnimalForm = () => {
                   variant='solid'
                   size='sm'
                   startContent={<IconSend2 />}
+                  type='submit'
                   className='px-10 font-poppins font-semibold text-sm'
                 >
                   Enviar
