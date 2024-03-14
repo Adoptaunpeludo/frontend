@@ -7,7 +7,7 @@ import {
   Divider,
   Image,
   Link,
-} from "@nextui-org/react";
+} from '@nextui-org/react';
 
 import {
   UilMapMarker,
@@ -15,11 +15,12 @@ import {
   UilMars,
   UilSchedule,
   UilPlay,
-} from "@iconscout/react-unicons";
+} from '@iconscout/react-unicons';
 
-import PropTypes from "prop-types";
-import { HeartIcon, UnderlineVector, PetSize } from "../assets/svg";
-import { MinimalLogo } from "../assets/logos";
+import PropTypes from 'prop-types';
+import { HeartIcon, UnderlineVector, PetSize } from '../assets/svg';
+import { MinimalLogo } from '../assets/logos';
+import { BUCKET_URL } from '../config/config';
 
 export const PetCard = ({ animal }) => {
   console.log({ animal });
@@ -28,9 +29,7 @@ export const PetCard = ({ animal }) => {
       {/* Header */}
       <CardHeader className="relative p-0 overflow-hidden">
         <Image
-          src={`${import.meta.env.VITE_ANIMALS_IMAGES_BASE_URL}/${
-            animal.images[0]
-          }`}
+          src={`${BUCKET_URL}/${animal.images[0]}`}
           alt={animal.name}
           className="w-80 h-full object-cover"
         />
@@ -65,7 +64,7 @@ export const PetCard = ({ animal }) => {
 
           <div>
             {/* Gender */}
-            {animal.gender === "male" ? (
+            {animal.gender === 'male' ? (
               <div className="flex flex-row justify-center items-center">
                 <UilMars color="#3E73C7" />
                 <span>{animal.gender}</span>
@@ -115,7 +114,7 @@ PetCard.propTypes = {
     size: PropTypes.string.isRequired,
     name: PropTypes.string.isRequired,
     age: PropTypes.number.isRequired,
-    gender: PropTypes.oneOf(["male", "female", "unknown"]).isRequired,
+    gender: PropTypes.oneOf(['male', 'female', 'unknown']).isRequired,
     cityId: PropTypes.number.isRequired,
   }),
 };
