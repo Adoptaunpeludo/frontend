@@ -17,7 +17,9 @@ const CatsPage = () => {
         {isLoading ? (
           <Spinner />
         ) : (
-          data.map((animal) => <PetCard key={animal.id} animal={animal} />)
+          data.animals.map((animal) => (
+            <PetCard key={animal.id} animal={animal} />
+          ))
         )}
       </ul>
     </main>

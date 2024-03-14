@@ -6,6 +6,8 @@ import { useAnimals } from '../Landing/useAnimals';
 const DogsPage = () => {
   const { data, isLoading } = useAnimals('dogs');
 
+  console.log({ data });
+
   return (
     <>
       <TitleSection title="Perretes" />
@@ -14,7 +16,9 @@ const DogsPage = () => {
         {isLoading ? (
           <Spinner />
         ) : (
-          data.map((animal) => <PetCard key={animal.id} animal={animal} />)
+          data.animals.map((animal) => (
+            <PetCard key={animal.id} animal={animal} />
+          ))
         )}
       </ul>
     </>
