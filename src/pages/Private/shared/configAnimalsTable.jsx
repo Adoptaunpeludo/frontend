@@ -1,11 +1,11 @@
 export const statusColorMap = {
-  'En Acogida': 'success',
-  'Esperando Hogar': 'success',
-  adoptado: 'danger',
+  fostered: 'success',
+  awaiting_home: 'success',
+  adopted: 'danger',
   reservado: 'warning',
-  publicado: 'success',
-  pendiente: 'warning',
-  rechazado: 'danger'
+  published: 'success',
+  reserved: 'warning',
+  rejected: 'danger'
 };
 import {
   UilMapMarker,
