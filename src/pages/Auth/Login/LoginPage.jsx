@@ -1,8 +1,10 @@
-import { Button, Input } from "@nextui-org/react";
-import { IconLogin2 as LoginIcon } from "@tabler/icons-react";
-import { Link, Form, redirect } from "react-router-dom";
-import { login } from "../../Auth/authService";
-import { Hero, LogoHeader, Panel } from "../../../components";
+import { Button, Input } from '@nextui-org/react';
+import { IconLogin2 as LoginIcon } from '@tabler/icons-react';
+import { Link, Form, redirect } from 'react-router-dom';
+import { login } from '../../Auth/authService';
+import { Hero, LogoHeader, Panel } from '../../../components';
+import { handleAuthError } from '../../../utils/handleAuthError';
+import { toast } from 'react-toastify';
 
 export const action = async ({ request }) => {
   const formData = await request.formData();
@@ -10,11 +12,11 @@ export const action = async ({ request }) => {
 
   try {
     await login(credentials);
-    return redirect("/");
-    
+    return redirect('/');
   } catch (error) {
-    console.error(error.message);
-    return redirect("/login");
+    const message = handleAuthError(error);
+    toast.error(message);
+    return redirect('/login');
   }
 };
 

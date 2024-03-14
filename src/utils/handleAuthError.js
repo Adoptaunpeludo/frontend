@@ -14,6 +14,10 @@ export const handleAuthError = (error) => {
       return `El username: ${username} ya existe, prueba con otro username`;
     }
 
+    if (message.startsWith('Incorrect')) {
+      return 'Email o password incorrectos';
+    }
+
     return message;
   }
 };
