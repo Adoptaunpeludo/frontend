@@ -11,7 +11,7 @@ const CatsPage = () => {
       <Banner src={'/backgrounds/banner-cats.jpg'} />
       <TitleSection title="Gatetes" />
 
-      <FilterBar></FilterBar>
+      <FilterBar />
 
       <ul className="flex justify-center gap-4 flex-wrap p-6 ">
         {isLoading ? (
