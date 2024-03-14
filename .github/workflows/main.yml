@@ -64,7 +64,7 @@ jobs:
         
       - name: Sync files to production server
         run: |
-          rsync -avz --delete -e "ssh -o StrictHostKeyChecking=no -i key.pem" ./dist/ ubuntu@3.228.164.55:/var/www/html/adoptaunpeludo
+          rsync -avz --delete -e "ssh -o StrictHostKeyChecking=no -i key.pem" ./dist/ ubuntu@3.228.164.55:/var/www/adoptaunpeludo
 
   # deploy:
   #   needs: build
