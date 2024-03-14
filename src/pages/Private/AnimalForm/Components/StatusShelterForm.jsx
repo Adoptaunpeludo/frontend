@@ -9,14 +9,16 @@ const StatusShelterForm = ({ data }) => {
       <div className='flex w-full flex-wrap md:flex-nowrap gap-2 border-primary border-t-1 pt-3'>
         <SelectField
           label='Status'
-          className='min-w-72 '
+          className='min-w-72'
+          name='status'
           dataField={status}
           dataEnum={statusPetEnum}
         />
 
         <SelectField
           label='Ciudad'
-          className='min-w-72 '
+          className='min-w-72'
+          name='city'
           dataField={city}
           dataEnum={cities}
         />
