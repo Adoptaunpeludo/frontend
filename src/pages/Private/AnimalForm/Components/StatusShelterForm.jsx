@@ -1,5 +1,5 @@
-import { Input } from '@nextui-org/react';
-import { H3Title } from '../../../shared';
+import { cities, statusPetEnum } from '../../../../utils/enumData';
+import { H3Title, SelectField } from '../../../shared';
 
 const StatusShelterForm = ({ data }) => {
   const { status, city } = data;
@@ -7,19 +7,18 @@ const StatusShelterForm = ({ data }) => {
     <div className='flex flex-col gap-2'>
       <H3Title title='Estado protectora' />
       <div className='flex w-full flex-wrap md:flex-nowrap gap-2 border-primary border-t-1 pt-3'>
-        <Input
-          className='min-w-72 '
-          type='text'
+        <SelectField
           label='Status'
-          name='status'
-          placeholder={status === '' ? '' : status}
-        />
-        <Input
           className='min-w-72 '
-          type='text'
+          dataField={status}
+          dataEnum={statusPetEnum}
+        />
+
+        <SelectField
           label='Ciudad'
-          name='city'
-          placeholder={city === '' ? '' : city}
+          className='min-w-72 '
+          dataField={city}
+          dataEnum={cities}
         />
       </div>
     </div>
