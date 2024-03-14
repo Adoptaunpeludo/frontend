@@ -30,7 +30,7 @@ export const useAnimalDetails = slug => {
     moltingAmount: 'moderate',
     status: 'awaiting_home',
     type: '',
-    gender: 'male',
+    gender: '',
     numFavs: 0,
     departmentAdapted: 'true',
     droolingPotential: 'none',
