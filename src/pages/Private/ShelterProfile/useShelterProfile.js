@@ -1,7 +1,7 @@
 export const useShelterProfile = () => {
   const data = {
     cif: 'X.99.999.999',
-    legalForms: null,
+    legalForms: '',
     ownVet: true,
     description:
       'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis ultricies dapibus leo, sed tempus dolor commodo vel. Cras non metus in ex condimentum congue id eu lacus. Etiam eleifend interdum mollis. Nunc ante erat, laoreet nec ante gravida, mattis euismod turpis. Aliquam dictum egestas lectus vitae rutrum. Curabitur ornare faucibus sapien nec semper. Nam eget fringilla velit.',
