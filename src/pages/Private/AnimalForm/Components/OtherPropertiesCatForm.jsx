@@ -23,24 +23,28 @@ const OtherPropertiesCatForm = ({ data }) => {
         <SelectField
           label='Entrenado en el arenero'
           className=''
+          name='toiletTrained'
           dataField={toiletTrained}
           dataEnum={boolDataEnum}
         />
         <SelectField
           label='Fácil de entrenar'
           className=''
+          name='easyTrain'
           dataField={easyTrain}
           dataEnum={boolDataEnum}
         />
         <SelectField
           label='Cantidad de muda'
           className=''
+          name='moltingAmount'
           dataField={moltingAmount}
           dataEnum={moltingEnum}
         />
         <SelectField
           label='Nivel de energía'
           className=''
+          name='energyLevel'
           dataField={energyLevel}
           dataEnum={energyEnum}
         />
@@ -49,6 +53,7 @@ const OtherPropertiesCatForm = ({ data }) => {
         <SelectField
           label='Nivel de juego'
           className=''
+          name='playLevel'
           dataField={playLevel}
           dataEnum={potentialEnum}
         />
@@ -56,12 +61,14 @@ const OtherPropertiesCatForm = ({ data }) => {
         <SelectField
           label='Tendencia a arañar'
           className=''
+          name='scratchPotential'
           dataField={scratchPotential}
           dataEnum={potentialEnum}
         />
         <SelectField
           label='Sociable con niños'
           className=''
+          name='kidsFriendly'
           dataField={kidsFriendly}
           dataEnum={boolDataEnum}
         />
