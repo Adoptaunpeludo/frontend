@@ -1,4 +1,4 @@
-import { Avatar, Button, Input, Link } from '@nextui-org/react';
+import { Avatar, Button, Input } from '@nextui-org/react';
 import { IconCircleX, IconSend2 } from '@tabler/icons-react';
 import { cities } from '../../../utils/enumData';
 import { H2Title, Hero, Panel, SelectField } from '../../shared';
@@ -14,7 +14,7 @@ export const UserFormBio = () => {
     dni,
     firstName,
     lastName,
-    phone_number,
+    phoneNumber,
     city
   } = data;
   return (
@@ -44,6 +44,7 @@ export const UserFormBio = () => {
                   className='min-w-72 '
                   type='text'
                   label='DNI'
+                  name='dni'
                   placeholder={dni === '' ? 'Introduce tu email' : dni}
                 />
               </div>
@@ -52,6 +53,7 @@ export const UserFormBio = () => {
                   className='min-w-72 '
                   type='text'
                   label='Nombre'
+                  name='name'
                   placeholder={
                     firstName === '' ? 'Introduce tu nombre' : firstName
                   }
@@ -60,6 +62,7 @@ export const UserFormBio = () => {
                   className='min-w-72 '
                   type='text'
                   label='Apellidos'
+                  name='lastName'
                   placeholder={
                     lastName === '' ? 'Introduce tus apellidos' : lastName
                   }
@@ -70,13 +73,15 @@ export const UserFormBio = () => {
                   className='min-w-72 '
                   type='tel'
                   label='Teléfono'
+                  name='phoneNumber'
                   placeholder={
-                    firstName === '' ? 'Introduce tu teléfono' : phone_number
+                    phoneNumber === '' ? 'Introduce tu teléfono' : phoneNumber
                   }
                 />
                 <SelectField
                   label='Ciudad'
                   className='min-w-72'
+                  name='city'
                   dataField={city}
                   dataEnum={cities}
                 />
@@ -85,9 +90,8 @@ export const UserFormBio = () => {
 
             <div className='flex justify-center gap-4'>
               <Button
-                as={Link}
                 color='primary'
-                href='#'
+                type='reset'
                 variant='solid'
                 size='sm'
                 startContent={<IconCircleX />}
@@ -96,9 +100,8 @@ export const UserFormBio = () => {
                 Cancelar
               </Button>
               <Button
-                as={Link}
                 color='primary'
-                href='#'
+                type='submit'
                 variant='solid'
                 size='sm'
                 startContent={<IconSend2 />}
