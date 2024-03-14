@@ -63,73 +63,102 @@ export const legalFormEnum = [
   { label: 'Seleccionar...', value: ' ' }
 ];
 
+export const genderEnum = [
+  { label: 'Macho', value: 'male' },
+  {
+    label: 'Hembra',
+    value: 'female'
+  }
+];
+
+export const adoptionPublishStatusEnum = [
+  { label: 'Pendiente', value: 'pending' },
+  {
+    label: 'Rechazado',
+    value: 'rejected'
+  },
+  {
+    label: 'Publicado',
+    value: 'published'
+  }
+];
+
+export const statusPetEnum = [
+  { label: 'Adoptado', value: 'adopted' },
+  {
+    label: 'En acogida',
+    value: 'fostered'
+  },
+  {
+    label: 'Reservado',
+    value: 'reserved'
+  },
+  {
+    label: 'Esperando un hogar',
+    value: 'awaiting_home'
+  }
+];
+
+export const animalSizeEnum = [
+  { label: 'Pequeño', value: 'small' },
+  {
+    label: 'Mediano',
+    value: 'medium'
+  },
+  { label: 'Grande', value: 'big' },
+  { label: 'Muy Grande', value: 'very_big' }
+];
+
+export const facilitiesEnum = [
+  { label: 'Casas de acogida', value: 'foster_homes' },
+  {
+    label: 'Instalaciones Municipales o públicas',
+    value: 'municipal_or_public_facilities'
+  },
+  { label: 'Instalaciones arrendadas', value: 'leased_facilities' },
+  { label: 'Residencias propias', value: ' owned_facilities' },
+
+  { label: 'Residencias privadas (arrendadas)', value: 'private_residences' }
+];
+
+export const moltingEnum = [
+  { label: 'Ligera', value: 'light' },
+  {
+    label: 'Moderada',
+    value: 'moderate'
+  },
+  { label: 'Elevada', value: 'heavy' },
+  { label: 'No suelta pelo', value: 'no_shedding' }
+];
+
+export const energyEnum = [
+  { label: 'Baja', value: 'light' },
+  {
+    label: 'Moderada',
+    value: 'moderate'
+  },
+  { label: 'Elevada', value: 'high' }
+];
+
+export const potentialEnum = [
+  { label: 'Nada', value: 'none' },
+  { label: 'Bajo', value: 'low' },
+  {
+    label: 'Moderado',
+    value: 'moderate'
+  },
+  { label: 'Elevado', value: 'high' },
+  { label: 'Excesivo', value: 'excessive' }
+];
+
+export const boolDataEnum = [
+  { label: 'Si', value: true },
+  {
+    label: 'No',
+    value: false
+  }
+];
 //Enums de backend
-
-// enum user_roles {
-//   adopter
-//   shelter
-//   admin
-// }
-
-// enum gender_enum {
-//   male
-//   female
-// }
-
-// enum adoption_publish_status {
-//   pending
-//   rejected
-//   published
-// }
-
-// enum social_media_enum {
-//   facebook
-//   xtweet
-//   instagram
-// }
-
-// enum animal_size {
-//   small
-//   medium
-//   big
-//   very_big
-// }
-
-// enum facilities {
-//   foster_homes
-//   municipal_or_public_facilities
-//   leased_facilities
-//   owned_facilities
-//   private_residences
-// }
-
-// enum status_pet {
-//   adopted
-//   fostered
-//   reserved
-//   awaiting_home
-// }
-
-// enum molting {
-//   light
-//   moderate
-//   heavy
-//   no_shedding
-// }
-
-// enum energy {
-//   light
-//   moderate
-//   high
-// }
-
-// enum potential {
-//   none
-//   low
-//   moderate
-//   high
-//   excessive
-// }
 
 // enum animal_type {
 //   cat
