@@ -1,20 +1,10 @@
-import {
-  Button,
-  Input,
-  Radio,
-  RadioGroup,
-  Select,
-  SelectItem,
-  Spinner,
-  Textarea
-} from '@nextui-org/react';
+import { Button, Input, Spinner, Textarea } from '@nextui-org/react';
 import { IconCircleX, IconSend2 } from '@tabler/icons-react';
-
 import { Form } from 'react-router-dom';
+import { boolDataEnum, legalFormEnum } from '../../../utils/enumData';
 import ErrorPage from '../../Error/ErrorPage';
-import { H2Title, H3Title, Hero, Panel } from '../../shared';
+import { H2Title, H3Title, Hero, Panel, SelectField } from '../../shared';
 import { AddButton } from '../../shared/AddButton';
-import { legalFormEnum } from '../../shared/data/enumData';
 import Accommodations from '../ShelterProfile/components/Acommodations';
 import { useShelterProfile } from '../ShelterProfile/useShelterProfile';
 import { ImagesFrame } from '../shared/ImagesFrame';
@@ -52,53 +42,40 @@ const ShelterForm = () => {
                   className='min-w-72 '
                   type='text'
                   label='CIF'
+                  name='cif'
                   placeholder={cif === '' ? '' : cif}
                 />
-                <Select
+                <SelectField
                   className='min-w-72 '
-                  label='Forma legal '
-                  defaultSelectedKeys={[legalForms === null ? ' ' : legalForms]}
-                >
-                  {legalFormEnum.map(legalForm => (
-                    <SelectItem key={legalForm.value} value={legalForm.value}>
-                      {legalForm.label}
-                    </SelectItem>
-                  ))}
-                </Select>
+                  label='Forma legal'
+                  name='legalForms'
+                  dataField={legalForms}
+                  dataEnum={legalFormEnum}
+                />
               </div>
-              <div className='flex w-full justify-around gap-4 flex-wrap md:flex-nowrap rounded-lg bg-default-100 py-2'>
-                <RadioGroup
+              <div className='flex w-full justify-around gap-4 flex-wrap md:flex-nowrap py-2'>
+                <SelectField
+                  className='min-w-72 '
                   label='Instalaciones veterinarias'
-                  orientation='horizontal'
                   name='veterinaryFacilities'
-                  defaultValue={veterinaryFacilities}
+                  dataField={veterinaryFacilities}
+                  dataEnum={boolDataEnum}
+                />
+                <SelectField
                   className='min-w-72 '
-                >
-                  <Radio value={true} className=''>
-                    Si
-                  </Radio>
-                  <Radio value={false}>No</Radio>
-                </RadioGroup>
-                <RadioGroup
                   label='Veterinario propio'
-                  orientation='horizontal'
                   name='ownVet'
-                  defaultValue={ownVet}
-                  className='min-w-72 '
-                >
-                  <Radio value={true} className='ring-black '>
-                    Si
-                  </Radio>
-                  <Radio value={false}>No</Radio>
-                </RadioGroup>
+                  dataField={ownVet}
+                  dataEnum={boolDataEnum}
+                />
               </div>
               <Accommodations facilities={facilities} isDisable={false} />
               <div className='flex w-full flex-col  gap-4'>
                 <H3Title title='Descripción:' className='mx-2' />
                 <Textarea
                   className='w-full '
-                  type='tel'
                   label='Descripción'
+                  name='description'
                   placeholder={
                     description === '' ? 'Describe tu protectora' : description
                   }
