@@ -141,7 +141,7 @@ export function FilterBar({ page }) {
       </Select>
       <Button type="submit">Buscar</Button>
       <Button onPress={handleReset}>Reset</Button>
-      <PagePagination />
+      <PagePagination page={page} />
     </form>
   );
 }
