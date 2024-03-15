@@ -31,15 +31,15 @@ const CatsPage = () => {
 
       <FilterBar page="cats" />
 
-      {isLoading ? (
-        <Spinner className="flex justify-center items-center" />
-      ) : (
-        <ul className="flex justify-center gap-4 flex-wrap p-6 ">
-          {data.animals.map((animal) => (
+      <ul className="flex justify-center gap-4 flex-wrap p-6">
+        {isLoading ? (
+          <Spinner className="flex justify-center items-center" />
+        ) : (
+          data.animals.map((animal) => (
             <PetCard key={animal.id} animal={animal} />
-          ))}
-        </ul>
-      )}
+          ))
+        )}
+      </ul>
     </main>
   );
 };
