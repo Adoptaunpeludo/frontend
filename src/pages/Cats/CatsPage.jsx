@@ -1,7 +1,8 @@
 import { Spinner } from '@nextui-org/spinner';
 import { FilterBar, PetCard, TitleSection, Banner } from '../../components';
 import { animalsQuery, useAnimals } from '../Landing/useAnimals';
-//import { Spinner } from '@nextui-org/react';
+import { useLoaderData } from 'react-router';
+import { useNavigation } from 'react-router-dom';
 
 export const loader =
   (queryClient) =>
@@ -10,18 +11,18 @@ export const loader =
       ...new URL(request.url).searchParams.entries(),
     ]);
 
-    console.log({ params });
-
-    queryClient.invalidateQueries({
-      queryKeys: ['animals', 'cats'],
-    });
     await queryClient.ensureQueryData(animalsQuery('cats', params));
 
-    return null;
+    return { params };
   };
 
 const CatsPage = () => {
-  const { data, isLoading } = useAnimals('cats');
+  const { params } = useLoaderData();
+  const navigation = useNavigation();
+
+  const { data } = useAnimals('cats', params);
+
+  const isLoading = navigation.state === 'loading';
 
   return (
     <main>
@@ -30,15 +31,15 @@ const CatsPage = () => {
 
       <FilterBar />
 
-      <ul className="flex justify-center gap-4 flex-wrap p-6 ">
-        {isLoading ? (
-          <Spinner />
-        ) : (
-          data.animals.map((animal) => (
+      {isLoading ? (
+        <Spinner className="flex justify-center items-center" />
+      ) : (
+        <ul className="flex justify-center gap-4 flex-wrap p-6 ">
+          {data.animals.map((animal) => (
             <PetCard key={animal.id} animal={animal} />
-          ))
-        )}
-      </ul>
+          ))}
+        </ul>
+      )}
     </main>
   );
 };
