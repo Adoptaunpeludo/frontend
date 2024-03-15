@@ -1,5 +1,7 @@
+export { AddButton } from './AddButton';
 export { AsideDataColumn } from './AsideDataColumn';
 export { AsideDataField } from './AsideDataField';
+export { Banner } from './Banner';
 export { EditButton } from './EditButton';
 export { FilterBar } from './FilterBar';
 export { H2Title } from './H2Title';
@@ -11,5 +13,4 @@ export { Panel } from './Panel';
 export { PetCard } from './PetCard';
 export { SelectField } from './SelectField';
 export { TitleSection } from './TitleSection';
-export { Banner } from './Banner';
-export { AddButton } from './AddButton';
+export { UserAreaMenu } from './UserAreaMenu';
