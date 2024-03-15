@@ -1,7 +1,24 @@
 import { Spinner } from '@nextui-org/spinner';
 import { FilterBar, PetCard, TitleSection, Banner } from '../../components';
-import { useAnimals } from '../Landing/useAnimals';
+import { animalsQuery, useAnimals } from '../Landing/useAnimals';
 //import { Spinner } from '@nextui-org/react';
+
+export const loader =
+  (queryClient) =>
+  async ({ request }) => {
+    const params = Object.fromEntries([
+      ...new URL(request.url).searchParams.entries(),
+    ]);
+
+    console.log({ params });
+
+    queryClient.invalidateQueries({
+      queryKeys: ['animals', 'cats'],
+    });
+    await queryClient.ensureQueryData(animalsQuery('cats', params));
+
+    return null;
+  };
 
 const CatsPage = () => {
   const { data, isLoading } = useAnimals('cats');

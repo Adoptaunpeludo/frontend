@@ -1,7 +1,9 @@
 import { fetchData } from '../../api/client';
 
-export const getCats = async () => {
-  const { data } = await fetchData('/animals?type=cat');
+export const getCats = async (params) => {
+  console.log({ params });
+
+  const { data } = await fetchData(`/animals?type=cat`, params);
 
   return data;
 };

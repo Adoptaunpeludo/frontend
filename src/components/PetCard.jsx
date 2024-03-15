@@ -22,7 +22,6 @@ import { MinimalLogo } from '../assets/logos';
 import { BUCKET_URL } from '../config/config';
 
 export const PetCard = ({ animal }) => {
-  console.log({ animal });
   return (
     <Card className="max-w-80">
       {/* Header */}

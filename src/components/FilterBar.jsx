@@ -1,5 +1,5 @@
 import { Button, Input, Select, SelectItem, Spacer } from '@nextui-org/react';
-import { Form, useSearchParams } from 'react-router-dom';
+import { useSearchParams } from 'react-router-dom';
 import { ageRanges, cities, genders, sizes } from './data/items';
 
 export function FilterBar() {
@@ -34,10 +34,15 @@ export function FilterBar() {
     setSearchParams(searchParams);
   };
 
+  const handleReset = () => {
+    setSearchParams(new URLSearchParams()); // Reiniciar los parámetros de búsqueda a un nuevo objeto vacío
+  };
+
   return (
-    <Form
+    <form
       className="bg-gray-100 p-4 rounded-lg flex items-center space-x-2"
       onSubmit={handleSubmit}
+      onReset={handleReset}
     >
       <Input
         clearable
@@ -55,7 +60,11 @@ export function FilterBar() {
         name="size"
       >
         {sizes.map((size) => (
-          <SelectItem key={size.name} value={size.value} className="capitalize">
+          <SelectItem
+            key={size.value}
+            value={size.value}
+            className="capitalize"
+          >
             {size.name}
           </SelectItem>
         ))}
@@ -64,7 +73,7 @@ export function FilterBar() {
       <Select label="Género" className="flex-1 capitalize" name="gender">
         {genders.map((gender) => (
           <SelectItem
-            key={gender.name}
+            key={gender.value}
             value={gender.value}
             className="capitalize"
           >
@@ -75,7 +84,7 @@ export function FilterBar() {
       <Spacer x={0.5} />
       <Select label="Edad" className="flex-1 capitalize" name="age">
         {ageRanges.map((age) => (
-          <SelectItem key={age.name} value={age.value} className="capitalize">
+          <SelectItem key={age.value} value={age.value} className="capitalize">
             {age.name}
           </SelectItem>
         ))}
@@ -93,6 +102,7 @@ export function FilterBar() {
         ))}
       </Select>
       <Button type="submit">Buscar</Button>
-    </Form>
+      <Button type="reset">Reset</Button>
+    </form>
   );
 }
