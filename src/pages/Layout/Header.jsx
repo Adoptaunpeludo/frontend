@@ -1,5 +1,4 @@
 import {
-  Avatar,
   Button,
   Link,
   Navbar,
@@ -9,24 +8,26 @@ import {
   NavbarMenu,
   NavbarMenuItem,
   NavbarMenuToggle,
-  Spinner,
+  Spinner
 } from '@nextui-org/react';
 import { useState } from 'react';
 import BrandNavLogo from '../../assets/logos/BrandNavLogo.jsx';
 import { logout } from '../Auth/authService.js';
 
 import { IconLogin2 as LoginIcon } from '@tabler/icons-react';
-import { useUser } from './useUser.js';
-import { useNavigate } from 'react-router-dom';
 import { useQueryClient } from '@tanstack/react-query';
+import { useNavigate } from 'react-router-dom';
+
+import { UserAreaMenu } from '../../components/UserAreaMenu.jsx';
+import { useUser } from './useUser.js';
 
 const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const navigate = useNavigate();
   const queryClient = useQueryClient();
   const { data: user, isLoading } = useUser();
-
-  const handleMenuOpenChange = (open) => {
+  console.log(user);
+  const handleMenuOpenChange = open => {
     setIsMenuOpen(open);
   };
 
@@ -40,49 +41,44 @@ const Header = () => {
     {
       name: 'Home',
       href: '/',
-      color: 'foreground',
+      color: 'foreground'
     },
     {
       name: 'Perros',
       href: '/dogs',
-      color: 'foreground',
+      color: 'foreground'
     },
     {
       name: 'Gatos',
       href: '/cats',
-      color: 'foreground',
+      color: 'foreground'
     },
     {
       name: 'Asociaciones',
       href: '/shelters',
-      color: 'foreground',
-    },
-    {
-      name: 'testOnly',
-      href: '/testPage',
-      color: 'foreground',
-    },
+      color: 'foreground'
+    }
   ];
 
   return (
     <Navbar
       isMenuOpen={isMenuOpen}
       onMenuOpenChange={handleMenuOpenChange}
-      maxWidth="xl"
+      maxWidth='xl'
     >
       <NavbarContent>
         <NavbarMenuToggle
           aria-label={isMenuOpen ? 'Close menu' : 'Open menu'}
-          className="sm:hidden"
+          className='sm:hidden'
         />
         <NavbarBrand>
-          <Link href="/">
+          <Link href='/'>
             <BrandNavLogo />
           </Link>
         </NavbarBrand>
       </NavbarContent>
 
-      <NavbarContent className="hidden sm:flex gap-4" justify="center">
+      <NavbarContent className='hidden sm:flex gap-4' justify='center'>
         {menuItems.map((item, index) => (
           <NavbarItem key={`${item.name}-${index}`}>
             <Link color={item.color} href={item.href}>
@@ -91,41 +87,23 @@ const Header = () => {
           </NavbarItem>
         ))}
       </NavbarContent>
-      <NavbarContent justify="end">
+      <NavbarContent justify='end'>
         <NavbarItem>
           {!user ? (
             <Button
               as={Link}
-              color="primary"
-              href="/login"
-              variant="solid"
-              size="sm"
+              color='primary'
+              href='/login'
+              variant='solid'
+              size='sm'
               endContent={<LoginIcon />}
             >
               Login
             </Button>
           ) : (
-            <div className="flex gap-2">
+            <div className='flex gap-2'>
               {isLoading && <Spinner />}
-              <Avatar
-                isBordered
-                as="button"
-                className="transition-transform"
-                color="secondary"
-                name="Jason Hughes"
-                size="sm"
-                src="https://i.pravatar.cc/150?u=a042581f4e29026704d"
-              />
-              <Button
-                onClick={handleLogout}
-                color="primary"
-                href="/login"
-                variant="solid"
-                size="sm"
-                endContent={<LoginIcon />}
-              >
-                Logout
-              </Button>
+              <UserAreaMenu user={user} />
             </div>
           )}
         </NavbarItem>
@@ -134,9 +112,9 @@ const Header = () => {
         {menuItems.map((item, index) => (
           <NavbarMenuItem key={`${item.name}-${index}`}>
             <Link
-              className="w-full"
+              className='w-full'
               href={item.href}
-              size="lg"
+              size='lg'
               color={item.color}
             >
               {item.name}
