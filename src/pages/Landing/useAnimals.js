@@ -1,7 +1,7 @@
 import { useQuery } from '@tanstack/react-query';
 import { getCats, getDogs } from './service';
 
-export const animalsQuery = (type, params) => {
+export const animalsQuery = (type, params = {}) => {
   const queryFn = type === 'cats' ? getCats : getDogs;
 
   const { name, size, gender, age, city } = params;
@@ -13,7 +13,7 @@ export const animalsQuery = (type, params) => {
   };
 };
 
-export const useAnimals = (type, params) => {
+export const useAnimals = (type, params = {}) => {
   const { data, isLoading, isFetching, isError } = useQuery(
     animalsQuery(type, params)
   );
