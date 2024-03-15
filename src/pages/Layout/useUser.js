@@ -5,6 +5,7 @@ export const userQuery = {
   queryKey: ['user'],
   queryFn: getCurrentUser,
   staleTime: Infinity,
+  retry: false,
 };
 
 export const useUser = () => {
