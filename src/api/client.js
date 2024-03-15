@@ -6,8 +6,8 @@ const client = axios.create({
 });
 
 // GET
-export const fetchData = (endpoint) => {
-  return client.get(endpoint);
+export const fetchData = (endpoint, params) => {
+  return client.get(endpoint, { params });
 };
 
 // POST

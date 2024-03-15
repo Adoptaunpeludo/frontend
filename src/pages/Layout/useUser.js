@@ -4,7 +4,7 @@ import { getCurrentUser } from './service';
 export const userQuery = {
   queryKey: ['user'],
   queryFn: getCurrentUser,
-  staleTime: 1000 * 60 * 15,
+  staleTime: Infinity,
 };
 
 export const useUser = () => {

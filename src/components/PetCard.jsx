@@ -17,13 +17,11 @@ import {
   UilPlay,
 } from '@iconscout/react-unicons';
 
-import PropTypes from 'prop-types';
 import { HeartIcon, UnderlineVector, PetSize } from '../assets/svg';
 import { MinimalLogo } from '../assets/logos';
 import { BUCKET_URL } from '../config/config';
 
 export const PetCard = ({ animal }) => {
-  console.log({ animal });
   return (
     <Card className="max-w-80">
       {/* Header */}
@@ -105,16 +103,4 @@ export const PetCard = ({ animal }) => {
       </CardFooter>
     </Card>
   );
-};
-
-PetCard.propTypes = {
-  animal: PropTypes.shape({
-    id: PropTypes.string.isRequired,
-    slug: PropTypes.string.isRequired,
-    size: PropTypes.string.isRequired,
-    name: PropTypes.string.isRequired,
-    age: PropTypes.number.isRequired,
-    gender: PropTypes.oneOf(['male', 'female', 'unknown']).isRequired,
-    cityId: PropTypes.number.isRequired,
-  }),
 };

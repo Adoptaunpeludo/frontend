@@ -6,8 +6,6 @@ import { useAnimals } from '../Landing/useAnimals';
 const DogsPage = () => {
   const { data, isLoading } = useAnimals('dogs');
 
-  console.log({ data });
-
   return (
     <>
       <TitleSection title="Perretes" />
