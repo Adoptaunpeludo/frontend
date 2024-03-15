@@ -36,24 +36,21 @@ export const action = async (data) => {
 };
 
 const RegisterPage = () => {
-	const [credentials, setCredentials] = useState({
-		role: '',
-		username: '',
-		email: '',
-		password: '',
-		repeatPassword: '',
+	const [credentials, setCredentials] = useState({});
+	const [errors, setErrors] = useState({
+		role: 'Selecciona tipo de perfil',
 	});
-
-	const [errors, setErrors] = useState({});
 
 	const handleChange = (event) => {
 		const { name, value } = event.target;
 		setCredentials({ ...credentials, [name]: value });
-		setErrors({ ...errors, [name]: validateField(name, value) });
+		setErrors({
+			...errors,
+			[name]: validateField(name, value, credentials.password),
+		});
 	};
 
 	const isFormValid = Object.values(errors).every((error) => error === '');
-
 	const enableButton = !(
 		credentials.role &&
 		credentials.username &&
@@ -84,6 +81,7 @@ const RegisterPage = () => {
 									name='role'
 									label='Perfil'
 									orientation='horizontal'
+									errorMessage={errors.role}
 									onChange={handleChange}
 								>
 									<Radio value='shelter'>Protectora</Radio>
@@ -102,7 +100,7 @@ const RegisterPage = () => {
 										placeholder='Introduce un nombre'
 										color={errors.username ? 'danger' : 'none'}
 										errorMessage={errors.username}
-										onChange={handleChange}
+										onBlur={handleChange}
 									></Input>
 
 									<Input
@@ -113,7 +111,7 @@ const RegisterPage = () => {
 										placeholder='Introduce tu email'
 										color={errors.email ? 'danger' : 'none'}
 										errorMessage={errors.email}
-										onChange={handleChange}
+										onBlur={handleChange}
 									></Input>
 								</div>
 								<div className='flex w-full flex-wrap md:flex-nowrap gap-4'>
@@ -125,7 +123,7 @@ const RegisterPage = () => {
 										placeholder='Introduce tu password'
 										color={errors.password ? 'danger' : 'none'}
 										errorMessage={errors.password}
-										onChange={handleChange}
+										onBlur={handleChange}
 									></Input>
 
 									<Input
@@ -136,7 +134,7 @@ const RegisterPage = () => {
 										placeholder='Introduce tu password'
 										color={errors.repeatPassword ? 'danger' : 'none'}
 										errorMessage={errors.repeatPassword}
-										onChange={handleChange}
+										onBlur={handleChange}
 									></Input>
 								</div>
 							</div>

@@ -1,10 +1,9 @@
-export const validateField = (name, value) => {
+export const validateField = (name, value, password) => {
 	switch (name) {
-		case 'role':
-			return value === undefined ? 'Selecciones un tipo de perfil' : '';
 		case 'username':
-			return value.trim().length < 3
-				? 'El nombre de usuario debe tener al menos 3 caracteres'
+			return value.trim().length < 3 ||
+				!/^[A-Za-zÑñÁáÉéÍíÓóÚúÜü\s]+$/i.test(value.trim())
+				? 'El nombre de usuario debe tener al menos 3 caracteres válidos'
 				: '';
 		case 'email':
 			return !/^[A-Z0-9._%+-]+@[A-Z0-9.-]+.[A-Z]{2,4}$/i.test(value.trim())
@@ -15,9 +14,7 @@ export const validateField = (name, value) => {
 				? 'La contraseña debe tener al menos 8 caracteres.'
 				: '';
 		case 'repeatPassword':
-			return value.trim().length < 8
-				? 'La contraseña debe tener al menos 8 caracteres.'
-				: '';
+			return value.trim() !== password ? 'Las contraseñas no coinciden' : '';
 		default:
 			return '';
 	}
