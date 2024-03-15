@@ -40,7 +40,6 @@ const LoginPage = () => {
 			...errors,
 			[name]: validateField(name, value),
 		});
-		console.log(errors);
 	};
 
 	const isFormValid = Object.values(errors).every((error) => error === '');
