@@ -123,7 +123,7 @@ const RegisterPage = () => {
 										placeholder='Introduce tu password'
 										color={errors.password ? 'danger' : 'none'}
 										errorMessage={errors.password}
-										onBlur={handleChange}
+										onChange={handleChange}
 									></Input>
 
 									<Input
@@ -134,7 +134,7 @@ const RegisterPage = () => {
 										placeholder='Introduce tu password'
 										color={errors.repeatPassword ? 'danger' : 'none'}
 										errorMessage={errors.repeatPassword}
-										onBlur={handleChange}
+										onChange={handleChange}
 									></Input>
 								</div>
 							</div>

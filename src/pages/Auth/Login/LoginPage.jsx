@@ -6,6 +6,7 @@ import { Hero, LogoHeader, Panel } from '../../../components';
 import { handleAuthError } from '../../../utils/handleAuthError';
 import { toast } from 'react-toastify';
 import { useState } from 'react';
+import { validateField } from '../../../utils/validateField';
 
 export const action = async ({ request }) => {
 	const formData = await request.formData();
@@ -27,15 +28,27 @@ const LoginPage = () => {
 		password: '',
 	});
 
+	const [errors, setErrors] = useState({});
+
 	const handleChange = (event) => {
 		const { name, value } = event.target;
 		setCredentials((prevCredentials) => ({
 			...prevCredentials,
 			[name]: value,
 		}));
+		setErrors({
+			...errors,
+			[name]: validateField(name, value),
+		});
+		console.log(errors);
 	};
 
-	const enableButton = !(credentials.email && credentials.password);
+	const isFormValid = Object.values(errors).every((error) => error === '');
+	const enableButton = !(
+		credentials.email &&
+		credentials.password &&
+		isFormValid
+	);
 
 	return (
 		<>
@@ -58,7 +71,9 @@ const LoginPage = () => {
 									label='email'
 									name='email'
 									placeholder='Introduce tu email'
-									onChange={handleChange}
+									color={errors.email ? 'danger' : 'none'}
+									onBlur={handleChange}
+									errorMessage={errors.email}
 									required
 								></Input>
 								<Input
@@ -66,6 +81,8 @@ const LoginPage = () => {
 									name='password'
 									label='Password'
 									placeholder='Introduce tu password'
+									color={errors.password ? 'danger' : 'none'}
+									errorMessage={errors.password}
 									onChange={handleChange}
 									required
 								></Input>

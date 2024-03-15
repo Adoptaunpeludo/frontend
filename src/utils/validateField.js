@@ -6,7 +6,7 @@ export const validateField = (name, value, password) => {
 				? 'El nombre de usuario debe tener al menos 3 caracteres válidos'
 				: '';
 		case 'email':
-			return !/^[A-Z0-9._%+-]+@[A-Z0-9.-]+.[A-Z]{2,4}$/i.test(value.trim())
+			return !/^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/i.test(value.trim())
 				? 'El correo electrónico ingresado no es válido.'
 				: '';
 		case 'password':
@@ -19,3 +19,6 @@ export const validateField = (name, value, password) => {
 			return '';
 	}
 };
+
+// email regex 1 ^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$
+// email regex 2 ^[A-Z0-9._%+-]+@[A-Z0-9.-]+.[A-Z]{2,4}$
