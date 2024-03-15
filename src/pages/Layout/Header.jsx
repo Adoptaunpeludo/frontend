@@ -57,6 +57,11 @@ const Header = () => {
       href: '/shelters',
       color: 'foreground',
     },
+    {
+      name: 'testOnly',
+      href: '/testPage',
+      color: 'foreground',
+    },
   ];
 
   return (

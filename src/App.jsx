@@ -1,10 +1,10 @@
-import { QueryClientProvider } from '@tanstack/react-query';
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
+import { RouterProvider, createBrowserRouter } from 'react-router-dom';
 import 'react-toastify/dist/ReactToastify.css';
 import './index.css';
-import { RouterProvider, createBrowserRouter } from 'react-router-dom';
-import { QueryClient } from '@tanstack/react-query';
 import {
+  AnimalDetailsPage,
   AppLayout,
   CatsPage,
   DogsPage,
@@ -13,7 +13,7 @@ import {
   LoginPage,
   RegisterPage,
   SheltersPage,
-  AnimalDetailsPage,
+  UserFormBio,
 } from './pages/index.js';
 
 import { action as registerAction } from './pages/Auth/Register/RegisterPage.jsx';
@@ -64,6 +64,12 @@ const router = createBrowserRouter([
       {
         path: 'shelters',
         element: <SheltersPage />,
+        // action:
+      },
+      {
+        path: 'testPage',
+        //for test only
+        element: <UserFormBio />,
       },
       {
         path: 'cats/:slug',
