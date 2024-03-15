@@ -27,7 +27,7 @@ const DogsPage = () => {
     <>
       <TitleSection title="Perretes" />
 
-      <FilterBar />
+      <FilterBar page="dogs" />
 
       <ul className="flex justify-center gap-4 flex-wrap p-6 ">
         {isLoading ? (

@@ -29,7 +29,7 @@ const CatsPage = () => {
       <Banner src={'/backgrounds/banner-cats.jpg'} />
       <TitleSection title="Gatetes" />
 
-      <FilterBar />
+      <FilterBar page="cats" />
 
       {isLoading ? (
         <Spinner className="flex justify-center items-center" />

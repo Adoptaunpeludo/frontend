@@ -1,11 +1,27 @@
 import { Button, Input, Select, SelectItem, Spacer } from '@nextui-org/react';
-import { useLoaderData, useSearchParams } from 'react-router-dom';
+import { useLoaderData, useNavigate, useSearchParams } from 'react-router-dom';
 import { ageRanges, cities, genders, sizes } from './data/items';
+import PagePagination from './Pagination';
+import { useState } from 'react';
 
-export function FilterBar() {
+export function FilterBar({ page }) {
   const [searchParams, setSearchParams] = useSearchParams();
-
+  const navigate = useNavigate();
   const { params } = useLoaderData();
+  const [gender, setGender] = useState(
+    new Set(params?.gender ? [params.gender] : [])
+  );
+  const [age, setAge] = useState(new Set(params?.age ? [params.age] : []));
+  const [size, setSize] = useState(new Set(params?.size ? [params.size] : []));
+  const [city, setCity] = useState(new Set(params?.city ? [params.city] : []));
+
+  const handleReset = () => {
+    setGender(new Set([]));
+    setAge(new Set([]));
+    setSize(new Set([]));
+    setCity(new Set([]));
+    navigate(`/${page}`);
+  };
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -36,15 +52,10 @@ export function FilterBar() {
     setSearchParams(searchParams);
   };
 
-  const handleReset = () => {
-    setSearchParams(new URLSearchParams());
-  };
-
   return (
     <form
       className="bg-gray-100 p-4 rounded-lg flex items-center space-x-2"
       onSubmit={handleSubmit}
-      onReset={handleReset}
     >
       <Input
         clearable
@@ -61,6 +72,8 @@ export function FilterBar() {
         aria-label="Filtrar por tamaño"
         className="flex-1 capitalize"
         name="size"
+        selectedKeys={size}
+        onSelectionChange={setSize}
         defaultSelectedKeys={params?.size ? [params.size] : []}
       >
         {sizes.map((size) => (
@@ -78,6 +91,8 @@ export function FilterBar() {
         label="Género"
         className="flex-1 capitalize"
         name="gender"
+        selectedKeys={gender}
+        onSelectionChange={setGender}
         defaultSelectedKeys={params?.gender ? [params.gender] : []}
       >
         {genders.map((gender) => (
@@ -96,6 +111,8 @@ export function FilterBar() {
         className="flex-1 capitalize"
         name="age"
         defaultSelectedKeys={params?.age ? [params.age] : []}
+        selectedKeys={age}
+        onSelectionChange={setAge}
       >
         {ageRanges.map((age) => (
           <SelectItem key={age.value} value={age.value} className="capitalize">
@@ -109,6 +126,8 @@ export function FilterBar() {
         className="flex-1 capitalize"
         name="city"
         defaultSelectedKeys={params?.city ? [params.city] : []}
+        selectedKeys={city}
+        onSelectionChange={setCity}
       >
         {cities.map((city) => (
           <SelectItem
@@ -121,7 +140,8 @@ export function FilterBar() {
         ))}
       </Select>
       <Button type="submit">Buscar</Button>
-      <Button type="reset">Reset</Button>
+      <Button onPress={handleReset}>Reset</Button>
+      <PagePagination />
     </form>
   );
 }
