@@ -6,6 +6,7 @@ import { Hero, LogoHeader, Panel } from '../../../components';
 import { toast } from 'react-toastify';
 import { handleAuthError } from '../../../utils/handleAuthError';
 import { useState } from 'react';
+import { validateField } from '../../../utils/validateField';
 
 export const action = async (data) => {
 	const { request } = data;
@@ -36,25 +37,30 @@ export const action = async (data) => {
 
 const RegisterPage = () => {
 	const [credentials, setCredentials] = useState({
+		role: '',
 		username: '',
 		email: '',
 		password: '',
 		repeatPassword: '',
 	});
 
+	const [errors, setErrors] = useState({});
+
 	const handleChange = (event) => {
 		const { name, value } = event.target;
-		setCredentials((prevCredentials) => ({
-			...prevCredentials,
-			[name]: value,
-		}));
+		setCredentials({ ...credentials, [name]: value });
+		setErrors({ ...errors, [name]: validateField(name, value) });
 	};
 
+	const isFormValid = Object.values(errors).every((error) => error === '');
+
 	const enableButton = !(
+		credentials.role &&
 		credentials.username &&
 		credentials.email &&
 		credentials.password &&
-		credentials.repeatPassword
+		credentials.password === credentials.repeatPassword &&
+		isFormValid
 	);
 
 	return (
@@ -74,7 +80,12 @@ const RegisterPage = () => {
 							<div>Regístrate</div>
 							<div id='profile'>
 								{/* TODO: useRadio hook to custom all inputs with the same styles  */}
-								<RadioGroup name='role' label='Perfil' orientation='horizontal'>
+								<RadioGroup
+									name='role'
+									label='Perfil'
+									orientation='horizontal'
+									onChange={handleChange}
+								>
 									<Radio value='shelter'>Protectora</Radio>
 									<Radio value='adopter'>Adoptante</Radio>
 								</RadioGroup>
@@ -89,14 +100,19 @@ const RegisterPage = () => {
 										type='text'
 										label='Nombre de la protectora / adoptante' //TODO: toggle by profile
 										placeholder='Introduce un nombre'
+										color={errors.username ? 'danger' : 'none'}
+										errorMessage={errors.username}
 										onChange={handleChange}
 									></Input>
+
 									<Input
 										name='email'
 										className='min-w-72 '
 										type='email'
 										label='Email'
 										placeholder='Introduce tu email'
+										color={errors.email ? 'danger' : 'none'}
+										errorMessage={errors.email}
 										onChange={handleChange}
 									></Input>
 								</div>
@@ -107,14 +123,19 @@ const RegisterPage = () => {
 										type='password'
 										label='Password'
 										placeholder='Introduce tu password'
+										color={errors.password ? 'danger' : 'none'}
+										errorMessage={errors.password}
 										onChange={handleChange}
 									></Input>
+
 									<Input
 										name='repeatPassword'
 										className='min-w-72 '
 										type='password'
 										label='confirm password'
 										placeholder='Introduce tu password'
+										color={errors.repeatPassword ? 'danger' : 'none'}
+										errorMessage={errors.repeatPassword}
 										onChange={handleChange}
 									></Input>
 								</div>
