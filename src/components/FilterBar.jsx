@@ -1,9 +1,11 @@
 import { Button, Input, Select, SelectItem, Spacer } from '@nextui-org/react';
-import { useSearchParams } from 'react-router-dom';
+import { useLoaderData, useSearchParams } from 'react-router-dom';
 import { ageRanges, cities, genders, sizes } from './data/items';
 
 export function FilterBar() {
   const [searchParams, setSearchParams] = useSearchParams();
+
+  const { params } = useLoaderData();
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -35,7 +37,7 @@ export function FilterBar() {
   };
 
   const handleReset = () => {
-    setSearchParams(new URLSearchParams()); // Reiniciar los parámetros de búsqueda a un nuevo objeto vacío
+    setSearchParams(new URLSearchParams());
   };
 
   return (
@@ -51,6 +53,7 @@ export function FilterBar() {
         aria-label="Nombre"
         label="Nombre"
         name="name"
+        defaultValue={params?.name || ''}
       />
       <Spacer x={0.5} />
       <Select
@@ -58,6 +61,7 @@ export function FilterBar() {
         aria-label="Filtrar por tamaño"
         className="flex-1 capitalize"
         name="size"
+        defaultSelectedKeys={params?.size ? [params.size] : []}
       >
         {sizes.map((size) => (
           <SelectItem
@@ -70,7 +74,12 @@ export function FilterBar() {
         ))}
       </Select>
       <Spacer x={0.5} />
-      <Select label="Género" className="flex-1 capitalize" name="gender">
+      <Select
+        label="Género"
+        className="flex-1 capitalize"
+        name="gender"
+        defaultSelectedKeys={params?.gender ? [params.gender] : []}
+      >
         {genders.map((gender) => (
           <SelectItem
             key={gender.value}
@@ -82,7 +91,12 @@ export function FilterBar() {
         ))}
       </Select>
       <Spacer x={0.5} />
-      <Select label="Edad" className="flex-1 capitalize" name="age">
+      <Select
+        label="Edad"
+        className="flex-1 capitalize"
+        name="age"
+        defaultSelectedKeys={params?.age ? [params.age] : []}
+      >
         {ageRanges.map((age) => (
           <SelectItem key={age.value} value={age.value} className="capitalize">
             {age.name}
@@ -90,7 +104,12 @@ export function FilterBar() {
         ))}
       </Select>
       <Spacer x={0.5} />
-      <Select label="Provincia" className="flex-1 capitalize" name="city">
+      <Select
+        label="Provincia"
+        className="flex-1 capitalize"
+        name="city"
+        defaultSelectedKeys={params?.city ? [params.city] : []}
+      >
         {cities.map((city) => (
           <SelectItem
             key={city.label}

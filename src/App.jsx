@@ -23,6 +23,7 @@ import { loader as currentUserLoader } from './pages/Layout/AppLayout.jsx';
 import { loader as animalDetailsLoader } from './pages/AnimalDetails/AnimalDetailsPage.jsx';
 import { loader as animalsLoader } from './pages/Landing/LandingPage.jsx';
 import { loader as filterCatsLoader } from './pages/Cats/CatsPage.jsx';
+import { loader as filterDogsLoader } from './pages/Dogs/DogsPage.jsx';
 
 export const queryClient = new QueryClient({
   defaultOptions: {
@@ -62,6 +63,7 @@ const router = createBrowserRouter([
       {
         path: 'dogs',
         element: <DogsPage />,
+        loader: filterDogsLoader(queryClient),
       },
       {
         path: 'shelters',

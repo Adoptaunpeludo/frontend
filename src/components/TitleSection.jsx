@@ -6,8 +6,8 @@ export const TitleSection = ({ title, className }) => {
       className={` ${className} border-solid border-t-1 border-b-1 border-t-primary border-b-primary py-8 h-100 `}
     >
       <h1
-        className='font-lobster text-7xl flex justify-center text-center'
-        name='Rescates Peludos'
+        className="font-lobster text-7xl flex justify-center text-center"
+        name="Rescates Peludos"
       >
         {title}
       </h1>
@@ -16,5 +16,5 @@ export const TitleSection = ({ title, className }) => {
 };
 
 TitleSection.propTypes = {
-  title: PropTypes.string.isRequired
+  title: PropTypes.string.isRequired,
 };
