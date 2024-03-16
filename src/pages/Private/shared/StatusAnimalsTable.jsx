@@ -33,8 +33,6 @@ export const StatusAnimalsTable = ({ role }) => {
 
   const { animals } = data;
 
-  console.log({ animals });
-
   const renderCell = React.useCallback((user, columnKey) => {
     const cellValue = user[columnKey];
     // if (isLoading) return <Spinner />;
