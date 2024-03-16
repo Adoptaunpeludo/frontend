@@ -21,6 +21,8 @@ export const action = async (data) => {
 		}
 
 		delete registerData.repeatPassword;
+		registerData.username = registerData.username.toLowerCase();
+		registerData.email = registerData.email.toLowerCase();
 
 		const data = await register(registerData);
 		await verifyEmail(data.token);
