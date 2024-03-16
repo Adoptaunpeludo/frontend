@@ -17,7 +17,7 @@ import {
 
 import { ImagesFrame } from '../shared/ImagesFrame';
 import { StatusAnimalsTable } from '../shared/StatusAnimalsTable';
-import { userInformation } from '../shared/useDataUser';
+import { userInformation } from '../shared/mapUserInformation';
 import Accommodations from './components/Acommodations';
 import { useUser } from '../../Layout/useUser';
 

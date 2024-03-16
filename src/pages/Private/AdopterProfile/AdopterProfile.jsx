@@ -1,6 +1,5 @@
 import { Avatar, Button, Spinner, User } from '@nextui-org/react';
 import { IconTrashXFilled } from '@tabler/icons-react';
-import { useAdopterProfile } from '../AdopterProfile/useAdopterProfile';
 import {
   AsideDataColumn,
   EditButton,
@@ -10,10 +9,11 @@ import {
 } from '../../../components';
 
 import { StatusAnimalsTable } from '../shared/StatusAnimalsTable';
-import { userInformation } from '../shared/useDataUser';
+import { userInformation } from '../shared/mapUserInformation';
+import { useUser } from '../../Layout/useUser';
 
 const AdopterProfile = () => {
-  const { data, isLoading } = useAdopterProfile();
+  const { data, isLoading } = useUser();
 
   if (isLoading) return <Spinner />;
   const { userName, avatar } = data;
