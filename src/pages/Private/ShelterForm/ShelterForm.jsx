@@ -43,10 +43,6 @@ const ShelterForm = () => {
         onPress={onOpen}
       >
         Editar
-        {/* <section
-        id="userFormShelter"
-        className="max-w-screen-xl w-full flex flex-col gap-3 h-full justify-center py-12 mx-auto "
-      > */}
         <Modal
           isOpen={isOpen}
           onOpenChange={onOpenChange}
@@ -144,7 +140,6 @@ const ShelterForm = () => {
             )}
           </ModalContent>
         </Modal>
-        {/* </section> */}
       </Button>
     </Form>
   );

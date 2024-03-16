@@ -11,7 +11,6 @@ import {
   TitleSection,
   H2Title,
   H3Title,
-  EditButton,
   AsideDataColumn,
   CameraIcon,
 } from '../../../components';
@@ -23,6 +22,7 @@ import Accommodations from './components/Acommodations';
 import { useUser } from '../../Layout/useUser';
 import { BUCKET_URL } from '../../../config/config';
 import ShelterForm from '../ShelterForm/ShelterForm';
+import SocialMediaForm from '../ShelterForm/components/SocialMediaForm';
 
 const ShelterProfile = () => {
   const { data, isLoading } = useUser();
@@ -84,13 +84,13 @@ const ShelterProfile = () => {
                       {media.name === 'facebook' && <IconBrandFacebook />}
                       {media.name === 'xtweet' && <IconBrandX />}
                       {media.name === 'instagram' && <IconBrandInstagram />}
-                      {media.url}
+                      {media.url === '' ? <span>Vacio</span> : media.url}
                     </div>
                   ))}
                 </div>
               </div>
             </div>
-            <EditButton />
+            <SocialMediaForm socialMedia={socialMedia} />
           </main>
           <aside className="w-96 flex flex-col order-2 max-lg:order-1 mx-auto">
             <div id="profileAside" className=" flex flex-col gap-5">
