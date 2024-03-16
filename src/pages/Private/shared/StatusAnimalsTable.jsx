@@ -33,6 +33,8 @@ export const StatusAnimalsTable = ({ role }) => {
 
   const { animals } = data;
 
+  console.log({ animals });
+
   const renderCell = React.useCallback((user, columnKey) => {
     const cellValue = user[columnKey];
     // if (isLoading) return <Spinner />;
@@ -106,7 +108,7 @@ export const StatusAnimalsTable = ({ role }) => {
     }
   }, []);
   return (
-    <Table aria-label="Example table with custom cells">
+    <Table aria-label="Animals info">
       <TableHeader columns={headerColumn} className="flex justify-center">
         {(column) => (
           <TableColumn key={column.uid} className="text-start ">

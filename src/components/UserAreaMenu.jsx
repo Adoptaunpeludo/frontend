@@ -8,7 +8,7 @@ import {
 } from '@nextui-org/react';
 import { useQueryClient } from '@tanstack/react-query';
 import { useNavigate } from 'react-router-dom';
-import { BUCKET_URL_USERS } from '../config/config.js';
+import { BUCKET_URL } from '../config/config.js';
 import { logout } from '../pages/Auth/authService.js';
 import { CameraIcon } from './CameraIcon.jsx';
 
@@ -20,7 +20,7 @@ export const UserAreaMenu = ({ user }) => {
     queryClient.removeQueries({ queryKey: ['user'] });
     navigate('/');
   };
-  const { avatar, firstName, lastName, username, id, email, role } = user;
+  const { avatar, firstName, lastName, username, email, role } = user;
 
   return (
     <Dropdown placement="bottom-end">
@@ -31,7 +31,7 @@ export const UserAreaMenu = ({ user }) => {
             lastName === null ? 'Doe' : lastName
           }`}
           avatarProps={{
-            src: `${BUCKET_URL_USERS}/${id}/${avatar}`,
+            src: `${BUCKET_URL}/${avatar}`,
             isBordered: true,
             // color: isOnline ? 'success' : 'danger',
             as: 'button',

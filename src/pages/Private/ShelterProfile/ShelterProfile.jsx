@@ -20,6 +20,7 @@ import { StatusAnimalsTable } from '../shared/StatusAnimalsTable';
 import { userInformation } from '../shared/mapUserInformation';
 import Accommodations from './components/Acommodations';
 import { useUser } from '../../Layout/useUser';
+import { BUCKET_URL } from '../../../config/config';
 
 const ShelterProfile = () => {
   const { data, isLoading } = useUser();
@@ -95,7 +96,7 @@ const ShelterProfile = () => {
                 isBordered
                 color="success"
                 className="w-40 h-40 bg-white self-center"
-                src={`/avatar/${avatar}`}
+                src={`${BUCKET_URL}/${avatar}`}
               />
               <div
                 id="personalData"
