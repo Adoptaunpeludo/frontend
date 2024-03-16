@@ -20,7 +20,7 @@ export function FilterBar({ page }) {
     setAge(new Set([]));
     setSize(new Set([]));
     setCity(new Set([]));
-    navigate(`/${page}`);
+    navigate(`/animals/${page}`);
   };
 
   const handleSubmit = (e) => {

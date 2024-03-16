@@ -14,3 +14,4 @@ export { PetCard } from './PetCard';
 export { SelectField } from './SelectField';
 export { TitleSection } from './TitleSection';
 export { UserAreaMenu } from './UserAreaMenu';
+export { Pagination } from './Pagination';
