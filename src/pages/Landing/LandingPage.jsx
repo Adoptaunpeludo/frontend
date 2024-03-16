@@ -7,16 +7,16 @@ import {
   GetInvolved,
   HeroHome,
   JoinNewsletter,
-  OurRescues,
+  OurRescues
 } from './sections';
 import { animalsQuery } from './useAnimals';
 
-export const loader = (queryClient) => () => {
+export const loader = queryClient => () => {
   const { data: cats } = queryClient.ensureQueryData(
-    animalsQuery('cats', { limit: 5 })
+    animalsQuery('cats', { limit: 4 })
   );
   const { data: dogs } = queryClient.ensureQueryData(
-    animalsQuery('dogs', { limit: 5 })
+    animalsQuery('dogs', { limit: 4 })
   );
   const { data: animals } = queryClient.ensureQueryData(animalsQuery('all'));
 
@@ -29,10 +29,10 @@ const LandingPage = () => {
       <HeroHome />
       <GetInvolved />
       {/* <FeaturedDogs /> */}
-      <FeaturedAnimals page="dogs" />
+      <FeaturedAnimals page='dogs' />
       <AdoptVsBuy />
       {/* <FeaturedCats /> */}
-      <FeaturedAnimals page="cats" />
+      <FeaturedAnimals page='cats' />
       <OurRescues />
       <FeaturedShelters />
       <JoinNewsletter />

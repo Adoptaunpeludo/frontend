@@ -4,7 +4,7 @@ import FeaturedPets from '../components/FeaturedPets';
 import { useAnimals } from '../useAnimals';
 
 const FeaturedAnimals = ({ page }) => {
-  const { data, isLoading } = useAnimals(page, { limit: 5 });
+  const { data, isLoading } = useAnimals(page, { limit: 4 });
 
   const background =
     page === 'cats'
@@ -13,7 +13,7 @@ const FeaturedAnimals = ({ page }) => {
 
   return (
     <section
-      id="featured-cats"
+      id='featured-cats'
       className={`w-full bg-${
         page === 'cats' ? 'black' : 'white'
       } relative flex justify-center`}
@@ -31,10 +31,10 @@ const FeaturedAnimals = ({ page }) => {
         </Panel>
       </main>
 
-      <div id="vector" className="absolute bottom-0 w-full">
+      <div id='vector' className='absolute bottom-0 w-full'>
         <img
           src={`/backgrounds/featured-${page}-vector.png`}
-          className="w-screen"
+          className='w-screen'
         />
       </div>
     </section>
