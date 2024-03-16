@@ -13,6 +13,7 @@ import {
   H3Title,
   EditButton,
   AsideDataColumn,
+  CameraIcon,
 } from '../../../components';
 
 import { ImagesFrame } from '../shared/ImagesFrame';
@@ -21,6 +22,7 @@ import { userInformation } from '../shared/mapUserInformation';
 import Accommodations from './components/Acommodations';
 import { useUser } from '../../Layout/useUser';
 import { BUCKET_URL } from '../../../config/config';
+import ShelterForm from '../ShelterForm/ShelterForm';
 
 const ShelterProfile = () => {
   const { data, isLoading } = useUser();
@@ -97,6 +99,8 @@ const ShelterProfile = () => {
                 color="success"
                 className="w-40 h-40 bg-white self-center"
                 src={`${BUCKET_URL}/${avatar}`}
+                showFallback
+                fallback={<CameraIcon />}
               />
               <div
                 id="personalData"
@@ -106,7 +110,7 @@ const ShelterProfile = () => {
                 <AsideDataColumn dataColumn={userData} />
               </div>
             </div>
-            <EditButton />
+            <ShelterForm />
             <div id="NotificationsAside">
               <H2Title title="Mensajes" className="pb-5" />
               <div className="flex justify-between border-solid border-b-1 border-b-primary pb-3 items-center">
