@@ -25,7 +25,7 @@ export const ColumnsShelter = [
         peludo
       </span>
     ),
-    uid: 'pet',
+    uid: 'name',
   },
   { name: <PetSize />, uid: 'size' },
   {

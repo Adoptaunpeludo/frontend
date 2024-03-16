@@ -19,16 +19,19 @@ import {
 } from '@tabler/icons-react';
 import React from 'react';
 
-import { useDataAnimalsMe } from './useDataAnimalsMe';
 import {
   ColumnsAdopter,
   ColumnsShelter,
   statusColorMap,
 } from './configAnimalsTable';
+import { useUserAnimals } from '../useUserAnimals';
 
 export const StatusAnimalsTable = ({ role }) => {
   const headerColumn = role === 'shelter' ? ColumnsShelter : ColumnsAdopter;
-  const { data, isLoading, isError } = useDataAnimalsMe();
+
+  const { data } = useUserAnimals();
+
+  const { animals } = data;
 
   const renderCell = React.useCallback((user, columnKey) => {
     const cellValue = user[columnKey];
@@ -104,7 +107,7 @@ export const StatusAnimalsTable = ({ role }) => {
           </TableColumn>
         )}
       </TableHeader>
-      <TableBody items={data}>
+      <TableBody items={animals}>
         {(item) => (
           <TableRow key={item.id}>
             {(columnKey) => (

@@ -19,21 +19,20 @@ import { ImagesFrame } from '../shared/ImagesFrame';
 import { StatusAnimalsTable } from '../shared/StatusAnimalsTable';
 import { userInformation } from '../shared/useDataUser';
 import Accommodations from './components/Acommodations';
-import { useShelterProfile } from './useShelterProfile';
+import { useUser } from '../../Layout/useUser';
 
 const ShelterProfile = () => {
-  const { data, isLoading } = useShelterProfile();
+  const { data, isLoading } = useUser();
 
   if (isLoading) return <Spinner />;
   const {
     cif,
     legalForms,
     veterinarianFacilities,
-    userName,
+    username,
     avatar,
     ownVet,
     description,
-    facilities,
     images,
   } = data;
   const userData = userInformation(data);
@@ -45,7 +44,7 @@ const ShelterProfile = () => {
         id="SheltersProfile"
         className="max-w-screen-xl w-full flex  flex-col justify-center  gap-12 h-full  py-12  mx-auto "
       >
-        <TitleSection title={userName} id=" shelterTitle" />
+        <TitleSection title={username} id=" shelterTitle" />
         <section id="sheltersProfile" className="flex gap-12 max-lg:flex-col ">
           <main className="flex flex-col max-w-3xl order-1 max-lg:order-2">
             <div
@@ -61,13 +60,13 @@ const ShelterProfile = () => {
                 <H3Title title="Instalaciones" />
                 <div id="veterinarianFacilities" className="flex gap-5 mx-3">
                   <span>
-                    Instalaciones veterinarias:{' '}
+                    Instalaciones veterinarias:
                     {veterinarianFacilities ? 'si' : 'no'}
                   </span>
                   <span>Veterinario propio: {ownVet ? 'si' : 'no'}</span>
                 </div>
               </div>
-              <Accommodations facilities={facilities} />
+              <Accommodations />
               <div id="description" className="flex flex-col gap-3 mx-3 py-3">
                 <H3Title title="Descripción:" />
                 <div>{description}</div>
