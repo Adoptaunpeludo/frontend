@@ -16,6 +16,8 @@ import {
   RegisterPage,
   ShelterProfile,
   SheltersPage,
+  UserFormBio,
+  VerifyEmail,
 } from './pages/index.js';
 
 import { action as loginAction } from './pages/Auth/Login/LoginPage.jsx';
@@ -102,6 +104,10 @@ const router = createBrowserRouter([
         path: 'dogs/:slug',
         element: <AnimalDetailsPage />,
         loader: animalDetailsLoader(queryClient),
+      },
+      {
+        path: 'users/verify-email',
+        element: <VerifyEmail />,
       },
     ],
   },

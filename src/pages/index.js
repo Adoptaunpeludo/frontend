@@ -10,6 +10,8 @@ export { default as AdopterProfile } from './Private/AdopterProfile/AdopterProfi
 export { default as AnimalForm } from './Private/AnimalForm/AnimalForm.jsx';
 export { default as ShelterForm } from './Private/ShelterForm/ShelterForm.jsx';
 export { default as ShelterProfile } from './Private/ShelterProfile/ShelterProfile.jsx';
-export { default as UserFormBio } from './Private/UserFormBio/UserFormBio.jsx';
 export { default as SheltersPage } from './Shelters/SheltersPage';
+export { default as UserFormBio } from './Private/UserFormBio/UserFormBio.jsx';
+export { default as VerifyEmail } from './VerifyEmail/VerifyEmailPage.jsx';
 export { default as AnimalsPage } from './Animals/AnimalsPage.jsx';
+

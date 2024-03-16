@@ -7,7 +7,6 @@ import { userQuery } from './useUser';
 export const loader = (queryClient) => async () => {
   try {
     const data = await queryClient.ensureQueryData(userQuery);
-
     if (!data) return null;
     return data;
   } catch (error) {
