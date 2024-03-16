@@ -2,13 +2,15 @@ import { Button, Image, Spinner } from '@nextui-org/react';
 import { useLoaderData } from 'react-router-dom';
 import { MinimalLogo } from '../../assets/logos';
 import { HeartIcon } from '../../assets/svg';
-import { TitleSection } from '../../components';
+import { AsideDataColumn, H2Title, TitleSection } from '../../components';
 import { BUCKET_URL_ANIMALS } from '../../config/config';
+import {
+  animalBioInfo,
+  animalShelterInfo,
+  catDescription,
+  dogDescription
+} from '../../utils/asideDataFields';
 import ErrorPage from '../Error/ErrorPage';
-import BioDescription from './components/BioDescription';
-import CatDescription from './components/CatDescription';
-import DogDescription from './components/DogDescription';
-import ShelterDescription from './components/ShelterDescription';
 import { animalDetailsQuery, useAnimalDetails } from './useAnimalDetails';
 
 const SectionTitle = ({ title }) => <h3 className='my-5 font-bold'>{title}</h3>;
@@ -53,15 +55,20 @@ const AnimalDetailsPage = () => {
 
         {/* Info */}
         <section className='p-3'>
-          <SectionTitle title='Información' />
-          <ShelterDescription data={data} />
+          <H2Title title='información' className={'py-4'} />
+          <AsideDataColumn dataColumn={animalShelterInfo(data)} />
 
-          <SectionTitle title='BIO' />
-          <BioDescription data={data} />
+          <H2Title title='bio' className={'py-4'} />
+          <AsideDataColumn dataColumn={animalBioInfo(data)} />
 
-          <SectionTitle title='Otras características' />
-          {data.type === 'cat' && <CatDescription data={data} />}
-          {data.type === 'dog' && <DogDescription data={data} />}
+          <H2Title title='Otras características' className={'py-4'} />
+
+          {data.type === 'cat' && (
+            <AsideDataColumn dataColumn={catDescription(data)} />
+          )}
+          {data.type === 'dog' && (
+            <AsideDataColumn dataColumn={dogDescription(data)} />
+          )}
         </section>
       </main>
     </>
