@@ -6,32 +6,34 @@ import './index.css';
 import {
   AdopterProfile,
   AnimalDetailsPage,
+  AnimalsPage,
   AppLayout,
-  CatsPage,
-  DogsPage,
+  // CatsPage,
+  // DogsPage,
   ErrorPage,
   LandingPage,
   LoginPage,
   RegisterPage,
   ShelterProfile,
-  SheltersPage
+  SheltersPage,
 } from './pages/index.js';
 
 import { action as loginAction } from './pages/Auth/Login/LoginPage.jsx';
 import { action as registerAction } from './pages/Auth/Register/RegisterPage.jsx';
 
 import { loader as animalDetailsLoader } from './pages/AnimalDetails/AnimalDetailsPage.jsx';
-import { loader as filterCatsLoader } from './pages/Cats/CatsPage.jsx';
-import { loader as filterDogsLoader } from './pages/Dogs/DogsPage.jsx';
-import { loader as animalsLoader } from './pages/Landing/LandingPage.jsx';
+// import { loader as filterCatsLoader } from './pages/Cats/CatsPage.jsx';
+// import { loader as filterDogsLoader } from './pages/Dogs/DogsPage.jsx';
+import { loader as landingAnimalsLoader } from './pages/Landing/LandingPage.jsx';
 import { loader as currentUserLoader } from './pages/Layout/AppLayout.jsx';
+import { loader as animalsLoader } from './pages/Animals/AnimalsPage.jsx';
 
 export const queryClient = new QueryClient({
   defaultOptions: {
     queries: {
-      staleTime: 1000 * 60 * 15
-    }
-  }
+      staleTime: 1000 * 60 * 15,
+    },
+  },
 });
 
 const router = createBrowserRouter([
@@ -44,55 +46,65 @@ const router = createBrowserRouter([
       {
         index: true,
         element: <LandingPage />,
-        loader: animalsLoader(queryClient)
+        loader: landingAnimalsLoader(queryClient),
       },
       {
         path: 'register',
         element: <RegisterPage />,
-        action: registerAction
+        action: registerAction,
       },
       {
         path: 'login',
         element: <LoginPage />,
-        action: loginAction
+        action: loginAction,
       },
       {
-        path: 'cats',
-        element: <CatsPage />,
-        loader: filterCatsLoader(queryClient)
+        path: 'animals/cats',
+        element: <AnimalsPage page={'cats'} />,
+        loader: animalsLoader(queryClient, 'cats'),
       },
       {
-        path: 'dogs',
-        element: <DogsPage />,
-        loader: filterDogsLoader(queryClient)
+        path: 'animals/dogs',
+        element: <AnimalsPage page={'dogs'} />,
+        loader: animalsLoader(queryClient, 'dogs'),
       },
+      // {
+      //   path: 'cats',
+      //   element: <CatsPage />,
+      //   loader: filterCatsLoader(queryClient),
+      // },
+      // {
+      //   path: 'dogs',
+      //   element: <DogsPage />,
+      //   loader: filterDogsLoader(queryClient),
+      // },
       {
         path: 'shelters',
-        element: <SheltersPage />
+        element: <SheltersPage />,
         // action:
       },
       {
         path: 'private/adopter',
         //for test only
-        element: <AdopterProfile />
+        element: <AdopterProfile />,
       },
       {
         path: 'private/shelter',
         //for test only
-        element: <ShelterProfile />
+        element: <ShelterProfile />,
       },
       {
         path: 'cats/:slug',
         element: <AnimalDetailsPage />,
-        loader: animalDetailsLoader(queryClient)
+        loader: animalDetailsLoader(queryClient),
       },
       {
         path: 'dogs/:slug',
         element: <AnimalDetailsPage />,
-        loader: animalDetailsLoader(queryClient)
-      }
-    ]
-  }
+        loader: animalDetailsLoader(queryClient),
+      },
+    ],
+  },
 ]);
 
 function App() {

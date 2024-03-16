@@ -19,7 +19,7 @@ const FeaturedDogs = () => {
           {isLoading ? (
             <Spinner />
           ) : (
-            <FeaturedPets title={'Perretes'} pets={data.animals}></FeaturedPets>
+            <FeaturedPets title={'Perretes'} pets={data.animals} />
           )}
         </Panel>
       </main>

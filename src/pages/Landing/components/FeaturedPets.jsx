@@ -3,11 +3,11 @@ import { BUCKET_URL_ANIMALS } from '../../../config/config.js';
 import PetCardLanding from '../components/PetCardLanding.jsx';
 const FeaturedPets = ({ title, pets }) => {
   return (
-    <section className='flex flex-col gap-4 h-max z-30  '>
+    <section className="flex flex-col gap-4 h-max z-30  ">
       <header>
-        <h2 className='font-lobster text-5xl text-secondary'>{title}</h2>
+        <h2 className="font-lobster text-5xl text-secondary">{title}</h2>
       </header>
-      <main className='flex flex-col gap-2'>
+      <main className="flex flex-col gap-2">
         {pets.map(({ images, name, age, breed, slug, type }, index) => (
           <PetCardLanding
             key={index}
@@ -20,15 +20,15 @@ const FeaturedPets = ({ title, pets }) => {
           />
         ))}
       </main>
-      <footer className='mx-auto'>
+      <footer className="mx-auto">
         <Button
           as={Link}
-          href={title === 'Gatetes' ? '/cats' : '/dogs'}
-          size='md'
-          color='primary'
-          className='w-32'
+          href={title === 'Gatetes' ? '/animals/cats' : '/animals/dogs'}
+          size="md"
+          color="primary"
+          className="w-32"
         >
-          <span className='font-lobster text-xl text-white'>Ver todos</span>
+          <span className="font-lobster text-xl text-white">Ver todos</span>
         </Button>
       </footer>
     </section>

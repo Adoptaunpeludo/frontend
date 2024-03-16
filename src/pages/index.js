@@ -12,3 +12,4 @@ export { default as ShelterForm } from './Private/ShelterForm/ShelterForm.jsx';
 export { default as ShelterProfile } from './Private/ShelterProfile/ShelterProfile.jsx';
 export { default as UserFormBio } from './Private/UserFormBio/UserFormBio.jsx';
 export { default as SheltersPage } from './Shelters/SheltersPage';
+export { default as AnimalsPage } from './Animals/AnimalsPage.jsx';
