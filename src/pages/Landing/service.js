@@ -11,3 +11,9 @@ export const getDogs = async (params = {}) => {
 
   return data;
 };
+
+export const getAnimals = async (params = {}) => {
+  const { data } = await fetchData('/animals', params);
+
+  return data;
+};

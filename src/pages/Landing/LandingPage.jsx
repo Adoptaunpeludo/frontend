@@ -18,8 +18,9 @@ export const loader = (queryClient) => () => {
   const { data: dogs } = queryClient.ensureQueryData(
     animalsQuery('dogs', { limit: 5 })
   );
+  const { data: animals } = queryClient.ensureQueryData(animalsQuery('all'));
 
-  return { cats, dogs };
+  return { cats, dogs, animals };
 };
 
 const LandingPage = () => {

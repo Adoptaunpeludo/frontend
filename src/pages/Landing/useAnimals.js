@@ -1,8 +1,12 @@
 import { useQuery } from '@tanstack/react-query';
-import { getCats, getDogs } from './service';
+import { getAnimals, getCats, getDogs } from './service';
 
 export const animalsQuery = (type, params = {}) => {
-  const queryFn = type === 'cats' ? getCats : getDogs;
+  let queryFn;
+
+  if (type === 'cats') queryFn = getCats;
+  if (type === 'dogs') queryFn = getDogs;
+  if (type === 'all') queryFn = getAnimals;
 
   const { name, size, gender, age, city, limit } = params;
 
