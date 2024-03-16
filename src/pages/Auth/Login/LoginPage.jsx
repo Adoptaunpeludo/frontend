@@ -11,6 +11,7 @@ import { validateField } from '../../../utils/validateField';
 export const action = async ({ request }) => {
 	const formData = await request.formData();
 	const credentials = Object.fromEntries(formData);
+	credentials.email = credentials.email.toLowerCase();
 
 	try {
 		await login(credentials);
