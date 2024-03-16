@@ -4,7 +4,7 @@ import FeaturedPets from '../components/FeaturedPets';
 import { useAnimals } from '../useAnimals';
 
 const FeaturedCats = () => {
-  const { data, isLoading } = useAnimals('cats');
+  const { data, isLoading } = useAnimals('cats', { limit: 5 });
 
   return (
     <section

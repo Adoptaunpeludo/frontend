@@ -4,10 +4,10 @@ import { getCats, getDogs } from './service';
 export const animalsQuery = (type, params = {}) => {
   const queryFn = type === 'cats' ? getCats : getDogs;
 
-  const { name, size, gender, age, city } = params;
+  const { name, size, gender, age, city, limit } = params;
 
   return {
-    queryKey: ['animals', type, name ?? '', size, gender, age, city],
+    queryKey: ['animals', type, name ?? '', size, gender, age, city, limit],
     queryFn: () => queryFn(params),
     staleTime: 1000 * 60 * 15,
   };

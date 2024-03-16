@@ -11,8 +11,12 @@ import {
 import { animalsQuery } from './useAnimals';
 
 export const loader = (queryClient) => () => {
-  const { data: cats } = queryClient.ensureQueryData(animalsQuery('cats', {}));
-  const { data: dogs } = queryClient.ensureQueryData(animalsQuery('dogs', {}));
+  const { data: cats } = queryClient.ensureQueryData(
+    animalsQuery('cats', { limit: 5 })
+  );
+  const { data: dogs } = queryClient.ensureQueryData(
+    animalsQuery('dogs', { limit: 5 })
+  );
 
   return { cats, dogs };
 };
