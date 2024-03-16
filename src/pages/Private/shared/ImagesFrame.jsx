@@ -1,6 +1,7 @@
 import { H3Title } from '../../../components';
 import { BUCKET_URL } from '../../../config/config';
 import ImageUploadModal from './ImageUploadModal';
+import DeleteImageModal from './DeleteImageModal';
 
 export const ImagesFrame = ({ images }) => {
   return (
@@ -14,7 +15,7 @@ export const ImagesFrame = ({ images }) => {
         )}
         {images.map((image, index) => (
           <div
-            className={`imageProfile w-60 h-32 border-solid border-3 border-${
+            className={`relative imageProfile w-60 h-32 border-solid border-3 border-${
               index === 0 ? 'primary' : 'secondary'
             }`}
             key={image}
@@ -23,6 +24,7 @@ export const ImagesFrame = ({ images }) => {
               className="h-full w-full object-cover"
               src={`${BUCKET_URL}/${image}`}
             />
+            <DeleteImageModal name={image} />
           </div>
         ))}
       </div>

@@ -10,7 +10,7 @@ import {
 } from '@nextui-org/react';
 import { useState } from 'react';
 import { Form } from 'react-router-dom';
-import { uploadFile } from './fileUploadService';
+import { uploadFile } from './imagesService';
 import { toast } from 'react-toastify';
 import { useQueryClient } from '@tanstack/react-query';
 
@@ -32,6 +32,7 @@ const ImageUploadModal = () => {
       });
       onClose();
     } catch (error) {
+      toast.error('Error al subir el archivo');
       console.log(error);
     } finally {
       setIsLoading(false);
@@ -73,12 +74,18 @@ const ImageUploadModal = () => {
                   )}
                 </ModalBody>
                 <ModalFooter>
-                  <Button color="default" variant="light" onPress={onClose}>
+                  <Button
+                    color="default"
+                    variant="light"
+                    onPress={onClose}
+                    disabled={isLoading}
+                  >
                     Cerrar
                   </Button>
                   <Button
                     className="bg-tertiary text-white"
                     onPress={() => handleUploadFile(onClose)}
+                    disabled={isLoading}
                   >
                     Subir
                   </Button>

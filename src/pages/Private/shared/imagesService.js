@@ -7,3 +7,9 @@ export const uploadFile = async (file) => {
 
   return data;
 };
+
+export const deleteFile = async (deleteImages) => {
+  const { data } = await postData('users/upload-images', { deleteImages });
+
+  return data;
+};
