@@ -1,7 +1,8 @@
 import {
   AdoptVsBuy,
-  FeaturedCats,
-  FeaturedDogs,
+  FeaturedAnimals,
+  // FeaturedCats,
+  // FeaturedDogs,
   FeaturedShelters,
   GetInvolved,
   HeroHome,
@@ -26,9 +27,11 @@ const LandingPage = () => {
     <main>
       <HeroHome />
       <GetInvolved />
-      <FeaturedDogs />
+      {/* <FeaturedDogs /> */}
+      <FeaturedAnimals page="dogs" />
       <AdoptVsBuy />
-      <FeaturedCats />
+      {/* <FeaturedCats /> */}
+      <FeaturedAnimals page="cats" />
       <OurRescues />
       <FeaturedShelters />
       <JoinNewsletter />

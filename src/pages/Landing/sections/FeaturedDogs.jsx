@@ -9,7 +9,7 @@ const FeaturedDogs = () => {
   return (
     <section
       id="featured-dogs"
-      className="w-full bg-white  relative flex justify-center"
+      className="w-full bg-white relative flex justify-center"
     >
       <main
         id="featured-dogs-content"
