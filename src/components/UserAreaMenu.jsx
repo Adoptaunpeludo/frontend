@@ -4,12 +4,13 @@ import {
   DropdownMenu,
   DropdownTrigger,
   Link,
-  User
+  User,
 } from '@nextui-org/react';
 import { useQueryClient } from '@tanstack/react-query';
 import { useNavigate } from 'react-router-dom';
 import { BUCKET_URL_USERS } from '../config/config.js';
 import { logout } from '../pages/Auth/authService.js';
+import { CameraIcon } from './CameraIcon.jsx';
 
 export const UserAreaMenu = ({ user }) => {
   const navigate = useNavigate();
@@ -19,11 +20,10 @@ export const UserAreaMenu = ({ user }) => {
     queryClient.removeQueries({ queryKey: ['user'] });
     navigate('/');
   };
-  const { avatar, firstName, lastName, username, isOnline, id, email, role } =
-    user;
+  const { avatar, firstName, lastName, username, id, email, role } = user;
 
   return (
-    <Dropdown placement='bottom-end'>
+    <Dropdown placement="bottom-end">
       <DropdownTrigger>
         <User
           name={username}
@@ -33,50 +33,52 @@ export const UserAreaMenu = ({ user }) => {
           avatarProps={{
             src: `${BUCKET_URL_USERS}/${id}/${avatar}`,
             isBordered: true,
-            color: isOnline ? 'success' : 'danger',
-            as: 'button'
+            // color: isOnline ? 'success' : 'danger',
+            as: 'button',
+            showFallback: true,
+            fallback: <CameraIcon />,
           }}
         />
       </DropdownTrigger>
-      <DropdownMenu aria-label='Profile Actions' variant='flat'>
-        <DropdownItem key='signedMail' className='h-14 gap-2'>
-          <p className='font-semibold capitalize'>has iniciado sesión como</p>
-          <p className='font-semibold'>{email}</p>
+      <DropdownMenu aria-label="Profile Actions" variant="flat">
+        <DropdownItem key="signedMail" className="h-14 gap-2">
+          <p className="font-semibold capitalize">has iniciado sesión como</p>
+          <p className="font-semibold">{email}</p>
         </DropdownItem>
-        <DropdownItem key='profile'>
+        <DropdownItem key="profile">
           <Link
             href={`/private/${role}`}
-            color='foreground'
-            className='capitalize'
+            color="foreground"
+            className="capitalize"
           >
             mi perfil
           </Link>
         </DropdownItem>
-        <DropdownItem key='notifications'>
+        <DropdownItem key="notifications">
           <Link
             href={`/private/${role}`}
-            color='foreground'
-            className='capitalize'
+            color="foreground"
+            className="capitalize"
           >
-            <Link href={`/private/${role}`} color='foreground'>
+            <Link href={`/private/${role}`} color="foreground">
               notificaciones
             </Link>
           </Link>
         </DropdownItem>
-        <DropdownItem key='chats'>
+        <DropdownItem key="chats">
           <Link
             href={`/private/${role}`}
-            color='foreground'
-            className='capitalize'
+            color="foreground"
+            className="capitalize"
           >
             chats
           </Link>{' '}
         </DropdownItem>
         <DropdownItem
-          key='logout'
-          color='danger'
+          key="logout"
+          color="danger"
           onPress={handleLogout}
-          className='capitalize'
+          className="capitalize"
         >
           log out
         </DropdownItem>

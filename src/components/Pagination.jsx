@@ -2,7 +2,7 @@ import { Pagination } from '@nextui-org/react';
 import { useLoaderData, useSearchParams } from 'react-router-dom';
 import { useAnimals } from '../pages/Landing/useAnimals';
 
-const PagePagination = ({ page }) => {
+export const PagePagination = ({ page }) => {
   const { params } = useLoaderData();
   const { data } = useAnimals(page, params);
   const [searchParams, setSearchParams] = useSearchParams();
@@ -21,5 +21,3 @@ const PagePagination = ({ page }) => {
     />
   );
 };
-
-export default PagePagination;

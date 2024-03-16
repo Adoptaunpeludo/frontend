@@ -1,7 +1,7 @@
 import { Button, Input, Select, SelectItem, Spacer } from '@nextui-org/react';
 import { useLoaderData, useNavigate, useSearchParams } from 'react-router-dom';
 import { ageRanges, cities, genders, sizes } from './data/items';
-import PagePagination from './Pagination';
+import { PagePagination } from './Pagination';
 import { useState } from 'react';
 
 export function FilterBar({ page }) {
