@@ -38,8 +38,6 @@ const ShelterProfile = () => {
   } = data;
   const userData = userInformation(data);
 
-  console.log({ socialMedia });
-
   return (
     <main className="bg-default-100">
       <Hero />
