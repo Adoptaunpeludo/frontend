@@ -23,10 +23,10 @@ export const register = async (credentials) => {
 export const verifyEmail = async (token) => {
   try {
     const response = await postData(`/auth/verify-email/${token}`);
-    const data = await response.json();
-    return data;
+    return response;
   } catch (error) {
     console.log(error.response.data.message);
+    return error.response.data.message
   }
 };
 

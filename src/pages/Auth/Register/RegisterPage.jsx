@@ -1,7 +1,7 @@
 import { Button, Checkbox, Input, Radio, RadioGroup } from '@nextui-org/react';
 import { IconLogin2 as LoginIcon } from '@tabler/icons-react';
 import { Form, Link, redirect } from 'react-router-dom';
-import { register, verifyEmail } from '../authService';
+import { register } from '../authService';
 import { Hero, LogoHeader, Panel } from '../../../components';
 import { toast } from 'react-toastify';
 import { handleAuthError } from '../../../utils/handleAuthError';
@@ -20,8 +20,7 @@ export const action = async (data) => {
 
     delete registerData.repeatPassword;
 
-    const data = await register(registerData);
-    await verifyEmail(data.token);
+    await register(registerData);
 
     toast.success('Usuario creado');
 
