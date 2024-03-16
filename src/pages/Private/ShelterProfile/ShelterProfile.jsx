@@ -34,8 +34,11 @@ const ShelterProfile = () => {
     ownVet,
     description,
     images,
+    socialMedia,
   } = data;
   const userData = userInformation(data);
+
+  console.log({ socialMedia });
 
   return (
     <main className="bg-default-100">
@@ -75,18 +78,14 @@ const ShelterProfile = () => {
               <div id="socialMedia" className="flex flex-col gap-3 mx-3 py-3 ">
                 <H3Title title="Redes sociales:" />
                 <div className="flex gap-4 justify-between max-sm:flex-col max-sm:mx-auto">
-                  <div className="flex items-center gap-2">
-                    <IconBrandInstagram />
-                    @peludos_felices
-                  </div>
-                  <div className="flex items-center gap-2">
-                    <IconBrandFacebook />
-                    @peludos_felices
-                  </div>
-                  <div className="flex  items-center gap-2">
-                    <IconBrandX />
-                    <span>@peludos_felices</span>
-                  </div>
+                  {socialMedia.map((media) => (
+                    <div className="flex items-center gap-2" key={media.name}>
+                      {media.name === 'facebook' && <IconBrandFacebook />}
+                      {media.name === 'xtweet' && <IconBrandX />}
+                      {media.name === 'instagram' && <IconBrandInstagram />}
+                      {media.url}
+                    </div>
+                  ))}
                 </div>
               </div>
             </div>
