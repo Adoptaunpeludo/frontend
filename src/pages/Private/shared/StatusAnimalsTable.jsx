@@ -1,6 +1,7 @@
 import {
   Button,
   Chip,
+  Link,
   Spinner,
   Table,
   TableBody,
@@ -63,7 +64,14 @@ export const StatusAnimalsTable = ({ role }) => {
         return (
           <div className="relative flex items-center gap-2">
             <Tooltip content="Ver Detalles">
-              <Button isIconOnly variant="solid" color="primary" size="sm">
+              <Button
+                isIconOnly
+                as={Link}
+                href={`/${user.type}s/${user.slug}`}
+                variant="solid"
+                color="primary"
+                size="sm"
+              >
                 <IconEye />
               </Button>
             </Tooltip>
