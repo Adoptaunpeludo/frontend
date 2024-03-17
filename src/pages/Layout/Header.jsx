@@ -10,16 +10,16 @@ import {
   NavbarMenuToggle,
   Spinner,
 } from '@nextui-org/react';
-import { useState } from 'react';
+
 import BrandNavLogo from '../../assets/logos/BrandNavLogo.jsx';
-
 import { IconLogin2 as LoginIcon } from '@tabler/icons-react';
-
 import { UserAreaMenu } from '../../components/UserAreaMenu.jsx';
+import { useState } from 'react';
 import { useUser } from './useUser.js';
 
 const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+
   const { data: user, isLoading } = useUser();
 
   const handleMenuOpenChange = (open) => {
@@ -77,25 +77,28 @@ const Header = () => {
         ))}
       </NavbarContent>
       <NavbarContent justify="end">
-        <NavbarItem>
-          {!user ? (
-            <Button
-              as={Link}
-              color="primary"
-              href="/login"
-              variant="solid"
-              size="sm"
-              endContent={<LoginIcon />}
-            >
-              Login
-            </Button>
-          ) : (
-            <div className="flex gap-2">
-              {isLoading && <Spinner />}
-              <UserAreaMenu user={user} />
-            </div>
-          )}
-        </NavbarItem>
+        {isLoading ? (
+          <Spinner />
+        ) : (
+          <NavbarItem>
+            {!user ? (
+              <Button
+                as={Link}
+                color="primary"
+                href="/login"
+                variant="solid"
+                size="sm"
+                endContent={<LoginIcon />}
+              >
+                Login
+              </Button>
+            ) : (
+              <div className="flex gap-2">
+                <UserAreaMenu />
+              </div>
+            )}
+          </NavbarItem>
+        )}
       </NavbarContent>
       <NavbarMenu>
         {menuItems.map((item, index) => (

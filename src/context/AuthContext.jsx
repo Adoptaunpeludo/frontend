@@ -5,12 +5,8 @@ const AuthContext = createContext();
 const AuthContextProvider = ({ children, initialIsLoggedIn }) => {
   const [isLoggedIn, setIsLoggedIn] = useState(initialIsLoggedIn);
 
-  const toggleIsLoggedIn = () => {
-    setIsLoggedIn((isLoggedIn) => !isLoggedIn);
-  };
-
   return (
-    <AuthContext.Provider value={{ isLoggedIn, toggleIsLoggedIn }}>
+    <AuthContext.Provider value={{ isLoggedIn, setIsLoggedIn }}>
       {children}
     </AuthContext.Provider>
   );

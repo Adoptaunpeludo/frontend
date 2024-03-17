@@ -12,6 +12,7 @@ export const action = async ({ request }) => {
 
   try {
     await login(credentials);
+    localStorage.setItem('isLoggedIn', true);
     return redirect('/');
   } catch (error) {
     const message = handleAuthError(error);
