@@ -3,7 +3,7 @@ import { IconLogin2 as LoginIcon } from '@tabler/icons-react';
 import { Link, Form, redirect } from 'react-router-dom';
 import { login } from '../../Auth/authService';
 import { Hero, LogoHeader, Panel } from '../../../components';
-import { handleAuthError } from '../../../utils/handleAuthError';
+import { handleAuthError } from '../../../utils/handleError';
 import { toast } from 'react-toastify';
 
 export const action = async ({ request }) => {

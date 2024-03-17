@@ -1,6 +1,7 @@
 import { Checkbox } from '@nextui-org/react';
 import { H4Title } from '../../../../components';
 import { useUser } from '../../../Layout/useUser';
+import { facilitiesEnum } from '../../../../utils/enumData';
 
 const Accommodations = ({ isDisable = true }) => {
   const { data } = useUser();
@@ -14,15 +15,15 @@ const Accommodations = ({ isDisable = true }) => {
     >
       <H4Title title="Alojamientos" />
       <div id="accommodationsCheck" className="flex flex-wrap gap-5 mx-7">
-        {facilities.map((facility, index) => (
+        {facilitiesEnum.map((facility, index) => (
           <Checkbox
             key={index}
             radius="none"
             size="sm"
-            isSelected={facility}
+            defaultSelected={facilities.includes(facility.value)}
             isDisabled={isDisable}
           >
-            {facility}
+            {facility.label}
           </Checkbox>
         ))}
       </div>

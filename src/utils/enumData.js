@@ -115,7 +115,7 @@ export const facilitiesEnum = [
     value: 'municipal_or_public_facilities',
   },
   { label: 'Instalaciones arrendadas', value: 'leased_facilities' },
-  { label: 'Residencias propias', value: ' owned_facilities' },
+  { label: 'Residencias propias', value: 'owned_facilities' },
 
   { label: 'Residencias privadas (arrendadas)', value: 'private_residences' },
 ];

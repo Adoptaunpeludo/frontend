@@ -1,16 +1,9 @@
-import { useEffect } from 'react';
-import { Link, useNavigate, useRouteError } from 'react-router-dom';
+import { Link, Navigate, useRouteError } from 'react-router-dom';
 // import img from '../assets/images/not-found.svg';
 const Error = () => {
   const error = useRouteError();
-  const navigate = useNavigate();
 
-  console.log(error.status);
-
-  useEffect(() => {
-    console.log('404');
-    if (error.status === 404) return navigate('/404');
-  }, [error.status, navigate]);
+  if (error.status === 404) return <Navigate to="/404" />;
 
   return (
     <div>

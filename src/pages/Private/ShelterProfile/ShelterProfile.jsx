@@ -87,6 +87,7 @@ const ShelterProfile = () => {
                 <H3Title title="Descripción:" />
                 <div>{description}</div>
               </div>
+              <ShelterForm />
               <ImagesFrame images={images} />
               <div id="socialMedia" className="flex flex-col gap-3 mx-3 py-3 ">
                 <H3Title title="Redes sociales:" />
@@ -122,7 +123,7 @@ const ShelterProfile = () => {
                 <AsideDataColumn dataColumn={userData} />
               </div>
             </div>
-            <ShelterForm />
+
             <div id="NotificationsAside">
               <H2Title title="Mensajes" className="pb-5" />
               <div className="flex justify-between border-solid border-b-1 border-b-primary pb-3 items-center">
