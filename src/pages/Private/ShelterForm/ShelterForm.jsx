@@ -46,6 +46,8 @@ const ShelterForm = () => {
         <Modal
           isOpen={isOpen}
           onOpenChange={onOpenChange}
+          placement="center"
+          scrollBehavior="outside"
           className={`text-foreground bg-background border border-white`}
           size="3xl"
         >

@@ -105,6 +105,7 @@ export const SocialMediaForm = ({ socialMedia = [] }) => {
         <Modal
           isOpen={isOpen}
           onOpenChange={onOpenChange}
+          placement="center"
           className={`text-foreground bg-background border border-white`}
           size="3xl"
         >

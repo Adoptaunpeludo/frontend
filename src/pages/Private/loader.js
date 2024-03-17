@@ -7,5 +7,6 @@ export const loader = (queryClient) => async () => {
     return data;
   } catch (error) {
     console.log(error);
+    return error;
   }
 };

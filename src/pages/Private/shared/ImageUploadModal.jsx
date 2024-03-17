@@ -49,6 +49,7 @@ const ImageUploadModal = () => {
         <Modal
           isOpen={isOpen}
           onOpenChange={onOpenChange}
+          placement="center"
           className={`text-foreground bg-background border border-white`}
         >
           <ModalContent>

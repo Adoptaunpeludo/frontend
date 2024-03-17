@@ -23,11 +23,23 @@ import { useUser } from '../../Layout/useUser';
 import { BUCKET_URL } from '../../../config/config';
 import ShelterForm from '../ShelterForm/ShelterForm';
 import SocialMediaForm from '../ShelterForm/components/SocialMediaForm';
+import { toast } from 'react-toastify';
+import { useNavigate } from 'react-router-dom';
+import { useEffect } from 'react';
 
 const ShelterProfile = () => {
   const { data, isLoading } = useUser();
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if (!data) {
+      toast.warn('Por favor primero haz login con tu cuenta');
+      return navigate('/login');
+    }
+  }, [data, navigate]);
 
   if (isLoading) return <Spinner />;
+
   const {
     cif,
     legalForms,
