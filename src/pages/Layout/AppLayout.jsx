@@ -7,8 +7,6 @@ import { userQuery } from './useUser';
 export const loader = (queryClient) => async () => {
   const isLoggedIn = localStorage.getItem('isLoggedIn') === 'true';
 
-  console.log({ isLoggedIn });
-
   if (!isLoggedIn) {
     return null;
   }

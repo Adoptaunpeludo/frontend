@@ -26,19 +26,17 @@ import SocialMediaForm from '../ShelterForm/components/SocialMediaForm';
 import { toast } from 'react-toastify';
 import { useNavigate } from 'react-router-dom';
 import { useEffect } from 'react';
-import { useAuthContext } from '../../../context/AuthContext';
 
 const ShelterProfile = () => {
   const { data, isLoading } = useUser();
-  const { isLoggedIn } = useAuthContext();
   const navigate = useNavigate();
 
   useEffect(() => {
-    if (!isLoggedIn || !data) {
+    if (!data) {
       toast.warn('Por favor primero haz login con tu cuenta');
       return navigate('/login');
     }
-  }, [isLoggedIn, navigate, data]);
+  }, [navigate, data]);
 
   if (isLoading) return <Spinner />;
 
