@@ -1,6 +1,10 @@
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
-import { RouterProvider, createBrowserRouter } from 'react-router-dom';
+import {
+  Navigate,
+  RouterProvider,
+  createBrowserRouter,
+} from 'react-router-dom';
 import 'react-toastify/dist/ReactToastify.css';
 import './index.css';
 import {
@@ -114,6 +118,10 @@ const router = createBrowserRouter([
       {
         path: '404',
         element: <NotFoundPage />,
+      },
+      {
+        path: '*',
+        element: <Navigate to="404" />,
       },
     ],
   },
