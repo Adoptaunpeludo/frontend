@@ -1,17 +1,12 @@
 import { Checkbox } from '@nextui-org/react';
 import { H4Title } from '../../../../components';
+import { useUser } from '../../../Layout/useUser';
 
-const Accommodations = ({ facilities, isDisable = true }) => {
-  const facilitiesInformation = [
-    { fieldName: 'Hogares de acogida', value: facilities[0] },
-    {
-      fieldName: 'Instalaciones municipales o públicas',
-      value: facilities[1],
-    },
-    { fieldName: 'Instalaciones arrendadas', value: facilities[2] },
-    { fieldName: 'Instalaciones propias', value: facilities[3] },
-    { fieldName: 'Residencias privadas (arrendadas)', value: facilities[4] },
-  ];
+const Accommodations = ({ isDisable = true }) => {
+  const { data } = useUser();
+
+  const { facilities } = data;
+
   return (
     <div
       id="accommodations"
@@ -19,15 +14,15 @@ const Accommodations = ({ facilities, isDisable = true }) => {
     >
       <H4Title title="Alojamientos" />
       <div id="accommodationsCheck" className="flex flex-wrap gap-5 mx-7">
-        {facilitiesInformation.map((facility, index) => (
+        {facilities.map((facility, index) => (
           <Checkbox
             key={index}
             radius="none"
             size="sm"
-            isSelected={facility.value}
+            isSelected={facility}
             isDisabled={isDisable}
           >
-            {facility.fieldName}
+            {facility}
           </Checkbox>
         ))}
       </div>

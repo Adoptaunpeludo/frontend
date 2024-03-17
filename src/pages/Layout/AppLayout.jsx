@@ -5,9 +5,14 @@ import { NextUIProvider } from '@nextui-org/react';
 import { userQuery } from './useUser';
 
 export const loader = (queryClient) => async () => {
+  const isLoggedIn = localStorage.getItem('isLoggedIn') === 'true';
+
+  if (!isLoggedIn) {
+    return null;
+  }
+
   try {
     const data = await queryClient.ensureQueryData(userQuery);
-
     if (!data) return null;
     return data;
   } catch (error) {

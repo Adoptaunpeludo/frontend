@@ -2,13 +2,15 @@ import { Avatar, Button, Input, Spinner } from '@nextui-org/react';
 import { IconCircleX, IconSend2 } from '@tabler/icons-react';
 import { cities } from '../../../utils/enumData';
 import { H2Title, Hero, Panel, SelectField } from '../../../components';
-import { useFormBio } from './useFormBio';
+import { useUser } from '../../Layout/useUser';
 export const UserFormBio = () => {
-  const { data, isLoading } = useFormBio();
+  const { data, isLoading } = useUser();
+
+  console.log({ data });
 
   if (isLoading) return <Spinner />;
   const {
-    userName,
+    username,
     avatar,
     // role,
     dni,
@@ -30,7 +32,7 @@ export const UserFormBio = () => {
               className="w-40 h-40 bg-white self-center"
               src={`/avatar/${avatar}`}
             />
-            <H2Title title={userName} className="mx-auto" />
+            <H2Title title={username} className="mx-auto" />
             <div className="flex flex-col w-full gap-4">
               {/* TODO: useInput hook to custom all inputs with the same styles  */}
               <div className="flex w-full flex-wrap md:flex-nowrap gap-4">

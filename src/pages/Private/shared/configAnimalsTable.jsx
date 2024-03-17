@@ -25,7 +25,7 @@ export const ColumnsShelter = [
         peludo
       </span>
     ),
-    uid: 'pet',
+    uid: 'name',
   },
   { name: <PetSize />, uid: 'size' },
   {
@@ -38,7 +38,7 @@ export const ColumnsShelter = [
     uid: 'gender',
   },
   { name: <UilSchedule className="fill-tertiary" />, uid: 'age' },
-  { name: <UilMapMarker className="fill-tertiary" />, uid: 'location' },
+  { name: <UilMapMarker className="fill-tertiary" />, uid: 'city' },
   {
     name: (
       <span className="text-tertiary font-semibold font-poppins uppercase">
@@ -50,7 +50,7 @@ export const ColumnsShelter = [
   {
     name: (
       <span className="text-tertiary font-semibold font-poppins uppercase">
-        status
+        Estado
       </span>
     ),
     uid: 'status',
@@ -75,7 +75,7 @@ export const ColumnsAdopter = [
         peludo
       </span>
     ),
-    uid: 'pet',
+    uid: 'name',
   },
   { name: <PetSize />, uid: 'size' },
   {
@@ -88,7 +88,7 @@ export const ColumnsAdopter = [
     uid: 'gender',
   },
   { name: <UilSchedule className="fill-tertiary" />, uid: 'age' },
-  { name: <UilMapMarker className="fill-tertiary" />, uid: 'location' },
+  { name: <UilMapMarker className="fill-tertiary" />, uid: 'city' },
 
   {
     name: (
