@@ -14,17 +14,19 @@ import { useUser } from '../../Layout/useUser';
 import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import { useEffect } from 'react';
+import { useAuthContext } from '../../../context/AuthContext';
 
 const AdopterProfile = () => {
   const { data, isLoading } = useUser();
+  const { isLoggedIn } = useAuthContext();
   const navigate = useNavigate();
 
   useEffect(() => {
-    if (!data) {
+    if (!isLoggedIn || !data) {
       toast.warn('Por favor primero haz login con tu cuenta');
       return navigate('/login');
     }
-  }, [data, navigate]);
+  }, [isLoggedIn, navigate, data]);
 
   if (isLoading) return <Spinner />;
 

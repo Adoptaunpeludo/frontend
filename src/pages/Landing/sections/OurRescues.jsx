@@ -6,8 +6,6 @@ const OurRescues = () => {
 
   if (isLoading) return <Spinner />;
 
-  console.log({ data });
-
   const rescues = [
     { image: 'adopted.svg', number: data?.adopted, label: 'Adoptados' },
     { image: 'foster.svg', number: data?.fostered, label: 'En acogida' },

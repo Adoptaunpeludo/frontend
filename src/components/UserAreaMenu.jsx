@@ -11,15 +11,25 @@ import { useQueryClient } from '@tanstack/react-query';
 import { useNavigate } from 'react-router-dom';
 import { BUCKET_URL } from '../config/config.js';
 import { logout } from '../pages/Auth/authService.js';
+import { useUser } from '../pages/Layout/useUser.js';
+import { useAuthContext } from '../context/AuthContext.jsx';
 
-export const UserAreaMenu = ({ user }) => {
+export const UserAreaMenu = () => {
+  const { data: user } = useUser();
+  const { setIsLoggedIn } = useAuthContext();
   const navigate = useNavigate();
   const queryClient = useQueryClient();
+
   const handleLogout = async () => {
     await logout();
+    setIsLoggedIn(false);
+    localStorage.setItem('isLoggedIn', false);
     queryClient.removeQueries({ queryKey: ['user'] });
     navigate('/');
   };
+
+  if (!user) return;
+
   const { avatar, firstName, lastName, username, email, role } = user;
 
   return (
