@@ -16,7 +16,13 @@ import {
   dogDescription
 } from '../../utils/asideDataFields';
 import ErrorPage from '../Error/ErrorPage';
-import { AnimalGallery } from './components/AnimalGallery';
+import {
+  AnimalFavs,
+  AnimalGallery,
+  ContactShelter,
+  ShareSocialMedia
+} from './components';
+
 import { animalDetailsQuery, useAnimalDetails } from './useAnimalDetails';
 export const loader =
   queryClient =>
@@ -48,6 +54,7 @@ const AnimalDetailsPage = () => {
 
       <section className='flex gap-12 max-xl:flex-col mx-auto'>
         <section id='central-column' className='flex flex-col    '>
+          {/* TODO: check loading image put spinner reservate space */}
           <div className='relative container lg:w-164'>
             <Image
               src={`${BUCKET_URL_ANIMALS}/${data.images[0]}`}
@@ -60,6 +67,7 @@ const AnimalDetailsPage = () => {
               size={40}
               className='absolute left-3 bottom-3 z-10  stroke-primary'
             />
+            {/* {TODO: change Minimal logo shelter avatar} */}
             <MinimalLogo size={60} className='absolute right-5 top-5 z-10' />
             <AdoptButton className='absolute right-5 bottom-5 z-10'>
               Adoptar
@@ -90,15 +98,10 @@ const AnimalDetailsPage = () => {
           )}
         </section>
       </section>
-      <footer className='flex '>
-        <section id='likes' className='flex'>
-          <span>{data.numFavs}</span>
-          <IconHeart className='fill-primary stroke-primary' />
-        </section>
-        <section id='talk-to-shelters'>
-          <H2Title title='habla con la protectora' className='text-secondary' />
-        </section>
-        <section id='share-rrss'></section>
+      <footer className='flex px-4 justify-around items-center max-sm:flex-col max-sm:justify-start'>
+        <AnimalFavs numFavs={data.numFavs} />
+        <ContactShelter />
+        <ShareSocialMedia />
       </footer>
     </main>
   );
