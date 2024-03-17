@@ -16,7 +16,6 @@ import {
   RegisterPage,
   ShelterProfile,
   SheltersPage,
-  UserFormBio,
   VerifyEmail,
 } from './pages/index.js';
 
