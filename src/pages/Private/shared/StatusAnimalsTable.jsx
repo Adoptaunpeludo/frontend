@@ -1,7 +1,7 @@
 import {
   Button,
   Chip,
-  Spinner,
+  Link,
   Table,
   TableBody,
   TableCell,
@@ -19,16 +19,19 @@ import {
 } from '@tabler/icons-react';
 import React from 'react';
 
-import { useDataAnimalsMe } from './useDataAnimalsMe';
 import {
   ColumnsAdopter,
   ColumnsShelter,
   statusColorMap,
 } from './configAnimalsTable';
+import { useUserAnimals } from '../useUserAnimals';
 
 export const StatusAnimalsTable = ({ role }) => {
   const headerColumn = role === 'shelter' ? ColumnsShelter : ColumnsAdopter;
-  const { data, isLoading, isError } = useDataAnimalsMe();
+
+  const { data } = useUserAnimals();
+
+  const { animals } = data;
 
   const renderCell = React.useCallback((user, columnKey) => {
     const cellValue = user[columnKey];
@@ -60,7 +63,14 @@ export const StatusAnimalsTable = ({ role }) => {
         return (
           <div className="relative flex items-center gap-2">
             <Tooltip content="Ver Detalles">
-              <Button isIconOnly variant="solid" color="primary" size="sm">
+              <Button
+                isIconOnly
+                as={Link}
+                href={`/${user.type}s/${user.slug}`}
+                variant="solid"
+                color="primary"
+                size="sm"
+              >
                 <IconEye />
               </Button>
             </Tooltip>
@@ -96,7 +106,7 @@ export const StatusAnimalsTable = ({ role }) => {
     }
   }, []);
   return (
-    <Table aria-label="Example table with custom cells">
+    <Table aria-label="Animals info">
       <TableHeader columns={headerColumn} className="flex justify-center">
         {(column) => (
           <TableColumn key={column.uid} className="text-start ">
@@ -104,7 +114,7 @@ export const StatusAnimalsTable = ({ role }) => {
           </TableColumn>
         )}
       </TableHeader>
-      <TableBody items={data}>
+      <TableBody items={animals}>
         {(item) => (
           <TableRow key={item.id}>
             {(columnKey) => (

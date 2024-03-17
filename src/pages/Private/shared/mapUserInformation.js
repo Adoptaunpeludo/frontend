@@ -1,12 +1,12 @@
 export const userInformation = ({
   createdAt,
-  userName,
+  username,
   firstName,
   lastName,
   dni,
-  phone_number,
+  phoneNumber,
   email,
-  city
+  city,
 }) => {
   const entryDate = new Date(createdAt);
   const userInformation = [
@@ -14,15 +14,15 @@ export const userInformation = ({
       fieldName: 'Fecha de entrada: ',
       value: `${entryDate.getDate()}/${
         entryDate.getMonth() + 1
-      }/${entryDate.getFullYear()}`
+      }/${entryDate.getFullYear()}`,
     },
-    { fieldName: 'Usuario: ', value: userName },
+    { fieldName: 'Usuario: ', value: username },
     { fieldName: 'Nombre: ', value: firstName },
     { fieldName: 'Apellidos: ', value: lastName },
     { fieldName: 'Dni: ', value: dni },
-    { fieldName: 'Teléfono: ', value: phone_number },
+    { fieldName: 'Teléfono: ', value: phoneNumber },
     { fieldName: 'Email: ', value: email },
-    { fieldName: 'Ciudad: ', value: city }
+    { fieldName: 'Ciudad: ', value: city },
   ];
   return userInformation;
 };

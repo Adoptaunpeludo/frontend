@@ -29,6 +29,7 @@ import { loader as animalDetailsLoader } from './pages/AnimalDetails/AnimalDetai
 import { loader as landingAnimalsLoader } from './pages/Landing/LandingPage.jsx';
 import { loader as currentUserLoader } from './pages/Layout/AppLayout.jsx';
 import { loader as animalsLoader } from './pages/Animals/AnimalsPage.jsx';
+import { loader as userAnimalsLoader } from './pages/Private/loader.js';
 
 export const queryClient = new QueryClient({
   defaultOptions: {
@@ -94,6 +95,7 @@ const router = createBrowserRouter([
         path: 'private/shelter',
         //for test only
         element: <ShelterProfile />,
+        loader: userAnimalsLoader(queryClient),
       },
       {
         path: 'cats/:slug',

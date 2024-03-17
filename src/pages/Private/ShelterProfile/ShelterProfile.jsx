@@ -11,30 +11,45 @@ import {
   TitleSection,
   H2Title,
   H3Title,
-  EditButton,
   AsideDataColumn,
+  CameraIcon,
 } from '../../../components';
 
 import { ImagesFrame } from '../shared/ImagesFrame';
 import { StatusAnimalsTable } from '../shared/StatusAnimalsTable';
-import { userInformation } from '../shared/useDataUser';
+import { userInformation } from '../shared/mapUserInformation';
 import Accommodations from './components/Acommodations';
-import { useShelterProfile } from './useShelterProfile';
+import { useUser } from '../../Layout/useUser';
+import { BUCKET_URL } from '../../../config/config';
+import ShelterForm from '../ShelterForm/ShelterForm';
+import SocialMediaForm from '../ShelterForm/components/SocialMediaForm';
+import { toast } from 'react-toastify';
+import { useNavigate } from 'react-router-dom';
+import { useEffect } from 'react';
 
 const ShelterProfile = () => {
-  const { data, isLoading } = useShelterProfile();
+  const { data, isLoading } = useUser();
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if (!data) {
+      toast.warn('Por favor primero haz login con tu cuenta');
+      return navigate('/login');
+    }
+  }, [data, navigate]);
 
   if (isLoading) return <Spinner />;
+
   const {
     cif,
     legalForms,
     veterinarianFacilities,
-    userName,
+    username,
     avatar,
     ownVet,
     description,
-    facilities,
     images,
+    socialMedia,
   } = data;
   const userData = userInformation(data);
 
@@ -45,7 +60,7 @@ const ShelterProfile = () => {
         id="SheltersProfile"
         className="max-w-screen-xl w-full flex  flex-col justify-center  gap-12 h-full  py-12  mx-auto "
       >
-        <TitleSection title={userName} id=" shelterTitle" />
+        <TitleSection title={username} id=" shelterTitle" />
         <section id="sheltersProfile" className="flex gap-12 max-lg:flex-col ">
           <main className="flex flex-col max-w-3xl order-1 max-lg:order-2">
             <div
@@ -61,13 +76,13 @@ const ShelterProfile = () => {
                 <H3Title title="Instalaciones" />
                 <div id="veterinarianFacilities" className="flex gap-5 mx-3">
                   <span>
-                    Instalaciones veterinarias:{' '}
+                    Instalaciones veterinarias:
                     {veterinarianFacilities ? 'si' : 'no'}
                   </span>
                   <span>Veterinario propio: {ownVet ? 'si' : 'no'}</span>
                 </div>
               </div>
-              <Accommodations facilities={facilities} />
+              <Accommodations />
               <div id="description" className="flex flex-col gap-3 mx-3 py-3">
                 <H3Title title="Descripción:" />
                 <div>{description}</div>
@@ -76,22 +91,18 @@ const ShelterProfile = () => {
               <div id="socialMedia" className="flex flex-col gap-3 mx-3 py-3 ">
                 <H3Title title="Redes sociales:" />
                 <div className="flex gap-4 justify-between max-sm:flex-col max-sm:mx-auto">
-                  <div className="flex items-center gap-2">
-                    <IconBrandInstagram />
-                    @peludos_felices
-                  </div>
-                  <div className="flex items-center gap-2">
-                    <IconBrandFacebook />
-                    @peludos_felices
-                  </div>
-                  <div className="flex  items-center gap-2">
-                    <IconBrandX />
-                    <span>@peludos_felices</span>
-                  </div>
+                  {socialMedia.map((media) => (
+                    <div className="flex items-center gap-2" key={media.name}>
+                      {media.name === 'facebook' && <IconBrandFacebook />}
+                      {media.name === 'xtweet' && <IconBrandX />}
+                      {media.name === 'instagram' && <IconBrandInstagram />}
+                      {media.url === '' ? <span>Vacio</span> : media.url}
+                    </div>
+                  ))}
                 </div>
               </div>
             </div>
-            <EditButton />
+            <SocialMediaForm socialMedia={socialMedia} />
           </main>
           <aside className="w-96 flex flex-col order-2 max-lg:order-1 mx-auto">
             <div id="profileAside" className=" flex flex-col gap-5">
@@ -99,7 +110,9 @@ const ShelterProfile = () => {
                 isBordered
                 color="success"
                 className="w-40 h-40 bg-white self-center"
-                src={`/avatar/${avatar}`}
+                src={`${BUCKET_URL}/${avatar}`}
+                showFallback
+                fallback={<CameraIcon />}
               />
               <div
                 id="personalData"
@@ -109,7 +122,7 @@ const ShelterProfile = () => {
                 <AsideDataColumn dataColumn={userData} />
               </div>
             </div>
-            <EditButton />
+            <ShelterForm />
             <div id="NotificationsAside">
               <H2Title title="Mensajes" className="pb-5" />
               <div className="flex justify-between border-solid border-b-1 border-b-primary pb-3 items-center">
