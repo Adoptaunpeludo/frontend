@@ -1,8 +1,14 @@
 import { Spinner } from '@nextui-org/spinner';
-import { FilterBar, PetCard, TitleSection, Banner } from '../../components';
-import { animalsQuery, useAnimals } from '../Landing/useAnimals';
 import { useLoaderData } from 'react-router';
 import { useNavigation } from 'react-router-dom';
+import {
+  Banner,
+  FilterBar,
+  PagePagination,
+  PetCard,
+  TitleSection,
+} from '../../components';
+import { animalsQuery, useAnimals } from '../Landing/useAnimals';
 
 export const loader =
   (queryClient, page) =>
@@ -25,22 +31,25 @@ const AnimalsPage = ({ page }) => {
   const isLoading = navigation.state === 'loading';
 
   return (
-    <main>
+    <>
       <Banner src={`/backgrounds/banner-${page}.jpg`} />
-      <TitleSection title={page === 'cats' ? 'Gatetes' : 'Perretes'} />
-
-      <FilterBar page={page} />
-
-      <ul className="flex justify-center gap-4 flex-wrap p-6">
-        {isLoading ? (
-          <Spinner className="flex justify-center items-center" />
-        ) : (
-          data.animals.map((animal) => (
-            <PetCard key={animal.id} animal={animal} />
-          ))
-        )}
-      </ul>
-    </main>
+      <main className="max-w-screen-xl w-full flex  flex-col justify-center  gap-12 h-full  py-12  mx-auto">
+        <TitleSection title={page === 'cats' ? 'Gatetes' : 'Perretes'} />
+        <FilterBar page={page} className="" />
+        <ul className="flex justify-center gap-4 flex-wrap p-6">
+          {isLoading ? (
+            <Spinner className="flex justify-center items-center" />
+          ) : (
+            data.animals.map((animal) => (
+              <PetCard key={animal.id} animal={animal} />
+            ))
+          )}
+        </ul>
+        <footer className="mx-auto">
+          <PagePagination page={page} />
+        </footer>
+      </main>
+    </>
   );
 };
 
