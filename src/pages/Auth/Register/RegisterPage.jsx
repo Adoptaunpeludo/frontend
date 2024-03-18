@@ -4,7 +4,7 @@ import { Form, Link, redirect } from 'react-router-dom';
 import { register } from '../authService';
 import { Hero, LogoHeader, Panel } from '../../../components';
 import { toast } from 'react-toastify';
-import { handleAuthError } from '../../../utils/handleAuthError';
+import { handleAuthError } from '../../../utils/handleError';
 
 export const action = async (data) => {
   const { request } = data;

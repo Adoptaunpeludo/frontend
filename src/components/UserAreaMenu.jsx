@@ -63,7 +63,7 @@ export const UserAreaMenu = () => {
           <Link
             href={`/private/${role}`}
             color="foreground"
-            className="capitalize"
+            className="capitalize w-full"
           >
             mi perfil
           </Link>
@@ -72,7 +72,7 @@ export const UserAreaMenu = () => {
           <Link
             href={`/private/${role}`}
             color="foreground"
-            className="capitalize"
+            className="capitalize w-full"
           >
             notificaciones
           </Link>
@@ -81,7 +81,7 @@ export const UserAreaMenu = () => {
           <Link
             href={`/private/${role}`}
             color="foreground"
-            className="capitalize"
+            className="capitalize w-full"
           >
             chats
           </Link>
@@ -90,7 +90,7 @@ export const UserAreaMenu = () => {
           key="logout"
           color="danger"
           onPress={handleLogout}
-          className="capitalize"
+          className="capitalize w-full"
         >
           log out
         </DropdownItem>

@@ -9,7 +9,7 @@ export const userQuery = {
 };
 
 export const useUser = () => {
-  const { data, isLoading, isError } = useQuery(userQuery);
+  const { data, isLoading, isError, isFetching } = useQuery(userQuery);
 
-  return { data, isLoading, isError };
+  return { data, isLoading, isError, isFetching };
 };

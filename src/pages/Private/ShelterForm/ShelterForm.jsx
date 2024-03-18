@@ -6,22 +6,21 @@ import {
   ModalContent,
   ModalFooter,
   ModalHeader,
-  Spinner,
   Textarea,
   useDisclosure,
 } from '@nextui-org/react';
 import { IconCircleX, IconEdit, IconSend2 } from '@tabler/icons-react';
-import { Form } from 'react-router-dom';
+
 import { boolDataEnum, legalFormEnum } from '../../../utils/enumData';
 import { H2Title, H3Title, Panel, SelectField } from '../../../components';
 
 import Accommodations from '../ShelterProfile/components/Acommodations';
 
-import { useUser } from '../../Layout/useUser';
+import { Form } from 'react-router-dom';
 
-const ShelterForm = () => {
-  const { data, isLoading } = useUser();
+const ShelterForm = ({ isSubmitting, data }) => {
   const { isOpen, onOpen, onOpenChange } = useDisclosure();
+
   const {
     cif,
     legalForms,
@@ -33,31 +32,32 @@ const ShelterForm = () => {
     username,
   } = data;
 
-  if (isLoading) return <Spinner />;
   return (
-    <Form className="bg-default-100 my-4">
-      <Button
-        color="primary"
-        size="md"
-        startContent={<IconEdit />}
-        onPress={onOpen}
+    <Button
+      color="primary"
+      size="md"
+      startContent={<IconEdit />}
+      onPress={onOpen}
+      className="max-w-[100px]"
+    >
+      Editar
+      <Modal
+        isOpen={isOpen}
+        onOpenChange={onOpenChange}
+        placement="center"
+        scrollBehavior="outside"
+        className={`text-foreground bg-background border border-white`}
+        size="3xl"
       >
-        Editar
-        <Modal
-          isOpen={isOpen}
-          onOpenChange={onOpenChange}
-          placement="center"
-          scrollBehavior="outside"
-          className={`text-foreground bg-background border border-white`}
-          size="3xl"
-        >
+        <Form method="post" preventScrollReset={true}>
           <ModalContent>
             {(onClose) => (
               <>
                 <ModalHeader className="flex flex-col gap-1">
                   {/* <Hero /> */}
-                  Actualizar Perfil
+                  Actualizar Perfil de Shelter
                 </ModalHeader>
+
                 <ModalBody>
                   <Panel className=" max-w-4xl mx-auto">
                     <div className="flex flex-col gap-6 mx-auto px-10 py-8">
@@ -70,9 +70,11 @@ const ShelterForm = () => {
                             type="text"
                             label="CIF"
                             name="cif"
-                            placeholder={cif === '' ? '' : cif}
+                            defaultValue={cif === '' ? '' : cif}
+                            isDisabled={isSubmitting}
                           />
                           <SelectField
+                            isDisabled={isSubmitting}
                             className="min-w-72 "
                             label="Forma legal"
                             name="legalForms"
@@ -82,6 +84,7 @@ const ShelterForm = () => {
                         </div>
                         <div className="flex w-full justify-around gap-4 flex-wrap md:flex-nowrap py-2">
                           <SelectField
+                            isDisabled={isSubmitting}
                             className="min-w-72 "
                             label="Instalaciones veterinarias"
                             name="veterinaryFacilities"
@@ -89,6 +92,7 @@ const ShelterForm = () => {
                             dataEnum={boolDataEnum}
                           />
                           <SelectField
+                            isDisabled={isSubmitting}
                             className="min-w-72 "
                             label="Veterinario propio"
                             name="ownVet"
@@ -98,15 +102,16 @@ const ShelterForm = () => {
                         </div>
                         <Accommodations
                           facilities={facilities}
-                          isDisable={false}
+                          isDisabled={isSubmitting}
                         />
                         <div className="flex w-full flex-col  gap-4">
                           <H3Title title="Descripción:" className="mx-2" />
                           <Textarea
+                            isDisabled={isSubmitting}
                             className="w-full "
                             label="Descripción"
                             name="description"
-                            placeholder={
+                            defaultValue={
                               description === ''
                                 ? 'Describe tu protectora'
                                 : description
@@ -134,6 +139,11 @@ const ShelterForm = () => {
                     size="sm"
                     startContent={<IconSend2 />}
                     className="px-10 font-poppins font-semibold text-sm"
+                    type="submit"
+                    name="intent"
+                    value={'shelter-profile'}
+                    isLoading={isSubmitting}
+                    onPress={onClose}
                   >
                     Enviar
                   </Button>
@@ -141,9 +151,9 @@ const ShelterForm = () => {
               </>
             )}
           </ModalContent>
-        </Modal>
-      </Button>
-    </Form>
+        </Form>
+      </Modal>
+    </Button>
   );
 };
 export default ShelterForm;

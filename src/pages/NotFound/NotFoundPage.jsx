@@ -1,6 +1,8 @@
-import { Link } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 const NotFoundPage = () => {
+  const navigate = useNavigate();
+
   return (
     <main className="min-h-screen text-center flex items-center justify-center">
       <div>
@@ -9,9 +11,12 @@ const NotFoundPage = () => {
         <p className="leading-6 mt-2 mb-4 text-foreground">
           No podemos encontrar la página que estás buscando
         </p>
-        <Link className="text-tertiary capitalize" to="/">
-          De vuelta a casa
-        </Link>
+        <button
+          className="text-tertiary capitalize"
+          onClick={() => navigate(-1, { replace: true })}
+        >
+          Ir Atras
+        </button>
       </div>
     </main>
   );

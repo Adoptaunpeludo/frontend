@@ -1,121 +1,151 @@
-import { Avatar, Button, Input, Spinner } from '@nextui-org/react';
-import { IconCircleX, IconSend2 } from '@tabler/icons-react';
+import {
+  Avatar,
+  Button,
+  Input,
+  Modal,
+  ModalBody,
+  ModalContent,
+  ModalFooter,
+  ModalHeader,
+  useDisclosure,
+} from '@nextui-org/react';
+import { IconCircleX, IconEdit, IconSend2 } from '@tabler/icons-react';
 import { cities } from '../../../utils/enumData';
-import { H2Title, Hero, Panel, SelectField } from '../../../components';
-import { useUser } from '../../Layout/useUser';
-export const UserFormBio = () => {
-  const { data, isLoading } = useUser();
+import { H2Title, Panel, SelectField } from '../../../components';
 
-  console.log({ data });
+import { Form } from 'react-router-dom';
+import { BUCKET_URL } from '../../../config/config';
+export const UserFormBio = ({ data, isSubmitting }) => {
+  const { isOpen, onOpen, onOpenChange } = useDisclosure();
 
-  if (isLoading) return <Spinner />;
-  const {
-    username,
-    avatar,
-    // role,
-    dni,
-    firstName,
-    lastName,
-    phoneNumber,
-    city,
-  } = data;
+  const { username, avatar, dni, firstName, lastName, phoneNumber, city } =
+    data;
   return (
-    <main className="bg-default-100">
-      <Hero />
-      <section
-        id="userFormBio"
-        className="max-w-screen-xl w-full flex flex-col gap-3 h-full justify-center py-12 mx-auto "
+    <Button
+      color="primary"
+      size="md"
+      startContent={<IconEdit />}
+      onPress={onOpen}
+      className="max-w-[100px] my-4"
+    >
+      Editar
+      <Modal
+        isOpen={isOpen}
+        onOpenChange={onOpenChange}
+        placement="center"
+        scrollBehavior="outside"
+        className={`text-foreground bg-background border border-white`}
+        size="3xl"
       >
-        <Panel className="my-14 max-w-4xl mx-auto">
-          <form className="flex flex-col gap-6 max-w-4xl mx-auto px-10 py-8">
-            <Avatar
-              className="w-40 h-40 bg-white self-center"
-              src={`/avatar/${avatar}`}
-            />
-            <H2Title title={username} className="mx-auto" />
-            <div className="flex flex-col w-full gap-4">
-              {/* TODO: useInput hook to custom all inputs with the same styles  */}
-              <div className="flex w-full flex-wrap md:flex-nowrap gap-4">
-                <Input
-                  className="min-w-72 "
-                  type="file"
-                  label="Añade una foto" //TODO: check props for this input
-                  placeholder="  "
-                ></Input>
-                <Input
-                  className="min-w-72 "
-                  type="text"
-                  label="DNI"
-                  name="dni"
-                  placeholder={dni === '' ? 'Introduce tu email' : dni}
-                />
-              </div>
-              <div className="flex w-full flex-wrap md:flex-nowrap gap-4">
-                <Input
-                  className="min-w-72 "
-                  type="text"
-                  label="Nombre"
-                  name="name"
-                  placeholder={
-                    firstName === '' ? 'Introduce tu nombre' : firstName
-                  }
-                />
-                <Input
-                  className="min-w-72 "
-                  type="text"
-                  label="Apellidos"
-                  name="lastName"
-                  placeholder={
-                    lastName === '' ? 'Introduce tus apellidos' : lastName
-                  }
-                />
-              </div>
-              <div className="flex w-full flex-wrap md:flex-nowrap gap-4">
-                <Input
-                  className="min-w-72 "
-                  type="tel"
-                  label="Teléfono"
-                  name="phoneNumber"
-                  placeholder={
-                    phoneNumber === '' ? 'Introduce tu teléfono' : phoneNumber
-                  }
-                />
-                <SelectField
-                  label="Ciudad"
-                  className="min-w-72"
-                  name="city"
-                  dataField={city}
-                  dataEnum={cities}
-                />
-              </div>
-            </div>
-
-            <div className="flex justify-center gap-4">
-              <Button
-                color="primary"
-                type="reset"
-                variant="solid"
-                size="sm"
-                startContent={<IconCircleX />}
-                className="px-10 font-poppins font-semibold text-sm"
-              >
-                Cancelar
-              </Button>
-              <Button
-                color="primary"
-                type="submit"
-                variant="solid"
-                size="sm"
-                startContent={<IconSend2 />}
-                className="px-10 font-poppins font-semibold text-sm"
-              >
-                Enviar
-              </Button>
-            </div>
-          </form>
-        </Panel>
-      </section>
-    </main>
+        <Form method="post" preventScrollReset={true}>
+          <ModalContent>
+            {(onClose) => (
+              <>
+                <ModalHeader className="flex flex-col gap-1">
+                  {/* <Hero /> */}
+                  Actualizar Perfil de Usuario
+                </ModalHeader>
+                <ModalBody>
+                  <Panel className="max-w-4xl mx-auto">
+                    <div className="flex flex-col gap-6 max-w-4xl mx-auto px-10 py-8">
+                      <Avatar
+                        className="w-40 h-40 bg-white self-center"
+                        src={`${BUCKET_URL}/${avatar}`}
+                      />
+                      <H2Title title={username} className="mx-auto" />
+                      <div className="flex flex-col w-full gap-4">
+                        {/* TODO: useInput hook to custom all inputs with the same styles  */}
+                        <div className="flex w-full flex-wrap md:flex-nowrap gap-4">
+                          <Input
+                            className="min-w-72 "
+                            type="text"
+                            label="DNI"
+                            name="dni"
+                            defaultValue={
+                              dni === '' ? 'Introduce tu email' : dni
+                            }
+                          />
+                        </div>
+                        <div className="flex w-full flex-wrap md:flex-nowrap gap-4">
+                          <Input
+                            className="min-w-72 "
+                            type="text"
+                            label="Nombre"
+                            name="firstName"
+                            defaultValue={
+                              firstName === ''
+                                ? 'Introduce tu nombre'
+                                : firstName
+                            }
+                          />
+                          <Input
+                            className="min-w-72 "
+                            type="text"
+                            label="Apellidos"
+                            name="lastName"
+                            defaultValue={
+                              lastName === ''
+                                ? 'Introduce tus apellidos'
+                                : lastName
+                            }
+                          />
+                        </div>
+                        <div className="flex w-full flex-wrap md:flex-nowrap gap-4">
+                          <Input
+                            className="min-w-72 "
+                            type="tel"
+                            label="Teléfono"
+                            name="phoneNumber"
+                            defaultValue={
+                              phoneNumber === ''
+                                ? 'Introduce tu teléfono'
+                                : phoneNumber
+                            }
+                          />
+                          <SelectField
+                            label="Ciudad"
+                            className="min-w-72"
+                            name="city"
+                            dataField={city}
+                            dataEnum={cities}
+                          />
+                        </div>
+                      </div>
+                    </div>
+                  </Panel>
+                </ModalBody>
+                <ModalFooter className="flex justify-center gap-4 w-full">
+                  <Button
+                    color="primary"
+                    variant="solid"
+                    size="sm"
+                    startContent={<IconCircleX />}
+                    className="px-10 font-poppins font-semibold text-sm"
+                    onPress={onClose}
+                  >
+                    Cancelar
+                  </Button>
+                  <Button
+                    color="primary"
+                    variant="solid"
+                    size="sm"
+                    startContent={<IconSend2 />}
+                    className="px-10 font-poppins font-semibold text-sm"
+                    type="submit"
+                    name="intent"
+                    value={'shelter-user-profile'}
+                    isLoading={isSubmitting}
+                    onPress={onClose}
+                  >
+                    Enviar
+                  </Button>
+                </ModalFooter>
+              </>
+            )}
+          </ModalContent>
+        </Form>
+      </Modal>
+    </Button>
   );
 };
 export default UserFormBio;
