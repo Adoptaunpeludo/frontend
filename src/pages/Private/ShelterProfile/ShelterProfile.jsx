@@ -27,6 +27,17 @@ import { toast } from 'react-toastify';
 import { useNavigate } from 'react-router-dom';
 import { useEffect } from 'react';
 
+export const action =
+  (queryClient) =>
+  async ({ request }) => {
+    let formData = await request.formData();
+    let intent = formData.get('intent');
+
+    if (intent === 'shelter-profile') {
+      console.log({ formData });
+    }
+  };
+
 const ShelterProfile = () => {
   const { data, isLoading } = useUser();
   const navigate = useNavigate();

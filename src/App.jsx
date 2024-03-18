@@ -25,6 +25,7 @@ import {
 
 import { action as loginAction } from './pages/Auth/Login/LoginPage.jsx';
 import { action as registerAction } from './pages/Auth/Register/RegisterPage.jsx';
+import { action as shelterProfileAction } from './pages/Private/ShelterProfile/ShelterProfile.jsx';
 
 import { loader as animalDetailsLoader } from './pages/AnimalDetails/AnimalDetailsPage.jsx';
 // import { loader as filterCatsLoader } from './pages/Cats/CatsPage.jsx';
@@ -100,6 +101,7 @@ const router = createBrowserRouter([
         //for test only
         element: <ShelterProfile />,
         loader: userAnimalsLoader(queryClient),
+        action: shelterProfileAction(queryClient),
       },
       {
         path: 'cats/:slug',

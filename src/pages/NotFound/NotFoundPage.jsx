@@ -13,7 +13,7 @@ const NotFoundPage = () => {
         </p>
         <button
           className="text-tertiary capitalize"
-          onClick={() => navigate(-1)}
+          onClick={() => navigate(-1, { replace: true })}
         >
           Ir Atras
         </button>

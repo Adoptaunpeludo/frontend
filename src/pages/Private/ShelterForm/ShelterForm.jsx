@@ -6,21 +6,21 @@ import {
   ModalContent,
   ModalFooter,
   ModalHeader,
-  Spinner,
   Textarea,
   useDisclosure,
 } from '@nextui-org/react';
 import { IconCircleX, IconEdit, IconSend2 } from '@tabler/icons-react';
-import { Form } from 'react-router-dom';
+
 import { boolDataEnum, legalFormEnum } from '../../../utils/enumData';
 import { H2Title, H3Title, Panel, SelectField } from '../../../components';
 
 import Accommodations from '../ShelterProfile/components/Acommodations';
 
 import { useUser } from '../../Layout/useUser';
+import { Form } from 'react-router-dom';
 
 const ShelterForm = () => {
-  const { data, isLoading } = useUser();
+  const { data } = useUser();
   const { isOpen, onOpen, onOpenChange } = useDisclosure();
   const {
     cif,
@@ -33,24 +33,23 @@ const ShelterForm = () => {
     username,
   } = data;
 
-  if (isLoading) return <Spinner />;
   return (
-    <Form className="bg-default-100 my-4">
-      <Button
-        color="primary"
-        size="md"
-        startContent={<IconEdit />}
-        onPress={onOpen}
+    <Button
+      color="primary"
+      size="md"
+      startContent={<IconEdit />}
+      onPress={onOpen}
+    >
+      Editar
+      <Modal
+        isOpen={isOpen}
+        onOpenChange={onOpenChange}
+        placement="center"
+        scrollBehavior="outside"
+        className={`text-foreground bg-background border border-white`}
+        size="3xl"
       >
-        Editar
-        <Modal
-          isOpen={isOpen}
-          onOpenChange={onOpenChange}
-          placement="center"
-          scrollBehavior="outside"
-          className={`text-foreground bg-background border border-white`}
-          size="3xl"
-        >
+        <Form method="post">
           <ModalContent>
             {(onClose) => (
               <>
@@ -134,6 +133,9 @@ const ShelterForm = () => {
                     size="sm"
                     startContent={<IconSend2 />}
                     className="px-10 font-poppins font-semibold text-sm"
+                    type="submit"
+                    name="intent"
+                    value="shelter-profile"
                   >
                     Enviar
                   </Button>
@@ -141,9 +143,9 @@ const ShelterForm = () => {
               </>
             )}
           </ModalContent>
-        </Modal>
-      </Button>
-    </Form>
+        </Form>
+      </Modal>
+    </Button>
   );
 };
 export default ShelterForm;
