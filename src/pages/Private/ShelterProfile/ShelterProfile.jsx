@@ -1,4 +1,4 @@
-import { Avatar, Button, User } from '@nextui-org/react';
+import { Avatar, Button, Spinner, User } from '@nextui-org/react';
 import {
   IconBrandFacebook,
   IconBrandInstagram,
@@ -24,7 +24,7 @@ import { BUCKET_URL } from '../../../config/config';
 import ShelterForm from '../ShelterForm/ShelterForm';
 import SocialMediaForm from '../ShelterForm/components/SocialMediaForm';
 import { toast } from 'react-toastify';
-import { redirect, useNavigate, useNavigation } from 'react-router-dom';
+import { useNavigate, useNavigation } from 'react-router-dom';
 import { useEffect } from 'react';
 import { updateShelterProfile } from '../ShelterForm/service';
 
@@ -37,11 +37,9 @@ export const action =
     if (intent === 'shelter-profile') {
       try {
         await updateShelterProfile(formData);
-        queryClient.invalidateQueries({
-          queryKey: ['user'],
-        });
+        queryClient.invalidateQueries({ queryKey: ['user'] });
         toast.success('Perfil del Refugio actualizado');
-        return redirect('/private/shelter');
+        return null;
       } catch (error) {
         console.log(error);
         toast.error('Error actualizando perfil del Refugio');
@@ -51,18 +49,18 @@ export const action =
   };
 
 const ShelterProfile = () => {
-  const { data } = useUser();
+  const { data, isFetching } = useUser();
   const navigate = useNavigate();
   const navigation = useNavigation();
 
   const isSubmitting = navigation.state === 'submitting';
 
   useEffect(() => {
-    if (!data) {
+    if (!isFetching && !data) {
       toast.warn('Por favor primero haz login con tu cuenta');
       return navigate('/login');
     }
-  }, [navigate, data]);
+  }, [navigate, data, isFetching]);
 
   const {
     cif,
@@ -92,43 +90,61 @@ const ShelterProfile = () => {
               id="Profile"
               className="flex flex-col gap-4 border-solid border-b-1 border-b-primary"
             >
-              <H2Title title="Protectora" />
-              <div id="legalFrame" className="flex gap-5 mx-3">
-                <span id="cif">CIF: {cif}</span>
-                <span id="legalForm">Forma legal: {legalForms}</span>
-              </div>
-              <div id="facilities" className="flex flex-col gap-2 mx-3">
-                <H3Title title="Instalaciones" />
-                <div id="veterinarianFacilities" className="flex gap-5 mx-3">
-                  <span>
-                    Instalaciones veterinarias:{' '}
-                    {veterinaryFacilities ? 'si' : 'no'}
-                  </span>
-                  <span>Veterinario propio: {ownVet ? 'si' : 'no'}</span>
-                </div>
-              </div>
-
-              <Accommodations facilities={facilities} />
-
-              <div id="description" className="flex flex-col gap-3 mx-3 py-3">
-                <H3Title title="Descripción:" />
-                <div>{description}</div>
-              </div>
-              <ShelterForm isSubmitting={isSubmitting} />
-              <ImagesFrame images={images} />
-              <div id="socialMedia" className="flex flex-col gap-3 mx-3 py-3 ">
-                <H3Title title="Redes sociales:" />
-                <div className="flex gap-4 justify-between max-sm:flex-col max-sm:mx-auto">
-                  {socialMedia.map((media) => (
-                    <div className="flex items-center gap-2" key={media.name}>
-                      {media.name === 'facebook' && <IconBrandFacebook />}
-                      {media.name === 'xtweet' && <IconBrandX />}
-                      {media.name === 'instagram' && <IconBrandInstagram />}
-                      {media.url === '' ? <span>Vacio</span> : media.url}
+              {isFetching ? (
+                <Spinner />
+              ) : (
+                <>
+                  <H2Title title="Protectora" />
+                  <div id="legalFrame" className="flex gap-5 mx-3">
+                    <span id="cif">CIF: {cif}</span>
+                    <span id="legalForm">Forma legal: {legalForms}</span>
+                  </div>
+                  <div id="facilities" className="flex flex-col gap-2 mx-3">
+                    <H3Title title="Instalaciones" />
+                    <div
+                      id="veterinarianFacilities"
+                      className="flex gap-5 mx-3"
+                    >
+                      <span>
+                        Instalaciones veterinarias:{' '}
+                        {veterinaryFacilities ? 'si' : 'no'}
+                      </span>
+                      <span>Veterinario propio: {ownVet ? 'si' : 'no'}</span>
                     </div>
-                  ))}
-                </div>
-              </div>
+                  </div>
+
+                  <Accommodations facilities={facilities} />
+
+                  <div
+                    id="description"
+                    className="flex flex-col gap-3 mx-3 py-3"
+                  >
+                    <H3Title title="Descripción:" />
+                    <div>{description}</div>
+                  </div>
+                  <ShelterForm isSubmitting={isSubmitting} data={data} />
+                  <ImagesFrame images={images} />
+                  <div
+                    id="socialMedia"
+                    className="flex flex-col gap-3 mx-3 py-3 "
+                  >
+                    <H3Title title="Redes sociales:" />
+                    <div className="flex gap-4 justify-between max-sm:flex-col max-sm:mx-auto">
+                      {socialMedia.map((media) => (
+                        <div
+                          className="flex items-center gap-2"
+                          key={media.name}
+                        >
+                          {media.name === 'facebook' && <IconBrandFacebook />}
+                          {media.name === 'xtweet' && <IconBrandX />}
+                          {media.name === 'instagram' && <IconBrandInstagram />}
+                          {media.url === '' ? <span>Vacio</span> : media.url}
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                </>
+              )}
             </div>
             <SocialMediaForm socialMedia={socialMedia} />
           </main>

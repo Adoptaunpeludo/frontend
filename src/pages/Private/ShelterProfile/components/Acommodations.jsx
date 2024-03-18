@@ -4,8 +4,6 @@ import { H4Title } from '../../../../components';
 import { facilitiesEnum } from '../../../../utils/enumData';
 
 const Accommodations = ({ facilities, isDisabled = true }) => {
-  console.log({ facilities });
-
   return (
     <div
       id="accommodations"

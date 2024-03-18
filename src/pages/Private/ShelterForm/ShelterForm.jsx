@@ -16,11 +16,9 @@ import { H2Title, H3Title, Panel, SelectField } from '../../../components';
 
 import Accommodations from '../ShelterProfile/components/Acommodations';
 
-import { useUser } from '../../Layout/useUser';
 import { Form } from 'react-router-dom';
 
-const ShelterForm = ({ isSubmitting }) => {
-  const { data } = useUser();
+const ShelterForm = ({ isSubmitting, data }) => {
   const { isOpen, onOpen, onOpenChange } = useDisclosure();
 
   const {
@@ -50,7 +48,7 @@ const ShelterForm = ({ isSubmitting }) => {
         className={`text-foreground bg-background border border-white`}
         size="3xl"
       >
-        <Form method="post">
+        <Form method="post" preventScrollReset={true}>
           <ModalContent>
             {(onClose) => (
               <>
@@ -144,6 +142,7 @@ const ShelterForm = ({ isSubmitting }) => {
                     name="intent"
                     value={'shelter-profile'}
                     isLoading={isSubmitting}
+                    onPress={onClose}
                   >
                     Enviar
                   </Button>
