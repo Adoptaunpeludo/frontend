@@ -21,3 +21,11 @@ export const handleAuthError = (error) => {
     return message;
   }
 };
+
+export const handleNotFoundError = (error) => {
+  if (error instanceof AxiosError)
+    return {
+      message: error.response.statusText,
+      status: error.response.status,
+    };
+};

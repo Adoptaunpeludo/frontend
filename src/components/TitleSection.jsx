@@ -1,13 +1,17 @@
-import PropTypes from "prop-types";
-import { Divider } from "@nextui-org/react";
+import PropTypes from 'prop-types';
 
-export const TitleSection = ({ title }) => {
+export const TitleSection = ({ title, className }) => {
   return (
-    <div className="my-8">
-      <Divider />
-      <h1 className="flex justify-center m-5 w-full font-lobster">{title}</h1>
-      <Divider />
-    </div>
+    <header
+      className={` ${className} border-solid border-t-1 border-b-1 border-t-primary border-b-primary py-8 h-100 `}
+    >
+      <h1
+        className="font-lobster text-7xl flex justify-center text-center"
+        name="Rescates Peludos"
+      >
+        {title}
+      </h1>
+    </header>
   );
 };
 

@@ -1,5 +1,5 @@
-import { Button } from '@nextui-org/react';
 import Imago from '../../../assets/logos/imago.svg?react';
+import { AdoptButton } from '../../../components';
 const HeroHome = () => {
   return (
     <section
@@ -30,9 +30,7 @@ const HeroHome = () => {
             </div>
           </div>
           <div id='hero-CTA' className='flex flex-col justify-center mx-auto'>
-            <Button size='md' color='primary' className='w-32'>
-              <span className='font-lobster text-xl text-white'>Adopta</span>
-            </Button>
+            <AdoptButton />
           </div>
         </div>
       </main>

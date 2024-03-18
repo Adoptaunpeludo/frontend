@@ -1,12 +1,13 @@
 import { Button, Checkbox, Input, Radio, RadioGroup } from '@nextui-org/react';
 import { IconLogin2 as LoginIcon } from '@tabler/icons-react';
 import { Form, Link, redirect } from 'react-router-dom';
-import { register, verifyEmail } from '../authService';
+import { register } from '../authService';
 import { Hero, LogoHeader, Panel } from '../../../components';
 import { toast } from 'react-toastify';
 import { handleAuthError } from '../../../utils/handleAuthError';
 import { useState } from 'react';
 import { validateField } from '../../../utils/validateField';
+
 
 export const action = async (data) => {
 	const { request } = data;
@@ -24,8 +25,10 @@ export const action = async (data) => {
 		registerData.username = registerData.username.toLowerCase();
 		registerData.email = registerData.email.toLowerCase();
 
+
 		const data = await register(registerData);
 		await verifyEmail(data.token);
+
 
 		toast.success('Usuario creado');
 

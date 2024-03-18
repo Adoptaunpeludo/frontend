@@ -1,27 +1,40 @@
-import { QueryClientProvider } from '@tanstack/react-query';
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
+import {
+  Navigate,
+  RouterProvider,
+  createBrowserRouter,
+} from 'react-router-dom';
 import 'react-toastify/dist/ReactToastify.css';
 import './index.css';
-import { RouterProvider, createBrowserRouter } from 'react-router-dom';
-import { QueryClient } from '@tanstack/react-query';
 import {
+  AdopterProfile,
+  AnimalDetailsPage,
+  AnimalsPage,
   AppLayout,
-  CatsPage,
-  DogsPage,
+  // CatsPage,
+  // DogsPage,
   ErrorPage,
   LandingPage,
   LoginPage,
   RegisterPage,
+  ShelterProfile,
   SheltersPage,
-  AnimalDetailsPage,
+  VerifyEmail,
 } from './pages/index.js';
 
-import { action as registerAction } from './pages/Auth/Register/RegisterPage.jsx';
 import { action as loginAction } from './pages/Auth/Login/LoginPage.jsx';
+import { action as registerAction } from './pages/Auth/Register/RegisterPage.jsx';
+import { action as shelterProfileAction } from './pages/Private/ShelterProfile/ShelterProfile.jsx';
 
-import { loader as currentUserLoader } from './pages/Layout/AppLayout.jsx';
 import { loader as animalDetailsLoader } from './pages/AnimalDetails/AnimalDetailsPage.jsx';
-import { loader as animalsLoader } from './pages/Landing/LandingPage.jsx';
+// import { loader as filterCatsLoader } from './pages/Cats/CatsPage.jsx';
+// import { loader as filterDogsLoader } from './pages/Dogs/DogsPage.jsx';
+import { loader as landingAnimalsLoader } from './pages/Landing/LandingPage.jsx';
+import { loader as currentUserLoader } from './pages/Layout/AppLayout.jsx';
+import { loader as animalsLoader } from './pages/Animals/AnimalsPage.jsx';
+import { loader as userAnimalsLoader } from './pages/Private/loader.js';
+import NotFoundPage from './pages/NotFound/NotFoundPage.jsx';
 
 export const queryClient = new QueryClient({
   defaultOptions: {
@@ -41,7 +54,7 @@ const router = createBrowserRouter([
       {
         index: true,
         element: <LandingPage />,
-        loader: animalsLoader(queryClient),
+        loader: landingAnimalsLoader(queryClient),
       },
       {
         path: 'register',
@@ -54,16 +67,41 @@ const router = createBrowserRouter([
         action: loginAction,
       },
       {
-        path: 'cats',
-        element: <CatsPage />,
+        path: 'animals/cats',
+        element: <AnimalsPage page={'cats'} />,
+        loader: animalsLoader(queryClient, 'cats'),
       },
       {
-        path: 'dogs',
-        element: <DogsPage />,
+        path: 'animals/dogs',
+        element: <AnimalsPage page={'dogs'} />,
+        loader: animalsLoader(queryClient, 'dogs'),
       },
+      // {
+      //   path: 'cats',
+      //   element: <CatsPage />,
+      //   loader: filterCatsLoader(queryClient),
+      // },
+      // {
+      //   path: 'dogs',
+      //   element: <DogsPage />,
+      //   loader: filterDogsLoader(queryClient),
+      // },
       {
         path: 'shelters',
         element: <SheltersPage />,
+        // action:
+      },
+      {
+        path: 'private/adopter',
+        //for test only
+        element: <AdopterProfile />,
+      },
+      {
+        path: 'private/shelter',
+        //for test only
+        element: <ShelterProfile />,
+        loader: userAnimalsLoader(queryClient),
+        action: shelterProfileAction(queryClient),
       },
       {
         path: 'cats/:slug',
@@ -74,6 +112,18 @@ const router = createBrowserRouter([
         path: 'dogs/:slug',
         element: <AnimalDetailsPage />,
         loader: animalDetailsLoader(queryClient),
+      },
+      {
+        path: 'users/verify-email',
+        element: <VerifyEmail />,
+      },
+      {
+        path: '404',
+        element: <NotFoundPage />,
+      },
+      {
+        path: '*',
+        element: <Navigate to="404" />,
       },
     ],
   },

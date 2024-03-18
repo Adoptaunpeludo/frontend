@@ -6,3 +6,4 @@ export { default as GetInvolved } from './GetInvolved.jsx';
 export { default as HeroHome } from './HeroHome.jsx';
 export { default as JoinNewsletter } from './JoinNewsletter.jsx';
 export { default as OurRescues } from './OurRescues.jsx';
+export { default as FeaturedAnimals } from './FeaturedAnimals.jsx';

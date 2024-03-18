@@ -1,20 +1,26 @@
 import {
   AdoptVsBuy,
-  FeaturedCats,
-  FeaturedDogs,
+  FeaturedAnimals,
+  // FeaturedCats,
+  // FeaturedDogs,
   FeaturedShelters,
   GetInvolved,
   HeroHome,
   JoinNewsletter,
-  OurRescues,
+  OurRescues
 } from './sections';
 import { animalsQuery } from './useAnimals';
 
-export const loader = (queryClient) => () => {
-  const { data: cats } = queryClient.ensureQueryData(animalsQuery('cats'));
-  const { data: dogs } = queryClient.ensureQueryData(animalsQuery('dogs'));
+export const loader = queryClient => () => {
+  const { data: cats } = queryClient.ensureQueryData(
+    animalsQuery('cats', { limit: 4 })
+  );
+  const { data: dogs } = queryClient.ensureQueryData(
+    animalsQuery('dogs', { limit: 4 })
+  );
+  const { data: animals } = queryClient.ensureQueryData(animalsQuery('all'));
 
-  return { cats, dogs };
+  return { cats, dogs, animals };
 };
 
 const LandingPage = () => {
@@ -22,9 +28,11 @@ const LandingPage = () => {
     <main>
       <HeroHome />
       <GetInvolved />
-      <FeaturedDogs />
+      {/* <FeaturedDogs /> */}
+      <FeaturedAnimals page='dogs' />
       <AdoptVsBuy />
-      <FeaturedCats />
+      {/* <FeaturedCats /> */}
+      <FeaturedAnimals page='cats' />
       <OurRescues />
       <FeaturedShelters />
       <JoinNewsletter />

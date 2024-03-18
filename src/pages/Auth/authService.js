@@ -5,7 +5,8 @@ export const login = async (credentials) => {
     const response = await postData('/auth/login', credentials);
     return { data: response.data };
   } catch (error) {
-    return error.response.data.message;
+    console.log('Login error: ' + error);
+    throw error;
   }
 };
 
@@ -22,10 +23,10 @@ export const register = async (credentials) => {
 export const verifyEmail = async (token) => {
   try {
     const response = await postData(`/auth/verify-email/${token}`);
-    const data = await response.json();
-    return data;
+    return response;
   } catch (error) {
     console.log(error.response.data.message);
+    return error.response.data.message
   }
 };
 

@@ -4,11 +4,12 @@ import { getCurrentUser } from './service';
 export const userQuery = {
   queryKey: ['user'],
   queryFn: getCurrentUser,
-  staleTime: 1000 * 60 * 15,
+  staleTime: Infinity,
+  retry: false,
 };
 
 export const useUser = () => {
-  const { data, isLoading, isError } = useQuery(userQuery);
+  const { data, isLoading, isError, isFetching } = useQuery(userQuery);
 
-  return { data, isLoading, isError };
+  return { data, isLoading, isError, isFetching };
 };

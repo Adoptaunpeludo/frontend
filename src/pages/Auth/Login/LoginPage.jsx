@@ -3,7 +3,7 @@ import { IconLogin2 as LoginIcon } from '@tabler/icons-react';
 import { Link, Form, redirect } from 'react-router-dom';
 import { login } from '../../Auth/authService';
 import { Hero, LogoHeader, Panel } from '../../../components';
-import { handleAuthError } from '../../../utils/handleAuthError';
+import { handleAuthError } from '../../../utils/handleError';
 import { toast } from 'react-toastify';
 import { useState } from 'react';
 import { validateField } from '../../../utils/validateField';
@@ -13,14 +13,17 @@ export const action = async ({ request }) => {
 	const credentials = Object.fromEntries(formData);
 	credentials.email = credentials.email.toLowerCase();
 
-	try {
-		await login(credentials);
-		return redirect('/');
-	} catch (error) {
-		const message = handleAuthError(error);
-		toast.error(message);
-		return redirect('/login');
-	}
+
+  try {
+    await login(credentials);
+    localStorage.setItem('isLoggedIn', true);
+    return redirect('/');
+  } catch (error) {
+    const message = handleAuthError(error);
+    toast.error(message);
+    return redirect('/login');
+  }
+
 };
 
 const LoginPage = () => {

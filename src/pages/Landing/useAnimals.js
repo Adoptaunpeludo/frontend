@@ -1,17 +1,26 @@
 import { useQuery } from '@tanstack/react-query';
-import { getCats, getDogs } from './service';
+import { getAnimals, getCats, getDogs } from './service';
 
-export const animalsQuery = (type) => {
-  const queryFn = type === 'cats' ? getCats : getDogs;
+export const animalsQuery = (type, params = {}) => {
+  let queryFn;
+
+  if (type === 'cats') queryFn = getCats;
+  if (type === 'dogs') queryFn = getDogs;
+  if (type === 'all') queryFn = getAnimals;
+
+  const { name, size, gender, age, city, limit } = params;
 
   return {
-    queryKey: ['animals', type],
-    queryFn: () => queryFn(),
+    queryKey: ['animals', type, name ?? '', size, gender, age, city, limit],
+    queryFn: () => queryFn(params),
+    staleTime: 1000 * 60 * 15,
   };
 };
 
-export const useAnimals = (type) => {
-  const { data, isLoading, isError } = useQuery(animalsQuery(type));
+export const useAnimals = (type, params = {}) => {
+  const { data, isLoading, isFetching, isError } = useQuery(
+    animalsQuery(type, params)
+  );
 
-  return { data, isLoading, isError };
+  return { data, isLoading, isFetching, isError };
 };
