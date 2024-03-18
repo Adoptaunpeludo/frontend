@@ -1,10 +1,10 @@
+import { NextUIProvider } from '@nextui-org/react';
 import { Outlet, ScrollRestoration, useNavigate } from 'react-router-dom';
 import Footer from './Footer';
 import Header from './Header';
-import { NextUIProvider } from '@nextui-org/react';
 import { userQuery } from './useUser';
 
-export const loader = (queryClient) => async () => {
+export const loader = queryClient => async () => {
   const isLoggedIn = localStorage.getItem('isLoggedIn') === 'true';
 
   if (!isLoggedIn) {
@@ -26,14 +26,14 @@ const AppLayout = () => {
 
   return (
     <>
-      <div>
-        <NextUIProvider navigate={navigate}>
+      <NextUIProvider navigate={navigate}>
+        <div className='min-h-screen flex flex-col'>
           <Header />
           <Outlet />
           <Footer />
-          <ScrollRestoration />
-        </NextUIProvider>
-      </div>
+        </div>
+        <ScrollRestoration />
+      </NextUIProvider>
     </>
   );
 };
