@@ -15,6 +15,7 @@ import {
   catDescription,
   dogDescription,
 } from '../../utils/asideDataFields';
+import { handleNotFoundError } from '../../utils/handleError';
 import ErrorPage from '../Error/ErrorPage';
 import {
   AnimalFavs,
@@ -22,7 +23,6 @@ import {
   ContactShelter,
   ShareSocialMedia,
 } from './components';
-import { handleNotFoundError } from '../../utils/handleError';
 import { animalDetailsQuery, useAnimalDetails } from './useAnimalDetails';
 export const loader =
   (queryClient) =>
@@ -52,8 +52,6 @@ const AnimalDetailsPage = () => {
   }
   if (isError) return <ErrorPage />;
   if (isLoading) return <Spinner />;
-
-  console.log({ data });
 
   return (
     <main className="max-w-screen-xl w-full flex  flex-col justify-center  gap-12 h-full  py-12  mx-auto">
