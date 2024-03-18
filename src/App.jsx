@@ -30,11 +30,12 @@ import { action as shelterProfileAction } from './pages/Private/ShelterProfile/S
 import { loader as animalDetailsLoader } from './pages/AnimalDetails/AnimalDetailsPage.jsx';
 // import { loader as filterCatsLoader } from './pages/Cats/CatsPage.jsx';
 // import { loader as filterDogsLoader } from './pages/Dogs/DogsPage.jsx';
+import { loader as animalsLoader } from './pages/Animals/AnimalsPage.jsx';
 import { loader as landingAnimalsLoader } from './pages/Landing/LandingPage.jsx';
 import { loader as currentUserLoader } from './pages/Layout/AppLayout.jsx';
-import { loader as animalsLoader } from './pages/Animals/AnimalsPage.jsx';
-import { loader as userAnimalsLoader } from './pages/Private/loader.js';
 import NotFoundPage from './pages/NotFound/NotFoundPage.jsx';
+import { loader as userAnimalsLoader } from './pages/Private/loader.js';
+import { loader as sheltersLoader } from './pages/Shelters/SheltersPage.jsx';
 
 export const queryClient = new QueryClient({
   defaultOptions: {
@@ -88,8 +89,8 @@ const router = createBrowserRouter([
       // },
       {
         path: 'shelters',
-        element: <SheltersPage />,
-        // action:
+        element: <SheltersPage page={'shelter'} />,
+        loader: sheltersLoader(queryClient, 'shelters'),
       },
       {
         path: 'private/adopter',
