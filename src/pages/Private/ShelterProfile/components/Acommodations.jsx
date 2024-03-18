@@ -1,12 +1,10 @@
 import { Checkbox } from '@nextui-org/react';
 import { H4Title } from '../../../../components';
-import { useUser } from '../../../Layout/useUser';
+
 import { facilitiesEnum } from '../../../../utils/enumData';
 
-const Accommodations = ({ isDisable = true }) => {
-  const { data } = useUser();
-
-  const { facilities } = data;
+const Accommodations = ({ facilities, isDisabled = true }) => {
+  console.log({ facilities });
 
   return (
     <div
@@ -21,7 +19,10 @@ const Accommodations = ({ isDisable = true }) => {
             radius="none"
             size="sm"
             defaultSelected={facilities.includes(facility.value)}
-            isDisabled={isDisable}
+            isDisabled={isDisabled}
+            defaultValue={facilities.includes(facility.value)}
+            name="facilities"
+            value={facility.value}
           >
             {facility.label}
           </Checkbox>

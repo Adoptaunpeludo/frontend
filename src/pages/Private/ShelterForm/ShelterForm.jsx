@@ -19,9 +19,10 @@ import Accommodations from '../ShelterProfile/components/Acommodations';
 import { useUser } from '../../Layout/useUser';
 import { Form } from 'react-router-dom';
 
-const ShelterForm = () => {
+const ShelterForm = ({ isSubmitting }) => {
   const { data } = useUser();
   const { isOpen, onOpen, onOpenChange } = useDisclosure();
+
   const {
     cif,
     legalForms,
@@ -57,6 +58,7 @@ const ShelterForm = () => {
                   {/* <Hero /> */}
                   Actualizar Perfil
                 </ModalHeader>
+
                 <ModalBody>
                   <Panel className=" max-w-4xl mx-auto">
                     <div className="flex flex-col gap-6 mx-auto px-10 py-8">
@@ -69,9 +71,11 @@ const ShelterForm = () => {
                             type="text"
                             label="CIF"
                             name="cif"
-                            placeholder={cif === '' ? '' : cif}
+                            defaultValue={cif === '' ? '' : cif}
+                            isDisabled={isSubmitting}
                           />
                           <SelectField
+                            isDisabled={isSubmitting}
                             className="min-w-72 "
                             label="Forma legal"
                             name="legalForms"
@@ -81,6 +85,7 @@ const ShelterForm = () => {
                         </div>
                         <div className="flex w-full justify-around gap-4 flex-wrap md:flex-nowrap py-2">
                           <SelectField
+                            isDisabled={isSubmitting}
                             className="min-w-72 "
                             label="Instalaciones veterinarias"
                             name="veterinaryFacilities"
@@ -88,6 +93,7 @@ const ShelterForm = () => {
                             dataEnum={boolDataEnum}
                           />
                           <SelectField
+                            isDisabled={isSubmitting}
                             className="min-w-72 "
                             label="Veterinario propio"
                             name="ownVet"
@@ -97,15 +103,16 @@ const ShelterForm = () => {
                         </div>
                         <Accommodations
                           facilities={facilities}
-                          isDisable={false}
+                          isDisabled={isSubmitting}
                         />
                         <div className="flex w-full flex-col  gap-4">
                           <H3Title title="Descripción:" className="mx-2" />
                           <Textarea
+                            isDisabled={isSubmitting}
                             className="w-full "
                             label="Descripción"
                             name="description"
-                            placeholder={
+                            defaultValue={
                               description === ''
                                 ? 'Describe tu protectora'
                                 : description
@@ -135,7 +142,8 @@ const ShelterForm = () => {
                     className="px-10 font-poppins font-semibold text-sm"
                     type="submit"
                     name="intent"
-                    value="shelter-profile"
+                    value={'shelter-profile'}
+                    isLoading={isSubmitting}
                   >
                     Enviar
                   </Button>

@@ -6,10 +6,12 @@ export const SelectField = ({
   dataField,
   dataEnum,
   name,
-  className = ''
+  className = '',
+  isDisabled,
 }) => {
   return (
     <Select
+      isDisabled={isDisabled}
       className={className}
       label={label}
       name={name}
@@ -33,5 +35,5 @@ SelectField.propTypes = {
   label: PropTypes.string.isRequired,
   dataField: PropTypes.oneOfType([PropTypes.string, PropTypes.bool]).isRequired,
   dataEnum: PropTypes.array.isRequired,
-  name: PropTypes.string.isRequired
+  name: PropTypes.string.isRequired,
 };

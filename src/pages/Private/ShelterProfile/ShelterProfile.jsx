@@ -1,4 +1,4 @@
-import { Avatar, Button, Spinner, User } from '@nextui-org/react';
+import { Avatar, Button, User } from '@nextui-org/react';
 import {
   IconBrandFacebook,
   IconBrandInstagram,
@@ -24,8 +24,9 @@ import { BUCKET_URL } from '../../../config/config';
 import ShelterForm from '../ShelterForm/ShelterForm';
 import SocialMediaForm from '../ShelterForm/components/SocialMediaForm';
 import { toast } from 'react-toastify';
-import { useNavigate } from 'react-router-dom';
+import { redirect, useNavigate, useNavigation } from 'react-router-dom';
 import { useEffect } from 'react';
+import { updateShelterProfile } from '../ShelterForm/service';
 
 export const action =
   (queryClient) =>
@@ -34,13 +35,27 @@ export const action =
     let intent = formData.get('intent');
 
     if (intent === 'shelter-profile') {
-      console.log({ formData });
+      try {
+        await updateShelterProfile(formData);
+        queryClient.invalidateQueries({
+          queryKey: ['user'],
+        });
+        toast.success('Perfil del Refugio actualizado');
+        return redirect('/private/shelter');
+      } catch (error) {
+        console.log(error);
+        toast.error('Error actualizando perfil del Refugio');
+        return null;
+      }
     }
   };
 
 const ShelterProfile = () => {
-  const { data, isLoading } = useUser();
+  const { data } = useUser();
   const navigate = useNavigate();
+  const navigation = useNavigation();
+
+  const isSubmitting = navigation.state === 'submitting';
 
   useEffect(() => {
     if (!data) {
@@ -49,18 +64,17 @@ const ShelterProfile = () => {
     }
   }, [navigate, data]);
 
-  if (isLoading) return <Spinner />;
-
   const {
     cif,
     legalForms,
-    veterinarianFacilities,
+    veterinaryFacilities,
     username,
     avatar,
     ownVet,
     description,
     images,
     socialMedia,
+    facilities,
   } = data;
   const userData = userInformation(data);
 
@@ -87,18 +101,20 @@ const ShelterProfile = () => {
                 <H3Title title="Instalaciones" />
                 <div id="veterinarianFacilities" className="flex gap-5 mx-3">
                   <span>
-                    Instalaciones veterinarias:
-                    {veterinarianFacilities ? 'si' : 'no'}
+                    Instalaciones veterinarias:{' '}
+                    {veterinaryFacilities ? 'si' : 'no'}
                   </span>
                   <span>Veterinario propio: {ownVet ? 'si' : 'no'}</span>
                 </div>
               </div>
-              <Accommodations />
+
+              <Accommodations facilities={facilities} />
+
               <div id="description" className="flex flex-col gap-3 mx-3 py-3">
                 <H3Title title="Descripción:" />
                 <div>{description}</div>
               </div>
-              <ShelterForm />
+              <ShelterForm isSubmitting={isSubmitting} />
               <ImagesFrame images={images} />
               <div id="socialMedia" className="flex flex-col gap-3 mx-3 py-3 ">
                 <H3Title title="Redes sociales:" />
