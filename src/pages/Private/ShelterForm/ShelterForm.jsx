@@ -19,8 +19,6 @@ import Accommodations from '../ShelterProfile/components/Acommodations';
 import { Form } from 'react-router-dom';
 
 const ShelterForm = ({ isSubmitting, data }) => {
-
-  const validate
 	const { isOpen, onOpen, onOpenChange } = useDisclosure();
 
 	const {
