@@ -1,8 +1,8 @@
 export const cities = [
   { label: 'A Coruña', value: 'A Coruña' },
-  { label: 'Álava', value: 'Álava' },
+  { label: 'Álava', value: 'Araba/Álava' },
   { label: 'Albacete', value: 'Albacete' },
-  { label: 'Alicante', value: 'Alicante' },
+  { label: 'Alicante', value: 'Alicante/Alacant' },
   { label: 'Almería', value: 'Almería' },
   { label: 'Asturias', value: 'Asturias' },
   { label: 'Ávila', value: 'Ávila' },
@@ -12,7 +12,7 @@ export const cities = [
   { label: 'Cáceres', value: 'Cáceres' },
   { label: 'Cádiz', value: 'Cádiz' },
   { label: 'Cantabria', value: 'Cantabria' },
-  { label: 'Castellón', value: 'Castellón' },
+  { label: 'Castellón', value: 'Castellón/Castelló' },
   { label: 'Ciudad Real', value: 'Ciudad Real' },
   { label: 'Córdoba', value: 'Córdoba' },
   { label: 'Cuenca', value: 'Cuenca' },
@@ -22,10 +22,10 @@ export const cities = [
   { label: 'Guipúzcoa', value: 'Guipúzcoa' },
   { label: 'Huelva', value: 'Huelva' },
   { label: 'Huesca', value: 'Huesca' },
-  { label: 'Islas Baleares', value: 'Islas Baleares' },
+  { label: 'Islas Baleares', value: 'Balears, Illes' },
   { label: 'Jaén', value: 'Jaén' },
   { label: 'La Rioja', value: 'La Rioja' },
-  { label: 'Las Palmas', value: 'Las Palmas' },
+  { label: 'Las Palmas', value: 'Palmas, Las' },
   { label: 'León', value: 'León' },
   { label: 'Lérida', value: 'Lérida' },
   { label: 'Lugo', value: 'Lugo' },
@@ -44,7 +44,7 @@ export const cities = [
   { label: 'Tarragona', value: 'Tarragona' },
   { label: 'Teruel', value: 'Teruel' },
   { label: 'Toledo', value: 'Toledo' },
-  { label: 'Valencia', value: 'Valencia' },
+  { label: 'Valencia', value: 'Valencia/València' },
   { label: 'Valladolid', value: 'Valladolid' },
   { label: 'Vizcaya', value: 'Vizcaya' },
   { label: 'Zamora', value: 'Zamora' },
@@ -155,5 +155,20 @@ export const boolDataEnum = [
   {
     label: 'No',
     value: false,
+  },
+];
+
+export const ageRanges = [
+  {
+    label: 'cachorro',
+    value: 'puppy',
+  },
+  {
+    label: 'adulto',
+    value: 'adult',
+  },
+  {
+    label: 'anciano',
+    value: 'senior',
   },
 ];

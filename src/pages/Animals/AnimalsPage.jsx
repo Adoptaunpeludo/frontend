@@ -11,6 +11,8 @@ export const loader =
       ...new URL(request.url).searchParams.entries(),
     ]);
 
+    if (params.name) params.name = params.name.toLowerCase();
+
     await queryClient.ensureQueryData(animalsQuery(page, params));
 
     return { params };

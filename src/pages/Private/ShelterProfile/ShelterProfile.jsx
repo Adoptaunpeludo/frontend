@@ -26,8 +26,12 @@ import SocialMediaForm from '../ShelterForm/components/SocialMediaForm';
 import { toast } from 'react-toastify';
 import { useNavigate, useNavigation } from 'react-router-dom';
 import { useEffect } from 'react';
-import { updateShelterProfile } from '../ShelterForm/service';
+import {
+  createPetAdoption,
+  updateShelterProfile,
+} from '../ShelterForm/service';
 import UserFormBio from '../UserFormBio/UserFormBio';
+import AnimalForm from '../AnimalForm/AnimalForm';
 
 export const action =
   (queryClient) =>
@@ -44,6 +48,20 @@ export const action =
       } catch (error) {
         console.log(error);
         toast.error('Error actualizando perfil del Refugio');
+        return null;
+      }
+    }
+
+    if (intent === 'create-adoption') {
+      try {
+        await createPetAdoption(formData);
+        queryClient.invalidateQueries({
+          queryKey: ['user-animals'],
+        });
+        return null;
+      } catch (error) {
+        console.log(error);
+        toast.error('Error creando anuncio de adopcion');
         return null;
       }
     }
@@ -172,6 +190,7 @@ const ShelterProfile = () => {
         </section>
         <section id="petsTable" className="px-4">
           <StatusAnimalsTable role={'shelter'} />
+          <AnimalForm isSubmitting={isSubmitting} />
         </section>
         <footer className="border-solid border-t-1 border-t-danger py-8 h-100 flex justify-center">
           <Button color="danger" size="lg" startContent={<IconTrashXFilled />}>

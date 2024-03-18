@@ -3,17 +3,17 @@ import { BUCKET_URL } from '../../../config/config';
 import ImageUploadModal from './ImageUploadModal';
 import DeleteImageModal from './DeleteImageModal';
 
-export const ImagesFrame = ({ images }) => {
+export const ImagesFrame = ({ images = [] }) => {
   return (
     <div id="images" className="flex flex-col gap-5 mx-3">
       <H3Title title="Imágenes:" />
       <div className="grid grid-cols-3 max-sm:grid-cols-1 max-md:grid-cols-2 max-sm:justify-items-center gap-x-5 gap-y-5 ">
-        {images.length < 6 && (
+        {images?.length < 6 && (
           <div className="imageProfile w-60 h-32 ">
             <ImageUploadModal />
           </div>
         )}
-        {images.map((image, index) => (
+        {images?.map((image, index) => (
           <div
             className={`relative imageProfile w-60 h-32 border-solid border-3 border-${
               index === 0 ? 'primary' : 'secondary'
