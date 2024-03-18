@@ -1,8 +1,7 @@
 import { Button, Input, Select, SelectItem, Spacer } from '@nextui-org/react';
+import { useState } from 'react';
 import { useLoaderData, useNavigate, useSearchParams } from 'react-router-dom';
 import { ageRanges, cities, genders, sizes } from './data/items';
-import { PagePagination } from './Pagination';
-import { useState } from 'react';
 
 export function FilterBar({ page }) {
   const [searchParams, setSearchParams] = useSearchParams();
@@ -139,9 +138,14 @@ export function FilterBar({ page }) {
           </SelectItem>
         ))}
       </Select>
-      <Button type="submit">Buscar</Button>
-      <Button onPress={handleReset}>Reset</Button>
-      <PagePagination page={page} />
+      <Button type="submit" color="primary">
+        Buscar
+      </Button>
+      <Button onPress={handleReset} color="primary">
+        Reset
+      </Button>
+      {/* TODO:Dont remove without final layout  */}
+      {/* <PagePagination page={page} /> */}
     </form>
   );
 }
