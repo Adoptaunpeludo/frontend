@@ -38,6 +38,7 @@ const ShelterForm = ({ isSubmitting, data }) => {
       size="md"
       startContent={<IconEdit />}
       onPress={onOpen}
+      className="max-w-[100px]"
     >
       Editar
       <Modal
@@ -54,7 +55,7 @@ const ShelterForm = ({ isSubmitting, data }) => {
               <>
                 <ModalHeader className="flex flex-col gap-1">
                   {/* <Hero /> */}
-                  Actualizar Perfil
+                  Actualizar Perfil de Shelter
                 </ModalHeader>
 
                 <ModalBody>

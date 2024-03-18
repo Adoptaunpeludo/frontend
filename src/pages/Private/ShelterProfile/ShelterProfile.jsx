@@ -27,6 +27,7 @@ import { toast } from 'react-toastify';
 import { useNavigate, useNavigation } from 'react-router-dom';
 import { useEffect } from 'react';
 import { updateShelterProfile } from '../ShelterForm/service';
+import UserFormBio from '../UserFormBio/UserFormBio';
 
 export const action =
   (queryClient) =>
@@ -34,9 +35,9 @@ export const action =
     let formData = await request.formData();
     let intent = formData.get('intent');
 
-    if (intent === 'shelter-profile') {
+    if (intent === 'shelter-profile' || intent === 'shelter-user-profile') {
       try {
-        await updateShelterProfile(formData);
+        await updateShelterProfile(formData, intent);
         queryClient.invalidateQueries({ queryKey: ['user'] });
         toast.success('Perfil del Refugio actualizado');
         return null;
@@ -166,7 +167,7 @@ const ShelterProfile = () => {
                 <AsideDataColumn dataColumn={userData} />
               </div>
             </div>
-
+            <UserFormBio data={data} isSubmitting={isSubmitting} />
             <div id="NotificationsAside">
               <H2Title title="Mensajes" className="pb-5" />
               <div className="flex justify-between border-solid border-b-1 border-b-primary pb-3 items-center">
