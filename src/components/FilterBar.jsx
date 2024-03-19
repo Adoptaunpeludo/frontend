@@ -1,16 +1,13 @@
 import { Button, Input, Select, SelectItem, Spacer } from '@nextui-org/react';
 import { useState } from 'react';
 import { useLoaderData, useNavigate, useSearchParams } from 'react-router-dom';
-
-import { PagePagination } from './Pagination';
-import { useState } from 'react';
+// import { PagePagination } from './Pagination';
 import {
   ageRanges,
   animalSizeEnum,
   cities,
   genderEnum,
 } from '../utils/enumData';
-
 
 export function FilterBar({ page }) {
   const [searchParams, setSearchParams] = useSearchParams();
@@ -36,7 +33,6 @@ export function FilterBar({ page }) {
     setTimeout(() => {
       window.scrollTo(0, scrollPosition);
     });
-
   };
 
   const handleSubmit = (e) => {
@@ -98,7 +94,7 @@ export function FilterBar({ page }) {
           onSelectionChange={setSize}
           defaultSelectedKeys={params?.size ? [params.size] : []}
         >
-          {sizes.map((size) => (
+          {animalSizeEnum.map((size) => (
             <SelectItem
               key={size.value}
               value={size.value}
@@ -119,7 +115,7 @@ export function FilterBar({ page }) {
           onSelectionChange={setGender}
           defaultSelectedKeys={params?.gender ? [params.gender] : []}
         >
-          {genders.map((gender) => (
+          {genderEnum.map((gender) => (
             <SelectItem
               key={gender.value}
               value={gender.value}
