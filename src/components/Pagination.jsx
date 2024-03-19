@@ -1,10 +1,9 @@
 import { Pagination } from '@nextui-org/react';
 import { useLoaderData, useSearchParams } from 'react-router-dom';
-import { useAnimals } from '../pages/Landing/useAnimals';
 
-export const PagePagination = ({ page }) => {
+export const PagePagination = ({ data }) => {
   const { params } = useLoaderData();
-  const { data } = useAnimals(page, params);
+
   const [searchParams, setSearchParams] = useSearchParams();
 
   const handlePageChange = (pageNumber) => {

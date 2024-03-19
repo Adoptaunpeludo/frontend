@@ -99,6 +99,7 @@ export function FilterBar({ page }) {
               key={size.value}
               value={size.value}
               className="capitalize"
+              textValue="Size"
             >
               {size.name}
             </SelectItem>
@@ -120,6 +121,7 @@ export function FilterBar({ page }) {
               key={gender.value}
               value={gender.value}
               className="capitalize"
+              textValue="Gender"
             >
               {gender.name}
             </SelectItem>
@@ -141,6 +143,7 @@ export function FilterBar({ page }) {
               key={age.value}
               value={age.value}
               className="capitalize"
+              textValue="Ages"
             >
               {age.name}
             </SelectItem>
@@ -161,6 +164,7 @@ export function FilterBar({ page }) {
             key={city.value}
             value={city.value}
             className="capitalize"
+            textValue="Cities"
           >
             {city.label}
           </SelectItem>
