@@ -1,4 +1,4 @@
-import { Avatar, Button, Spinner, User, useUser } from '@nextui-org/react';
+import { Avatar, Button, Spinner, User } from '@nextui-org/react';
 import { IconTrashXFilled } from '@tabler/icons-react';
 import {
   AsideDataColumn,
