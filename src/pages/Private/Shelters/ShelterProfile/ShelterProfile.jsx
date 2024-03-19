@@ -23,13 +23,10 @@ import {
 } from '../../shared';
 
 import Accommodations from './components/Acommodations';
-import { useUser } from '../../../Layout/useUser';
 import { BUCKET_URL } from '../../../../config/config';
 import ShelterForm from '../ShelterForm/ShelterForm';
 import SocialMediaForm from '../ShelterForm/components/SocialMediaForm';
 import { toast } from 'react-toastify';
-import { useNavigate, useNavigation } from 'react-router-dom';
-import { useEffect } from 'react';
 import {
   createPetAdoption,
   updateShelterProfile,
@@ -37,6 +34,8 @@ import {
 } from '../ShelterForm/service';
 
 import AnimalForm from '../AnimalForm/AnimalForm';
+import { useNavigation } from 'react-router-dom';
+import { useUser } from '../../useUser';
 
 export const action =
   (animalImages, resetImages, queryClient) =>
@@ -82,21 +81,13 @@ export const action =
   };
 
 const ShelterProfile = () => {
-  const { data, isFetching, isLoading, isError } = useUser();
-  const navigate = useNavigate();
+  const { data, isFetching, isLoading } = useUser();
 
   const navigation = useNavigation();
 
   const isSubmitting = navigation.state === 'submitting';
 
-  useEffect(() => {
-    if (isError) {
-      toast.error('Por favor primero haz Login con tu cuenta');
-      navigate('/login');
-    }
-  }, [isError, navigate]);
-
-  if (isLoading || isError) return <Spinner />;
+  if (isLoading) return <Spinner />;
 
   const {
     cif,
