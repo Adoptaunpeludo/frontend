@@ -35,7 +35,7 @@ import { loader as currentUserLoader } from './pages/Layout/AppLayout.jsx';
 import { loader as animalsLoader } from './pages/Animals/AnimalsPage.jsx';
 import { loader as userAnimalsLoader } from './pages/Private/loader.js';
 import NotFoundPage from './pages/NotFound/NotFoundPage.jsx';
-import { AnimalImagesContextProvider } from './context/AnimalImagesContext.jsx';
+import { useAnimalImagesContext } from './context/AnimalImagesContext.jsx';
 
 export const queryClient = new QueryClient({
   defaultOptions: {
@@ -45,100 +45,99 @@ export const queryClient = new QueryClient({
   },
 });
 
-const router = createBrowserRouter([
-  {
-    path: '/',
-    element: <AppLayout />,
-    errorElement: <ErrorPage />,
-    loader: currentUserLoader(queryClient),
-    children: [
-      {
-        index: true,
-        element: <LandingPage />,
-        loader: landingAnimalsLoader(queryClient),
-      },
-      {
-        path: 'register',
-        element: <RegisterPage />,
-        action: registerAction,
-      },
-      {
-        path: 'login',
-        element: <LoginPage />,
-        action: loginAction,
-      },
-      {
-        path: 'animals/cats',
-        element: <AnimalsPage page={'cats'} />,
-        loader: animalsLoader(queryClient, 'cats'),
-      },
-      {
-        path: 'animals/dogs',
-        element: <AnimalsPage page={'dogs'} />,
-        loader: animalsLoader(queryClient, 'dogs'),
-      },
-      // {
-      //   path: 'cats',
-      //   element: <CatsPage />,
-      //   loader: filterCatsLoader(queryClient),
-      // },
-      // {
-      //   path: 'dogs',
-      //   element: <DogsPage />,
-      //   loader: filterDogsLoader(queryClient),
-      // },
-      {
-        path: 'shelters',
-        element: <SheltersPage />,
-        // action:
-      },
-      {
-        path: 'private/adopter',
-        //for test only
-        element: <AdopterProfile />,
-      },
-      {
-        path: 'private/shelter',
-        //for test only
-        element: (
-          <AnimalImagesContextProvider>
-            <ShelterProfile />,
-          </AnimalImagesContextProvider>
-        ),
-        loader: userAnimalsLoader(queryClient),
-        action: shelterProfileAction(queryClient),
-      },
-      {
-        path: 'cats/:slug',
-        element: <AnimalDetailsPage />,
-        loader: animalDetailsLoader(queryClient),
-      },
-      {
-        path: 'dogs/:slug',
-        element: <AnimalDetailsPage />,
-        loader: animalDetailsLoader(queryClient),
-      },
-      {
-        path: 'users/verify-email',
-        element: <VerifyEmail />,
-      },
-      {
-        path: '404',
-        element: <NotFoundPage />,
-      },
-      {
-        path: '*',
-        element: <Navigate to="404" />,
-      },
-    ],
-  },
-]);
+const router = (animalImages, resetImages) =>
+  createBrowserRouter([
+    {
+      path: '/',
+      element: <AppLayout />,
+      errorElement: <ErrorPage />,
+      loader: currentUserLoader(queryClient),
+      children: [
+        {
+          index: true,
+          element: <LandingPage />,
+          loader: landingAnimalsLoader(queryClient),
+        },
+        {
+          path: 'register',
+          element: <RegisterPage />,
+          action: registerAction,
+        },
+        {
+          path: 'login',
+          element: <LoginPage />,
+          action: loginAction,
+        },
+        {
+          path: 'animals/cats',
+          element: <AnimalsPage page={'cats'} />,
+          loader: animalsLoader(queryClient, 'cats'),
+        },
+        {
+          path: 'animals/dogs',
+          element: <AnimalsPage page={'dogs'} />,
+          loader: animalsLoader(queryClient, 'dogs'),
+        },
+        // {
+        //   path: 'cats',
+        //   element: <CatsPage />,
+        //   loader: filterCatsLoader(queryClient),
+        // },
+        // {
+        //   path: 'dogs',
+        //   element: <DogsPage />,
+        //   loader: filterDogsLoader(queryClient),
+        // },
+        {
+          path: 'shelters',
+          element: <SheltersPage />,
+          // action:
+        },
+        {
+          path: 'private/adopter',
+          //for test only
+          element: <AdopterProfile />,
+        },
+        {
+          path: 'private/shelter',
+          //for test only
+          element: <ShelterProfile />,
+          loader: userAnimalsLoader(queryClient),
+          action: shelterProfileAction(animalImages, resetImages, queryClient),
+        },
+        {
+          path: 'cats/:slug',
+          element: <AnimalDetailsPage />,
+          loader: animalDetailsLoader(queryClient),
+        },
+        {
+          path: 'dogs/:slug',
+          element: <AnimalDetailsPage />,
+          loader: animalDetailsLoader(queryClient),
+        },
+        {
+          path: 'users/verify-email',
+          element: <VerifyEmail />,
+        },
+        {
+          path: '404',
+          element: <NotFoundPage />,
+        },
+        {
+          path: '*',
+          element: <Navigate to="404" />,
+        },
+      ],
+    },
+  ]);
 
 function App() {
+  const { images: animalImages, resetImages } = useAnimalImagesContext();
+
   return (
     <QueryClientProvider client={queryClient}>
       <ReactQueryDevtools initialIsOpen={false} />
-      <RouterProvider router={router} />
+      <RouterProvider router={router(animalImages, resetImages)} />
     </QueryClientProvider>
   );
 }

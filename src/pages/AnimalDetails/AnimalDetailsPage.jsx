@@ -8,7 +8,7 @@ import {
   H2Title,
   TitleSection,
 } from '../../components';
-import { BUCKET_URL_ANIMALS } from '../../config/config';
+import { BUCKET_URL } from '../../config/config';
 import {
   animalBioInfo,
   animalShelterInfo,
@@ -66,7 +66,7 @@ const AnimalDetailsPage = () => {
           {/* TODO: check loading image put spinner reservate space */}
           <div className="relative container lg:w-164">
             <Image
-              src={`${BUCKET_URL_ANIMALS}/${data.images[0]}`}
+              src={`${BUCKET_URL}/${data.images[0]}`}
               className=" xl:w-200 xl:max-h-[36rem] object-cover object-top aspect-4/3"
               loading="lazy"
               alt={slug}

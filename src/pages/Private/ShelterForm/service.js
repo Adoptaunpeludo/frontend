@@ -31,3 +31,9 @@ export const createPetAdoption = async (formData) => {
 
   return data;
 };
+
+export const uploadAnimalImages = async (images, animalId) => {
+  const { data } = await postData(`animals/upload-images/${animalId}`, images);
+
+  return data;
+};

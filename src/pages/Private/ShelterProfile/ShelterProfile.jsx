@@ -29,12 +29,13 @@ import { useEffect } from 'react';
 import {
   createPetAdoption,
   updateShelterProfile,
+  uploadAnimalImages,
 } from '../ShelterForm/service';
 import UserFormBio from '../UserFormBio/UserFormBio';
 import AnimalForm from '../AnimalForm/AnimalForm';
 
 export const action =
-  (queryClient) =>
+  (animalImages, resetImages, queryClient) =>
   async ({ request }) => {
     let formData = await request.formData();
     let intent = formData.get('intent');
@@ -53,11 +54,20 @@ export const action =
     }
 
     if (intent === 'create-adoption') {
+      const imagesData = new FormData();
+
+      animalImages.forEach((image) => {
+        imagesData.append('images', image);
+      });
+
       try {
-        await createPetAdoption(formData);
-        queryClient.invalidateQueries({
-          queryKey: ['user-animals'],
-        });
+        const animal = await createPetAdoption(formData);
+        await uploadAnimalImages(imagesData, animal.id);
+        resetImages();
+        await queryClient.invalidateQueries((queryKey) =>
+          queryKey.includes('animals')
+        );
+        toast.success(`Animal ${animal.name} puesto en adopción`);
         return null;
       } catch (error) {
         console.log(error);

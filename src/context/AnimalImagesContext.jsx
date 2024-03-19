@@ -5,8 +5,12 @@ const AnimalImagesContext = createContext();
 const AnimalImagesContextProvider = ({ children }) => {
   const [images, setImages] = useState([]);
 
+  const resetImages = () => {
+    setImages([]);
+  };
+
   return (
-    <AnimalImagesContext.Provider value={{ images, setImages }}>
+    <AnimalImagesContext.Provider value={{ images, setImages, resetImages }}>
       {children}
     </AnimalImagesContext.Provider>
   );
