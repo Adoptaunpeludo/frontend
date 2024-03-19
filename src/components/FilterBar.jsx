@@ -27,12 +27,6 @@ export function FilterBar({ page }) {
     setCity(new Set([]));
 
     page !== 'shelter' ? navigate(`/animals/${page}`) : navigate(`/shelters`);
-
-    const scrollPosition = window.scrollY;
-
-    setTimeout(() => {
-      window.scrollTo(0, scrollPosition);
-    });
   };
 
   const handleSubmit = (e) => {
@@ -61,12 +55,6 @@ export function FilterBar({ page }) {
     }
 
     setSearchParams(searchParams);
-
-    const scrollPosition = window.scrollY;
-
-    setTimeout(() => {
-      window.scrollTo(0, scrollPosition);
-    });
   };
 
   return (

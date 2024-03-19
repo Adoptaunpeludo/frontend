@@ -11,6 +11,7 @@ import {
 } from '../../../components';
 
 import { animalsQuery, useAnimals } from '../Landing/useAnimals';
+import { useEffect, useRef } from 'react';
 
 export const loader =
   (queryClient, page) =>
@@ -29,16 +30,24 @@ export const loader =
 const AnimalsPage = ({ page }) => {
   const { params } = useLoaderData();
   const navigation = useNavigation();
+  const titleRef = useRef(null);
 
   const { data } = useAnimals(page, params);
 
   const isLoading = navigation.state === 'loading';
+
+  useEffect(() => {
+    if (!isLoading) {
+      titleRef.current.scrollIntoView({ behavior: 'instant' });
+    }
+  }, [isLoading]);
 
   return (
     <>
       <Banner src={`/backgrounds/banner-${page}.jpg`} />
       <main className="max-w-screen-xl w-full flex  flex-col justify-center  gap-12 h-full  py-12  mx-auto">
         <TitleSection title={page === 'cats' ? 'Gatetes' : 'Perretes'} />
+        <div ref={titleRef}></div>
         <FilterBar page={page} />
         <ul className="flex justify-center gap-4 flex-wrap p-6">
           {isLoading ? (
