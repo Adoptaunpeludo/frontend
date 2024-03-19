@@ -16,7 +16,6 @@ import {
   dogDescription,
 } from '../../utils/asideDataFields';
 import { handleNotFoundError } from '../../utils/handleError';
-
 import {
   AnimalFavs,
   AnimalGallery,

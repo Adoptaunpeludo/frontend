@@ -1,5 +1,7 @@
 import { Button, Input, Select, SelectItem, Spacer } from '@nextui-org/react';
+import { useState } from 'react';
 import { useLoaderData, useNavigate, useSearchParams } from 'react-router-dom';
+
 import { PagePagination } from './Pagination';
 import { useState } from 'react';
 import {
@@ -8,6 +10,7 @@ import {
   cities,
   genderEnum,
 } from '../utils/enumData';
+
 
 export function FilterBar({ page }) {
   const [searchParams, setSearchParams] = useSearchParams();
@@ -25,13 +28,15 @@ export function FilterBar({ page }) {
     setAge(new Set([]));
     setSize(new Set([]));
     setCity(new Set([]));
-    navigate(`/animals/${page}`);
+
+    page !== 'shelter' ? navigate(`/animals/${page}`) : navigate(`/shelters`);
 
     const scrollPosition = window.scrollY;
 
     setTimeout(() => {
       window.scrollTo(0, scrollPosition);
     });
+
   };
 
   const handleSubmit = (e) => {
@@ -83,59 +88,69 @@ export function FilterBar({ page }) {
         defaultValue={params?.name || ''}
       />
       <Spacer x={0.5} />
-      <Select
-        label="Tamaño"
-        aria-label="Filtrar por tamaño"
-        className="flex-1 capitalize"
-        name="size"
-        selectedKeys={size}
-        onSelectionChange={setSize}
-        defaultSelectedKeys={params?.size ? [params.size] : []}
-      >
-        {animalSizeEnum.map((size) => (
-          <SelectItem
-            key={size.value}
-            value={size.value}
-            className="capitalize"
-          >
-            {size.label}
-          </SelectItem>
-        ))}
-      </Select>
+      {page !== 'shelter' && (
+        <Select
+          label="Tamaño"
+          aria-label="Filtrar por tamaño"
+          className="flex-1 capitalize"
+          name="size"
+          selectedKeys={size}
+          onSelectionChange={setSize}
+          defaultSelectedKeys={params?.size ? [params.size] : []}
+        >
+          {sizes.map((size) => (
+            <SelectItem
+              key={size.value}
+              value={size.value}
+              className="capitalize"
+            >
+              {size.name}
+            </SelectItem>
+          ))}
+        </Select>
+      )}
       <Spacer x={0.5} />
-      <Select
-        label="Género"
-        className="flex-1 capitalize"
-        name="gender"
-        selectedKeys={gender}
-        onSelectionChange={setGender}
-        defaultSelectedKeys={params?.gender ? [params.gender] : []}
-      >
-        {genderEnum.map((gender) => (
-          <SelectItem
-            key={gender.value}
-            value={gender.value}
-            className="capitalize"
-          >
-            {gender.label}
-          </SelectItem>
-        ))}
-      </Select>
+      {page !== 'shelter' && (
+        <Select
+          label="Género"
+          className="flex-1 capitalize"
+          name="gender"
+          selectedKeys={gender}
+          onSelectionChange={setGender}
+          defaultSelectedKeys={params?.gender ? [params.gender] : []}
+        >
+          {genders.map((gender) => (
+            <SelectItem
+              key={gender.value}
+              value={gender.value}
+              className="capitalize"
+            >
+              {gender.name}
+            </SelectItem>
+          ))}
+        </Select>
+      )}
       <Spacer x={0.5} />
-      <Select
-        label="Edad"
-        className="flex-1 capitalize"
-        name="age"
-        defaultSelectedKeys={params?.age ? [params.age] : []}
-        selectedKeys={age}
-        onSelectionChange={setAge}
-      >
-        {ageRanges.map((age) => (
-          <SelectItem key={age.value} value={age.value} className="capitalize">
-            {age.label}
-          </SelectItem>
-        ))}
-      </Select>
+      {page !== 'shelter' && (
+        <Select
+          label="Edad"
+          className="flex-1 capitalize"
+          name="age"
+          defaultSelectedKeys={params?.age ? [params.age] : []}
+          selectedKeys={age}
+          onSelectionChange={setAge}
+        >
+          {ageRanges.map((age) => (
+            <SelectItem
+              key={age.value}
+              value={age.value}
+              className="capitalize"
+            >
+              {age.name}
+            </SelectItem>
+          ))}
+        </Select>
+      )}
       <Spacer x={0.5} />
       <Select
         label="Provincia"
@@ -155,9 +170,14 @@ export function FilterBar({ page }) {
           </SelectItem>
         ))}
       </Select>
-      <Button type="submit">Buscar</Button>
-      <Button onPress={handleReset}>Reset</Button>
-      <PagePagination page={page} />
+      <Button type="submit" color="primary">
+        Buscar
+      </Button>
+      <Button onPress={handleReset} color="primary">
+        Reset
+      </Button>
+      {/* TODO:Dont remove without final layout  */}
+      {/* <PagePagination page={page} /> */}
     </form>
   );
 }

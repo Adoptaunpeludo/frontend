@@ -23,13 +23,17 @@ import { BUCKET_URL } from '../config/config';
 
 export const PetCard = ({ animal }) => {
   return (
+
     <Card className="max-w-80">
+
       {/* Header */}
       <CardHeader className="relative p-0 overflow-hidden">
         <Image
           src={`${BUCKET_URL}/${animal.images[0]}`}
           alt={animal.name}
+
           className="w-80 h-full object-cover min-h-[320px]"
+
         />
 
         {/* Etiqueta absolutamente posicionada para 'gato' */}
@@ -43,11 +47,13 @@ export const PetCard = ({ animal }) => {
       </CardHeader>
 
       {/* Body */}
+
       <CardBody className="flex flex-column overflow-visible py-2 content-between">
         <h3 className="flex w-full font-lobster justify-center items-center text-4xl capitalize">
           {animal.name}
         </h3>
         <p className="my-3 flex-1">
+
           Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque
           imperdiet nulla ipsum. Cras et suscipit ligula. Nunc molestie ultrices
           eros, eu vulputate enim hendrerit a.
