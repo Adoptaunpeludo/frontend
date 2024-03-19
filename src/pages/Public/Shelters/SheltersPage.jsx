@@ -2,8 +2,14 @@ import { Spinner } from '@nextui-org/spinner';
 import { useLoaderData } from 'react-router';
 import { useNavigation } from 'react-router-dom';
 
+import { useEffect, useRef } from 'react';
+import {
+  Banner,
+  FilterBar,
+  ShelterCard,
+  TitleSection,
+} from '../../../components';
 import { sheltersQuery, useShelters } from './useShelters';
-import { Banner, FilterBar, TitleSection } from '../../../components';
 
 export const loader =
   (queryClient, page) =>
@@ -20,11 +26,14 @@ export const loader =
 const SheltersPage = ({ page }) => {
   const { params } = useLoaderData();
   const navigation = useNavigation();
-
-  const { data } = useShelters(page, params);
-
-  console.log({ data });
-  const isLoading = navigation.state === 'loading';
+  const titleRef = useRef(null);
+  const { data, isLoading } = useShelters(page, params);
+  //const isLoading = navigation.state === 'loading';
+  useEffect(() => {
+    if (!isLoading) {
+      // titleRef.current.scrollIntoView({ behavior: 'instant' });
+    }
+  }, [isLoading]);
 
   return (
     <>
@@ -36,8 +45,10 @@ const SheltersPage = ({ page }) => {
           {isLoading ? (
             <Spinner className="flex justify-center items-center" />
           ) : (
-            // data.map((animal) => <PetCard key={animal.id} animal={animal} />)
-            ''
+            data.users.map((shelter) => (
+              <ShelterCard key={shelter.id} shelter={shelter} />
+              //<p>{JSON.stringify(data, null, 2)}</p>
+            ))
           )}
         </ul>
         <footer className="mx-auto">
