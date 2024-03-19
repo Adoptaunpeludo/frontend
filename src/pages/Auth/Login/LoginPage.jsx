@@ -1,11 +1,10 @@
 import { Button, Input } from '@nextui-org/react';
 import { IconLogin2 as LoginIcon } from '@tabler/icons-react';
-import { Link, Form, redirect } from 'react-router-dom';
-import { login } from '../../Auth/authService';
+import { useState } from 'react';
+import { Form, Link, redirect } from 'react-router-dom';
+import { toast } from 'react-toastify';
 import { Hero, LogoHeader, Panel } from '../../../components';
 import { handleAuthError } from '../../../utils/handleError';
-import { toast } from 'react-toastify';
-import { useState } from 'react';
 import { validateField } from '../../../utils/validateField';
 import { userQuery } from '../../Private/useUser';
 
@@ -60,7 +59,8 @@ const LoginPage = () => {
 
   return (
     <>
-      <main className="bg-default-100">
+
+      <main className="bg-default-100 flex-grow">
         <Hero />
         <section
           id="login"

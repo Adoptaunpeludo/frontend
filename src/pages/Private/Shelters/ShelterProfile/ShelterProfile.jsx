@@ -7,12 +7,12 @@ import {
 } from '@tabler/icons-react';
 
 import {
-  Hero,
-  TitleSection,
-  H2Title,
-  H3Title,
   AsideDataColumn,
   CameraIcon,
+  H2Title,
+  H3Title,
+  Hero,
+  TitleSection,
 } from '../../../../components';
 
 import {
@@ -104,7 +104,7 @@ const ShelterProfile = () => {
   const userData = userInformation(data);
 
   return (
-    <main className="bg-default-100">
+    <main className="bg-default-100 flex-grow">
       <Hero />
       <section
         id="SheltersProfile"

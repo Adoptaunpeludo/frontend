@@ -50,73 +50,71 @@ const Header = () => {
   ];
 
   return (
-    <header className="h-16">
-      <Navbar
-        isMenuOpen={isMenuOpen}
-        onMenuOpenChange={handleMenuOpenChange}
-        maxWidth="xl"
-      >
-        <NavbarContent>
-          <NavbarMenuToggle
-            aria-label={isMenuOpen ? 'Close menu' : 'Open menu'}
-            className="sm:hidden"
-          />
-          <NavbarBrand>
-            <Link href="/">
-              <BrandNavLogo />
-            </Link>
-          </NavbarBrand>
-        </NavbarContent>
+    <Navbar
+      isMenuOpen={isMenuOpen}
+      onMenuOpenChange={handleMenuOpenChange}
+      maxWidth="xl"
+    >
+      <NavbarContent>
+        <NavbarMenuToggle
+          aria-label={isMenuOpen ? 'Close menu' : 'Open menu'}
+          className="sm:hidden"
+        />
+        <NavbarBrand>
+          <Link href="/">
+            <BrandNavLogo />
+          </Link>
+        </NavbarBrand>
+      </NavbarContent>
 
-        <NavbarContent className="hidden sm:flex " justify="center">
-          {menuItems.map((item, index) => (
-            <NavbarItem key={`${item.name}-${index}`}>
-              <Link color={item.color} href={item.href}>
-                {item.name}
-              </Link>
-            </NavbarItem>
-          ))}
-        </NavbarContent>
-        <NavbarContent justify="end">
-          {isLoading ? (
-            <Spinner />
-          ) : (
-            <NavbarItem>
-              {!user ? (
-                <Button
-                  as={Link}
-                  color="primary"
-                  href="/login"
-                  variant="solid"
-                  size="sm"
-                  endContent={<LoginIcon />}
-                >
-                  Login
-                </Button>
-              ) : (
-                <div className="flex gap-2">
-                  <UserAreaMenu />
-                </div>
-              )}
-            </NavbarItem>
-          )}
-        </NavbarContent>
-        <NavbarMenu>
-          {menuItems.map((item, index) => (
-            <NavbarMenuItem key={`${item.name}-${index}`}>
-              <Link
-                className="w-full"
-                href={item.href}
-                size="lg"
-                color={item.color}
+      <NavbarContent className="hidden sm:flex " justify="center">
+        {menuItems.map((item, index) => (
+          <NavbarItem key={`${item.name}-${index}`}>
+            <Link color={item.color} href={item.href}>
+              {item.name}
+            </Link>
+          </NavbarItem>
+        ))}
+      </NavbarContent>
+      <NavbarContent justify="end">
+        {isLoading ? (
+          <Spinner />
+        ) : (
+          <NavbarItem>
+            {!user ? (
+              <Button
+                as={Link}
+                color="primary"
+                href="/login"
+                variant="solid"
+                size="sm"
+                endContent={<LoginIcon />}
               >
-                {item.name}
-              </Link>
-            </NavbarMenuItem>
-          ))}
-        </NavbarMenu>
-      </Navbar>
-    </header>
+                Login
+              </Button>
+            ) : (
+              <div className="flex gap-2">
+                <UserAreaMenu />
+              </div>
+            )}
+          </NavbarItem>
+        )}
+      </NavbarContent>
+      <NavbarMenu>
+        {menuItems.map((item, index) => (
+          <NavbarMenuItem key={`${item.name}-${index}`}>
+            <Link
+              className="w-full"
+              href={item.href}
+              size="lg"
+              color={item.color}
+            >
+              {item.name}
+            </Link>
+          </NavbarMenuItem>
+        ))}
+      </NavbarMenu>
+    </Navbar>
   );
 };
 export default Header;

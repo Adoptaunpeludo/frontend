@@ -1,6 +1,5 @@
 import { Avatar, Button, Spinner, User, useUser } from '@nextui-org/react';
 import { IconTrashXFilled } from '@tabler/icons-react';
-
 import {
   AsideDataColumn,
   EditButton,
@@ -9,6 +8,7 @@ import {
   TitleSection,
 } from '../../../../components';
 import { StatusAnimalsTable, userInformation } from '../../shared';
+import { useUser } from '../../useUser';
 
 const AdopterProfile = () => {
   const { data, isLoading } = useUser();
@@ -19,7 +19,7 @@ const AdopterProfile = () => {
   const userData = userInformation(data);
 
   return (
-    <main className="bg-default-100">
+    <main className="bg-default-100 flex-grow">
       <Hero />
       <section
         id="adopterProfile"
