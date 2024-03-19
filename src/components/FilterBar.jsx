@@ -158,7 +158,7 @@ export function FilterBar({ page }) {
       >
         {cities.map((city) => (
           <SelectItem
-            key={city.label}
+            key={city.value}
             value={city.value}
             className="capitalize"
           >

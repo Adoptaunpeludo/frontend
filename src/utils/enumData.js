@@ -1,5 +1,5 @@
 export const cities = [
-  { label: 'A Coruña', value: 'A Coruña' },
+  { label: 'A Coruña', value: 'Coruña, A' },
   { label: 'Álava', value: 'Araba/Álava' },
   { label: 'Albacete', value: 'Albacete' },
   { label: 'Alicante', value: 'Alicante/Alacant' },
