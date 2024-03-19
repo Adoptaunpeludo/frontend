@@ -78,19 +78,21 @@ export const action =
   };
 
 const ShelterProfile = () => {
-  const { data, isFetching } = useUser();
-
+  const { data, isFetching, isLoading, isError } = useUser();
   const navigate = useNavigate();
+
   const navigation = useNavigation();
 
   const isSubmitting = navigation.state === 'submitting';
 
   useEffect(() => {
-    if (!isFetching && !data) {
-      toast.warn('Por favor primero haz login con tu cuenta');
-      return navigate('/login');
+    if (isError) {
+      toast.error('Por favor primero haz Login con tu cuenta');
+      navigate('/login');
     }
-  }, [navigate, data, isFetching]);
+  }, [isError, navigate]);
+
+  if (isLoading || isError) return <Spinner />;
 
   const {
     cif,
