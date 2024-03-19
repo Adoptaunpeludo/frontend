@@ -1,7 +1,16 @@
 import { Button, Input, Select, SelectItem, Spacer } from '@nextui-org/react';
 import { useState } from 'react';
 import { useLoaderData, useNavigate, useSearchParams } from 'react-router-dom';
-import { ageRanges, cities, genders, sizes } from './data/items';
+
+import { PagePagination } from './Pagination';
+import { useState } from 'react';
+import {
+  ageRanges,
+  animalSizeEnum,
+  cities,
+  genderEnum,
+} from '../utils/enumData';
+
 
 export function FilterBar({ page }) {
   const [searchParams, setSearchParams] = useSearchParams();
@@ -19,7 +28,15 @@ export function FilterBar({ page }) {
     setAge(new Set([]));
     setSize(new Set([]));
     setCity(new Set([]));
+
     page !== 'shelter' ? navigate(`/animals/${page}`) : navigate(`/shelters`);
+
+    const scrollPosition = window.scrollY;
+
+    setTimeout(() => {
+      window.scrollTo(0, scrollPosition);
+    });
+
   };
 
   const handleSubmit = (e) => {
@@ -33,12 +50,11 @@ export function FilterBar({ page }) {
         hasSelected = true;
         searchParams.set(key, value);
       } else {
-        searchParams.delete(key); // Eliminar el parámetro si el campo está vacío
+        searchParams.delete(key);
       }
     }
 
     if (!hasSelected) {
-      // Si ningún campo está seleccionado, limpiar todos los parámetros de búsqueda
       searchParams
         .toString()
         .split('&')
@@ -49,6 +65,12 @@ export function FilterBar({ page }) {
     }
 
     setSearchParams(searchParams);
+
+    const scrollPosition = window.scrollY;
+
+    setTimeout(() => {
+      window.scrollTo(0, scrollPosition);
+    });
   };
 
   return (
@@ -141,7 +163,7 @@ export function FilterBar({ page }) {
         {cities.map((city) => (
           <SelectItem
             key={city.label}
-            value={city.label}
+            value={city.value}
             className="capitalize"
           >
             {city.label}

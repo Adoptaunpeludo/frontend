@@ -1,6 +1,7 @@
 import { Spinner } from '@nextui-org/spinner';
 import { useLoaderData } from 'react-router';
 import { useNavigation } from 'react-router-dom';
+
 import {
   Banner,
   FilterBar,
@@ -8,14 +9,17 @@ import {
   PetCard,
   TitleSection,
 } from '../../components';
+
 import { animalsQuery, useAnimals } from '../Landing/useAnimals';
 
 export const loader =
   (queryClient, page) =>
   async ({ request }) => {
     const params = Object.fromEntries([
-      ...new URL(request.url).searchParams.entries(),
+      ...new URL(request.url).searchParams.entries()
     ]);
+
+    if (params.name) params.name = params.name.toLowerCase();
 
     await queryClient.ensureQueryData(animalsQuery(page, params));
 
@@ -50,6 +54,7 @@ const AnimalsPage = ({ page }) => {
         </footer>
       </main>
     </>
+
   );
 };
 

@@ -1,3 +1,4 @@
+
 import { Spinner } from '@nextui-org/spinner';
 import { useLoaderData } from 'react-router';
 import { useNavigation } from 'react-router-dom';
@@ -26,7 +27,9 @@ const SheltersPage = ({ page }) => {
   console.log({ data });
   const isLoading = navigation.state === 'loading';
 
+
   return (
+
     <>
       <Banner src={`/backgrounds/banner-shelter.jpg`} />
       <main className="max-w-screen-xl w-full flex  flex-col justify-center  gap-12 h-full  py-12  mx-auto">
@@ -45,6 +48,7 @@ const SheltersPage = ({ page }) => {
         </footer>
       </main>
     </>
+
   );
 };
 

@@ -8,7 +8,7 @@ import {
   H2Title,
   TitleSection,
 } from '../../components';
-import { BUCKET_URL_ANIMALS } from '../../config/config';
+import { BUCKET_URL } from '../../config/config';
 import {
   animalBioInfo,
   animalShelterInfo,
@@ -16,7 +16,6 @@ import {
   dogDescription,
 } from '../../utils/asideDataFields';
 import { handleNotFoundError } from '../../utils/handleError';
-import ErrorPage from '../Error/ErrorPage';
 import {
   AnimalFavs,
   AnimalGallery,
@@ -46,26 +45,23 @@ const AnimalDetailsPage = () => {
 
   const { slug } = params;
 
-  const { data, isLoading, isError } = useAnimalDetails(slug);
-  {
-    console.log(isLoading);
-  }
-  if (isError) return <ErrorPage />;
+  const { data, isLoading } = useAnimalDetails(slug);
+
   if (isLoading) return <Spinner />;
 
   return (
-    <main className="max-w-screen-xl w-full flex  flex-col justify-center  gap-12 h-full  py-12  mx-auto">
+    <main className="max-w-screen-xl w-full flex  flex-col justify-center  gap-12 h-full  py-12  mx-auto ">
       <header>
         <TitleSection title={data.name} />
       </header>
 
       <section className="flex gap-12 max-xl:flex-col mx-auto">
-        <section id="central-column" className="flex flex-col    ">
+        <section id="central-column" className="flex flex-col flex-1">
           {/* TODO: check loading image put spinner reservate space */}
           <div className="relative container lg:w-164">
             <Image
-              src={`${BUCKET_URL_ANIMALS}/${data.images[0]}`}
-              className=" xl:w-200 xl:max-h-[36rem] object-cover object-top aspect-4/3"
+              src={`${BUCKET_URL}/${data.images[0]}`}
+              className=" xl:w-200 xl:max-h-[36rem] object-cover object-top aspect-4/3 flex-1"
               loading="lazy"
               alt={slug}
               radius="sm"

@@ -4,16 +4,16 @@ import svgr from 'vite-plugin-svgr';
 
 // https://vitejs.dev/config/
 export default defineConfig({
-	plugins: [react(), svgr()],
-	server: {
-		proxy: {
-			'/api': {
-				target: 'https://backend.adoptaunpeludo.com/api',
-				// target: 'http://localhost:5000/api',
-				changeOrigin: true,
-				rewrite: (path) => path.replace(/^\/api/, ''),
-				secure: false,
-			},
-		},
-	},
+  plugins: [react(), svgr()],
+  server: {
+    proxy: {
+      '/api': {
+        target: 'https://backend.adoptaunpeludo.com/api',
+        // target: 'http://localhost:5000/api',
+        changeOrigin: true,
+        rewrite: (path) => path.replace(/^\/api/, ''),
+        secure: false,
+      },
+    },
+  },
 });
