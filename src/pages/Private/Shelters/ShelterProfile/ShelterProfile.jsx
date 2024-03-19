@@ -7,12 +7,12 @@ import {
 } from '@tabler/icons-react';
 
 import {
-  Hero,
-  TitleSection,
-  H2Title,
-  H3Title,
   AsideDataColumn,
   CameraIcon,
+  H2Title,
+  H3Title,
+  Hero,
+  TitleSection,
 } from '../../../../components';
 
 import {
@@ -22,19 +22,19 @@ import {
   userInformation,
 } from '../../shared';
 
-import Accommodations from './components/Acommodations';
-import { useUser } from '../../../Layout/useUser';
+import { useEffect } from 'react';
+import { useNavigate, useNavigation } from 'react-router-dom';
+import { toast } from 'react-toastify';
 import { BUCKET_URL } from '../../../../config/config';
+import { useUser } from '../../../Layout/useUser';
 import ShelterForm from '../ShelterForm/ShelterForm';
 import SocialMediaForm from '../ShelterForm/components/SocialMediaForm';
-import { toast } from 'react-toastify';
-import { useNavigate, useNavigation } from 'react-router-dom';
-import { useEffect } from 'react';
 import {
   createPetAdoption,
   updateShelterProfile,
   uploadAnimalImages,
 } from '../ShelterForm/service';
+import Accommodations from './components/Acommodations';
 
 import AnimalForm from '../AnimalForm/AnimalForm';
 
@@ -113,7 +113,7 @@ const ShelterProfile = () => {
   const userData = userInformation(data);
 
   return (
-    <main className="bg-default-100">
+    <main className="bg-default-100 flex-grow">
       <Hero />
       <section
         id="SheltersProfile"
