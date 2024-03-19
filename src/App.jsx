@@ -25,20 +25,17 @@ import {
 
 import { action as loginAction } from './pages/Auth/Login/LoginPage.jsx';
 import { action as registerAction } from './pages/Auth/Register/RegisterPage.jsx';
-import { action as shelterProfileAction } from './pages/Private/ShelterProfile/ShelterProfile.jsx';
+import { action as shelterProfileAction } from './pages/Private/Shelters/ShelterProfile/ShelterProfile.jsx';
 
-import { loader as animalDetailsLoader } from './pages/AnimalDetails/AnimalDetailsPage.jsx';
-// import { loader as filterCatsLoader } from './pages/Cats/CatsPage.jsx';
-// import { loader as filterDogsLoader } from './pages/Dogs/DogsPage.jsx';
-import { loader as animalsLoader } from './pages/Animals/AnimalsPage.jsx';
-import { loader as landingAnimalsLoader } from './pages/Landing/LandingPage.jsx';
+import { loader as animalDetailsLoader } from './pages/Public/Animals/AnimalDetails/AnimalDetailsPage.jsx';
+import { loader as animalsLoader } from './pages/Public/Animals/AnimalsPage.jsx';
+import { loader as landingAnimalsLoader } from './pages/Public/Landing/LandingPage.jsx';
 import { loader as currentUserLoader } from './pages/Layout/AppLayout.jsx';
-import NotFoundPage from './pages/NotFound/NotFoundPage.jsx';
-
-import { loader as userAnimalsLoader } from './pages/Private/loader.js';
-import { loader as sheltersLoader } from './pages/Shelters/SheltersPage.jsx';
+import { loader as userAnimalsLoader } from './pages/Private/Shelters/loader.js';
+import { loader as sheltersLoader } from './pages/Public/Shelters/SheltersPage.jsx';
 
 import { useAnimalImagesContext } from './context/AnimalImagesContext.jsx';
+import NotFoundPage from './pages/Error/NotFound/NotFoundPage.jsx';
 
 export const queryClient = new QueryClient({
   defaultOptions: {
