@@ -69,6 +69,7 @@ export const action =
 
 const ShelterProfile = () => {
   const { data, isFetching } = useUser();
+
   const navigate = useNavigate();
   const navigation = useNavigation();
 

@@ -35,6 +35,7 @@ import { loader as currentUserLoader } from './pages/Layout/AppLayout.jsx';
 import { loader as animalsLoader } from './pages/Animals/AnimalsPage.jsx';
 import { loader as userAnimalsLoader } from './pages/Private/loader.js';
 import NotFoundPage from './pages/NotFound/NotFoundPage.jsx';
+import { AnimalImagesContextProvider } from './context/AnimalImagesContext.jsx';
 
 export const queryClient = new QueryClient({
   defaultOptions: {
@@ -99,7 +100,11 @@ const router = createBrowserRouter([
       {
         path: 'private/shelter',
         //for test only
-        element: <ShelterProfile />,
+        element: (
+          <AnimalImagesContextProvider>
+            <ShelterProfile />,
+          </AnimalImagesContextProvider>
+        ),
         loader: userAnimalsLoader(queryClient),
         action: shelterProfileAction(queryClient),
       },

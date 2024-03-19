@@ -22,6 +22,7 @@ import {
   StatusShelterForm,
 } from './Components';
 import { useAnimalDetails } from '../../AnimalDetails/useAnimalDetails';
+import { UploadImagesForm } from './Components/UploadImagesForm';
 
 const AnimalForm = ({ isSubmitting, slug = '' }) => {
   const { isOpen, onOpen, onOpenChange } = useDisclosure();
@@ -91,6 +92,7 @@ const AnimalForm = ({ isSubmitting, slug = '' }) => {
                           />
                         </div>
                       </div>
+                      <UploadImagesForm />
                     </Panel>
                   </section>
                 </ModalBody>
