@@ -1,5 +1,5 @@
 import { Button, Link } from '@nextui-org/react';
-import { BUCKET_URL_ANIMALS } from '../../../config/config.js';
+import { BUCKET_URL } from '../../../config/config.js';
 import PetCardLanding from '../components/PetCardLanding.jsx';
 const FeaturedPets = ({ title, pets }) => {
   return (
@@ -11,7 +11,7 @@ const FeaturedPets = ({ title, pets }) => {
         {pets.map(({ images, name, age, breed, slug, type }, index) => (
           <PetCardLanding
             key={index}
-            image={`${BUCKET_URL_ANIMALS}/${images[0]}`}
+            image={`${BUCKET_URL}/${images[0]}`}
             name={name}
             age={age}
             breed={breed}

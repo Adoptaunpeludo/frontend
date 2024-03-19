@@ -26,11 +26,16 @@ import SocialMediaForm from '../ShelterForm/components/SocialMediaForm';
 import { toast } from 'react-toastify';
 import { useNavigate, useNavigation } from 'react-router-dom';
 import { useEffect } from 'react';
-import { updateShelterProfile } from '../ShelterForm/service';
+import {
+  createPetAdoption,
+  updateShelterProfile,
+  uploadAnimalImages,
+} from '../ShelterForm/service';
 import UserFormBio from '../UserFormBio/UserFormBio';
+import AnimalForm from '../AnimalForm/AnimalForm';
 
 export const action =
-  (queryClient) =>
+  (animalImages, resetImages, queryClient) =>
   async ({ request }) => {
     let formData = await request.formData();
     let intent = formData.get('intent');
@@ -47,21 +52,47 @@ export const action =
         return null;
       }
     }
+
+    if (intent === 'create-adoption') {
+      const imagesData = new FormData();
+
+      animalImages.forEach((image) => {
+        imagesData.append('images', image);
+      });
+
+      try {
+        const animal = await createPetAdoption(formData);
+        await uploadAnimalImages(imagesData, animal.id);
+        resetImages();
+        await queryClient.invalidateQueries((queryKey) =>
+          queryKey.includes('animals')
+        );
+        toast.success(`Animal ${animal.name} puesto en adopción`);
+        return null;
+      } catch (error) {
+        console.log(error);
+        toast.error('Error creando anuncio de adopcion');
+        return null;
+      }
+    }
   };
 
 const ShelterProfile = () => {
-  const { data, isFetching } = useUser();
+  const { data, isFetching, isLoading, isError } = useUser();
   const navigate = useNavigate();
+
   const navigation = useNavigation();
 
   const isSubmitting = navigation.state === 'submitting';
 
   useEffect(() => {
-    if (!isFetching && !data) {
-      toast.warn('Por favor primero haz login con tu cuenta');
-      return navigate('/login');
+    if (isError) {
+      toast.error('Por favor primero haz Login con tu cuenta');
+      navigate('/login');
     }
-  }, [navigate, data, isFetching]);
+  }, [isError, navigate]);
+
+  if (isLoading || isError) return <Spinner />;
 
   const {
     cif,
@@ -172,6 +203,7 @@ const ShelterProfile = () => {
         </section>
         <section id="petsTable" className="px-4">
           <StatusAnimalsTable role={'shelter'} />
+          <AnimalForm isSubmitting={isSubmitting} />
         </section>
         <footer className="border-solid border-t-1 border-t-danger py-8 h-100 flex justify-center">
           <Button color="danger" size="lg" startContent={<IconTrashXFilled />}>
