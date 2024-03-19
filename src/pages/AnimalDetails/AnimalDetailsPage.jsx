@@ -16,7 +16,7 @@ import {
   dogDescription,
 } from '../../utils/asideDataFields';
 import { handleNotFoundError } from '../../utils/handleError';
-import ErrorPage from '../Error/ErrorPage';
+
 import {
   AnimalFavs,
   AnimalGallery,
@@ -46,14 +46,9 @@ const AnimalDetailsPage = () => {
 
   const { slug } = params;
 
-  const { data, isLoading, isError } = useAnimalDetails(slug);
-  {
-    console.log(isLoading);
-  }
-  if (isError) return <ErrorPage />;
-  if (isLoading) return <Spinner />;
+  const { data, isLoading } = useAnimalDetails(slug);
 
-  console.log({ data });
+  if (isLoading) return <Spinner />;
 
   return (
     <main className="max-w-screen-xl w-full flex  flex-col justify-center  gap-12 h-full  py-12  mx-auto ">

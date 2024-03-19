@@ -26,6 +26,12 @@ export function FilterBar({ page }) {
     setSize(new Set([]));
     setCity(new Set([]));
     navigate(`/animals/${page}`);
+
+    const scrollPosition = window.scrollY;
+
+    setTimeout(() => {
+      window.scrollTo(0, scrollPosition);
+    });
   };
 
   const handleSubmit = (e) => {
@@ -39,12 +45,11 @@ export function FilterBar({ page }) {
         hasSelected = true;
         searchParams.set(key, value);
       } else {
-        searchParams.delete(key); // Eliminar el parámetro si el campo está vacío
+        searchParams.delete(key);
       }
     }
 
     if (!hasSelected) {
-      // Si ningún campo está seleccionado, limpiar todos los parámetros de búsqueda
       searchParams
         .toString()
         .split('&')
@@ -55,6 +60,12 @@ export function FilterBar({ page }) {
     }
 
     setSearchParams(searchParams);
+
+    const scrollPosition = window.scrollY;
+
+    setTimeout(() => {
+      window.scrollTo(0, scrollPosition);
+    });
   };
 
   return (
