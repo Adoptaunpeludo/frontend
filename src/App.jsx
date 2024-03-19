@@ -40,7 +40,6 @@ import { loader as sheltersLoader } from './pages/Shelters/SheltersPage.jsx';
 
 import { useAnimalImagesContext } from './context/AnimalImagesContext.jsx';
 
-
 export const queryClient = new QueryClient({
   defaultOptions: {
     queries: {
@@ -82,22 +81,11 @@ const router = (animalImages, resetImages) =>
           element: <AnimalsPage page={'dogs'} />,
           loader: animalsLoader(queryClient, 'dogs'),
         },
-        // {
-        //   path: 'cats',
-        //   element: <CatsPage />,
-        //   loader: filterCatsLoader(queryClient),
-        // },
-        // {
-        //   path: 'dogs',
-        //   element: <DogsPage />,
-        //   loader: filterDogsLoader(queryClient),
-        // },
         {
-      {
-        path: 'shelters',
-        element: <SheltersPage page={'shelter'} />,
-        loader: sheltersLoader(queryClient, 'shelters'),
-      },
+          path: 'shelters',
+          element: <SheltersPage page={'shelter'} />,
+          loader: sheltersLoader(queryClient, 'shelters'),
+        },
         {
           path: 'private/adopter',
           //for test only
@@ -135,7 +123,6 @@ const router = (animalImages, resetImages) =>
       ],
     },
   ]);
-
 
 function App() {
   const { images: animalImages, resetImages } = useAnimalImagesContext();
