@@ -89,7 +89,7 @@ export function FilterBar({ page }) {
               className="capitalize"
               textValue="Size"
             >
-              {size.name}
+              {size.label}
             </SelectItem>
           ))}
         </Select>
@@ -111,7 +111,7 @@ export function FilterBar({ page }) {
               className="capitalize"
               textValue="Gender"
             >
-              {gender.name}
+              {gender.label}
             </SelectItem>
           ))}
         </Select>
@@ -133,7 +133,7 @@ export function FilterBar({ page }) {
               className="capitalize"
               textValue="Ages"
             >
-              {age.name}
+              {age.label}
             </SelectItem>
           ))}
         </Select>
