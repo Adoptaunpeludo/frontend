@@ -3,7 +3,7 @@ import { getAnimalDetails } from './service';
 
 export const animalDetailsQuery = (slug) => {
   return {
-    queryKey: ['animalDetails', slug],
+    queryKey: ['animal-details', slug],
     queryFn: () => getAnimalDetails(slug),
   };
 };

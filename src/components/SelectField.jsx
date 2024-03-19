@@ -1,5 +1,4 @@
 import { Select, SelectItem } from '@nextui-org/react';
-import { PropTypes } from 'prop-types';
 
 export const SelectField = ({
   label,
@@ -19,7 +18,7 @@ export const SelectField = ({
         dataField === '' || dataField === null ? 'Seleccionar...' : ''
       }
       defaultSelectedKeys={
-        dataField !== '' && dataField !== null && [dataField.toString()]
+        dataField !== '' && dataField !== null && [dataField?.toString()]
       }
     >
       {dataEnum.map(({ label, value }) => (
@@ -29,11 +28,4 @@ export const SelectField = ({
       ))}
     </Select>
   );
-};
-
-SelectField.propTypes = {
-  label: PropTypes.string.isRequired,
-  dataField: PropTypes.oneOfType([PropTypes.string, PropTypes.bool]).isRequired,
-  dataEnum: PropTypes.array.isRequired,
-  name: PropTypes.string.isRequired,
 };

@@ -2,6 +2,7 @@ import {
   Button,
   Chip,
   Link,
+  Spinner,
   Table,
   TableBody,
   TableCell,
@@ -29,7 +30,7 @@ import { useUserAnimals } from '../useUserAnimals';
 export const StatusAnimalsTable = ({ role }) => {
   const headerColumn = role === 'shelter' ? ColumnsShelter : ColumnsAdopter;
 
-  const { data } = useUserAnimals();
+  const { data, isFetching } = useUserAnimals({ limit: 100 });
 
   const { animals } = data;
 
@@ -105,6 +106,9 @@ export const StatusAnimalsTable = ({ role }) => {
         return cellValue;
     }
   }, []);
+
+  if (isFetching) return <Spinner />;
+
   return (
     <Table aria-label="Animals info">
       <TableHeader columns={headerColumn} className="flex justify-center">
