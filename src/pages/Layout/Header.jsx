@@ -15,7 +15,7 @@ import { IconLogin2 as LoginIcon } from '@tabler/icons-react';
 import { useState } from 'react';
 import BrandNavLogo from '../../assets/logos/BrandNavLogo.jsx';
 import { UserAreaMenu } from '../../components/UserAreaMenu.jsx';
-import { useUser } from './useUser.js';
+import { useUser } from '../Private/useUser.js';
 
 const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);

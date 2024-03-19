@@ -6,23 +6,29 @@ import { toast } from 'react-toastify';
 import { Hero, LogoHeader, Panel } from '../../../components';
 import { handleAuthError } from '../../../utils/handleError';
 import { validateField } from '../../../utils/validateField';
-import { login } from '../../Auth/authService';
+import { userQuery } from '../../Private/useUser';
 
-export const action = async ({ request }) => {
-  const formData = await request.formData();
-  const credentials = Object.fromEntries(formData);
-  credentials.email = credentials.email.toLowerCase();
+export const action =
+  (queryClient) =>
+  async ({ request }) => {
+    const formData = await request.formData();
+    const credentials = Object.fromEntries(formData);
+    credentials.email = credentials.email.toLowerCase();
 
-  try {
-    await login(credentials);
-    localStorage.setItem('isLoggedIn', true);
-    return redirect('/');
-  } catch (error) {
-    const message = handleAuthError(error);
-    toast.error(message);
-    return redirect('/login');
-  }
-};
+    try {
+      await login(credentials);
+      queryClient.invalidateQueries({
+        queryKey: ['user'],
+      });
+      await queryClient.ensureQueryData(userQuery);
+      localStorage.setItem('isLoggedIn', true);
+      return redirect('/');
+    } catch (error) {
+      const message = handleAuthError(error);
+      toast.error(message);
+      return redirect('/login');
+    }
+  };
 
 const LoginPage = () => {
   const [credentials, setCredentials] = useState({
@@ -53,6 +59,7 @@ const LoginPage = () => {
 
   return (
     <>
+
       <main className="bg-default-100 flex-grow">
         <Hero />
         <section
