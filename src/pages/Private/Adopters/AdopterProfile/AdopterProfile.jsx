@@ -1,9 +1,9 @@
 import { Avatar, Button, Spinner, User } from '@nextui-org/react';
 import { IconTrashXFilled } from '@tabler/icons-react';
 
+import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
-import { useEffect } from 'react';
 
 import {
   AsideDataColumn,
@@ -12,9 +12,9 @@ import {
   Hero,
   TitleSection,
 } from '../../../../components';
-import { StatusAnimalsTable, userInformation } from '../../shared';
-import { useUser } from '../../../Layout/useUser';
 import { useAuthContext } from '../../../../context/AuthContext';
+import { useUser } from '../../../Layout/useUser';
+import { StatusAnimalsTable, userInformation } from '../../shared';
 
 const AdopterProfile = () => {
   const { data, isLoading } = useUser();
@@ -34,7 +34,7 @@ const AdopterProfile = () => {
   const userData = userInformation(data);
 
   return (
-    <main className="bg-default-100">
+    <main className="bg-default-100 flex-grow">
       <Hero />
       <section
         id="adopterProfile"
