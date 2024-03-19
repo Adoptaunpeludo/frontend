@@ -7,11 +7,11 @@ import {
   GetInvolved,
   HeroHome,
   JoinNewsletter,
-  OurRescues
+  OurRescues,
 } from './sections';
 import { animalsQuery } from './useAnimals';
 
-export const loader = queryClient => () => {
+export const loader = (queryClient) => () => {
   const { data: cats } = queryClient.ensureQueryData(
     animalsQuery('cats', { limit: 4 })
   );
@@ -25,14 +25,14 @@ export const loader = queryClient => () => {
 
 const LandingPage = () => {
   return (
-    <main>
+    <main className="flex-grow">
       <HeroHome />
       <GetInvolved />
       {/* <FeaturedDogs /> */}
-      <FeaturedAnimals page='dogs' />
+      <FeaturedAnimals page="dogs" />
       <AdoptVsBuy />
       {/* <FeaturedCats /> */}
-      <FeaturedAnimals page='cats' />
+      <FeaturedAnimals page="cats" />
       <OurRescues />
       <FeaturedShelters />
       <JoinNewsletter />
