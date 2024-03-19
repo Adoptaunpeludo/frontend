@@ -30,12 +30,13 @@ import { action as shelterProfileAction } from './pages/Private/Shelters/Shelter
 import { loader as animalDetailsLoader } from './pages/Public/Animals/AnimalDetails/AnimalDetailsPage.jsx';
 import { loader as animalsLoader } from './pages/Public/Animals/AnimalsPage.jsx';
 import { loader as landingAnimalsLoader } from './pages/Public/Landing/LandingPage.jsx';
-import { loader as currentUserLoader } from './pages/Layout/AppLayout.jsx';
+import { loader as currentUserLoader } from './pages/Private/ProtectedRoute.jsx';
 import { loader as userAnimalsLoader } from './pages/Private/Shelters/loader.js';
 import { loader as sheltersLoader } from './pages/Public/Shelters/SheltersPage.jsx';
 
 import { useAnimalImagesContext } from './context/AnimalImagesContext.jsx';
 import NotFoundPage from './pages/Error/NotFound/NotFoundPage.jsx';
+import ProtectedRoute from './pages/Private/ProtectedRoute.jsx';
 
 export const queryClient = new QueryClient({
   defaultOptions: {
@@ -51,13 +52,8 @@ const router = (animalImages, resetImages) =>
       path: '/',
       element: <AppLayout />,
       errorElement: <ErrorPage />,
-      loader: currentUserLoader(queryClient),
       children: [
-        {
-          index: true,
-          element: <LandingPage />,
-          loader: landingAnimalsLoader(queryClient),
-        },
+        //* Auth Routes
         {
           path: 'register',
           element: <RegisterPage />,
@@ -66,7 +62,18 @@ const router = (animalImages, resetImages) =>
         {
           path: 'login',
           element: <LoginPage />,
-          action: loginAction,
+          action: loginAction(queryClient),
+        },
+        {
+          path: 'users/verify-email',
+          element: <VerifyEmail />,
+        },
+        //* End Auth Routes
+        //* Public Routes
+        {
+          index: true,
+          element: <LandingPage />,
+          loader: landingAnimalsLoader(queryClient),
         },
         {
           path: 'animals/cats',
@@ -84,18 +91,6 @@ const router = (animalImages, resetImages) =>
           loader: sheltersLoader(queryClient, 'shelters'),
         },
         {
-          path: 'private/adopter',
-          //for test only
-          element: <AdopterProfile />,
-        },
-        {
-          path: 'private/shelter',
-          //for test only
-          element: <ShelterProfile />,
-          loader: userAnimalsLoader(queryClient),
-          action: shelterProfileAction(animalImages, resetImages, queryClient),
-        },
-        {
           path: 'cats/:slug',
           element: <AnimalDetailsPage />,
           loader: animalDetailsLoader(queryClient),
@@ -105,10 +100,33 @@ const router = (animalImages, resetImages) =>
           element: <AnimalDetailsPage />,
           loader: animalDetailsLoader(queryClient),
         },
+        //* End Public Routes
+        //* Private Routes
         {
-          path: 'users/verify-email',
-          element: <VerifyEmail />,
+          path: 'private',
+          element: <ProtectedRoute />,
+          loader: currentUserLoader(queryClient),
+          children: [
+            {
+              path: 'adopter',
+              //for test only
+              element: <AdopterProfile />,
+            },
+            {
+              path: 'shelter',
+              //for test only
+              element: <ShelterProfile />,
+              loader: userAnimalsLoader(queryClient),
+              action: shelterProfileAction(
+                animalImages,
+                resetImages,
+                queryClient
+              ),
+            },
+          ],
         },
+        //* End Private Routes
+        //* Not Found Routes
         {
           path: '404',
           element: <NotFoundPage />,
