@@ -2,8 +2,8 @@ import { Spinner } from '@nextui-org/spinner';
 import { useLoaderData } from 'react-router';
 import { useNavigation } from 'react-router-dom';
 
-import { sheltersQuery, useShelters } from './useShelters';
 import { Banner, FilterBar, TitleSection } from '../../../components';
+import { sheltersQuery, useShelters } from './useShelters';
 
 export const loader =
   (queryClient, page) =>
@@ -29,7 +29,7 @@ const SheltersPage = ({ page }) => {
   return (
     <>
       <Banner src={`/backgrounds/banner-shelter.jpg`} />
-      <main className="max-w-screen-xl w-full flex  flex-col justify-center  gap-12 h-full  py-12  mx-auto">
+      <main className="max-w-screen-xl w-full flex  flex-col justify-center  gap-12 h-full  py-12  mx-auto flex-grow">
         <TitleSection title={'asociaciones'} />
         <FilterBar page={page} className="" />
         <ul className="flex justify-center gap-4 flex-wrap p-6">
