@@ -4,7 +4,7 @@ const NotFoundPage = () => {
   const navigate = useNavigate();
 
   return (
-    <main className="min-h-screen text-center flex items-center justify-center">
+    <main className="text-center flex items-center justify-center flex-grow">
       <div>
         {/* <img src={img} alt="not found" /> */}
         <h3 className="mb-2">Ohh! Página no encontrada!</h3>
