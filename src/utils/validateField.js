@@ -15,6 +15,8 @@ export const validateField = (name, value, password) => {
 				: '';
 		case 'repeatPassword':
 			return value.trim() !== password ? 'Las contraseñas no coinciden' : '';
+		case 'cif':
+			return value.trim().length !== 9 ? 'El cif debe tener 9 caracteres' : '';
 		default:
 			return '';
 	}

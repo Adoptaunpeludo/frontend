@@ -1,13 +1,12 @@
-import { TitleSection, Banner } from "../../components";
+import { Banner, TitleSection } from '../../components';
 
 const SheltersPage = () => {
   return (
-    
-  <main>
-        <Banner src={"/backgrounds/banner-shelter.jpg"} />
-        <TitleSection title="SheltersPage"/>
-  
-  </main>);
+    <main className='flex-grow'>
+      <Banner src={'/backgrounds/banner-shelter.jpg'} />
+      <TitleSection title='SheltersPage' />
+    </main>
+  );
 };
 
 export default SheltersPage;
