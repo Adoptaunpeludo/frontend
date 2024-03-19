@@ -30,7 +30,7 @@ import { useUserAnimals } from '../useUserAnimals';
 export const StatusAnimalsTable = ({ role }) => {
   const headerColumn = role === 'shelter' ? ColumnsShelter : ColumnsAdopter;
 
-  const { data, isFetching } = useUserAnimals();
+  const { data, isFetching } = useUserAnimals({ limit: 100 });
 
   const { animals } = data;
 
