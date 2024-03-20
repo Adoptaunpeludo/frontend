@@ -1,10 +1,8 @@
 import { Input } from '@nextui-org/react';
 import { animalSizeEnum, genderEnum } from '../../../../../utils/enumData';
 import { H3Title, SelectField } from '../../../../../components';
-import { useAnimalDetails } from '../../../../Public/Animals/AnimalDetails/useAnimalDetails';
 
-const AnimalBioForm = ({ slug = '', isDisabled }) => {
-  const data = useAnimalDetails(slug);
+const AnimalBioForm = ({ data = {}, isDisabled }) => {
   const { name, age, breed, size, gender } = data;
 
   return (

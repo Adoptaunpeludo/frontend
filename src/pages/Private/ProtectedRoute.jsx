@@ -15,12 +15,12 @@ export const loader = (queryClient) => async () => {
 };
 
 const ProtectedRoute = () => {
-  const { data } = useUser();
-  const navigate = useNavigate();
+  // const { data } = useUser();
+  // const navigate = useNavigate();
 
-  useEffect(() => {
-    navigate(`/private/${data.role}`);
-  }, [data.role, navigate]);
+  // useEffect(() => {
+  //   navigate(`/private/${data.role}`);
+  // }, [data.role, navigate]);
 
   return <Outlet />;
 };

@@ -3,6 +3,7 @@ import {
   IconBrandFacebook,
   IconBrandInstagram,
   IconBrandX,
+  IconEdit,
   IconTrashXFilled,
 } from '@tabler/icons-react';
 
@@ -27,21 +28,16 @@ import { BUCKET_URL } from '../../../../config/config';
 import ShelterForm from '../ShelterForm/ShelterForm';
 import SocialMediaForm from '../ShelterForm/components/SocialMediaForm';
 import { toast } from 'react-toastify';
-import {
-  createPetAdoption,
-  deleteAnimal,
-  updateShelterProfile,
-  uploadAnimalImages,
-} from '../ShelterForm/service';
+import { updateShelterProfile } from '../ShelterForm/service';
 
-import AnimalForm from '../AnimalForm/AnimalForm';
 import { useUser } from '../../useUser';
 import { useAnimalImagesContext } from '../../../../context/AnimalImagesContext';
 import { useEffect } from 'react';
-import { redirect } from 'react-router-dom';
+import { Link } from 'react-router-dom';
+import { deleteAnimal } from '../AnimalForm/service';
 
 export const action =
-  (closeModal, animalImages, resetImages, queryClient) =>
+  (closeModal, queryClient) =>
   async ({ request }) => {
     let formData = await request.formData();
     let intent = formData.get('intent');
@@ -56,30 +52,6 @@ export const action =
       } catch (error) {
         console.log(error);
         toast.error('Error actualizando perfil del Refugio');
-        return null;
-      }
-    }
-
-    if (intent === 'create-adoption') {
-      const imagesData = new FormData();
-
-      animalImages?.forEach((image) => {
-        imagesData.append('images', image);
-      });
-
-      try {
-        const animal = await createPetAdoption(formData);
-        await uploadAnimalImages(imagesData, animal.id);
-        resetImages();
-        await queryClient.invalidateQueries((queryKey) =>
-          queryKey.includes('animals')
-        );
-        toast.success(`Animal ${animal.name} puesto en adopción`);
-        redirect(`/animals/${animal.type}s/${animal.slug}`);
-        return null;
-      } catch (error) {
-        console.log(error);
-        toast.error('Error creando anuncio de adopción');
         return null;
       }
     }
@@ -106,7 +78,6 @@ const ShelterProfile = () => {
   const { resetImages } = useAnimalImagesContext();
 
   useEffect(() => {
-    console.log('reset');
     resetImages();
   }, [resetImages]);
 
@@ -221,7 +192,17 @@ const ShelterProfile = () => {
         </section>
         <section id="petsTable" className="px-4">
           <StatusAnimalsTable role={'shelter'} />
-          <AnimalForm />
+          <Button
+            // isIconOnly={data !== undefined}
+            color="primary"
+            size="md"
+            startContent={<IconEdit />}
+            className="my-4"
+            as={Link}
+            to="/private/shelter/create-animal"
+          >
+            Crear Anuncio
+          </Button>
         </section>
         <footer className="border-solid border-t-1 border-t-danger py-8 h-100 flex justify-center">
           <Button color="danger" size="lg" startContent={<IconTrashXFilled />}>

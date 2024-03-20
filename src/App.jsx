@@ -10,10 +10,9 @@ import './index.css';
 import {
   AdopterProfile,
   AnimalDetailsPage,
+  AnimalForm,
   AnimalsPage,
   AppLayout,
-  // CatsPage,
-  // DogsPage,
   ErrorPage,
   LandingPage,
   LoginPage,
@@ -26,6 +25,7 @@ import {
 import { action as loginAction } from './pages/Auth/Login/LoginPage.jsx';
 import { action as registerAction } from './pages/Auth/Register/RegisterPage.jsx';
 import { action as shelterProfileAction } from './pages/Private/Shelters/ShelterProfile/ShelterProfile.jsx';
+import { action as mutateAnimalAction } from './pages/Private/Shelters/AnimalForm/AnimalForm.jsx';
 
 import { loader as animalDetailsLoader } from './pages/Public/Animals/AnimalDetails/AnimalDetailsPage.jsx';
 import { loader as animalsLoader } from './pages/Public/Animals/AnimalsPage.jsx';
@@ -66,7 +66,7 @@ const router = (onClose, animalImages, resetImages) =>
           action: loginAction(queryClient),
         },
         {
-          path: 'users/verify-email',
+          path: 'users/verify-email/:token',
           element: <VerifyEmail />,
         },
         //* End Auth Routes
@@ -118,12 +118,12 @@ const router = (onClose, animalImages, resetImages) =>
               //for test only
               element: <ShelterProfile />,
               loader: userAnimalsLoader(queryClient),
-              action: shelterProfileAction(
-                onClose,
-                animalImages,
-                resetImages,
-                queryClient
-              ),
+              action: shelterProfileAction(onClose, queryClient),
+            },
+            {
+              path: 'shelter/create-animal',
+              element: <AnimalForm />,
+              action: mutateAnimalAction(animalImages, queryClient),
             },
           ],
         },
@@ -143,16 +143,13 @@ const router = (onClose, animalImages, resetImages) =>
   ]);
 
 function App() {
-  const { images: animalImages, resetImages } = useAnimalImagesContext();
-
+  const { images: animalImages } = useAnimalImagesContext();
   const { modal } = useModalContext();
 
   return (
     <QueryClientProvider client={queryClient}>
       <ReactQueryDevtools initialIsOpen={false} />
-      <RouterProvider
-        router={router(modal.onClose, animalImages, resetImages)}
-      />
+      <RouterProvider router={router(modal.onClose, animalImages)} />
     </QueryClientProvider>
   );
 }

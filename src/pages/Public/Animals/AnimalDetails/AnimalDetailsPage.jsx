@@ -26,6 +26,7 @@ import { animalDetailsQuery, useAnimalDetails } from './useAnimalDetails';
 export const loader =
   (queryClient) =>
   async ({ params }) => {
+    console.log({ params });
     try {
       const { slug } = params;
       await queryClient.ensureQueryData(animalDetailsQuery(slug));
@@ -42,6 +43,8 @@ export const loader =
 
 const AnimalDetailsPage = () => {
   const params = useLoaderData();
+
+  console.log('animal details');
 
   const { slug } = params;
 

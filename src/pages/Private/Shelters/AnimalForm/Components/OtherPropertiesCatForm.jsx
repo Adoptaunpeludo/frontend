@@ -6,7 +6,7 @@ import {
 } from '../../../../../utils/enumData';
 import { H3Title, SelectField } from '../../../../../components';
 
-const OtherPropertiesCatForm = ({ data, isDisabled }) => {
+const OtherPropertiesCatForm = ({ data = {}, isDisabled }) => {
   const {
     easyTrain,
     energyLevel,
