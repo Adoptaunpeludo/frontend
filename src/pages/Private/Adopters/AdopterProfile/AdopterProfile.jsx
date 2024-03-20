@@ -1,10 +1,5 @@
 import { Avatar, Button, Spinner, User } from '@nextui-org/react';
 import { IconTrashXFilled } from '@tabler/icons-react';
-
-import { useNavigate } from 'react-router-dom';
-import { toast } from 'react-toastify';
-import { useEffect } from 'react';
-
 import {
   AsideDataColumn,
   EditButton,
@@ -13,20 +8,10 @@ import {
   TitleSection,
 } from '../../../../components';
 import { StatusAnimalsTable, userInformation } from '../../shared';
-import { useUser } from '../../../Layout/useUser';
-import { useAuthContext } from '../../../../context/AuthContext';
+import { useUser } from '../../useUser';
 
 const AdopterProfile = () => {
   const { data, isLoading } = useUser();
-  const { isLoggedIn } = useAuthContext();
-  const navigate = useNavigate();
-
-  useEffect(() => {
-    if (!isLoggedIn || !data) {
-      toast.warn('Por favor primero haz login con tu cuenta');
-      return navigate('/login');
-    }
-  }, [isLoggedIn, navigate, data]);
 
   if (isLoading) return <Spinner />;
 
@@ -34,7 +19,7 @@ const AdopterProfile = () => {
   const userData = userInformation(data);
 
   return (
-    <main className="bg-default-100">
+    <main className="bg-default-100 flex-grow">
       <Hero />
       <section
         id="adopterProfile"

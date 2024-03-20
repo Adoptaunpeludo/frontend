@@ -1,4 +1,4 @@
-import { postData, updateData } from '../../../../api/client';
+import { deleteData, postData, updateData } from '../../../../api/client';
 
 export const updateSocialMedia = async (socialMedia) => {
   const { data } = await updateData('users/me/update-social-media', {
@@ -28,6 +28,16 @@ export const createPetAdoption = async (formData) => {
   delete creationData.intent;
 
   const { data } = await postData(`animals/${creationData.type}`, creationData);
+
+  return data;
+};
+
+export const deleteAnimal = async (formData) => {
+  const deletionData = Object.fromEntries(formData);
+
+  delete deletionData.intent;
+
+  const { data } = await deleteData(`animals/${deletionData.slug}`);
 
   return data;
 };

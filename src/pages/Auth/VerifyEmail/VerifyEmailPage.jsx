@@ -1,10 +1,9 @@
-import { useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-import { TitleSection } from '../../../components';
-import { useLocation } from 'react-router-dom';
-import { verifyEmail } from '../authService';
 import { Button } from '@nextui-org/react';
 import { Spinner } from '@nextui-org/spinner';
+import { useEffect, useState } from 'react';
+import { useLocation, useNavigate } from 'react-router-dom';
+import { TitleSection } from '../../../components';
+import { verifyEmail } from '../authService';
 
 const VerifyEmailPage = () => {
   const location = useLocation();
@@ -47,7 +46,7 @@ const VerifyEmailPage = () => {
   }, [verificationStatus, counter, navigate]);
 
   return (
-    <main>
+    <main className="flex-grow">
       <TitleSection title="Verificación de email" />
       <div className="flex justify-center m-20">
         <div className="bg-white shadow-lg rounded-lg p-8 m-4 max-w-lg w-full mx-auto">
