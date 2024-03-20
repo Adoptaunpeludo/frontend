@@ -7,12 +7,12 @@ import {
 } from '@tabler/icons-react';
 
 import {
-  Hero,
-  TitleSection,
-  H2Title,
-  H3Title,
   AsideDataColumn,
   CameraIcon,
+  H2Title,
+  H3Title,
+  Hero,
+  TitleSection,
 } from '../../../../components';
 
 import {
@@ -23,23 +23,25 @@ import {
 } from '../../shared';
 
 import Accommodations from './components/Acommodations';
-import { useUser } from '../../../Layout/useUser';
 import { BUCKET_URL } from '../../../../config/config';
 import ShelterForm from '../ShelterForm/ShelterForm';
 import SocialMediaForm from '../ShelterForm/components/SocialMediaForm';
 import { toast } from 'react-toastify';
-import { useNavigate, useNavigation } from 'react-router-dom';
-import { useEffect } from 'react';
 import {
   createPetAdoption,
+  deleteAnimal,
   updateShelterProfile,
   uploadAnimalImages,
 } from '../ShelterForm/service';
 
 import AnimalForm from '../AnimalForm/AnimalForm';
+import { useUser } from '../../useUser';
+import { useAnimalImagesContext } from '../../../../context/AnimalImagesContext';
+import { useEffect } from 'react';
+import { redirect } from 'react-router-dom';
 
 export const action =
-  (animalImages, resetImages, queryClient) =>
+  (closeModal, animalImages, resetImages, queryClient) =>
   async ({ request }) => {
     let formData = await request.formData();
     let intent = formData.get('intent');
@@ -49,6 +51,7 @@ export const action =
         await updateShelterProfile(formData, intent);
         queryClient.invalidateQueries({ queryKey: ['user'] });
         toast.success('Perfil del Refugio actualizado');
+        closeModal();
         return null;
       } catch (error) {
         console.log(error);
@@ -60,7 +63,7 @@ export const action =
     if (intent === 'create-adoption') {
       const imagesData = new FormData();
 
-      animalImages.forEach((image) => {
+      animalImages?.forEach((image) => {
         imagesData.append('images', image);
       });
 
@@ -72,31 +75,42 @@ export const action =
           queryKey.includes('animals')
         );
         toast.success(`Animal ${animal.name} puesto en adopción`);
+        redirect(`/animals/${animal.type}s/${animal.slug}`);
         return null;
       } catch (error) {
         console.log(error);
-        toast.error('Error creando anuncio de adopcion');
+        toast.error('Error creando anuncio de adopción');
+        return null;
+      }
+    }
+
+    if (intent === 'delete-animal') {
+      try {
+        await deleteAnimal(formData);
+        await queryClient.invalidateQueries((queryKey) =>
+          queryKey.includes('animals')
+        );
+        toast.success(`Anuncio de adopción borrado`);
+        return null;
+      } catch (error) {
+        console.log(error);
+        toast.error('Error borrando el anuncio de adopción');
         return null;
       }
     }
   };
 
 const ShelterProfile = () => {
-  const { data, isFetching, isLoading, isError } = useUser();
-  const navigate = useNavigate();
+  const { data, isFetching, isLoading } = useUser();
 
-  const navigation = useNavigation();
-
-  const isSubmitting = navigation.state === 'submitting';
+  const { resetImages } = useAnimalImagesContext();
 
   useEffect(() => {
-    if (isError) {
-      toast.error('Por favor primero haz Login con tu cuenta');
-      navigate('/login');
-    }
-  }, [isError, navigate]);
+    console.log('reset');
+    resetImages();
+  }, [resetImages]);
 
-  if (isLoading || isError) return <Spinner />;
+  if (isLoading) return <Spinner />;
 
   const {
     cif,
@@ -113,7 +127,7 @@ const ShelterProfile = () => {
   const userData = userInformation(data);
 
   return (
-    <main className="bg-default-100">
+    <main className="bg-default-100 flex-grow">
       <Hero />
       <section
         id="SheltersProfile"
@@ -152,7 +166,7 @@ const ShelterProfile = () => {
                 <H3Title title="Descripción:" />
                 <div>{description}</div>
               </div>
-              <ShelterForm isSubmitting={isSubmitting} data={data} />
+              <ShelterForm data={data} />
               <ImagesFrame images={images} />
               <div id="socialMedia" className="flex flex-col gap-3 mx-3 py-3 ">
                 <H3Title title="Redes sociales:" />
@@ -188,7 +202,7 @@ const ShelterProfile = () => {
                 <AsideDataColumn dataColumn={userData} />
               </div>
             </div>
-            <UserFormBio data={data} isSubmitting={isSubmitting} />
+            <UserFormBio data={data} />
             <div id="NotificationsAside">
               <H2Title title="Mensajes" className="pb-5" />
               <div className="flex justify-between border-solid border-b-1 border-b-primary pb-3 items-center">
@@ -207,7 +221,7 @@ const ShelterProfile = () => {
         </section>
         <section id="petsTable" className="px-4">
           <StatusAnimalsTable role={'shelter'} />
-          <AnimalForm isSubmitting={isSubmitting} />
+          <AnimalForm />
         </section>
         <footer className="border-solid border-t-1 border-t-danger py-8 h-100 flex justify-center">
           <Button color="danger" size="lg" startContent={<IconTrashXFilled />}>

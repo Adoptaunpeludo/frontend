@@ -9,6 +9,7 @@ import {
   ShelterCard,
   TitleSection,
 } from '../../../components';
+
 import { sheltersQuery, useShelters } from './useShelters';
 
 export const loader =
@@ -36,7 +37,7 @@ const SheltersPage = ({ page }) => {
   }, [isLoading]);
 
   return (
-    <main className="max-w-screen-xl w-full flex  flex-col justify-center  gap-12 h-full  py-12  mx-auto">
+    <main className="max-w-screen-xl w-full flex  flex-col justify-center  gap-12 h-full  py-12  mx-auto flex-grow">
       <TitleSection title={'asociaciones'} />
       <FilterBar page={page} className="" />
       <ul className="flex justify-center gap-4 flex-wrap p-6">
