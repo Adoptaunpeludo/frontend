@@ -29,6 +29,7 @@ import SocialMediaForm from '../ShelterForm/components/SocialMediaForm';
 import { toast } from 'react-toastify';
 import {
   createPetAdoption,
+  deleteAnimal,
   updateShelterProfile,
   uploadAnimalImages,
 } from '../ShelterForm/service';
@@ -74,7 +75,22 @@ export const action =
         return null;
       } catch (error) {
         console.log(error);
-        toast.error('Error creando anuncio de adopcion');
+        toast.error('Error creando anuncio de adopción');
+        return null;
+      }
+    }
+
+    if (intent === 'delete-animal') {
+      try {
+        await deleteAnimal(formData);
+        await queryClient.invalidateQueries((queryKey) =>
+          queryKey.includes('animals')
+        );
+        toast.success(`Anuncio de adopción borrado`);
+        return null;
+      } catch (error) {
+        console.log(error);
+        toast.error('Error borrando el anuncio de adopción');
         return null;
       }
     }
@@ -197,7 +213,7 @@ const ShelterProfile = () => {
           </aside>
         </section>
         <section id="petsTable" className="px-4">
-          <StatusAnimalsTable role={'shelter'} />
+          <StatusAnimalsTable role={'shelter'} isSubmitting={isSubmitting} />
           <AnimalForm isSubmitting={isSubmitting} />
         </section>
         <footer className="border-solid border-t-1 border-t-danger py-8 h-100 flex justify-center">
