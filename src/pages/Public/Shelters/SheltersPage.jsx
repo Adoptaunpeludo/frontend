@@ -47,7 +47,6 @@ const SheltersPage = ({ page }) => {
           ) : (
             data.users.map((shelter) => (
               <ShelterCard key={shelter.id} shelter={shelter} />
-              //<p>{JSON.stringify(data, null, 2)}</p>
             ))
           )}
         </ul>
