@@ -36,26 +36,22 @@ const SheltersPage = ({ page }) => {
   }, [isLoading]);
 
   return (
-    <>
-      {console.log('el de shelter ', { data })}
-      {/* <Banner src={`/backgrounds/banner-shelter.jpg`} /> */}
-      <main className="max-w-screen-xl w-full flex  flex-col justify-center  gap-12 h-full  py-12  mx-auto">
-        <TitleSection title={'asociaciones'} />
-        <FilterBar page={page} className="" />
-        <ul className="flex justify-center gap-4 flex-wrap p-6">
-          {isLoading ? (
-            <Spinner className="flex justify-center items-center" />
-          ) : (
-            data.users.map((shelter) => (
-              <ShelterCard key={shelter.id} shelter={shelter} />
-            ))
-          )}
-        </ul>
-        <footer className="mx-auto">
-          <PagePagination data={page} />
-        </footer>
-      </main>
-    </>
+    <main className="max-w-screen-xl w-full flex  flex-col justify-center  gap-12 h-full  py-12  mx-auto">
+      <TitleSection title={'asociaciones'} />
+      <FilterBar page={page} className="" />
+      <ul className="flex justify-center gap-4 flex-wrap p-6">
+        {isLoading ? (
+          <Spinner className="flex justify-center items-center" />
+        ) : (
+          data.users.map((shelter) => (
+            <ShelterCard key={shelter.id} shelter={shelter} />
+          ))
+        )}
+      </ul>
+      <footer className="mx-auto">
+        <PagePagination data={page} />
+      </footer>
+    </main>
   );
 };
 
