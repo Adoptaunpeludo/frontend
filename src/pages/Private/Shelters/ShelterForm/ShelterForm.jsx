@@ -16,10 +16,14 @@ import { H2Title, H3Title, Panel, SelectField } from '../../../../components';
 
 import Accommodations from '../ShelterProfile/components/Acommodations';
 
-import { Form } from 'react-router-dom';
+import { Form, useNavigation } from 'react-router-dom';
 
 const ShelterForm = ({ isSubmitting, data }) => {
   const { isOpen, onOpen, onOpenChange } = useDisclosure();
+
+  const navigation = useNavigation();
+
+  isSubmitting = navigation.state === 'submitting';
 
   const {
     cif,

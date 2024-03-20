@@ -59,7 +59,7 @@ export default function DeleteAnimalModal({ slug }) {
                       color="danger"
                       name="intent"
                       value={'delete-animal'}
-                      disabled={isSubmitting}
+                      isLoading={isSubmitting}
                       type="submit"
                     >
                       Borrar

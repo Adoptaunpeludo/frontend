@@ -12,7 +12,7 @@ import {
 } from '@nextui-org/react';
 import { IconCircleX, IconEdit, IconSend2 } from '@tabler/icons-react';
 import { useState } from 'react';
-import { Form } from 'react-router-dom';
+import { Form, useNavigation } from 'react-router-dom';
 import { H2Title, H4Title, Panel } from '../../../../components';
 
 import {
@@ -25,9 +25,13 @@ import {
 import { UploadImagesForm } from './Components/UploadImagesForm';
 import { useAnimalDetails } from '../../../Public/Animals/AnimalDetails/useAnimalDetails';
 
-const AnimalForm = ({ isSubmitting, slug = '' }) => {
+const AnimalForm = ({ slug = '' }) => {
   const { isOpen, onOpen, onOpenChange } = useDisclosure();
   const { data } = useAnimalDetails(slug);
+
+  const navigation = useNavigation();
+
+  const isSubmitting = navigation.state === 'submitting';
 
   const [pet, usePet] = useState(data?.type || 'cat');
 
@@ -118,7 +122,6 @@ const AnimalForm = ({ isSubmitting, slug = '' }) => {
                     name="intent"
                     value={'create-adoption'}
                     isLoading={isSubmitting}
-                    onPress={onClose}
                   >
                     Enviar
                   </Button>

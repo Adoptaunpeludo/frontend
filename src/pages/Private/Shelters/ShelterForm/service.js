@@ -35,8 +35,6 @@ export const createPetAdoption = async (formData) => {
 export const deleteAnimal = async (formData) => {
   const deletionData = Object.fromEntries(formData);
 
-  console.log({ deletionData });
-
   delete deletionData.intent;
 
   const { data } = await deleteData(`animals/${deletionData.slug}`);

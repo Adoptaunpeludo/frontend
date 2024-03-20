@@ -46,7 +46,7 @@ export const queryClient = new QueryClient({
   },
 });
 
-const router = (animalImages, resetImages) =>
+const router = (onClose, animalImages, resetImages) =>
   createBrowserRouter([
     {
       path: '/',
@@ -69,7 +69,6 @@ const router = (animalImages, resetImages) =>
           element: <VerifyEmail />,
         },
         //* End Auth Routes
-
         //* Public Routes
         {
           index: true,
@@ -102,7 +101,6 @@ const router = (animalImages, resetImages) =>
           loader: animalDetailsLoader(queryClient),
         },
         //* End Public Routes
-
         //* Private Routes
         {
           path: 'private',

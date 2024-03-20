@@ -35,7 +35,6 @@ import {
 } from '../ShelterForm/service';
 
 import AnimalForm from '../AnimalForm/AnimalForm';
-import { useNavigation } from 'react-router-dom';
 import { useUser } from '../../useUser';
 
 export const action =
@@ -99,10 +98,6 @@ export const action =
 const ShelterProfile = () => {
   const { data, isFetching, isLoading } = useUser();
 
-  const navigation = useNavigation();
-
-  const isSubmitting = navigation.state === 'submitting';
-
   if (isLoading) return <Spinner />;
 
   const {
@@ -159,7 +154,7 @@ const ShelterProfile = () => {
                 <H3Title title="Descripción:" />
                 <div>{description}</div>
               </div>
-              <ShelterForm isSubmitting={isSubmitting} data={data} />
+              <ShelterForm data={data} />
               <ImagesFrame images={images} />
               <div id="socialMedia" className="flex flex-col gap-3 mx-3 py-3 ">
                 <H3Title title="Redes sociales:" />
@@ -195,7 +190,7 @@ const ShelterProfile = () => {
                 <AsideDataColumn dataColumn={userData} />
               </div>
             </div>
-            <UserFormBio data={data} isSubmitting={isSubmitting} />
+            <UserFormBio data={data} />
             <div id="NotificationsAside">
               <H2Title title="Mensajes" className="pb-5" />
               <div className="flex justify-between border-solid border-b-1 border-b-primary pb-3 items-center">
@@ -213,8 +208,8 @@ const ShelterProfile = () => {
           </aside>
         </section>
         <section id="petsTable" className="px-4">
-          <StatusAnimalsTable role={'shelter'} isSubmitting={isSubmitting} />
-          <AnimalForm isSubmitting={isSubmitting} />
+          <StatusAnimalsTable role={'shelter'} />
+          <AnimalForm />
         </section>
         <footer className="border-solid border-t-1 border-t-danger py-8 h-100 flex justify-center">
           <Button color="danger" size="lg" startContent={<IconTrashXFilled />}>
