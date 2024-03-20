@@ -122,6 +122,7 @@ const AnimalForm = ({ slug = '' }) => {
                     name="intent"
                     value={'create-adoption'}
                     isLoading={isSubmitting}
+                    onPress={onClose}
                   >
                     Enviar
                   </Button>

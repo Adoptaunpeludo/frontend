@@ -46,7 +46,7 @@ export const queryClient = new QueryClient({
   },
 });
 
-const router = (onClose, animalImages, resetImages) =>
+const router = (animalImages, resetImages) =>
   createBrowserRouter([
     {
       path: '/',

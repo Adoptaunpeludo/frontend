@@ -59,7 +59,7 @@ export const action =
     if (intent === 'create-adoption') {
       const imagesData = new FormData();
 
-      animalImages.forEach((image) => {
+      animalImages?.forEach((image) => {
         imagesData.append('images', image);
       });
 

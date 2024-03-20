@@ -138,6 +138,7 @@ export const UserFormBio = ({ data }) => {
                   name="intent"
                   value={'shelter-user-profile'}
                   isLoading={isSubmitting}
+                  onPress={onClose}
                 >
                   Enviar
                 </Button>
