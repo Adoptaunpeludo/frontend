@@ -13,6 +13,7 @@ export function FilterBar({ page }) {
   const [searchParams, setSearchParams] = useSearchParams();
   const navigate = useNavigate();
   const { params } = useLoaderData();
+  const [name, setName] = useState(params?.name ? params.name : '');
   const [gender, setGender] = useState(
     new Set(params?.gender ? [params.gender] : [])
   );
@@ -21,6 +22,7 @@ export function FilterBar({ page }) {
   const [city, setCity] = useState(new Set(params?.city ? [params.city] : []));
 
   const handleReset = () => {
+    setName('');
     setGender(new Set([]));
     setAge(new Set([]));
     setSize(new Set([]));
@@ -68,7 +70,9 @@ export function FilterBar({ page }) {
         className="flex-1"
         aria-label="Nombre"
         label="Nombre"
-        name="name"
+        value={name}
+        onValueChange={setName}
+        name={page !== 'shelter' ? 'name' : 'username'}
         defaultValue={params?.name || ''}
       />
       <Spacer x={0.5} />
@@ -87,7 +91,7 @@ export function FilterBar({ page }) {
               key={size.value}
               value={size.value}
               className="capitalize"
-              textValue="Size"
+              // textValue="Size"
             >
               {size.label}
             </SelectItem>
@@ -109,7 +113,7 @@ export function FilterBar({ page }) {
               key={gender.value}
               value={gender.value}
               className="capitalize"
-              textValue="Gender"
+              // textValue="Gender"
             >
               {gender.label}
             </SelectItem>
@@ -131,7 +135,7 @@ export function FilterBar({ page }) {
               key={age.value}
               value={age.value}
               className="capitalize"
-              textValue="Ages"
+              // textValue="Ages"
             >
               {age.label}
             </SelectItem>
@@ -152,7 +156,7 @@ export function FilterBar({ page }) {
             key={city.value}
             value={city.value}
             className="capitalize"
-            textValue="Cities"
+            // textValue="Cities"
           >
             {city.label}
           </SelectItem>
