@@ -35,15 +35,15 @@ export const StatusAnimalsTable = ({ role }) => {
 
   const { animals } = data;
 
-  const renderCell = React.useCallback((user, columnKey) => {
-    const cellValue = user[columnKey];
+  const renderCell = React.useCallback((animal, columnKey) => {
+    const cellValue = animal[columnKey];
     // if (isLoading) return <Spinner />;
     switch (columnKey) {
       case 'status':
         return (
           <Chip
             className="capitalize w-full"
-            color={statusColorMap[user.status]}
+            color={statusColorMap[animal.status]}
             size="sm"
             variant="flat"
           >
@@ -54,7 +54,7 @@ export const StatusAnimalsTable = ({ role }) => {
         return (
           <Chip
             className="capitalize w-full"
-            color={statusColorMap[user.publishStatus]}
+            color={statusColorMap[animal.publishStatus]}
             size="sm"
             variant="flat"
           >
@@ -68,7 +68,7 @@ export const StatusAnimalsTable = ({ role }) => {
               <Button
                 isIconOnly
                 as={Link}
-                href={`/${user.type}s/${user.slug}`}
+                href={`/${animal.type}s/${animal.slug}`}
                 variant="solid"
                 color="primary"
                 size="sm"

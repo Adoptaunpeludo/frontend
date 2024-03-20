@@ -7,6 +7,7 @@ import { Hero, LogoHeader, Panel } from '../../../components';
 import { handleAuthError } from '../../../utils/handleError';
 import { validateField } from '../../../utils/validateField';
 import { userQuery } from '../../Private/useUser';
+import { login } from '../authService';
 
 export const action =
   (queryClient) =>
@@ -59,7 +60,6 @@ const LoginPage = () => {
 
   return (
     <>
-
       <main className="bg-default-100 flex-grow">
         <Hero />
         <section

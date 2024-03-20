@@ -69,6 +69,7 @@ const router = (animalImages, resetImages) =>
           element: <VerifyEmail />,
         },
         //* End Auth Routes
+
         //* Public Routes
         {
           index: true,
@@ -101,6 +102,7 @@ const router = (animalImages, resetImages) =>
           loader: animalDetailsLoader(queryClient),
         },
         //* End Public Routes
+
         //* Private Routes
         {
           path: 'private',
@@ -126,6 +128,7 @@ const router = (animalImages, resetImages) =>
           ],
         },
         //* End Private Routes
+
         //* Not Found Routes
         {
           path: '404',
