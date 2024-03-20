@@ -17,9 +17,13 @@ import { H2Title, H3Title, Panel, SelectField } from '../../../../components';
 import Accommodations from '../ShelterProfile/components/Acommodations';
 
 import { Form, useNavigation } from 'react-router-dom';
+import { useModalContext } from '../../../../context/ModalContext';
+import { useEffect } from 'react';
 
 const ShelterForm = ({ isSubmitting, data }) => {
-  const { isOpen, onOpen, onOpenChange } = useDisclosure();
+  const updateShelterModal = useDisclosure();
+  const { isOpen, onOpen, onOpenChange } = updateShelterModal;
+  const { saveModal } = useModalContext();
 
   const navigation = useNavigation();
 
@@ -35,6 +39,10 @@ const ShelterForm = ({ isSubmitting, data }) => {
     // socialMedia,
     username,
   } = data;
+
+  useEffect(() => {
+    saveModal(updateShelterModal);
+  }, []);
 
   return (
     <Button
@@ -147,7 +155,6 @@ const ShelterForm = ({ isSubmitting, data }) => {
                     name="intent"
                     value={'shelter-profile'}
                     isLoading={isSubmitting}
-                    onPress={onClose}
                   >
                     Enviar
                   </Button>

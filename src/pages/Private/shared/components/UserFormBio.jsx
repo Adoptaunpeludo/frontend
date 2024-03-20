@@ -16,9 +16,13 @@ import { H2Title, Panel, SelectField } from '../../../../components';
 
 import { Form, useNavigation } from 'react-router-dom';
 import { BUCKET_URL } from '../../../../config/config';
+import { useModalContext } from '../../../../context/ModalContext';
+import { useEffect } from 'react';
 
 export const UserFormBio = ({ data }) => {
-  const { isOpen, onOpen, onClose, onOpenChange } = useDisclosure();
+  const updateBioModal = useDisclosure();
+  const { isOpen, onOpen, onOpenChange, onClose } = updateBioModal;
+  const { saveModal } = useModalContext();
 
   const navigation = useNavigation();
 
@@ -26,6 +30,10 @@ export const UserFormBio = ({ data }) => {
 
   const { username, avatar, dni, firstName, lastName, phoneNumber, city } =
     data;
+
+  useEffect(() => {
+    saveModal(updateBioModal);
+  }, []);
 
   return (
     <Button
@@ -64,6 +72,7 @@ export const UserFormBio = ({ data }) => {
                       {/* TODO: useInput hook to custom all inputs with the same styles  */}
                       <div className="flex w-full flex-wrap md:flex-nowrap gap-4">
                         <Input
+                          isDisabled={isSubmitting}
                           className="min-w-72 "
                           type="text"
                           label="DNI"
@@ -73,6 +82,7 @@ export const UserFormBio = ({ data }) => {
                       </div>
                       <div className="flex w-full flex-wrap md:flex-nowrap gap-4">
                         <Input
+                          isDisabled={isSubmitting}
                           className="min-w-72 "
                           type="text"
                           label="Nombre"
@@ -82,6 +92,7 @@ export const UserFormBio = ({ data }) => {
                           }
                         />
                         <Input
+                          isDisabled={isSubmitting}
                           className="min-w-72 "
                           type="text"
                           label="Apellidos"
@@ -95,6 +106,7 @@ export const UserFormBio = ({ data }) => {
                       </div>
                       <div className="flex w-full flex-wrap md:flex-nowrap gap-4">
                         <Input
+                          isDisabled={isSubmitting}
                           className="min-w-72 "
                           type="tel"
                           label="Teléfono"
@@ -111,6 +123,7 @@ export const UserFormBio = ({ data }) => {
                           name="city"
                           dataField={city}
                           dataEnum={cities}
+                          isDisabled={isSubmitting}
                         />
                       </div>
                     </div>
@@ -138,7 +151,6 @@ export const UserFormBio = ({ data }) => {
                   name="intent"
                   value={'shelter-user-profile'}
                   isLoading={isSubmitting}
-                  onPress={onClose}
                 >
                   Enviar
                 </Button>

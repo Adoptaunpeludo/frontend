@@ -36,9 +36,12 @@ import {
 
 import AnimalForm from '../AnimalForm/AnimalForm';
 import { useUser } from '../../useUser';
+import { useAnimalImagesContext } from '../../../../context/AnimalImagesContext';
+import { useEffect } from 'react';
+import { redirect } from 'react-router-dom';
 
 export const action =
-  (animalImages, resetImages, queryClient) =>
+  (closeModal, animalImages, resetImages, queryClient) =>
   async ({ request }) => {
     let formData = await request.formData();
     let intent = formData.get('intent');
@@ -48,6 +51,7 @@ export const action =
         await updateShelterProfile(formData, intent);
         queryClient.invalidateQueries({ queryKey: ['user'] });
         toast.success('Perfil del Refugio actualizado');
+        closeModal();
         return null;
       } catch (error) {
         console.log(error);
@@ -71,6 +75,7 @@ export const action =
           queryKey.includes('animals')
         );
         toast.success(`Animal ${animal.name} puesto en adopción`);
+        redirect(`/animals/${animal.type}s/${animal.slug}`);
         return null;
       } catch (error) {
         console.log(error);
@@ -97,6 +102,13 @@ export const action =
 
 const ShelterProfile = () => {
   const { data, isFetching, isLoading } = useUser();
+
+  const { resetImages } = useAnimalImagesContext();
+
+  useEffect(() => {
+    console.log('reset');
+    resetImages();
+  }, [resetImages]);
 
   if (isLoading) return <Spinner />;
 

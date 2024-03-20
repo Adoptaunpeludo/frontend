@@ -11,7 +11,7 @@ import {
   useDisclosure,
 } from '@nextui-org/react';
 import { IconCircleX, IconEdit, IconSend2 } from '@tabler/icons-react';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Form, useNavigation } from 'react-router-dom';
 import { H2Title, H4Title, Panel } from '../../../../components';
 
@@ -24,16 +24,25 @@ import {
 
 import { UploadImagesForm } from './Components/UploadImagesForm';
 import { useAnimalDetails } from '../../../Public/Animals/AnimalDetails/useAnimalDetails';
+import { useModalContext } from '../../../../context/ModalContext';
+import { useAnimalImagesContext } from '../../../../context/AnimalImagesContext';
 
 const AnimalForm = ({ slug = '' }) => {
-  const { isOpen, onOpen, onOpenChange } = useDisclosure();
+  const createAnimalModal = useDisclosure();
+  const { isOpen, onOpen, onOpenChange } = createAnimalModal;
   const { data } = useAnimalDetails(slug);
+  const { saveModal } = useModalContext();
+  const { images, setImages } = useAnimalImagesContext();
 
   const navigation = useNavigation();
 
   const isSubmitting = navigation.state === 'submitting';
 
   const [pet, usePet] = useState(data?.type || 'cat');
+
+  useEffect(() => {
+    saveModal(createAnimalModal);
+  }, []);
 
   return (
     <Button
@@ -51,6 +60,7 @@ const AnimalForm = ({ slug = '' }) => {
         scrollBehavior="outside"
         className={`text-foreground bg-background border border-white`}
         size="4xl"
+        onClose={() => setImages([])}
       >
         <Form method="post" preventScrollReset={true}>
           <ModalContent>
@@ -65,6 +75,7 @@ const AnimalForm = ({ slug = '' }) => {
                       <H2Title title="Peludo" className="mx-auto pb-5" />
                       <div className="max-w-96 flex flex-col justify-center rounded-lg bg-default-100 mx-auto px-10 py-2">
                         <RadioGroup
+                          isDisabled={isSubmitting}
                           orientation="horizontal"
                           name="type"
                           className="flex justify-center font-semibold"
@@ -78,26 +89,39 @@ const AnimalForm = ({ slug = '' }) => {
                       </div>
                       <div className="flex flex-col gap-6 max-w-4xl mx-auto px-10 ">
                         <div className="flex w-full flex-col gap-4">
-                          <AnimalBioForm data={data} />
+                          <AnimalBioForm
+                            data={data}
+                            isDisabled={isSubmitting}
+                          />
                           {pet === 'cat' && (
-                            <OtherPropertiesCatForm data={data} />
+                            <OtherPropertiesCatForm
+                              data={data}
+                              isDisabled={isSubmitting}
+                            />
                           )}
                           {pet === 'dog' && (
-                            <OtherPropertiesDogForm data={data} />
+                            <OtherPropertiesDogForm
+                              data={data}
+                              isDisabled={isSubmitting}
+                            />
                           )}
-                          <StatusShelterForm data={data} />
+                          <StatusShelterForm
+                            data={data}
+                            isDisabled={isSubmitting}
+                          />
                           <H4Title title="Descripción:" className="mx-2" />
                           <Textarea
                             className="w-full "
                             name="description"
                             label="Descripción"
+                            isDisabled={isSubmitting}
                             defaultValue={
                               data?.description ? data?.description : ''
                             }
                           />
                         </div>
                       </div>
-                      <UploadImagesForm />
+                      <UploadImagesForm images={images} setImages={setImages} />
                     </Panel>
                   </section>
                 </ModalBody>
@@ -122,7 +146,6 @@ const AnimalForm = ({ slug = '' }) => {
                     name="intent"
                     value={'create-adoption'}
                     isLoading={isSubmitting}
-                    onPress={onClose}
                   >
                     Enviar
                   </Button>
