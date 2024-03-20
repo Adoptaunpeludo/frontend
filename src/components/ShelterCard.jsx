@@ -11,7 +11,7 @@ import {
 
 import { UilMapMarker, UilPlay } from '@iconscout/react-unicons';
 
-import { IconUserFilled } from '@tabler/icons-react';
+import { IconHome } from '@tabler/icons-react';
 import { UnderlineVector } from '../assets/svg';
 import { BUCKET_URL } from '../config/config';
 
@@ -38,7 +38,7 @@ export const ShelterCard = ({ shelter }) => {
             className="w-24 h-24"
             src={`${BUCKET_URL}/${shelter.images[0]}`}
             showFallback
-            fallback={<IconUserFilled className="w-10 h-10" />}
+            fallback={<IconHome className="w-10 h-10" />}
           />
         </div>
       </CardHeader>
@@ -52,7 +52,7 @@ export const ShelterCard = ({ shelter }) => {
         <p className="my-3 flex-1">
           {shelter.description !== ''
             ? shelter.description
-            : 'Sin descripción todavía'}
+            : `Protectora ${shelter.username}`}
         </p>
         {/* Icons */}
         <div className="flex justify-start items-baseline gap-1">
