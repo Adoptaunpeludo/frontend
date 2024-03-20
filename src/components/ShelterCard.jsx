@@ -13,25 +13,26 @@ import { UilMapMarker, UilPlay } from '@iconscout/react-unicons';
 
 import { IconHome } from '@tabler/icons-react';
 import { UnderlineVector } from '../assets/svg';
-import { BUCKET_URL } from '../config/config';
+import { BUCKET_URL, FALLBACK_IMAGE } from '../config/config';
 
 export const ShelterCard = ({ shelter }) => {
   return (
     <Card className="max-w-72">
       {/* Header */}
       <CardHeader className="relative p-0 overflow-hidden">
+        {/* principal image*/}
         <Image
           src={`${BUCKET_URL}/${shelter.images[1]}`}
           alt={shelter.username}
-          className="w-80 h-full object-cover min-h-[320px]"
+          className="w-80 object-cover h-52 aspect-square"
+          fallbackSrc={`${FALLBACK_IMAGE}`}
         />
-
-        {/* Etiqueta absolutamente posicionada para 'gato' */}
+        {/* vector over image*/}
         <div className="absolute z-10 bottom-0 left-0 right-0 w-full">
           <UnderlineVector />
         </div>
-
-        <div className="absolute z-10 bottom-2 left-1/2 -translate-x-10 w-full back">
+        {/* Avatar */}
+        <div className="absolute z-20 bottom-2 left-1/2 -translate-x-10 w-full back">
           <Avatar
             isBordered
             color={shelter.isOnline ? 'success' : 'danger'}
@@ -46,10 +47,12 @@ export const ShelterCard = ({ shelter }) => {
       {/* Body */}
 
       <CardBody className="flex flex-column overflow-visible py-2 content-between">
+        {/* username */}
         <h3 className="flex w-full font-lobster justify-center items-center text-3xl capitalize">
           {shelter.username}
         </h3>
-        <p className="my-3 flex-1">
+        {/* description */}
+        <p className="my-3 flex-1 text-ellipsis overflow-hidden max-h-16">
           {shelter.description !== ''
             ? shelter.description
             : `Protectora ${shelter.username}`}
@@ -57,6 +60,7 @@ export const ShelterCard = ({ shelter }) => {
         {/* Icons */}
         <div className="flex justify-start items-baseline gap-1">
           <UilMapMarker className="fill-tertiary" />
+          {/* city */}
           <span className="capitalize">
             {shelter.city !== undefined
               ? shelter.city
@@ -68,7 +72,7 @@ export const ShelterCard = ({ shelter }) => {
       {/* Footer */}
       <CardFooter className=" flex w-full justify-center items-center border-t-1 border-primary">
         <Button
-          href={`/shelters/${shelter.slug}`}
+          href={`/shelters/${shelter.id}`}
           as={Link}
           color="primary"
           size="sm"
