@@ -1,11 +1,8 @@
 import { H3Title } from '../../../../../components';
 import AddImagesModal from './AddImagesModal';
 import DeleteImageModal from './DeleteImageModal';
-import { useAnimalImagesContext } from '../../../../../context/AnimalImagesContext';
 
-export const UploadImagesForm = () => {
-  const { images, setImages } = useAnimalImagesContext();
-
+export const UploadImagesForm = ({ images, setImages }) => {
   return (
     <div id="images" className="flex flex-col gap-5 mx-3 mt-4">
       <H3Title title="Imágenes:" />

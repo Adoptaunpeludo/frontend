@@ -12,12 +12,7 @@ import {
   Tooltip,
 } from '@nextui-org/react';
 
-import {
-  IconEdit,
-  IconEye,
-  IconHeartFilled,
-  IconTrashXFilled,
-} from '@tabler/icons-react';
+import { IconEdit, IconEye, IconHeartFilled } from '@tabler/icons-react';
 import React from 'react';
 
 import {
@@ -27,6 +22,7 @@ import {
 } from '../../../shared/components/configAnimalsTable';
 
 import { useUserAnimals } from '../../useUserAnimals';
+import DeleteAnimalModal from './DeleteAnimalModal';
 
 export const StatusAnimalsTable = ({ role }) => {
   const headerColumn = role === 'shelter' ? ColumnsShelter : ColumnsAdopter;
@@ -81,11 +77,8 @@ export const StatusAnimalsTable = ({ role }) => {
                 <IconEdit />
               </Button>
             </Tooltip>
-            <Tooltip color="danger" content="Eliminar Peludo">
-              <Button isIconOnly variant="solid" color="danger" size="sm">
-                <IconTrashXFilled />
-              </Button>
-            </Tooltip>
+
+            <DeleteAnimalModal slug={animal.slug} />
           </div>
         );
       case 'actionsAdopter':

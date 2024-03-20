@@ -37,6 +37,7 @@ import { loader as sheltersLoader } from './pages/Public/Shelters/SheltersPage.j
 import { useAnimalImagesContext } from './context/AnimalImagesContext.jsx';
 import NotFoundPage from './pages/Error/NotFound/NotFoundPage.jsx';
 import ProtectedRoute from './pages/Private/ProtectedRoute.jsx';
+import { useModalContext } from './context/ModalContext.jsx';
 
 export const queryClient = new QueryClient({
   defaultOptions: {
@@ -46,7 +47,7 @@ export const queryClient = new QueryClient({
   },
 });
 
-const router = (animalImages, resetImages) =>
+const router = (onClose, animalImages, resetImages) =>
   createBrowserRouter([
     {
       path: '/',
@@ -69,7 +70,6 @@ const router = (animalImages, resetImages) =>
           element: <VerifyEmail />,
         },
         //* End Auth Routes
-
         //* Public Routes
         {
           index: true,
@@ -102,7 +102,6 @@ const router = (animalImages, resetImages) =>
           loader: animalDetailsLoader(queryClient),
         },
         //* End Public Routes
-
         //* Private Routes
         {
           path: 'private',
@@ -120,6 +119,7 @@ const router = (animalImages, resetImages) =>
               element: <ShelterProfile />,
               loader: userAnimalsLoader(queryClient),
               action: shelterProfileAction(
+                onClose,
                 animalImages,
                 resetImages,
                 queryClient
@@ -145,10 +145,14 @@ const router = (animalImages, resetImages) =>
 function App() {
   const { images: animalImages, resetImages } = useAnimalImagesContext();
 
+  const { modal } = useModalContext();
+
   return (
     <QueryClientProvider client={queryClient}>
       <ReactQueryDevtools initialIsOpen={false} />
-      <RouterProvider router={router(animalImages, resetImages)} />
+      <RouterProvider
+        router={router(modal.onClose, animalImages, resetImages)}
+      />
     </QueryClientProvider>
   );
 }
