@@ -13,7 +13,7 @@ import { UilMapMarker, UilPlay } from '@iconscout/react-unicons';
 
 import { IconHome } from '@tabler/icons-react';
 import { UnderlineVector } from '../assets/svg';
-import { BUCKET_URL, FALLBACK_IMAGE } from '../config/config';
+import { BUCKET_URL, FALLBACK_IMAGE_CARD } from '../config/config';
 
 export const ShelterCard = ({ shelter }) => {
   return (
@@ -25,7 +25,7 @@ export const ShelterCard = ({ shelter }) => {
           src={`${BUCKET_URL}/${shelter.images[1]}`}
           alt={shelter.username}
           className="w-80 object-cover h-52 aspect-square"
-          fallbackSrc={`${FALLBACK_IMAGE}`}
+          fallbackSrc={`${FALLBACK_IMAGE_CARD}`}
         />
         {/* vector over image*/}
         <div className="absolute z-10 bottom-0 left-0 right-0 w-full">
