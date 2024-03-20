@@ -34,7 +34,7 @@ export const action =
       await uploadAnimalImages(imagesData, animal.id);
       queryClient.invalidateQueries((queryKey) => queryKey.includes('animal'));
       toast.success(`Animal ${animal.name} puesto en adopción`);
-      return redirect(`/${animal.type}s/${animal.slug}`);
+      return redirect(`/animals/${animal.type}s/${animal.slug}`);
     } catch (error) {
       console.log(error);
       toast.error('Error creando anuncio de adopción');

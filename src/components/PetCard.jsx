@@ -94,7 +94,7 @@ export const PetCard = ({ animal }) => {
         <HeartIcon />
 
         <Button
-          href={`/${animal.type}s/${animal.slug}`}
+          href={`/animals/${animal.type}s/${animal.slug}`}
           as={Link}
           color="primary"
         >

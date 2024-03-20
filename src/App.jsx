@@ -47,7 +47,7 @@ export const queryClient = new QueryClient({
   },
 });
 
-const router = (onClose, animalImages, resetImages) =>
+const router = (onClose, animalImages) =>
   createBrowserRouter([
     {
       path: '/',
@@ -82,24 +82,24 @@ const router = (onClose, animalImages, resetImages) =>
           loader: animalsLoader(queryClient, 'cats'),
         },
         {
+          path: '/animals/cats/:slug',
+          element: <AnimalDetailsPage />,
+          loader: animalDetailsLoader(queryClient),
+        },
+        {
           path: 'animals/dogs',
           element: <AnimalsPage page={'dogs'} />,
           loader: animalsLoader(queryClient, 'dogs'),
         },
         {
+          path: '/animals/dogs/:slug',
+          element: <AnimalDetailsPage />,
+          loader: animalDetailsLoader(queryClient),
+        },
+        {
           path: 'shelters',
           element: <SheltersPage page={'shelter'} />,
           loader: sheltersLoader(queryClient, 'shelters'),
-        },
-        {
-          path: 'cats/:slug',
-          element: <AnimalDetailsPage />,
-          loader: animalDetailsLoader(queryClient),
-        },
-        {
-          path: 'dogs/:slug',
-          element: <AnimalDetailsPage />,
-          loader: animalDetailsLoader(queryClient),
         },
         //* End Public Routes
         //* Private Routes
