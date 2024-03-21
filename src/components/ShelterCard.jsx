@@ -72,7 +72,7 @@ export const ShelterCard = ({ shelter }) => {
       {/* Footer */}
       <CardFooter className=" flex w-full justify-center items-center border-t-1 border-primary">
         <Button
-          href={`/shelters/${shelter.id}`}
+          href={`/shelters/${shelter.username}`}
           as={Link}
           color="primary"
           size="sm"
