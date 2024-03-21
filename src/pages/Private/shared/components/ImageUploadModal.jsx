@@ -10,11 +10,12 @@ import {
 } from '@nextui-org/react';
 import { useState } from 'react';
 import { Form } from 'react-router-dom';
-import { uploadFile } from '../service/imagesService';
+import { uploadUserFile } from '../service/imagesService';
 import { toast } from 'react-toastify';
 import { useQueryClient } from '@tanstack/react-query';
+import { uploadAnimalFile } from '../../Shelters/AnimalForm/service';
 
-const ImageUploadModal = () => {
+const ImageUploadModal = ({ page, id, slug }) => {
   const { isOpen, onOpen, onOpenChange } = useDisclosure();
   const queryClient = useQueryClient();
   const [selectedFile, setSelectedFile] = useState();
@@ -29,12 +30,20 @@ const ImageUploadModal = () => {
   const handleUploadFile = async (onClose) => {
     if (!selectedFile) return;
 
+    const service =
+      page === 'update-animal'
+        ? () => uploadAnimalFile(selectedFile, id)
+        : () => uploadUserFile(selectedFile);
+
+    const queryKey =
+      page === 'update-animal' ? ['animal-details', slug] : ['user'];
+
     try {
       setIsLoading(true);
-      await uploadFile(selectedFile);
+      await service();
       toast.success('Imagen subida con exito');
       queryClient.invalidateQueries({
-        queryKey: ['user'],
+        queryKey,
       });
       onClose();
     } catch (error) {

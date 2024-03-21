@@ -10,10 +10,9 @@ import './index.css';
 import {
   AdopterProfile,
   AnimalDetailsPage,
+  AnimalForm,
   AnimalsPage,
   AppLayout,
-  // CatsPage,
-  // DogsPage,
   ErrorPage,
   LandingPage,
   LoginPage,
@@ -26,7 +25,9 @@ import {
 import { action as loginAction } from './pages/Auth/Login/LoginPage.jsx';
 import { action as registerAction } from './pages/Auth/Register/RegisterPage.jsx';
 import { action as shelterProfileAction } from './pages/Private/Shelters/ShelterProfile/ShelterProfile.jsx';
+import { action as mutateAnimalAction } from './pages/Private/Shelters/AnimalForm/AnimalForm.jsx';
 
+import { loader as updateAnimalLoader } from './pages/Private/Shelters/AnimalForm/AnimalForm.jsx';
 import { loader as animalDetailsLoader } from './pages/Public/Animals/AnimalDetails/AnimalDetailsPage.jsx';
 import { loader as animalsLoader } from './pages/Public/Animals/AnimalsPage.jsx';
 import { loader as landingAnimalsLoader } from './pages/Public/Landing/LandingPage.jsx';
@@ -47,7 +48,7 @@ export const queryClient = new QueryClient({
   },
 });
 
-const router = (onClose, animalImages, resetImages) =>
+const router = (bioModalOnClose, shelterModalOnClose, animalImages) =>
   createBrowserRouter([
     {
       path: '/',
@@ -66,7 +67,7 @@ const router = (onClose, animalImages, resetImages) =>
           action: loginAction(queryClient),
         },
         {
-          path: 'users/verify-email',
+          path: 'users/verify-email/:token',
           element: <VerifyEmail />,
         },
         //* End Auth Routes
@@ -82,24 +83,24 @@ const router = (onClose, animalImages, resetImages) =>
           loader: animalsLoader(queryClient, 'cats'),
         },
         {
+          path: '/animals/cats/:slug',
+          element: <AnimalDetailsPage />,
+          loader: animalDetailsLoader(queryClient),
+        },
+        {
           path: 'animals/dogs',
           element: <AnimalsPage page={'dogs'} />,
           loader: animalsLoader(queryClient, 'dogs'),
         },
         {
+          path: '/animals/dogs/:slug',
+          element: <AnimalDetailsPage />,
+          loader: animalDetailsLoader(queryClient),
+        },
+        {
           path: 'shelters',
           element: <SheltersPage page={'shelter'} />,
           loader: sheltersLoader(queryClient, 'shelters'),
-        },
-        {
-          path: 'cats/:slug',
-          element: <AnimalDetailsPage />,
-          loader: animalDetailsLoader(queryClient),
-        },
-        {
-          path: 'dogs/:slug',
-          element: <AnimalDetailsPage />,
-          loader: animalDetailsLoader(queryClient),
         },
         //* End Public Routes
         //* Private Routes
@@ -119,11 +120,21 @@ const router = (onClose, animalImages, resetImages) =>
               element: <ShelterProfile />,
               loader: userAnimalsLoader(queryClient),
               action: shelterProfileAction(
-                onClose,
-                animalImages,
-                resetImages,
+                bioModalOnClose,
+                shelterModalOnClose,
                 queryClient
               ),
+            },
+            {
+              path: 'shelter/create-animal',
+              element: <AnimalForm />,
+              action: mutateAnimalAction(animalImages, queryClient),
+            },
+            {
+              path: 'shelter/update-animal/:slug',
+              element: <AnimalForm />,
+              action: mutateAnimalAction(animalImages, queryClient),
+              loader: updateAnimalLoader(queryClient),
             },
           ],
         },
@@ -143,15 +154,14 @@ const router = (onClose, animalImages, resetImages) =>
   ]);
 
 function App() {
-  const { images: animalImages, resetImages } = useAnimalImagesContext();
-
-  const { modal } = useModalContext();
+  const { images: animalImages } = useAnimalImagesContext();
+  const { bioModal, shelterModal } = useModalContext();
 
   return (
     <QueryClientProvider client={queryClient}>
       <ReactQueryDevtools initialIsOpen={false} />
       <RouterProvider
-        router={router(modal.onClose, animalImages, resetImages)}
+        router={router(bioModal.onClose, shelterModal.onClose, animalImages)}
       />
     </QueryClientProvider>
   );

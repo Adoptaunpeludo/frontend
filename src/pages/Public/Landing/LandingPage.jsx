@@ -1,3 +1,4 @@
+import { useNavigation } from 'react-router-dom';
 import {
   AdoptVsBuy,
   FeaturedAnimals,
@@ -10,6 +11,7 @@ import {
   OurRescues,
 } from './sections';
 import { animalsQuery } from './useAnimals';
+import { Skeleton } from '@nextui-org/react';
 
 export const loader = (queryClient) => () => {
   const { data: cats } = queryClient.ensureQueryData(
@@ -24,19 +26,25 @@ export const loader = (queryClient) => () => {
 };
 
 const LandingPage = () => {
+  const navigation = useNavigation();
+
+  const isLoading = navigation.state === 'loading';
+
   return (
-    <main className="flex-grow">
-      <HeroHome />
-      <GetInvolved />
-      {/* <FeaturedDogs /> */}
-      <FeaturedAnimals page="dogs" />
-      <AdoptVsBuy />
-      {/* <FeaturedCats /> */}
-      <FeaturedAnimals page="cats" />
-      <OurRescues />
-      <FeaturedShelters />
-      <JoinNewsletter />
-    </main>
+    <Skeleton isLoaded={!isLoading}>
+      <main className="flex-grow">
+        <HeroHome />
+        <GetInvolved />
+        {/* <FeaturedDogs /> */}
+        <FeaturedAnimals page="dogs" />
+        <AdoptVsBuy />
+        {/* <FeaturedCats /> */}
+        <FeaturedAnimals page="cats" />
+        <OurRescues />
+        <FeaturedShelters />
+        <JoinNewsletter />
+      </main>
+    </Skeleton>
   );
 };
 

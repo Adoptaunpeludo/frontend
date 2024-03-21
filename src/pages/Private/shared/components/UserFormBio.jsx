@@ -22,7 +22,7 @@ import { useEffect } from 'react';
 export const UserFormBio = ({ data }) => {
   const updateBioModal = useDisclosure();
   const { isOpen, onOpen, onOpenChange, onClose } = updateBioModal;
-  const { saveModal } = useModalContext();
+  const { saveBioModal } = useModalContext();
 
   const navigation = useNavigation();
 
@@ -32,7 +32,8 @@ export const UserFormBio = ({ data }) => {
     data;
 
   useEffect(() => {
-    saveModal(updateBioModal);
+    console.log('use effect bio');
+    saveBioModal(updateBioModal);
   }, []);
 
   return (

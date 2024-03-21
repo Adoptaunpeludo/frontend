@@ -10,10 +10,11 @@ import {
 } from '@nextui-org/react';
 import { useQueryClient } from '@tanstack/react-query';
 import { useState } from 'react';
-import { deleteFile } from '../service/imagesService';
+import { deleteUserFile } from '../service/imagesService';
 import { toast } from 'react-toastify';
+import { deleteAnimalFile } from '../../Shelters/AnimalForm/service';
 
-export default function DeleteImageModal({ name }) {
+export default function DeleteImageModal({ name, page, slug, id }) {
   const { isOpen, onOpen, onOpenChange } = useDisclosure();
   const [isLoading, setIsLoading] = useState(false);
   const queryClient = useQueryClient();
@@ -21,12 +22,20 @@ export default function DeleteImageModal({ name }) {
   const handleDeleteImage = async (name, onClose) => {
     const images = [name];
 
+    const service =
+      page === 'update-animal'
+        ? () => deleteAnimalFile(images, id)
+        : deleteUserFile(images);
+
+    const queryKey =
+      page === 'update-animal' ? ['animal-details', slug] : ['user'];
+
     try {
       setIsLoading(true);
-      await deleteFile(images);
+      await service();
       toast.success('Imagen Borrada con exito');
       queryClient.invalidateQueries({
-        queryKey: ['user'],
+        queryKey,
       });
       onClose();
     } catch (error) {
