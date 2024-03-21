@@ -15,8 +15,6 @@ export { ImageGallery } from './ImageGallery';
 export { LogoHeader } from './LogoHeader';
 export { PagePagination } from './Pagination';
 export { Panel } from './Panel';
-export { PetCard } from './PetCard';
 export { SelectField } from './SelectField';
-export { ShelterCard } from './ShelterCard';
 export { TitleSection } from './TitleSection';
 export { UserAreaMenu } from './UserAreaMenu';
