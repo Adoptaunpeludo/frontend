@@ -64,7 +64,7 @@ export const StatusAnimalsTable = ({ role }) => {
               <Button
                 isIconOnly
                 as={Link}
-                href={`/${animal.type}s/${animal.slug}`}
+                href={`/animals/${animal.type}s/${animal.slug}`}
                 variant="solid"
                 color="primary"
                 size="sm"

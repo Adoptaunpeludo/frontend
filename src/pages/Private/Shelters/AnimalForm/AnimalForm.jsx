@@ -71,7 +71,7 @@ export const action =
         queryClient.invalidateQueries((queryKey) =>
           queryKey.includes('animal')
         );
-        toast.success(`Animal ${animal.name} puesto en adopción`);
+        toast.success(`Animal ${animal.name} Actualizado`);
         return redirect(`/animals/${animal.type}s/${animal.slug}`);
       } catch (error) {
         console.log(error);
