@@ -24,21 +24,24 @@ import {
 
 import { action as loginAction } from './pages/Auth/Login/LoginPage.jsx';
 import { action as registerAction } from './pages/Auth/Register/RegisterPage.jsx';
-import { action as shelterProfileAction } from './pages/Private/Shelters/ShelterProfile/ShelterProfile.jsx';
 import { action as mutateAnimalAction } from './pages/Private/Shelters/AnimalForm/AnimalForm.jsx';
+import { action as shelterProfileAction } from './pages/Private/Shelters/ShelterProfile/ShelterProfile.jsx';
 
+import { loader as currentUserLoader } from './pages/Private/ProtectedRoute.jsx';
 import { loader as updateAnimalLoader } from './pages/Private/Shelters/AnimalForm/AnimalForm.jsx';
+import { loader as userAnimalsLoader } from './pages/Private/Shelters/loader.js';
 import { loader as animalDetailsLoader } from './pages/Public/Animals/AnimalDetails/AnimalDetailsPage.jsx';
 import { loader as animalsLoader } from './pages/Public/Animals/AnimalsPage.jsx';
 import { loader as landingAnimalsLoader } from './pages/Public/Landing/LandingPage.jsx';
-import { loader as currentUserLoader } from './pages/Private/ProtectedRoute.jsx';
-import { loader as userAnimalsLoader } from './pages/Private/Shelters/loader.js';
+import ShelterDetailsPage, {
+  loader as shelterDetailsLoader,
+} from './pages/Public/Shelters/ShelterDetails/ShelterDetailsPage.jsx';
 import { loader as sheltersLoader } from './pages/Public/Shelters/SheltersPage.jsx';
 
 import { useAnimalImagesContext } from './context/AnimalImagesContext.jsx';
+import { useModalContext } from './context/ModalContext.jsx';
 import NotFoundPage from './pages/Error/NotFound/NotFoundPage.jsx';
 import ProtectedRoute from './pages/Private/ProtectedRoute.jsx';
-import { useModalContext } from './context/ModalContext.jsx';
 
 export const queryClient = new QueryClient({
   defaultOptions: {
@@ -81,6 +84,11 @@ const router = (bioModalOnClose, shelterModalOnClose, animalImages) =>
           path: 'shelters',
           element: <SheltersPage page={'shelter'} />,
           loader: sheltersLoader(queryClient, 'shelters'),
+        },
+        {
+          path: 'shelters/:username',
+          element: <ShelterDetailsPage />,
+          loader: shelterDetailsLoader(queryClient),
         },
         {
           path: 'animals/cats',
