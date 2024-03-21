@@ -100,7 +100,7 @@ const router = (bioModalOnClose, shelterModalOnClose, animalImages) =>
         {
           path: 'shelters',
           element: <SheltersPage page={'shelter'} />,
-          loader: sheltersLoader(queryClient, 'shelters'),
+          loader: sheltersLoader(queryClient),
         },
         //* End Public Routes
         //* Private Routes
