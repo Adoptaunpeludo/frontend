@@ -32,7 +32,7 @@ const PetCardLanding = ({ image, name, age, breed, slug, type }) => {
               <Button
                 size="sm"
                 as={Link}
-                href={`/${type}s/${slug}`}
+                href={`/animals/${type}s/${slug}`}
                 color="primary"
                 endContent={<IconPawFilled />}
                 className="px-5"
