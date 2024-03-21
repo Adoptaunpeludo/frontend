@@ -1,6 +1,6 @@
 import { Image } from '@nextui-org/react';
-import { BUCKET_URL } from '../../../../../config/config';
-export const AnimalGallery = ({ animalImages }) => {
+import { BUCKET_URL } from '../config/config';
+export const ImageGallery = ({ animalImages }) => {
   const images = [];
 
   for (let i = 1; i < 6; i++) {
