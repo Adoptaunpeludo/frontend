@@ -3,6 +3,8 @@ import { useNavigate } from 'react-router-dom';
 const NotFoundPage = () => {
   const navigate = useNavigate();
 
+  console.log(window.history);
+
   return (
     <main className="text-center flex items-center justify-center flex-grow">
       <div>
@@ -13,7 +15,7 @@ const NotFoundPage = () => {
         </p>
         <button
           className="text-tertiary capitalize"
-          onClick={() => navigate(-1, { replace: true })}
+          onClick={() => navigate(-1)}
         >
           Ir Atras
         </button>

@@ -148,7 +148,7 @@ const router = (bioModalOnClose, shelterModalOnClose, animalImages) =>
         },
         {
           path: '*',
-          element: <Navigate to="404" />,
+          element: <Navigate to="404" replace={true} />,
         },
       ],
     },

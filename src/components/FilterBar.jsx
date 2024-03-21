@@ -28,7 +28,9 @@ export function FilterBar({ page }) {
     setSize(new Set([]));
     setCity(new Set([]));
 
-    page !== 'shelter' ? navigate(`/animals/${page}`) : navigate(`/shelters`);
+    page !== 'shelter'
+      ? navigate(`/animals/${page}`, { preventScrollReset: true })
+      : navigate(`/shelters`, { preventScrollReset: true });
   };
 
   const handleSubmit = (e) => {
