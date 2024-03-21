@@ -36,7 +36,7 @@ const AnimalsPage = ({ page }) => {
   const isLoading = navigation.state === 'loading';
 
   return (
-    <Skeleton isLoaded={!isLoading}>
+    <>
       <Banner src={`/backgrounds/banner-${page}.jpg`} />
       <main className="max-w-screen-xl w-full flex  flex-col justify-center  gap-12 h-full  py-12  mx-auto flex-grow">
         <TitleSection title={page === 'cats' ? 'Gatetes' : 'Perretes'} />
@@ -53,7 +53,7 @@ const AnimalsPage = ({ page }) => {
           <PagePagination data={data} />
         </footer>
       </main>
-    </Skeleton>
+    </>
   );
 };
 
