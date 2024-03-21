@@ -43,7 +43,9 @@ const ImageUploadModal = () => {
       } else {
         if (file.size > maxSize) {
           setFileError(
-            `La imagen excede el tamaño de archivo permitido (${maxSize} bytes)`
+            `La imagen excede el tamaño de archivo permitido (${
+              maxSize / 1024
+            } Kbytes)`
           );
         } else {
           setFileError('');
@@ -106,6 +108,7 @@ const ImageUploadModal = () => {
                           fileError ? { color: 'red' } : { color: 'black' }
                         }
                         onChange={(e) => {
+                          setFileError('');
                           imageFileValidation(
                             e,
                             maxSizeInBytes,
