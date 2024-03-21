@@ -23,7 +23,7 @@ import { useEffect } from 'react';
 const ShelterForm = ({ isSubmitting, data }) => {
   const updateShelterModal = useDisclosure();
   const { isOpen, onOpen, onOpenChange, onClose } = updateShelterModal;
-  const { saveModal } = useModalContext();
+  const { saveShelterModal } = useModalContext();
 
   const navigation = useNavigation();
 
@@ -41,7 +41,7 @@ const ShelterForm = ({ isSubmitting, data }) => {
   } = data;
 
   useEffect(() => {
-    saveModal(updateShelterModal);
+    saveShelterModal(updateShelterModal);
   }, []);
 
   return (

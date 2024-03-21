@@ -3,14 +3,26 @@ import { createContext, useCallback, useContext, useState } from 'react';
 const ModalContext = createContext();
 
 const ModalContextProvider = ({ children }) => {
-  const [modal, setModal] = useState({});
+  const [bioModal, setBioModal] = useState({});
+  const [shelterModal, setShelterModal] = useState({});
 
-  const saveModal = useCallback((formModal) => {
-    setModal(formModal);
+  const saveBioModal = useCallback((formModal) => {
+    setBioModal(formModal);
+  }, []);
+
+  const saveShelterModal = useCallback((formModal) => {
+    setShelterModal(formModal);
   }, []);
 
   return (
-    <ModalContext.Provider value={{ modal, setModal, saveModal }}>
+    <ModalContext.Provider
+      value={{
+        bioModal,
+        shelterModal,
+        saveBioModal,
+        saveShelterModal,
+      }}
+    >
       {children}
     </ModalContext.Provider>
   );
