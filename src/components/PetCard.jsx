@@ -91,7 +91,11 @@ export const PetCard = ({ animal }) => {
 
       {/* Footer */}
       <CardFooter className=" px-5 flex w-full flex-row justify-between items-center">
-        <HeartIcon />
+        <HeartIcon
+          numFavs={animal.numFavs}
+          id={animal.id}
+          userFavs={animal.userFavs}
+        />
 
         <Button
           href={`/animals/${animal.type}s/${animal.slug}`}

@@ -18,3 +18,4 @@ export { SelectField } from './SelectField';
 export { ShelterCard } from './ShelterCard';
 export { TitleSection } from './TitleSection';
 export { UserAreaMenu } from './UserAreaMenu';
+export { HeartIcon } from './HeartIcon';
