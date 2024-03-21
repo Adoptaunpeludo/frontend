@@ -1,8 +1,8 @@
 import { IconMessages } from '@tabler/icons-react';
 import { H2Title } from '.';
-export const ContactShelter = () => {
+export const ContactShelter = ({ className }) => {
   return (
-    <section id="talk-to-shelters" className="flex items-center ">
+    <section id="talk-to-shelters" className={`flex items-center ${className}`}>
       <H2Title
         title="habla con la protectora"
         className="text-secondary max-sm:w-48"
