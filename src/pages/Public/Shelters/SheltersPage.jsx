@@ -1,15 +1,11 @@
 import { useLoaderData } from 'react-router';
 import { useNavigation } from 'react-router-dom';
 
-import {
-  FilterBar,
-  PagePagination,
-  ShelterCard,
-  TitleSection,
-} from '../../../components';
+import { FilterBar, PagePagination, TitleSection } from '../../../components';
 
-import { sheltersQuery, useShelters } from './useShelters';
 import { Skeleton } from '@nextui-org/react';
+import { ShelterCard } from './components';
+import { sheltersQuery, useShelters } from './useShelters';
 
 export const loader =
   (queryClient) =>
