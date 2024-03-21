@@ -2,7 +2,7 @@ import {
   Button,
   Radio,
   RadioGroup,
-  Spinner,
+  Skeleton,
   Textarea,
 } from '@nextui-org/react';
 import { IconSend2 } from '@tabler/icons-react';
@@ -73,7 +73,11 @@ export const loader =
 
 const AnimalForm = () => {
   const { images, setImages } = useAnimalImagesContext();
-  const { slug } = useLoaderData();
+  const params = useLoaderData();
+
+  let slug;
+
+  if (params) slug = params.slug;
 
   const { data, isLoading } = useAnimalDetails(slug);
 
@@ -81,14 +85,14 @@ const AnimalForm = () => {
 
   const isSubmitting = navigation.state === 'submitting';
 
-  const [pet, usePet] = useState('cat');
-
-  if (isLoading) return <Spinner />;
+  const [pet, usePet] = useState(data?.type || 'cat');
 
   return (
-    <>
+    <Skeleton isLoaded={!isLoading}>
       <Form method="post">
-        <h3 className="py-4 text-center">Nuevo anuncio de adopción</h3>
+        <h3 className="py-4 text-center">
+          {slug ? 'Editar Anuncio' : 'Nuevo anuncio de adopción'}
+        </h3>
 
         <section className="max-w-screen-xl w-full flex flex-col h-full justify-center mx-auto ">
           <Panel className=" max-w-4xl mx-auto flex flex-col py-4 px-10 justify-center">
@@ -150,7 +154,7 @@ const AnimalForm = () => {
             value={'create-adoption'}
             isLoading={isSubmitting}
           >
-            Crear Anuncio
+            {slug ? 'Editar Anuncio' : 'Crear Anuncio'}
           </Button>
         </div>
       </Form>
@@ -162,7 +166,7 @@ const AnimalForm = () => {
           slug={data.slug}
         />
       )}
-    </>
+    </Skeleton>
   );
 };
 export default AnimalForm;

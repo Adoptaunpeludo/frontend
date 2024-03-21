@@ -1,4 +1,4 @@
-import { Button, Spinner } from '@nextui-org/react';
+import { Button, Skeleton } from '@nextui-org/react';
 import { IconEdit, IconTrashXFilled } from '@tabler/icons-react';
 import { Hero, TitleSection } from '../../../../components';
 import { StatusAnimalsTable } from '../../shared';
@@ -50,7 +50,7 @@ export const action =
   };
 
 const ShelterProfile = () => {
-  const { data, isFetching, isLoading } = useUser();
+  const { data, isFetching } = useUser();
 
   const { resetImages } = useAnimalImagesContext();
 
@@ -58,60 +58,67 @@ const ShelterProfile = () => {
     resetImages();
   }, [resetImages]);
 
-  if (isLoading) return <Spinner />;
-
   const { username } = data;
 
   return (
-    <main className="bg-default-100 flex-grow">
-      <Hero />
+    <Skeleton className="bg-default-100 flex-grow" isLoaded={!isFetching}>
+      <main className="bg-default-100 flex-grow">
+        <Hero />
 
-      <section
-        id="SheltersProfile"
-        className="max-w-screen-xl w-full flex  flex-col justify-center  gap-12 h-full  py-12  mx-auto "
-      >
-        <TitleSection title={username} id=" shelterTitle" />
-        <section id="sheltersProfile" className="flex gap-12 max-lg:flex-col ">
-          <main className="flex flex-col max-w-3xl order-1 max-lg:order-2">
-            <ShelterProfileInfo isLoading={isFetching} data={data} />
-          </main>
-          <UserBioInfo data={data} isLoading={isFetching} />
-          {/* <div id="NotificationsAside">
+        <section
+          id="SheltersProfile"
+          className="max-w-screen-xl w-full flex  flex-col justify-center  gap-12 h-full  py-12  mx-auto "
+        >
+          <TitleSection title={username} id=" shelterTitle" />
+          <section
+            id="sheltersProfile"
+            className="flex gap-12 max-lg:flex-col "
+          >
+            <main className="flex flex-col max-w-3xl order-1 max-lg:order-2">
+              <ShelterProfileInfo isLoading={isFetching} data={data} />
+            </main>
+            <UserBioInfo data={data} isLoading={isFetching} />
+            {/* <div id="NotificationsAside">
             <H2Title title="Mensajes" className="pb-5" />
             <div className="flex justify-between border-solid border-b-1 border-b-primary pb-3 items-center">
-              <User
-                name="Jane Doe"
-                avatarProps={{
-                  src: 'https://i.pravatar.cc/150?u=a04258114e29026702d',
-                  isBordered: true,
-                  color: 'success',
-                }}
-              />
-              {1}
+            <User
+            name="Jane Doe"
+            avatarProps={{
+              src: 'https://i.pravatar.cc/150?u=a04258114e29026702d',
+              isBordered: true,
+              color: 'success',
+            }}
+            />
+            {1}
             </div>
           </div> */}
+          </section>
+          <section id="petsTable" className="px-4">
+            <StatusAnimalsTable role={'shelter'} />
+            <Button
+              // isIconOnly={data !== undefined}
+              color="primary"
+              size="md"
+              startContent={<IconEdit />}
+              className="my-4"
+              as={Link}
+              to="/private/shelter/create-animal"
+            >
+              Crear Anuncio
+            </Button>
+          </section>
+          <footer className="border-solid border-t-1 border-t-danger py-8 h-100 flex justify-center">
+            <Button
+              color="danger"
+              size="lg"
+              startContent={<IconTrashXFilled />}
+            >
+              Borrar Usuario
+            </Button>
+          </footer>
         </section>
-        <section id="petsTable" className="px-4">
-          <StatusAnimalsTable role={'shelter'} />
-          <Button
-            // isIconOnly={data !== undefined}
-            color="primary"
-            size="md"
-            startContent={<IconEdit />}
-            className="my-4"
-            as={Link}
-            to="/private/shelter/create-animal"
-          >
-            Crear Anuncio
-          </Button>
-        </section>
-        <footer className="border-solid border-t-1 border-t-danger py-8 h-100 flex justify-center">
-          <Button color="danger" size="lg" startContent={<IconTrashXFilled />}>
-            Borrar Usuario
-          </Button>
-        </footer>
-      </section>
-    </main>
+      </main>
+    </Skeleton>
   );
 };
 
