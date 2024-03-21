@@ -78,6 +78,11 @@ const router = (bioModalOnClose, shelterModalOnClose, animalImages) =>
           loader: landingAnimalsLoader(queryClient),
         },
         {
+          path: 'shelters',
+          element: <SheltersPage page={'shelter'} />,
+          loader: sheltersLoader(queryClient, 'shelters'),
+        },
+        {
           path: 'animals/cats',
           element: <AnimalsPage page={'cats'} />,
           loader: animalsLoader(queryClient, 'cats'),
@@ -96,11 +101,6 @@ const router = (bioModalOnClose, shelterModalOnClose, animalImages) =>
           path: '/animals/dogs/:slug',
           element: <AnimalDetailsPage />,
           loader: animalDetailsLoader(queryClient),
-        },
-        {
-          path: 'shelters',
-          element: <SheltersPage page={'shelter'} />,
-          loader: sheltersLoader(queryClient, 'shelters'),
         },
         //* End Public Routes
         //* Private Routes
