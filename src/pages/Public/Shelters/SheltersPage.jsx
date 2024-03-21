@@ -1,8 +1,6 @@
-import { Spinner } from '@nextui-org/spinner';
 import { useLoaderData } from 'react-router';
 import { useNavigation } from 'react-router-dom';
 
-import { useEffect, useRef } from 'react';
 import {
   FilterBar,
   PagePagination,
@@ -11,15 +9,17 @@ import {
 } from '../../../components';
 
 import { sheltersQuery, useShelters } from './useShelters';
+import { Skeleton } from '@nextui-org/react';
 
 export const loader =
-  (queryClient, page) =>
+  (queryClient) =>
   async ({ request }) => {
     const params = Object.fromEntries([
       ...new URL(request.url).searchParams.entries(),
     ]);
 
-    await queryClient.ensureQueryData(sheltersQuery(page, params));
+    //TODO: TryCatch
+    await queryClient.ensureQueryData(sheltersQuery(params));
 
     return { params };
   };
@@ -27,27 +27,20 @@ export const loader =
 const SheltersPage = ({ page }) => {
   const { params } = useLoaderData();
   const navigation = useNavigation();
-  const titleRef = useRef(null);
-  const { data, isLoading } = useShelters(page, params);
-  //const isLoading = navigation.state === 'loading';
-  useEffect(() => {
-    if (!isLoading) {
-      // titleRef.current.scrollIntoView({ behavior: 'instant' });
-    }
-  }, [isLoading]);
+
+  const { data } = useShelters(params);
+  const isLoading = navigation.state === 'loading';
 
   return (
     <main className="max-w-screen-xl w-full flex  flex-col justify-center  gap-12 h-full  py-12  mx-auto flex-grow">
       <TitleSection title={'asociaciones'} />
       <FilterBar page={page} className="" />
       <ul className="flex justify-center gap-4 flex-wrap p-6">
-        {isLoading ? (
-          <Spinner className="flex justify-center items-center" />
-        ) : (
-          data.users.map((shelter) => (
+        {data.users.map((shelter) => (
+          <Skeleton isLoaded={!isLoading} key={shelter.id}>
             <ShelterCard key={shelter.id} shelter={shelter} />
-          ))
-        )}
+          </Skeleton>
+        ))}
       </ul>
       <footer className="mx-auto">
         <PagePagination data={page} />
