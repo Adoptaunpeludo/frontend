@@ -17,9 +17,9 @@ import {
   UilVenus,
 } from '@iconscout/react-unicons';
 
-import { MinimalLogo } from '../assets/logos';
-import { HeartIcon, PetSize, UnderlineVector } from '../assets/svg';
-import { BUCKET_URL } from '../config/config';
+import { MinimalLogo } from '../../../../assets/logos';
+import { HeartIcon, PetSize, UnderlineVector } from '../../../../assets/svg';
+import { BUCKET_URL } from '../../../../config/config';
 
 export const PetCard = ({ animal }) => {
   return (
