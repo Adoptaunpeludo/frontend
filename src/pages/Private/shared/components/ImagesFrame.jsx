@@ -29,7 +29,7 @@ export const ImagesFrame = ({ images = [], page, id, slug }) => {
               className="h-full w-full object-cover"
               src={`${BUCKET_URL}/${image}`}
             />
-            <DeleteImageModal name={image} page={page} />
+            <DeleteImageModal name={image} page={page} slug={slug} id={id} />
           </div>
         ))}
       </div>

@@ -21,7 +21,11 @@ import { UploadImagesForm } from './Components/UploadImagesForm';
 
 import { useAnimalImagesContext } from '../../../../context/AnimalImagesContext';
 import { ImagesFrame } from '../../shared';
-import { createPetAdoption, uploadAnimalImages } from './service';
+import {
+  createPetAdoption,
+  updatePetAdoption,
+  uploadAnimalImages,
+} from './service';
 import { toast } from 'react-toastify';
 import {
   animalDetailsQuery,
@@ -31,32 +35,55 @@ import { handleNotFoundError } from '../../../../utils/handleError';
 
 export const action =
   (animalImages, queryClient) =>
-  async ({ request }) => {
+  async ({ request, params }) => {
     let formData = await request.formData();
+    let intent = formData.get('intent');
 
-    const imagesData = new FormData();
+    console.log({ intent });
 
-    animalImages?.forEach((image) => {
-      imagesData.append('images', image);
-    });
+    if (intent === 'create-adoption') {
+      const imagesData = new FormData();
 
-    try {
-      const animal = await createPetAdoption(formData);
-      await uploadAnimalImages(imagesData, animal.id);
-      queryClient.invalidateQueries((queryKey) => queryKey.includes('animal'));
-      toast.success(`Animal ${animal.name} puesto en adopción`);
-      return redirect(`/animals/${animal.type}s/${animal.slug}`);
-    } catch (error) {
-      console.log(error);
-      toast.error('Error creando anuncio de adopción');
-      return null;
+      animalImages?.forEach((image) => {
+        imagesData.append('images', image);
+      });
+
+      try {
+        const animal = await createPetAdoption(formData);
+        await uploadAnimalImages(imagesData, animal.id);
+        queryClient.invalidateQueries((queryKey) =>
+          queryKey.includes('animal')
+        );
+        toast.success(`Animal ${animal.name} puesto en adopción`);
+        return redirect(`/animals/${animal.type}s/${animal.slug}`);
+      } catch (error) {
+        console.log(error);
+        toast.error('Error creando anuncio de adopción');
+        return null;
+      }
+    }
+
+    if (intent === 'update-animal') {
+      const { slug } = params;
+
+      try {
+        const animal = await updatePetAdoption(formData, slug);
+        queryClient.invalidateQueries((queryKey) =>
+          queryKey.includes('animal')
+        );
+        toast.success(`Animal ${animal.name} puesto en adopción`);
+        return redirect(`/animals/${animal.type}s/${animal.slug}`);
+      } catch (error) {
+        console.log(error);
+        toast.error('Error creando anuncio de adopción');
+        return null;
+      }
     }
   };
 
 export const loader =
   (queryClient) =>
   async ({ params }) => {
-    console.log({ params });
     try {
       const { slug } = params;
       await queryClient.ensureQueryData(animalDetailsQuery(slug));
@@ -88,7 +115,10 @@ const AnimalForm = () => {
   const [pet, usePet] = useState(data?.type || 'cat');
 
   return (
-    <Skeleton isLoaded={!isLoading}>
+    <Skeleton
+      isLoaded={!isLoading}
+      className=" max-w-4xl mx-auto flex flex-col py-4 px-10 justify-center"
+    >
       <Form method="post">
         <h3 className="py-4 text-center">
           {slug ? 'Editar Anuncio' : 'Nuevo anuncio de adopción'}
@@ -151,7 +181,7 @@ const AnimalForm = () => {
             className="px-10 my-4 font-poppins font-semibold text-sm"
             type="submit"
             name="intent"
-            value={'create-adoption'}
+            value={slug ? 'update-animal' : 'create-animal'}
             isLoading={isSubmitting}
           >
             {slug ? 'Editar Anuncio' : 'Crear Anuncio'}

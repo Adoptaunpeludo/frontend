@@ -1,4 +1,4 @@
-import { deleteData, postData } from '../../../../api/client';
+import { deleteData, postData, updateData } from '../../../../api/client';
 
 export const createPetAdoption = async (formData) => {
   const creationData = Object.fromEntries(formData);
@@ -6,6 +6,16 @@ export const createPetAdoption = async (formData) => {
   delete creationData.intent;
 
   const { data } = await postData(`animals/${creationData.type}`, creationData);
+
+  return data;
+};
+
+export const updatePetAdoption = async (formData, slug) => {
+  const updatedData = Object.fromEntries(formData);
+
+  delete updatedData.intent;
+
+  const { data } = await updateData(`animals/${slug}`, updatedData);
 
   return data;
 };
