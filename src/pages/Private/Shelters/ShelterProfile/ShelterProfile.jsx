@@ -138,7 +138,7 @@ const ShelterProfile = () => {
                 <div>{description}</div>
               </div>
               <ShelterForm data={data} />
-              <ImagesFrame images={images} />
+              <ImagesFrame images={images} page="update-user" />
               <div id="socialMedia" className="flex flex-col gap-3 mx-3 py-3 ">
                 <H3Title title="Redes sociales:" />
                 <div className="flex gap-4 justify-between max-sm:flex-col max-sm:mx-auto">

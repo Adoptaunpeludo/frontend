@@ -25,3 +25,19 @@ export const uploadAnimalImages = async (images, animalId) => {
 
   return data;
 };
+
+export const uploadAnimalFile = async (file, id) => {
+  const formData = new FormData();
+  formData.append('images', file);
+  const { data } = await postData(`animals/upload-images/${id}`, formData);
+
+  return data;
+};
+
+export const deleteAnimalFile = async (deleteImages, id) => {
+  const { data } = await postData(`animals/upload-images/${id}`, {
+    deleteImages,
+  });
+
+  return data;
+};

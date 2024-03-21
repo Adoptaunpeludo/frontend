@@ -3,7 +3,6 @@ import {
   Chip,
   Link,
   Skeleton,
-  Spinner,
   Table,
   TableBody,
   TableCell,

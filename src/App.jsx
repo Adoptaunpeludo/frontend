@@ -27,6 +27,7 @@ import { action as registerAction } from './pages/Auth/Register/RegisterPage.jsx
 import { action as shelterProfileAction } from './pages/Private/Shelters/ShelterProfile/ShelterProfile.jsx';
 import { action as mutateAnimalAction } from './pages/Private/Shelters/AnimalForm/AnimalForm.jsx';
 
+import { loader as updateAnimalLoader } from './pages/Private/Shelters/AnimalForm/AnimalForm.jsx';
 import { loader as animalDetailsLoader } from './pages/Public/Animals/AnimalDetails/AnimalDetailsPage.jsx';
 import { loader as animalsLoader } from './pages/Public/Animals/AnimalsPage.jsx';
 import { loader as landingAnimalsLoader } from './pages/Public/Landing/LandingPage.jsx';
@@ -124,6 +125,12 @@ const router = (onClose, animalImages) =>
               path: 'shelter/create-animal',
               element: <AnimalForm />,
               action: mutateAnimalAction(animalImages, queryClient),
+            },
+            {
+              path: 'shelter/update-animal/:slug',
+              element: <AnimalForm />,
+              action: mutateAnimalAction(queryClient),
+              loader: updateAnimalLoader(queryClient),
             },
           ],
         },
