@@ -1,4 +1,3 @@
-import { Spinner } from '@nextui-org/spinner';
 import { useLoaderData } from 'react-router';
 import { useNavigation } from 'react-router-dom';
 
@@ -10,8 +9,9 @@ import {
   TitleSection,
 } from '../../../components';
 
-import { useEffect, useRef } from 'react';
+import { useRef } from 'react';
 import { animalsQuery, useAnimals } from '../Landing/useAnimals';
+import { Skeleton } from '@nextui-org/react';
 
 export const loader =
   (queryClient, page) =>
@@ -36,11 +36,11 @@ const AnimalsPage = ({ page }) => {
 
   const isLoading = navigation.state === 'loading';
 
-  useEffect(() => {
-    if (!isLoading) {
-      titleRef.current.scrollIntoView({ behavior: 'instant' });
-    }
-  }, [isLoading]);
+  // useEffect(() => {
+  //   if (!isLoading) {
+  //     titleRef.current.scrollIntoView({ behavior: 'instant' });
+  //   }
+  // }, [isLoading]);
 
   return (
     <>
@@ -50,13 +50,11 @@ const AnimalsPage = ({ page }) => {
         <div ref={titleRef}></div>
         <FilterBar page={page} />
         <ul className="flex justify-center gap-4 flex-wrap p-6">
-          {isLoading ? (
-            <Spinner className="flex justify-center items-center" />
-          ) : (
-            data.animals.map((animal) => (
+          {data.animals.map((animal) => (
+            <Skeleton isLoaded={!isLoading} key={animal.id}>
               <PetCard key={animal.id} animal={animal} />
-            ))
-          )}
+            </Skeleton>
+          ))}
         </ul>
         <footer className="mx-auto">
           <PagePagination data={data} />
