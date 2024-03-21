@@ -1,5 +1,5 @@
 import { IconMessages } from '@tabler/icons-react';
-import { H2Title } from '../../../../../components';
+import { H2Title } from '.';
 export const ContactShelter = () => {
   return (
     <section id="talk-to-shelters" className="flex items-center ">
