@@ -1,5 +1,4 @@
 import { Image, Spinner } from '@nextui-org/react';
-import { IconHeart } from '@tabler/icons-react';
 import { useLoaderData } from 'react-router-dom';
 import { MinimalLogo } from '../../../../assets/logos';
 import {
@@ -23,6 +22,7 @@ import {
   ShareSocialMedia,
 } from './components';
 import { animalDetailsQuery, useAnimalDetails } from './useAnimalDetails';
+import { IconHeart } from '@tabler/icons-react';
 export const loader =
   (queryClient) =>
   async ({ params }) => {
