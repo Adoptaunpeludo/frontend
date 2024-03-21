@@ -2,6 +2,7 @@ import {
   Button,
   Chip,
   Link,
+  Skeleton,
   Spinner,
   Table,
   TableBody,
@@ -73,7 +74,14 @@ export const StatusAnimalsTable = ({ role }) => {
               </Button>
             </Tooltip>
             <Tooltip content="Editar peludo ">
-              <Button isIconOnly variant="solid" color="primary" size="sm">
+              <Button
+                isIconOnly
+                variant="solid"
+                color="primary"
+                size="sm"
+                as={Link}
+                href={`/private/shelter/update-animal/${animal.slug}`}
+              >
                 <IconEdit />
               </Button>
             </Tooltip>
@@ -101,26 +109,26 @@ export const StatusAnimalsTable = ({ role }) => {
     }
   }, []);
 
-  if (isFetching) return <Spinner />;
-
   return (
-    <Table aria-label="Animals info">
-      <TableHeader columns={headerColumn} className="flex justify-center">
-        {(column) => (
-          <TableColumn key={column.uid} className="text-start ">
-            {column.name}
-          </TableColumn>
-        )}
-      </TableHeader>
-      <TableBody items={animals}>
-        {(item) => (
-          <TableRow key={item.id}>
-            {(columnKey) => (
-              <TableCell>{renderCell(item, columnKey)}</TableCell>
-            )}
-          </TableRow>
-        )}
-      </TableBody>
-    </Table>
+    <Skeleton isLoaded={!isFetching}>
+      <Table aria-label="Animals info">
+        <TableHeader columns={headerColumn} className="flex justify-center">
+          {(column) => (
+            <TableColumn key={column.uid} className="text-start ">
+              {column.name}
+            </TableColumn>
+          )}
+        </TableHeader>
+        <TableBody items={animals}>
+          {(item) => (
+            <TableRow key={item.id}>
+              {(columnKey) => (
+                <TableCell>{renderCell(item, columnKey)}</TableCell>
+              )}
+            </TableRow>
+          )}
+        </TableBody>
+      </Table>
+    </Skeleton>
   );
 };
