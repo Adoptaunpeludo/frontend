@@ -1,21 +1,19 @@
 import { useQuery } from '@tanstack/react-query';
 import { getShelters } from './service';
 
-export const sheltersQuery = (role, params = {}) => {
-  let queryFn = getShelters;
-
+export const sheltersQuery = (params = {}) => {
   const { username, city, limit } = params;
 
   return {
-    queryKey: ['shelters', role, username ?? '', city, limit],
-    queryFn: () => queryFn(params),
+    queryKey: ['shelters', username, city, limit],
+    queryFn: () => getShelters(params),
     staleTime: 1000 * 60 * 15,
   };
 };
 
-export const useShelters = (role, params = {}) => {
+export const useShelters = (params = {}) => {
   const { data, isLoading, isFetching, isError } = useQuery(
-    sheltersQuery(role, params)
+    sheltersQuery(params)
   );
 
   return { data, isLoading, isFetching, isError };

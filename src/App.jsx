@@ -102,6 +102,7 @@ const router = (bioModalOnClose, shelterModalOnClose, animalImages) =>
           element: <AnimalDetailsPage />,
           loader: animalDetailsLoader(queryClient),
         },
+
         //* End Public Routes
         //* Private Routes
         {
