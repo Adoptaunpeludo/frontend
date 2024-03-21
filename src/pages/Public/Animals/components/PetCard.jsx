@@ -19,7 +19,7 @@ import {
 
 import { MinimalLogo } from '../../../../assets/logos';
 import { HeartIcon, PetSize, UnderlineVector } from '../../../../assets/svg';
-import { BUCKET_URL } from '../../../../config/config';
+import { BUCKET_URL, FALLBACK_IMAGE_CARD } from '../../../../config/config';
 
 export const PetCard = ({ animal }) => {
   return (
@@ -30,6 +30,7 @@ export const PetCard = ({ animal }) => {
           src={`${BUCKET_URL}/${animal.images[0]}`}
           alt={animal.name}
           className="w-80 h-full object-cover min-h-[320px]"
+          fallbackSrc={`${FALLBACK_IMAGE_CARD}`}
         />
 
         {/* Etiqueta absolutamente posicionada para 'gato' */}
