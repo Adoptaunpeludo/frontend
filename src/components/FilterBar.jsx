@@ -165,7 +165,7 @@ export function FilterBar({ page }) {
       <Button type="submit" color="primary">
         Buscar
       </Button>
-      <Button onPress={handleReset} color="primary">
+      <Button onPress={handleReset} color="primary" type="reset">
         Reset
       </Button>
       {/* TODO:Dont remove without final layout  */}
