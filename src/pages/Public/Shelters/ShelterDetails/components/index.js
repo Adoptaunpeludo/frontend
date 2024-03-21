@@ -1,0 +1,1 @@
+export { FacilitiesAsideColumn } from './FacilitiesAsideColumn';
