@@ -1,12 +1,15 @@
 import { Image, Spinner } from '@nextui-org/react';
+import { IconHeart } from '@tabler/icons-react';
 import { useLoaderData } from 'react-router-dom';
 import { MinimalLogo } from '../../../../assets/logos';
 import {
   AdoptButton,
   AsideDataColumn,
   H2Title,
+  ImageGallery,
   TitleSection,
 } from '../../../../components';
+import { ContactShelter } from '../../../../components/ContactShelter';
 import { BUCKET_URL } from '../../../../config/config';
 import {
   animalBioInfo,
@@ -15,14 +18,8 @@ import {
   dogDescription,
 } from '../../../../utils/asideDataFields';
 import { handleNotFoundError } from '../../../../utils/handleError';
-import {
-  AnimalFavs,
-  AnimalGallery,
-  ContactShelter,
-  ShareSocialMedia,
-} from './components';
+import { AnimalFavs, ShareSocialMedia } from './components';
 import { animalDetailsQuery, useAnimalDetails } from './useAnimalDetails';
-import { IconHeart } from '@tabler/icons-react';
 export const loader =
   (queryClient) =>
   async ({ params }) => {
@@ -80,7 +77,7 @@ const AnimalDetailsPage = () => {
             </AdoptButton>
           </div>
 
-          <AnimalGallery animalImages={data.images} />
+          <ImageGallery animalImages={data.images} />
 
           <p className="p-2">{data.description}</p>
         </section>
