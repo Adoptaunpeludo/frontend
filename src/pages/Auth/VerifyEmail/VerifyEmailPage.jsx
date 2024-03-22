@@ -1,6 +1,6 @@
 //import { useEffect, useState } from "react";
-import { TitleSection } from "../../components";
-import { verifyEmail } from "../Auth/authService";
+import { TitleSection } from "../../../components";
+import { verifyEmail } from "../../Auth/authService";
 import { Button, Link, Spinner } from "@nextui-org/react";
 //import { Spinner } from "@nextui-org/spinner";
 //import { verifyEmailQuery, useVerifyEmail } from "./useVerifyEmailPage";

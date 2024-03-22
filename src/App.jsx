@@ -33,7 +33,7 @@ import { loader as animalsLoader } from './pages/Public/Animals/AnimalsPage.jsx'
 import { loader as landingAnimalsLoader } from './pages/Public/Landing/LandingPage.jsx';
 import { loader as currentUserLoader } from './pages/Private/ProtectedRoute.jsx';
 import { loader as userAnimalsLoader } from './pages/Private/Shelters/loader.js';
-import { loader as verifyEmailLoader } from './pages/VerifyEmail/VerifyEmailPage.jsx';
+import { loader as verifyEmailLoader } from './pages/Auth/VerifyEmail/VerifyEmailPage.jsx';
 import { loader as sheltersLoader } from './pages/Public/Shelters/SheltersPage.jsx';
 
 import { useAnimalImagesContext } from './context/AnimalImagesContext.jsx';
