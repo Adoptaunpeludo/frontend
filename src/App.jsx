@@ -37,6 +37,7 @@ import { loader as userAnimalsLoader } from './pages/Private/Shelters/ShelterPro
 import { loader as userFavsLoader } from './pages/Private/Adopters/AdopterProfile/AdopterProfile.jsx';
 import { loader as sheltersLoader } from './pages/Public/Shelters/SheltersPage.jsx';
 import { loader as verifyEmailLoader } from './pages/Auth/VerifyEmail/VerifyEmailPage.jsx';
+import { loader as notificationsLoader } from './components/UserAreaMenu.jsx';
 
 import { useAnimalImagesContext } from './context/AnimalImagesContext.jsx';
 import NotFoundPage from './pages/Error/NotFound/NotFoundPage.jsx';
@@ -57,6 +58,7 @@ const router = (bioModalOnClose, shelterModalOnClose, animalImages) =>
       path: '/',
       element: <AppLayout />,
       errorElement: <ErrorPage />,
+      loader: notificationsLoader(queryClient),
       children: [
         //* Auth Routes
         {
