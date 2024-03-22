@@ -1,4 +1,4 @@
-import { Avatar, Image, Spinner } from '@nextui-org/react';
+import { Avatar, Button, Image, Link, Spinner } from '@nextui-org/react';
 import { IconHome } from '@tabler/icons-react';
 import { useLoaderData } from 'react-router-dom';
 import {
@@ -104,6 +104,14 @@ const ShelterDetailsPage = () => {
           className="text-secondary border-hidden"
         />
         <ShelterRescues />
+        <Button
+          className="font-lobster w-80 py-6 mx-2 text-white text-3xl"
+          color="primary"
+          href="# " //pte endpoint
+          as={Link}
+        >
+          Ver peludos en adopción
+        </Button>
       </footer>
     </main>
   );
