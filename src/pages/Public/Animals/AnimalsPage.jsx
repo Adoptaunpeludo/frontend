@@ -21,8 +21,6 @@ export const loader =
 
     if (params.name) params.name = params.name.toLowerCase();
 
-    console.log({ params });
-
     //TODO: TryCatch
     await queryClient.ensureQueryData(animalsQuery(page, params));
 
