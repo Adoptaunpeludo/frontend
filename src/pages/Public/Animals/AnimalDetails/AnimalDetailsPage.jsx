@@ -1,5 +1,4 @@
 import { Image, Spinner } from '@nextui-org/react';
-import { IconHeart } from '@tabler/icons-react';
 import { useLoaderData } from 'react-router-dom';
 import { MinimalLogo } from '../../../../assets/logos';
 import {
@@ -22,7 +21,8 @@ import {
   ContactShelter,
   ShareSocialMedia,
 } from './components';
-import { animalDetailsQuery, useAnimalDetails } from './useAnimalDetails';
+import { animalDetailsQuery, useAnimalDetails } from '../useAnimalDetails';
+import { IconHeart } from '@tabler/icons-react';
 export const loader =
   (queryClient) =>
   async ({ params }) => {
@@ -43,6 +43,8 @@ export const loader =
 const AnimalDetailsPage = () => {
   const params = useLoaderData();
 
+  console.log('animal details');
+
   const { slug } = params;
 
   const { data, isLoading } = useAnimalDetails(slug);
@@ -50,7 +52,7 @@ const AnimalDetailsPage = () => {
   if (isLoading) return <Spinner />;
 
   return (
-    <main className="max-w-screen-xl w-full flex  flex-col justify-center  gap-12 h-full  py-12  mx-auto ">
+    <main className="max-w-screen-xl w-full flex  flex-col justify-center  gap-12 h-full  py-12  mx-auto flex-grow">
       <header>
         <TitleSection title={data.name} />
       </header>

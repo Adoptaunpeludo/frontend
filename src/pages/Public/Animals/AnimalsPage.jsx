@@ -1,4 +1,3 @@
-import { Spinner } from '@nextui-org/spinner';
 import { useLoaderData } from 'react-router';
 import { useNavigation } from 'react-router-dom';
 
@@ -11,7 +10,7 @@ import {
 } from '../../../components';
 
 import { animalsQuery, useAnimals } from '../Landing/useAnimals';
-import { useEffect, useRef } from 'react';
+import { Skeleton } from '@nextui-org/react';
 
 export const loader =
   (queryClient, page) =>
@@ -22,6 +21,7 @@ export const loader =
 
     if (params.name) params.name = params.name.toLowerCase();
 
+    //TODO: TryCatch
     await queryClient.ensureQueryData(animalsQuery(page, params));
 
     return { params };
@@ -30,33 +30,24 @@ export const loader =
 const AnimalsPage = ({ page }) => {
   const { params } = useLoaderData();
   const navigation = useNavigation();
-  const titleRef = useRef(null);
 
   const { data } = useAnimals(page, params);
 
   const isLoading = navigation.state === 'loading';
 
-  useEffect(() => {
-    if (!isLoading) {
-      titleRef.current.scrollIntoView({ behavior: 'instant' });
-    }
-  }, [isLoading]);
-
   return (
     <>
       <Banner src={`/backgrounds/banner-${page}.jpg`} />
-      <main className="max-w-screen-xl w-full flex  flex-col justify-center  gap-12 h-full  py-12  mx-auto">
+      <main className="max-w-screen-xl w-full flex  flex-col justify-center  gap-12 h-full  py-12  mx-auto flex-grow">
         <TitleSection title={page === 'cats' ? 'Gatetes' : 'Perretes'} />
-        <div ref={titleRef}></div>
+
         <FilterBar page={page} />
         <ul className="flex justify-center gap-4 flex-wrap p-6">
-          {isLoading ? (
-            <Spinner className="flex justify-center items-center" />
-          ) : (
-            data.animals.map((animal) => (
+          {data.animals.map((animal) => (
+            <Skeleton isLoaded={!isLoading} key={animal.id}>
               <PetCard key={animal.id} animal={animal} />
-            ))
-          )}
+            </Skeleton>
+          ))}
         </ul>
         <footer className="mx-auto">
           <PagePagination data={data} />

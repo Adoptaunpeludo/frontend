@@ -15,5 +15,7 @@ export { PagePagination } from './Pagination';
 export { Panel } from './Panel';
 export { PetCard } from './PetCard';
 export { SelectField } from './SelectField';
+export { ShelterCard } from './ShelterCard';
 export { TitleSection } from './TitleSection';
 export { UserAreaMenu } from './UserAreaMenu';
+export { HeartIcon } from './HeartIcon';

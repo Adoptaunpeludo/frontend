@@ -6,7 +6,7 @@ import {
 } from '../../../../../utils/enumData';
 import { H3Title, SelectField } from '../../../../../components';
 
-const OtherPropertiesDogForm = ({ data }) => {
+const OtherPropertiesDogForm = ({ data = {}, isDisabled }) => {
   const {
     easyTrain,
     energyLevel,
@@ -25,6 +25,7 @@ const OtherPropertiesDogForm = ({ data }) => {
           dataField={easyTrain}
           name="easyTrain"
           dataEnum={boolDataEnum}
+          isDisabled={isDisabled}
         />
         <SelectField
           label="Cantidad de muda"
@@ -32,6 +33,7 @@ const OtherPropertiesDogForm = ({ data }) => {
           name="moltingAmount"
           dataField={moltingAmount}
           dataEnum={moltingEnum}
+          isDisabled={isDisabled}
         />
         <SelectField
           label="Nivel de energía"
@@ -39,6 +41,7 @@ const OtherPropertiesDogForm = ({ data }) => {
           name="energyLevel"
           dataField={energyLevel}
           dataEnum={energyEnum}
+          isDisabled={isDisabled}
         />
       </div>
       <div className="flex w-full flex-wrap md:flex-nowrap gap-2 border-primary border-t-1 pt-3">
@@ -48,6 +51,7 @@ const OtherPropertiesDogForm = ({ data }) => {
           name="droolingPotential"
           dataField={droolingPotential}
           dataEnum={potentialEnum}
+          isDisabled={isDisabled}
         />
         <SelectField
           label="Tendencia a ladrar"
@@ -55,6 +59,7 @@ const OtherPropertiesDogForm = ({ data }) => {
           name="bark"
           dataField={bark}
           dataEnum={potentialEnum}
+          isDisabled={isDisabled}
         />
         <SelectField
           label="Acostumbrado a un piso"
@@ -62,6 +67,7 @@ const OtherPropertiesDogForm = ({ data }) => {
           name="departmentAdapted"
           dataField={departmentAdapted}
           dataEnum={boolDataEnum}
+          isDisabled={isDisabled}
         />
       </div>
     </div>

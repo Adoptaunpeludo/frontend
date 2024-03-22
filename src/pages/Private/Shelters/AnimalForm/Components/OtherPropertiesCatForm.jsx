@@ -6,7 +6,7 @@ import {
 } from '../../../../../utils/enumData';
 import { H3Title, SelectField } from '../../../../../components';
 
-const OtherPropertiesCatForm = ({ data }) => {
+const OtherPropertiesCatForm = ({ data = {}, isDisabled }) => {
   const {
     easyTrain,
     energyLevel,
@@ -26,6 +26,7 @@ const OtherPropertiesCatForm = ({ data }) => {
           name="toiletTrained"
           dataField={toiletTrained}
           dataEnum={boolDataEnum}
+          isDisabled={isDisabled}
         />
         <SelectField
           label="Fácil de entrenar"
@@ -33,6 +34,7 @@ const OtherPropertiesCatForm = ({ data }) => {
           name="easyTrain"
           dataField={easyTrain}
           dataEnum={boolDataEnum}
+          isDisabled={isDisabled}
         />
         <SelectField
           label="Cantidad de muda"
@@ -40,6 +42,7 @@ const OtherPropertiesCatForm = ({ data }) => {
           name="moltingAmount"
           dataField={moltingAmount}
           dataEnum={moltingEnum}
+          isDisabled={isDisabled}
         />
         <SelectField
           label="Nivel de energía"
@@ -47,6 +50,7 @@ const OtherPropertiesCatForm = ({ data }) => {
           name="energyLevel"
           dataField={energyLevel}
           dataEnum={energyEnum}
+          isDisabled={isDisabled}
         />
       </div>
       <div className="flex w-full flex-wrap md:flex-nowrap gap-2 border-primary border-t-1 pt-3">
@@ -56,6 +60,7 @@ const OtherPropertiesCatForm = ({ data }) => {
           name="playLevel"
           dataField={playLevel}
           dataEnum={potentialEnum}
+          isDisabled={isDisabled}
         />
 
         <SelectField
@@ -64,6 +69,7 @@ const OtherPropertiesCatForm = ({ data }) => {
           name="scratchPotential"
           dataField={scratchPotential}
           dataEnum={potentialEnum}
+          isDisabled={isDisabled}
         />
         <SelectField
           label="Sociable con niños"
@@ -71,6 +77,7 @@ const OtherPropertiesCatForm = ({ data }) => {
           name="kidsFriendly"
           dataField={kidsFriendly}
           dataEnum={boolDataEnum}
+          isDisabled={isDisabled}
         />
       </div>
     </div>

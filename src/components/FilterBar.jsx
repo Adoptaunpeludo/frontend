@@ -8,11 +8,13 @@ import {
   cities,
   genderEnum,
 } from '../utils/enumData';
+// import { PagePagination } from './Pagination';
 
 export function FilterBar({ page }) {
   const [searchParams, setSearchParams] = useSearchParams();
   const navigate = useNavigate();
   const { params } = useLoaderData();
+  const [name, setName] = useState(params?.name ? params.name : '');
   const [gender, setGender] = useState(
     new Set(params?.gender ? [params.gender] : [])
   );
@@ -21,16 +23,21 @@ export function FilterBar({ page }) {
   const [city, setCity] = useState(new Set(params?.city ? [params.city] : []));
 
   const handleReset = () => {
+    setName('');
     setGender(new Set([]));
     setAge(new Set([]));
     setSize(new Set([]));
     setCity(new Set([]));
 
-    page !== 'shelter' ? navigate(`/animals/${page}`) : navigate(`/shelters`);
+    page !== 'shelter'
+      ? navigate(`/animals/${page}`, { preventScrollReset: true })
+      : navigate(`/shelters`, { preventScrollReset: true });
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
+
+    searchParams.delete('page');
 
     const formData = new FormData(e.currentTarget);
     let hasSelected = false;
@@ -68,7 +75,9 @@ export function FilterBar({ page }) {
         className="flex-1"
         aria-label="Nombre"
         label="Nombre"
-        name="name"
+        value={name}
+        onValueChange={setName}
+        name={page !== 'shelter' ? 'name' : 'username'}
         defaultValue={params?.name || ''}
       />
       <Spacer x={0.5} />
@@ -87,9 +96,9 @@ export function FilterBar({ page }) {
               key={size.value}
               value={size.value}
               className="capitalize"
-              textValue="Size"
+              textValue={size.value}
             >
-              {size.name}
+              {size.label}
             </SelectItem>
           ))}
         </Select>
@@ -109,9 +118,9 @@ export function FilterBar({ page }) {
               key={gender.value}
               value={gender.value}
               className="capitalize"
-              textValue="Gender"
+              textValue={gender.value}
             >
-              {gender.name}
+              {gender.label}
             </SelectItem>
           ))}
         </Select>
@@ -131,9 +140,9 @@ export function FilterBar({ page }) {
               key={age.value}
               value={age.value}
               className="capitalize"
-              textValue="Ages"
+              textValue={age.value}
             >
-              {age.name}
+              {age.label}
             </SelectItem>
           ))}
         </Select>
@@ -152,7 +161,7 @@ export function FilterBar({ page }) {
             key={city.value}
             value={city.value}
             className="capitalize"
-            textValue="Cities"
+            textValue={city.value}
           >
             {city.label}
           </SelectItem>
@@ -161,7 +170,7 @@ export function FilterBar({ page }) {
       <Button type="submit" color="primary">
         Buscar
       </Button>
-      <Button onPress={handleReset} color="primary">
+      <Button onPress={handleReset} color="primary" type="reset">
         Reset
       </Button>
       {/* TODO:Dont remove without final layout  */}

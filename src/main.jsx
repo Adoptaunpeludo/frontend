@@ -7,13 +7,17 @@ import './index.css';
 import { AuthContextProvider } from './context/AuthContext.jsx';
 import { AnimalImagesContextProvider } from './context/AnimalImagesContext.jsx';
 
+import { ModalContextProvider } from './context/ModalContext.jsx';
+
 const isLoggedIn = localStorage.getItem('isLoggedIn');
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
     <AuthContextProvider initialIsLoggedIn={Boolean(isLoggedIn)}>
       <AnimalImagesContextProvider>
-        <App />
+        <ModalContextProvider>
+          <App />
+        </ModalContextProvider>
       </AnimalImagesContextProvider>
     </AuthContextProvider>
     <ToastContainer position="top-center" className={'toast-message'} />

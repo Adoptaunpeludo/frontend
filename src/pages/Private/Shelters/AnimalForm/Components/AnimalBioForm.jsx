@@ -1,10 +1,8 @@
 import { Input } from '@nextui-org/react';
 import { animalSizeEnum, genderEnum } from '../../../../../utils/enumData';
 import { H3Title, SelectField } from '../../../../../components';
-import { useAnimalDetails } from '../../../../Public/Animals/AnimalDetails/useAnimalDetails';
 
-const AnimalBioForm = ({ slug = '' }) => {
-  const data = useAnimalDetails(slug);
+const AnimalBioForm = ({ data = {}, isDisabled }) => {
   const { name, age, breed, size, gender } = data;
 
   return (
@@ -12,6 +10,7 @@ const AnimalBioForm = ({ slug = '' }) => {
       <H3Title title="Bio" />
       <div className="flex w-full flex-wrap md:flex-nowrap gap-2 border-primary border-t-1 pt-3">
         <Input
+          isDisabled={isDisabled}
           className="min-w-72 "
           type="text"
           label="Nombre"
@@ -19,6 +18,7 @@ const AnimalBioForm = ({ slug = '' }) => {
           defaultValue={name ? name : ''}
         />
         <Input
+          isDisabled={isDisabled}
           className="min-w-72 "
           type="text"
           label="Raza"
@@ -28,6 +28,7 @@ const AnimalBioForm = ({ slug = '' }) => {
       </div>
       <div className="flex w-full flex-wrap md:flex-nowrap gap-2">
         <Input
+          isDisabled={isDisabled}
           className=""
           type="number"
           label="Edad en años"
@@ -35,6 +36,7 @@ const AnimalBioForm = ({ slug = '' }) => {
           defaultValue={age ? age : ''}
         />
         <SelectField
+          isDisabled={isDisabled}
           label="Sexo"
           className=""
           name="gender"
@@ -42,6 +44,7 @@ const AnimalBioForm = ({ slug = '' }) => {
           dataEnum={genderEnum}
         />
         <SelectField
+          isDisabled={isDisabled}
           label="Tamaño"
           className=""
           name="size"

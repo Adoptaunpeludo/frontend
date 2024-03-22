@@ -7,5 +7,6 @@ export {
 export { default as ImageUploadModal } from './components/ImageUploadModal';
 export { StatusAnimalsTable } from '../Shelters/ShelterProfile/components/StatusAnimalsTable';
 export { UserFormBio } from './components/UserFormBio';
-export { uploadFile, deleteFile } from './service/imagesService';
+export { uploadUserFile, deleteUserFile } from './service/imagesService';
 export { userInformation } from './utils/mapUserInformation';
+export { default as DeleteUserModal } from './components/DeleteUserModal';

@@ -1,13 +1,13 @@
-import { createContext, useContext, useState } from 'react';
+import { createContext, useCallback, useContext, useState } from 'react';
 
 const AnimalImagesContext = createContext();
 
 const AnimalImagesContextProvider = ({ children }) => {
   const [images, setImages] = useState([]);
 
-  const resetImages = () => {
+  const resetImages = useCallback(() => {
     setImages([]);
-  };
+  }, []);
 
   return (
     <AnimalImagesContext.Provider value={{ images, setImages, resetImages }}>

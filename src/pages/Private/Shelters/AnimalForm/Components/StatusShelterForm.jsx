@@ -1,7 +1,7 @@
 import { cities, statusPetEnum } from '../../../../../utils/enumData';
 import { H3Title, SelectField } from '../../../../../components';
 
-const StatusShelterForm = ({ data }) => {
+const StatusShelterForm = ({ data = {}, isDisabled }) => {
   const { status, city } = data;
   return (
     <div className="flex flex-col gap-2">
@@ -13,6 +13,7 @@ const StatusShelterForm = ({ data }) => {
           name="status"
           dataField={status}
           dataEnum={statusPetEnum}
+          isDisabled={isDisabled}
         />
 
         <SelectField
@@ -21,6 +22,7 @@ const StatusShelterForm = ({ data }) => {
           name="city"
           dataField={city}
           dataEnum={cities}
+          isDisabled={isDisabled}
         />
       </div>
     </div>

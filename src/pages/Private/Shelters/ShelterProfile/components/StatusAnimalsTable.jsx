@@ -2,7 +2,7 @@ import {
   Button,
   Chip,
   Link,
-  Spinner,
+  Skeleton,
   Table,
   TableBody,
   TableCell,
@@ -12,12 +12,7 @@ import {
   Tooltip,
 } from '@nextui-org/react';
 
-import {
-  IconEdit,
-  IconEye,
-  IconHeartFilled,
-  IconTrashXFilled,
-} from '@tabler/icons-react';
+import { IconEdit, IconEye, IconHeartFilled } from '@tabler/icons-react';
 import React from 'react';
 
 import {
@@ -27,23 +22,27 @@ import {
 } from '../../../shared/components/configAnimalsTable';
 
 import { useUserAnimals } from '../../useUserAnimals';
+import DeleteAnimalModal from './DeleteAnimalModal';
 
 export const StatusAnimalsTable = ({ role }) => {
   const headerColumn = role === 'shelter' ? ColumnsShelter : ColumnsAdopter;
 
-  const { data, isFetching } = useUserAnimals({ limit: 100 });
+  const { data, isFetching } = useUserAnimals(
+    role,
+    role === 'shelter' && { limit: 100 }
+  );
 
   const { animals } = data;
 
-  const renderCell = React.useCallback((user, columnKey) => {
-    const cellValue = user[columnKey];
+  const renderCell = React.useCallback((animal, columnKey) => {
+    const cellValue = animal[columnKey];
     // if (isLoading) return <Spinner />;
     switch (columnKey) {
       case 'status':
         return (
           <Chip
             className="capitalize w-full"
-            color={statusColorMap[user.status]}
+            color={statusColorMap[animal.status]}
             size="sm"
             variant="flat"
           >
@@ -54,7 +53,7 @@ export const StatusAnimalsTable = ({ role }) => {
         return (
           <Chip
             className="capitalize w-full"
-            color={statusColorMap[user.publishStatus]}
+            color={statusColorMap[animal.publishStatus]}
             size="sm"
             variant="flat"
           >
@@ -68,7 +67,7 @@ export const StatusAnimalsTable = ({ role }) => {
               <Button
                 isIconOnly
                 as={Link}
-                href={`/${user.type}s/${user.slug}`}
+                href={`/animals/${animal.type}s/${animal.slug}`}
                 variant="solid"
                 color="primary"
                 size="sm"
@@ -77,30 +76,50 @@ export const StatusAnimalsTable = ({ role }) => {
               </Button>
             </Tooltip>
             <Tooltip content="Editar peludo ">
-              <Button isIconOnly variant="solid" color="primary" size="sm">
+              <Button
+                isIconOnly
+                variant="solid"
+                color="primary"
+                size="sm"
+                as={Link}
+                href={`/private/shelter/update-animal/${animal.slug}`}
+              >
                 <IconEdit />
               </Button>
             </Tooltip>
-            <Tooltip color="danger" content="Eliminar Peludo">
-              <Button isIconOnly variant="solid" color="danger" size="sm">
-                <IconTrashXFilled />
-              </Button>
-            </Tooltip>
+
+            <DeleteAnimalModal slug={animal.slug} />
           </div>
         );
       case 'actionsAdopter':
         return (
           <div className="relative flex items-center gap-2">
             <Tooltip content="Ver Detalles">
-              <Button isIconOnly variant="solid" color="primary" size="sm">
+              <Button
+                isIconOnly
+                as={Link}
+                href={`/animals/${animal.type}s/${animal.slug}`}
+                variant="solid"
+                color="primary"
+                size="sm"
+              >
                 <IconEye />
               </Button>
             </Tooltip>
             <Tooltip content="Me gusta ">
-              <Button isIconOnly variant="solid" color="primary" size="sm">
+              <Button
+                isIconOnly
+                variant="solid"
+                color="primary"
+                size="sm"
+                name="intent"
+                value={'remove-fav'}
+                type="submit"
+              >
                 <IconHeartFilled />
               </Button>
             </Tooltip>
+            <input type="hidden" name="id" value={animal.id} />
           </div>
         );
       default:
@@ -108,26 +127,26 @@ export const StatusAnimalsTable = ({ role }) => {
     }
   }, []);
 
-  if (isFetching) return <Spinner />;
-
   return (
-    <Table aria-label="Animals info">
-      <TableHeader columns={headerColumn} className="flex justify-center">
-        {(column) => (
-          <TableColumn key={column.uid} className="text-start ">
-            {column.name}
-          </TableColumn>
-        )}
-      </TableHeader>
-      <TableBody items={animals}>
-        {(item) => (
-          <TableRow key={item.id}>
-            {(columnKey) => (
-              <TableCell>{renderCell(item, columnKey)}</TableCell>
-            )}
-          </TableRow>
-        )}
-      </TableBody>
-    </Table>
+    <Skeleton isLoaded={!isFetching}>
+      <Table aria-label="Animals info">
+        <TableHeader columns={headerColumn} className="flex justify-center">
+          {(column) => (
+            <TableColumn key={column.uid} className="text-start ">
+              {column.name}
+            </TableColumn>
+          )}
+        </TableHeader>
+        <TableBody items={animals}>
+          {(item) => (
+            <TableRow key={item.id}>
+              {(columnKey) => (
+                <TableCell>{renderCell(item, columnKey)}</TableCell>
+              )}
+            </TableRow>
+          )}
+        </TableBody>
+      </Table>
+    </Skeleton>
   );
 };

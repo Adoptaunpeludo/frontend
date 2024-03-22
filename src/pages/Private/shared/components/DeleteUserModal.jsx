@@ -10,36 +10,28 @@ import {
 } from '@nextui-org/react';
 import { useQueryClient } from '@tanstack/react-query';
 import { useState } from 'react';
-import { deleteUserFile } from '../service/imagesService';
 import { toast } from 'react-toastify';
-import { deleteAnimalFile } from '../../Shelters/AnimalForm/service';
+import { deleteUser } from '../service/userService';
+import { IconTrashXFilled } from '@tabler/icons-react';
+import { useNavigate } from 'react-router-dom';
 
-export default function DeleteImageModal({ name, page, slug, id }) {
+export default function DeleteUserModal() {
   const { isOpen, onOpen, onOpenChange } = useDisclosure();
   const [isLoading, setIsLoading] = useState(false);
   const queryClient = useQueryClient();
+  const navigate = useNavigate();
 
-  const handleDeleteImage = async (name, onClose) => {
-    const images = [name];
-
-    const service =
-      page === 'update-animal'
-        ? () => deleteAnimalFile(images, id)
-        : () => deleteUserFile(images);
-
-    const queryKey =
-      page === 'update-animal' ? ['animal-details', slug] : ['user'];
-
+  const handleDeleteUser = async () => {
     try {
       setIsLoading(true);
-      await service();
-      toast.success('Imagen Borrada con exito');
-      queryClient.invalidateQueries({
-        queryKey,
+      await deleteUser();
+      toast.success('Usuario Borrada con exito');
+      queryClient.removeQueries({
+        queryKey: ['user'],
       });
-      onClose();
+      navigate('/');
     } catch (error) {
-      toast.error('Error al borrar la imagen');
+      toast.error('Error al borrar el usuario');
       console.log(error);
     } finally {
       setIsLoading(false);
@@ -50,38 +42,37 @@ export default function DeleteImageModal({ name, page, slug, id }) {
     <>
       <Button
         onPress={onOpen}
-        className="absolute top-[-15px] right-[-15px] z-10 rounded-full"
         color="danger"
-        size="sm"
-        isIconOnly
+        size="lg"
+        startContent={<IconTrashXFilled />}
       >
-        <i className="fa-solid fa-xmark text-xl text-white "></i>
+        Borrar Usuario
       </Button>
       <Modal
         isOpen={isOpen}
         onOpenChange={onOpenChange}
         placement="center"
-        className={` text-foreground bg-background border border-white`}
+        className={` text-foreground bg-danger border border-white text-white`}
       >
         <ModalContent>
           {(onClose) => (
             <>
               <ModalHeader className="flex flex-col gap-1">
-                Borrar Imagen
+                Borrar Usuario
               </ModalHeader>
               <ModalBody>
                 {isLoading ? (
                   <Spinner />
                 ) : (
                   <>
-                    <p>¿Seguro que deseas borrar la imagen?</p>
+                    <p>¿Seguro que deseas borrar el usuario?</p>
                     <small>Esta acción no se puede deshacer</small>
                   </>
                 )}
               </ModalBody>
               <ModalFooter>
                 <Button
-                  color="default"
+                  className="text-white"
                   variant="light"
                   onPress={onClose}
                   disabled={isLoading}
@@ -91,7 +82,7 @@ export default function DeleteImageModal({ name, page, slug, id }) {
                 <Button
                   className=" text-white"
                   color="danger"
-                  onPress={() => handleDeleteImage(name, onClose)}
+                  onPress={handleDeleteUser}
                   disabled={isLoading}
                 >
                   Borrar
