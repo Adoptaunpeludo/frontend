@@ -20,6 +20,7 @@ export const UserFormBio = ({ data, isSubmitting }) => {
 
   const { username, avatar, dni, firstName, lastName, phoneNumber, city } =
     data;
+
   return (
     <Button
       color="primary"
@@ -57,6 +58,7 @@ export const UserFormBio = ({ data, isSubmitting }) => {
                         {/* TODO: useInput hook to custom all inputs with the same styles  */}
                         <div className="flex w-full flex-wrap md:flex-nowrap gap-4">
                           <Input
+                            isRequired
                             className="min-w-72 "
                             type="text"
                             label="DNI"
@@ -68,6 +70,7 @@ export const UserFormBio = ({ data, isSubmitting }) => {
                         </div>
                         <div className="flex w-full flex-wrap md:flex-nowrap gap-4">
                           <Input
+                            isRequired
                             className="min-w-72 "
                             type="text"
                             label="Nombre"
@@ -79,6 +82,7 @@ export const UserFormBio = ({ data, isSubmitting }) => {
                             }
                           />
                           <Input
+                            isRequired
                             className="min-w-72 "
                             type="text"
                             label="Apellidos"
@@ -92,6 +96,7 @@ export const UserFormBio = ({ data, isSubmitting }) => {
                         </div>
                         <div className="flex w-full flex-wrap md:flex-nowrap gap-4">
                           <Input
+                            isRequired
                             className="min-w-72 "
                             type="tel"
                             label="Teléfono"
