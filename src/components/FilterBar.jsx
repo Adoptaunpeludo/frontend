@@ -8,6 +8,7 @@ import {
   cities,
   genderEnum,
 } from '../utils/enumData';
+// import { PagePagination } from './Pagination';
 
 export function FilterBar({ page }) {
   const [searchParams, setSearchParams] = useSearchParams();
@@ -35,6 +36,8 @@ export function FilterBar({ page }) {
 
   const handleSubmit = (e) => {
     e.preventDefault();
+
+    searchParams.delete('page');
 
     const formData = new FormData(e.currentTarget);
     let hasSelected = false;

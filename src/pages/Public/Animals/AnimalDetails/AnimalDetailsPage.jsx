@@ -21,12 +21,11 @@ import {
   ContactShelter,
   ShareSocialMedia,
 } from './components';
-import { animalDetailsQuery, useAnimalDetails } from './useAnimalDetails';
+import { animalDetailsQuery, useAnimalDetails } from '../useAnimalDetails';
 import { IconHeart } from '@tabler/icons-react';
 export const loader =
   (queryClient) =>
   async ({ params }) => {
-    console.log({ params });
     try {
       const { slug } = params;
       await queryClient.ensureQueryData(animalDetailsQuery(slug));

@@ -30,7 +30,7 @@ import { toast } from 'react-toastify';
 import {
   animalDetailsQuery,
   useAnimalDetails,
-} from '../../../Public/Animals/AnimalDetails/useAnimalDetails';
+} from '../../../Public/Animals/useAnimalDetails';
 import { handleNotFoundError } from '../../../../utils/handleError';
 
 export const action =

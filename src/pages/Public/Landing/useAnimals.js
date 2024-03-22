@@ -8,10 +8,10 @@ export const animalsQuery = (type, params = {}) => {
   if (type === 'dogs') queryFn = getDogs;
   if (type === 'all') queryFn = getAnimals;
 
-  const { name, size, gender, age, city, limit } = params;
+  const { name, size, gender, age, city, page } = params;
 
   return {
-    queryKey: ['animals', type, name ?? '', size, gender, age, city, limit],
+    queryKey: ['animals', type, name ?? '', size, gender, age, city, page],
     queryFn: () => queryFn(params),
     staleTime: 1000 * 60 * 15,
   };
