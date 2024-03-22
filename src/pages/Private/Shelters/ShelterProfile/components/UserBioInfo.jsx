@@ -6,6 +6,7 @@ import { IconUserFilled } from '@tabler/icons-react';
 
 const UserBioInfo = ({ data, isLoading }) => {
   const { avatar } = data;
+
   const userData = userInformation(data);
 
   return (
