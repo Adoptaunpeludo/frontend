@@ -1,12 +1,12 @@
 import PropTypes from 'prop-types';
 import { useEffect, useState } from 'react';
 
-import { toast } from 'react-toastify';
-import { addFav, deleteFav } from '../pages/Public/Animals/service';
+import { addFav } from '../pages/Public/Animals/service';
 import { useQueryClient } from '@tanstack/react-query';
 
 import { useUser } from '../pages/Private/useUser';
 import { Spinner } from '@nextui-org/react';
+import { handleFavError } from '../utils/handleFavsError';
 
 export const HeartIcon = ({
   size = 24,
@@ -16,7 +16,6 @@ export const HeartIcon = ({
   id,
   ...props
 }) => {
-  //! TODO: Change reference color and connect to global state
   const { data } = useUser();
   const [liked, setLiked] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
@@ -29,28 +28,16 @@ export const HeartIcon = ({
   const toggleLike = async () => {
     try {
       setIsLoading(true);
-      const { data } = await addFav(id);
-      console.log({ data });
-    } catch (error) {
-      if (
-        error.response.status === 400 &&
-        error.response.data.message.startsWith('Already')
-      ) {
-        await deleteFav(id);
-      } else {
-        toast.warn('No puedes añadir un animal propio a favoritos');
-      }
-      if (error.response.status === 401) toast.warn('Primero haz Login');
-
-      throw error;
-    } finally {
-      setIsLoading(false);
+      await addFav(id);
       queryClient.invalidateQueries({
         queryKey: ['animals'],
       });
+    } catch (error) {
+      await handleFavError(error, id, queryClient);
+      throw error;
+    } finally {
+      setIsLoading(false);
     }
-
-    setLiked(!liked);
   };
 
   return (

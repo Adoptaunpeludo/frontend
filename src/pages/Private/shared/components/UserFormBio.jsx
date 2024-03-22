@@ -32,7 +32,6 @@ export const UserFormBio = ({ data }) => {
     data;
 
   useEffect(() => {
-    console.log('use effect bio');
     saveBioModal(updateBioModal);
   }, []);
 

@@ -83,6 +83,7 @@ const ImageUploadModal = ({ page, id, slug }) => {
                         id="file_input"
                         type="file"
                         onChange={(e) => {
+                          setSelectedFile({});
                           setError('');
                           const file = e.target.files.item(0);
                           const image = new Image();

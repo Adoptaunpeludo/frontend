@@ -25,7 +25,7 @@ export default function DeleteImageModal({ name, page, slug, id }) {
     const service =
       page === 'update-animal'
         ? () => deleteAnimalFile(images, id)
-        : deleteUserFile(images);
+        : () => deleteUserFile(images);
 
     const queryKey =
       page === 'update-animal' ? ['animal-details', slug] : ['user'];
