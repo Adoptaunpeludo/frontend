@@ -149,7 +149,7 @@ export const UserFormBio = ({ data }) => {
                   className="px-10 font-poppins font-semibold text-sm"
                   type="submit"
                   name="intent"
-                  value={'shelter-user-profile'}
+                  value={'user-profile'}
                   isLoading={isSubmitting}
                 >
                   Enviar

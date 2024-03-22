@@ -29,8 +29,6 @@ export const StatusAnimalsTable = ({ role }) => {
 
   const { data, isFetching } = useUserAnimals(role);
 
-  console.log({ data });
-
   const { animals } = data;
 
   const renderCell = React.useCallback((animal, columnKey) => {

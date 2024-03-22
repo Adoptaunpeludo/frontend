@@ -3,7 +3,7 @@ import { IconEdit } from '@tabler/icons-react';
 import { Hero, TitleSection } from '../../../../components';
 import { DeleteUserModal, StatusAnimalsTable } from '../../shared';
 import { toast } from 'react-toastify';
-import { updateShelterProfile } from '../ShelterForm/service';
+
 import { useUser } from '../../useUser';
 import { useAnimalImagesContext } from '../../../../context/AnimalImagesContext';
 import { useEffect } from 'react';
@@ -12,6 +12,7 @@ import { deleteAnimal } from '../AnimalForm/service';
 import ShelterProfileInfo from './components/ShelterProfileInfo';
 import UserBioInfo from './components/UserBioInfo';
 import { userAnimalsQuery } from '../useUserAnimals';
+import { updateProfile } from '../../shared/service/updateUserService';
 
 export const loader = (queryClient) => async () => {
   try {
@@ -32,9 +33,9 @@ export const action =
     let formData = await request.formData();
     let intent = formData.get('intent');
 
-    if (intent === 'shelter-profile' || intent === 'shelter-user-profile') {
+    if (intent === 'shelter-profile' || intent === 'user-profile') {
       try {
-        await updateShelterProfile(formData, intent);
+        await updateProfile(formData, intent);
         queryClient.invalidateQueries({ queryKey: ['user'] });
         toast.success('Perfil del Refugio actualizado');
         closeBioModal();

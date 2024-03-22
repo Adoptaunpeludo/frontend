@@ -25,6 +25,7 @@ import {
 import { action as loginAction } from './pages/Auth/Login/LoginPage.jsx';
 import { action as registerAction } from './pages/Auth/Register/RegisterPage.jsx';
 import { action as shelterProfileAction } from './pages/Private/Shelters/ShelterProfile/ShelterProfile.jsx';
+import { action as adopterProfileAction } from './pages/Private/Adopters/AdopterProfile/AdopterProfile.jsx';
 import { action as mutateAnimalAction } from './pages/Private/Shelters/AnimalForm/AnimalForm.jsx';
 
 import { loader as updateAnimalLoader } from './pages/Private/Shelters/AnimalForm/AnimalForm.jsx';
@@ -115,6 +116,7 @@ const router = (bioModalOnClose, shelterModalOnClose, animalImages) =>
               path: 'adopter',
               element: <AdopterProfile />,
               loader: userFavsLoader(queryClient),
+              action: adopterProfileAction(bioModalOnClose, queryClient),
             },
             {
               path: 'shelter',
