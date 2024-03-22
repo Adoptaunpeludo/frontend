@@ -71,7 +71,7 @@ const router = (bioModalOnClose, shelterModalOnClose, animalImages) =>
         {
           path: '/verify-email/:token',
           element: <VerifyEmail />,
-          loader: verifyEmailLoader,
+          // loader: verifyEmailLoader,
         },
         //* End Auth Routes
         //* Public Routes
