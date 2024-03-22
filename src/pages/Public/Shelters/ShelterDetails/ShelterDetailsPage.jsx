@@ -14,7 +14,11 @@ import {
   vetInformation,
 } from '../../../../utils/asideDataFields';
 import { handleNotFoundError } from '../../../../utils/handleError';
-import { FacilitiesAsideColumn } from './components/';
+import {
+  FacilitiesAsideColumn,
+  ShelterRescues,
+  SocialMediaAsideColumn,
+} from './components/';
 import { shelterDetailsQuery, useShelterDetails } from './useShelterDetails';
 
 export const loader =
@@ -54,7 +58,6 @@ const ShelterDetailsPage = () => {
           id="central-column"
           className="flex flex-col  justify-center flex-1 "
         >
-          {/* TODO: check loading image put spinner reservate space */}
           <div className="relative container lg:w-164 rounded-lg bg-detail bg-cover bg-center">
             <Image
               src={`${BUCKET_URL}/${data.images[1]}`}
@@ -92,13 +95,15 @@ const ShelterDetailsPage = () => {
           <FacilitiesAsideColumn facilities={data.facilities} />
 
           <H2Title title="síguenos en:" className={'py-4'} />
+          <SocialMediaAsideColumn socialMedia={data.socialMedia} />
         </section>
       </section>
-      <footer className="flex px-4 justify-around items-center max-sm:flex-col max-sm:justify-start border-primary border-t-1">
+      <footer className="flex px-4 justify-around items-center flex-col max-sm:justify-start border-primary border-t-1">
         <TitleSection
           title="nuestros peludos"
           className="text-secondary border-hidden"
         />
+        <ShelterRescues />
       </footer>
     </main>
   );
