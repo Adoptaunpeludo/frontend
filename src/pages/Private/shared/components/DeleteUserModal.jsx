@@ -26,7 +26,7 @@ export default function DeleteUserModal() {
       setIsLoading(true);
       await deleteUser();
       toast.success('Usuario Borrada con exito');
-      queryClient.invalidateQueries({
+      queryClient.removeQueries({
         queryKey: ['user'],
       });
       navigate('/');
