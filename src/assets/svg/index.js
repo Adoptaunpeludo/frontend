@@ -1,4 +1,4 @@
+export { ChatIcon } from './ChatIcon';
 export { HeartIcon } from './HeartIcon';
-export { UnderlineVector } from './UnderlineVector';
 export { PetSize } from './PetSize';
-
+export { UnderlineVector } from './UnderlineVector';
