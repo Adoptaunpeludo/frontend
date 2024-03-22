@@ -69,8 +69,9 @@ const router = (bioModalOnClose, shelterModalOnClose, animalImages) =>
           action: loginAction(queryClient),
         },
         {
-          path: 'users/verify-email/:token',
+          path: '/verify-email/:token',
           element: <VerifyEmail />,
+          loader: verifyEmailLoader,
         },
         //* End Auth Routes
         //* Public Routes

@@ -25,8 +25,7 @@ export const verifyEmail = async (token) => {
     const response = await postData(`/auth/verify-email/${token}`);
     return response;
   } catch (error) {
-    console.log(error.response.data.message);
-    return error.response.data.message
+    return error
   }
 };
 
