@@ -46,7 +46,7 @@ export const UserAreaMenu = () => {
     await logout();
     setIsLoggedIn(false);
     localStorage.setItem('isLoggedIn', false);
-    queryClient.removeQueries({ queryKey: ['user'] });
+    queryClient.removeQueries();
     navigate('/');
   };
 
