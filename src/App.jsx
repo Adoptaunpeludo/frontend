@@ -36,6 +36,7 @@ import { loader as currentUserLoader } from './pages/Private/ProtectedRoute.jsx'
 import { loader as userAnimalsLoader } from './pages/Private/Shelters/ShelterProfile/ShelterProfile.jsx';
 import { loader as userFavsLoader } from './pages/Private/Adopters/AdopterProfile/AdopterProfile.jsx';
 import { loader as sheltersLoader } from './pages/Public/Shelters/SheltersPage.jsx';
+import { loader as verifyEmailLoader } from './pages/Auth/VerifyEmail/VerifyEmailPage.jsx';
 
 import { useAnimalImagesContext } from './context/AnimalImagesContext.jsx';
 import NotFoundPage from './pages/Error/NotFound/NotFoundPage.jsx';
@@ -71,7 +72,7 @@ const router = (bioModalOnClose, shelterModalOnClose, animalImages) =>
         {
           path: '/verify-email/:token',
           element: <VerifyEmail />,
-          // loader: verifyEmailLoader,
+          loader: verifyEmailLoader,
         },
         //* End Auth Routes
         //* Public Routes
