@@ -27,7 +27,10 @@ import DeleteAnimalModal from './DeleteAnimalModal';
 export const StatusAnimalsTable = ({ role }) => {
   const headerColumn = role === 'shelter' ? ColumnsShelter : ColumnsAdopter;
 
-  const { data, isFetching } = useUserAnimals({ limit: 100 });
+  const { data, isFetching } = useUserAnimals(
+    role,
+    role === 'shelter' && { limit: 100 }
+  );
 
   const { animals } = data;
 
@@ -92,15 +95,31 @@ export const StatusAnimalsTable = ({ role }) => {
         return (
           <div className="relative flex items-center gap-2">
             <Tooltip content="Ver Detalles">
-              <Button isIconOnly variant="solid" color="primary" size="sm">
+              <Button
+                isIconOnly
+                as={Link}
+                href={`/animals/${animal.type}s/${animal.slug}`}
+                variant="solid"
+                color="primary"
+                size="sm"
+              >
                 <IconEye />
               </Button>
             </Tooltip>
             <Tooltip content="Me gusta ">
-              <Button isIconOnly variant="solid" color="primary" size="sm">
+              <Button
+                isIconOnly
+                variant="solid"
+                color="primary"
+                size="sm"
+                name="intent"
+                value={'remove-fav'}
+                type="submit"
+              >
                 <IconHeartFilled />
               </Button>
             </Tooltip>
+            <input type="hidden" name="id" value={animal.id} />
           </div>
         );
       default:

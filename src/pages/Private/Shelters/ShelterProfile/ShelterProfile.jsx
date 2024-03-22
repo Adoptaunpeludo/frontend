@@ -1,9 +1,9 @@
 import { Button, Skeleton } from '@nextui-org/react';
-import { IconEdit, IconTrashXFilled } from '@tabler/icons-react';
+import { IconEdit } from '@tabler/icons-react';
 import { Hero, TitleSection } from '../../../../components';
-import { StatusAnimalsTable } from '../../shared';
+import { DeleteUserModal, StatusAnimalsTable } from '../../shared';
 import { toast } from 'react-toastify';
-import { updateShelterProfile } from '../ShelterForm/service';
+
 import { useUser } from '../../useUser';
 import { useAnimalImagesContext } from '../../../../context/AnimalImagesContext';
 import { useEffect } from 'react';
@@ -11,6 +11,21 @@ import { Link } from 'react-router-dom';
 import { deleteAnimal } from '../AnimalForm/service';
 import ShelterProfileInfo from './components/ShelterProfileInfo';
 import UserBioInfo from './components/UserBioInfo';
+import { userAnimalsQuery } from '../useUserAnimals';
+import { updateProfile } from '../../shared/service/updateUserService';
+
+export const loader = (queryClient) => async () => {
+  try {
+    const data = await queryClient.ensureQueryData(
+      userAnimalsQuery('shelter', { limit: 100 })
+    );
+
+    return data;
+  } catch (error) {
+    console.log(error);
+    return error;
+  }
+};
 
 export const action =
   (closeBioModal, closeShelterModal, queryClient) =>
@@ -18,9 +33,9 @@ export const action =
     let formData = await request.formData();
     let intent = formData.get('intent');
 
-    if (intent === 'shelter-profile' || intent === 'shelter-user-profile') {
+    if (intent === 'shelter-profile' || intent === 'user-profile') {
       try {
-        await updateShelterProfile(formData, intent);
+        await updateProfile(formData, intent);
         queryClient.invalidateQueries({ queryKey: ['user'] });
         toast.success('Perfil del Refugio actualizado');
         closeBioModal();
@@ -108,13 +123,7 @@ const ShelterProfile = () => {
             </Button>
           </section>
           <footer className="border-solid border-t-1 border-t-danger py-8 h-100 flex justify-center">
-            <Button
-              color="danger"
-              size="lg"
-              startContent={<IconTrashXFilled />}
-            >
-              Borrar Usuario
-            </Button>
+            <DeleteUserModal />
           </footer>
         </section>
       </main>
