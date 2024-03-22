@@ -41,7 +41,7 @@ export const action =
 
     console.log({ intent });
 
-    if (intent === 'create-adoption') {
+    if (intent === 'create-animal') {
       const imagesData = new FormData();
 
       animalImages?.forEach((image) => {
