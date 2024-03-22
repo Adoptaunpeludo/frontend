@@ -9,6 +9,18 @@ import {
 } from '../../../../components';
 import { StatusAnimalsTable, userInformation } from '../../shared';
 import { useUser } from '../../useUser';
+import { userAnimalsQuery } from '../../Shelters/useUserAnimals';
+
+export const loader = (queryClient) => async () => {
+  try {
+    const data = await queryClient.ensureQueryData(userAnimalsQuery('adopter'));
+
+    return data;
+  } catch (error) {
+    console.log(error);
+    return error;
+  }
+};
 
 const AdopterProfile = () => {
   const { data, isLoading } = useUser();

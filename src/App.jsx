@@ -32,7 +32,8 @@ import { loader as animalDetailsLoader } from './pages/Public/Animals/AnimalDeta
 import { loader as animalsLoader } from './pages/Public/Animals/AnimalsPage.jsx';
 import { loader as landingAnimalsLoader } from './pages/Public/Landing/LandingPage.jsx';
 import { loader as currentUserLoader } from './pages/Private/ProtectedRoute.jsx';
-import { loader as userAnimalsLoader } from './pages/Private/Shelters/loader.js';
+import { loader as userAnimalsLoader } from './pages/Private/Shelters/ShelterProfile/ShelterProfile.jsx';
+import { loader as userFavsLoader } from './pages/Private/Adopters/AdopterProfile/AdopterProfile.jsx';
 import { loader as sheltersLoader } from './pages/Public/Shelters/SheltersPage.jsx';
 
 import { useAnimalImagesContext } from './context/AnimalImagesContext.jsx';
@@ -112,12 +113,11 @@ const router = (bioModalOnClose, shelterModalOnClose, animalImages) =>
           children: [
             {
               path: 'adopter',
-              //for test only
               element: <AdopterProfile />,
+              loader: userFavsLoader(queryClient),
             },
             {
               path: 'shelter',
-              //for test only
               element: <ShelterProfile />,
               loader: userAnimalsLoader(queryClient),
               action: shelterProfileAction(

@@ -27,7 +27,9 @@ import DeleteAnimalModal from './DeleteAnimalModal';
 export const StatusAnimalsTable = ({ role }) => {
   const headerColumn = role === 'shelter' ? ColumnsShelter : ColumnsAdopter;
 
-  const { data, isFetching } = useUserAnimals({ limit: 100 });
+  const { data, isFetching } = useUserAnimals(role);
+
+  console.log({ data });
 
   const { animals } = data;
 

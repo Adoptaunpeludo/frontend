@@ -11,6 +11,20 @@ import { Link } from 'react-router-dom';
 import { deleteAnimal } from '../AnimalForm/service';
 import ShelterProfileInfo from './components/ShelterProfileInfo';
 import UserBioInfo from './components/UserBioInfo';
+import { userAnimalsQuery } from '../useUserAnimals';
+
+export const loader = (queryClient) => async () => {
+  try {
+    const data = await queryClient.ensureQueryData(
+      userAnimalsQuery('shelter', { limit: 100 })
+    );
+
+    return data;
+  } catch (error) {
+    console.log(error);
+    return error;
+  }
+};
 
 export const action =
   (closeBioModal, closeShelterModal, queryClient) =>
