@@ -4,12 +4,8 @@ import { getUserAnimals, getUserFavs } from './service';
 export const userAnimalsQuery = (role, params = {}) => {
   const { limit } = params;
 
-  console.log({ role });
-
   const queryFn =
     role === 'shelter' ? () => getUserAnimals(params) : () => getUserFavs();
-
-  console.log({ queryFn });
 
   return {
     queryKey: [`${role === 'shelter' ? 'user-animals' : 'user-favs'}`, limit],

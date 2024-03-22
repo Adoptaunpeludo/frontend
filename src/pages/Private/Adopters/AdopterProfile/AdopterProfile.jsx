@@ -1,13 +1,13 @@
-import { Button } from '@nextui-org/react';
-import { IconTrashXFilled } from '@tabler/icons-react';
 import { Hero, TitleSection } from '../../../../components';
-import { ImagesFrame, StatusAnimalsTable } from '../../shared';
+import { DeleteUserModal, ImagesFrame, StatusAnimalsTable } from '../../shared';
 import { useUser } from '../../useUser';
 import { userAnimalsQuery } from '../../Shelters/useUserAnimals';
 
 import UserBioInfo from '../../Shelters/ShelterProfile/components/UserBioInfo';
 import { updateProfile } from '../../shared/service/updateUserService';
 import { toast } from 'react-toastify';
+import { Form } from 'react-router-dom';
+import { deleteFav } from '../../../Public/Animals/service';
 
 export const loader = (queryClient) => async () => {
   try {
@@ -39,6 +39,27 @@ export const action =
         return null;
       }
     }
+
+    if (intent === 'remove-fav') {
+      console.log({ formData });
+      const id = formData.get('id');
+      try {
+        await deleteFav(id);
+        queryClient.invalidateQueries([
+          {
+            queryKey: ['animals'],
+          },
+          {
+            queryKey: ['user-favs', null],
+          },
+        ]);
+        return null;
+      } catch (error) {
+        console.log(error);
+        toast.error('Error al borrar de favoritos');
+        return error;
+      }
+    }
   };
 
 const AdopterProfile = () => {
@@ -60,7 +81,9 @@ const AdopterProfile = () => {
               <ImagesFrame images={data.avatar} page="update-user" limit={1} />
             </section>
             <section id="petsTable" className="lg:pt-16">
-              <StatusAnimalsTable role={'adopter'} />
+              <Form method="POST" preventScrollReset={true}>
+                <StatusAnimalsTable role={'adopter'} />
+              </Form>
             </section>
           </main>
           <UserBioInfo data={data} isLoading={isFetching} />
@@ -81,9 +104,7 @@ const AdopterProfile = () => {
         </section>
 
         <footer className="border-solid border-t-1 border-t-danger py-8 h-100 flex justify-center">
-          <Button color="danger" size="lg" startContent={<IconTrashXFilled />}>
-            Borrar Usuario
-          </Button>
+          <DeleteUserModal />
         </footer>
       </section>
     </main>
