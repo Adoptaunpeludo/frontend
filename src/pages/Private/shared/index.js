@@ -9,3 +9,4 @@ export { StatusAnimalsTable } from '../Shelters/ShelterProfile/components/Status
 export { UserFormBio } from './components/UserFormBio';
 export { uploadUserFile, deleteUserFile } from './service/imagesService';
 export { userInformation } from './utils/mapUserInformation';
+export { default as DeleteUserModal } from './components/DeleteUserModal';

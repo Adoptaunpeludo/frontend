@@ -1,7 +1,7 @@
 import { Button, Skeleton } from '@nextui-org/react';
-import { IconEdit, IconTrashXFilled } from '@tabler/icons-react';
+import { IconEdit } from '@tabler/icons-react';
 import { Hero, TitleSection } from '../../../../components';
-import { StatusAnimalsTable } from '../../shared';
+import { DeleteUserModal, StatusAnimalsTable } from '../../shared';
 import { toast } from 'react-toastify';
 import { updateShelterProfile } from '../ShelterForm/service';
 import { useUser } from '../../useUser';
@@ -108,13 +108,7 @@ const ShelterProfile = () => {
             </Button>
           </section>
           <footer className="border-solid border-t-1 border-t-danger py-8 h-100 flex justify-center">
-            <Button
-              color="danger"
-              size="lg"
-              startContent={<IconTrashXFilled />}
-            >
-              Borrar Usuario
-            </Button>
+            <DeleteUserModal />
           </footer>
         </section>
       </main>
