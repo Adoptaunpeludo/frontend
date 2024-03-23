@@ -10,7 +10,7 @@ import {
 } from '@nextui-org/react';
 import { IconUserFilled } from '@tabler/icons-react';
 import { useQueryClient } from '@tanstack/react-query';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useNavigation } from 'react-router-dom';
 import { BUCKET_URL } from '../config/config.js';
 import { logout } from '../pages/Auth/authService.js';
 
@@ -35,8 +35,8 @@ export const loader = (queryClient) => async () => {
 };
 
 export const UserAreaMenu = () => {
-  const { data: user, isLoading: isLoadingUser } = useUser();
-  const { data, isLoading: isLoadingNotifications } = useNotifications();
+  const { data: user } = useUser();
+  const { data, isLoading } = useNotifications();
   const { socket, setNotifications, notifications } = useWebSocketContext();
   const { setIsLoggedIn } = useAuthContext();
   const navigate = useNavigate();
@@ -51,16 +51,13 @@ export const UserAreaMenu = () => {
   };
 
   useEffect(() => {
-    if (isLoadingNotifications) return;
-    setNotifications(data.notifications);
-  }, [data.notifications, setNotifications, isLoadingNotifications]);
+    if (!isLoading) setNotifications(data.notifications);
+  }, [data, setNotifications, isLoading]);
 
   useEffect(() => {
     if (socket.readyState !== 0)
       socket.send(JSON.stringify({ userId: user.id }));
   }, [socket, user.id]);
-
-  if (isLoadingNotifications || isLoadingUser) return <Spinner />;
 
   if (socket.readyState !== 0)
     socket.onmessage = (event) => {
@@ -80,7 +77,9 @@ export const UserAreaMenu = () => {
     <Dropdown placement="bottom-end">
       <Badge
         content={
-          data.total > notifications.length ? data.total : notifications.length
+          data?.total > notifications.length
+            ? data?.total
+            : notifications.length
         }
         size="lg"
         color="primary"
