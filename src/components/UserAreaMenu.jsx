@@ -5,12 +5,11 @@ import {
   DropdownMenu,
   DropdownTrigger,
   Link,
-  Spinner,
   User,
 } from '@nextui-org/react';
 import { IconUserFilled } from '@tabler/icons-react';
 import { useQueryClient } from '@tanstack/react-query';
-import { useNavigate, useNavigation } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { BUCKET_URL } from '../config/config.js';
 import { logout } from '../pages/Auth/authService.js';
 
@@ -46,7 +45,20 @@ export const UserAreaMenu = () => {
     await logout();
     setIsLoggedIn(false);
     localStorage.setItem('isLoggedIn', false);
-    queryClient.removeQueries();
+    queryClient.removeQueries([
+      {
+        queryKey: ['user'],
+      },
+      {
+        queryKey: ['user-notifications'],
+      },
+      {
+        queryKey: ['user-favs'],
+      },
+      {
+        queryKey: ['user-animals'],
+      },
+    ]);
     navigate('/');
   };
 
