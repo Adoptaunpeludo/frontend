@@ -15,7 +15,7 @@ import { IconHome } from '@tabler/icons-react';
 import { UnderlineVector } from '../../../../assets/svg';
 import { BUCKET_URL, FALLBACK_IMAGE_CARD } from '../../../../config/config';
 
-export const ShelterCard = ({ shelter }) => {
+export const ShelterCard = ({ shelter, isLogged }) => {
   return (
     <Card className="max-w-72">
       {/* Header */}
@@ -35,11 +35,13 @@ export const ShelterCard = ({ shelter }) => {
         <div className="absolute z-20 bottom-2 left-1/2 -translate-x-10 w-full back">
           <Avatar
             isBordered
-            color={shelter.isOnline ? 'success' : 'danger'}
-            className="w-24 h-24"
+            color={`${
+              isLogged ? (shelter.isOnline ? 'success' : 'danger') : 'default'
+            }`}
+            className="w-24 h-24 bg-white"
             src={`${BUCKET_URL}/${shelter.images[0]}`}
             showFallback
-            fallback={<IconHome className="w-10 h-10" />}
+            fallback={<IconHome className="w-10 h-10 stroke-gray-600" />}
           />
         </div>
       </CardHeader>
