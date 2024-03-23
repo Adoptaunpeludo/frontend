@@ -10,7 +10,7 @@ import { AnimalImagesContextProvider } from './context/AnimalImagesContext.jsx';
 import { ModalContextProvider } from './context/ModalContext.jsx';
 import { WebSocketContextProvider } from './context/WebSocketContext.jsx';
 
-const isLoggedIn = localStorage.getItem('isLoggedIn') === 'true';
+const isLoggedIn = sessionStorage.getItem('isLoggedIn') === 'true';
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>

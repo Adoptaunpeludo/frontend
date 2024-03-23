@@ -24,7 +24,6 @@ import { useEffect } from 'react';
 import { useUser } from '../pages/Private/useUser.js';
 
 export const loader = (queryClient, isLoggedIn) => async () => {
-  console.log({ isLoggedIn });
   if (!isLoggedIn) return null;
   try {
     const data = await queryClient.ensureQueryData(userNotificationsQuery);
@@ -47,7 +46,7 @@ export const UserAreaMenu = () => {
     await logout();
     socket.close();
     setIsLoggedIn(false);
-    localStorage.setItem('isLoggedIn', false);
+    sessionStorage.setItem('isLoggedIn', false);
     queryClient.removeQueries([
       {
         queryKey: ['user'],
