@@ -103,7 +103,7 @@ const ShelterDetailsPage = () => {
           title="nuestros peludos"
           className="text-secondary border-hidden"
         />
-        <ShelterRescues />
+        <ShelterRescues shelterId={data.id} />
         <Button
           className="font-lobster w-80 py-6 mx-2 text-white text-3xl"
           color="primary"
