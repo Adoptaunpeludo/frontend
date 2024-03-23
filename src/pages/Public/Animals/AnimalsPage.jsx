@@ -1,13 +1,17 @@
 import { useLoaderData } from 'react-router';
 import { useNavigation } from 'react-router-dom';
 
-import { FilterBar, PagePagination, TitleSection } from '../../../components';
-
 import { Skeleton } from '@nextui-org/react';
+import { FilterBar, PagePagination, TitleSection } from '../../../components';
+import { handleNotFoundError } from '../../../utils/handleError';
 import { animalsQuery, useAnimals } from '../Landing/useAnimals';
+import {
+  shelterAnimalsQuery,
+  useShelterAnimals,
+} from '../Shelters/ShelterDetails/useShelterDetails';
 import { PetCard } from './components/PetCard';
 
-export const loader =
+export const loaderAnimals =
   (queryClient, page) =>
   async ({ request }) => {
     const params = Object.fromEntries([
@@ -22,17 +26,42 @@ export const loader =
     return { params };
   };
 
-const AnimalsPage = ({ page }) => {
-  const { params } = useLoaderData();
-  const navigation = useNavigation();
+export const loaderShelterAnimals =
+  (queryClient) =>
+  async ({ params }) => {
+    console.log({ params });
+    try {
+      const { id } = params;
+      await queryClient.ensureQueryData(shelterAnimalsQuery(id));
+      return params;
+    } catch (error) {
+      if (error.response.status === 404) {
+        const notFoundError = handleNotFoundError(error);
+        throw notFoundError;
+      }
 
-  const { data } = useAnimals(page, params);
+      throw error;
+    }
+  };
+
+const AnimalsPage = ({ page }) => {
+  const params = useLoaderData();
+  const navigation = useNavigation();
+  const { id } = params;
+  const { data } =
+    page !== 'shelterAnimals'
+      ? useAnimals(page, params)
+      : useShelterAnimals(id);
 
   const isLoading = navigation.state === 'loading';
-
+  console.log({ data });
   return (
     <main className="max-w-screen-xl w-full flex  flex-col justify-center  gap-12 h-full  py-12  mx-auto flex-grow">
-      <TitleSection title={page === 'cats' ? 'Gatetes' : 'Perretes'} />
+      {page !== 'shelterAnimals' ? (
+        <TitleSection title={page === 'cats' ? 'Gatetes' : 'Perretes'} />
+      ) : (
+        <TitleSection title={id} />
+      )}
 
       <FilterBar page={page} />
       <ul className="flex justify-center gap-4 flex-wrap p-6">
