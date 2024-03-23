@@ -13,14 +13,31 @@ const WebSocketContextProvider = ({ children }) => {
 
       socket.onopen = () => {
         console.log('Connected');
-      };
+        // Configurar intervalo de ping en el cliente
+        const pingInterval = setInterval(() => {
+          if (socket.readyState === socket.OPEN) {
+            socket.send(JSON.stringify({ type: 'ping' }));
+          }
+        }, 30000); // Enviar un ping cada 30 segundos
 
-      socket.onclose = () => {
-        console.log('Disconnected');
-        setTimeout(() => {
-          connectToSocketServer();
-          //* TODO: Random number
-        }, 1500);
+        socket.onmessage = (event) => {
+          const data = JSON.parse(event.data);
+          // Si recibimos un mensaje de pong, podemos restablecer el temporizador
+          if (data.type === 'pong') {
+            clearInterval(pingInterval);
+          } else {
+            // Manejar otros tipos de mensajes recibidos
+          }
+        };
+
+        socket.onclose = () => {
+          console.log('Disconnected');
+          clearInterval(pingInterval);
+          setTimeout(() => {
+            connectToSocketServer();
+            //* TODO: Random number
+          }, 1500);
+        };
       };
 
       setSocket(socket);
