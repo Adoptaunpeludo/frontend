@@ -37,7 +37,7 @@ export const loader = (queryClient, isLoggedIn) => async () => {
 
 export const UserAreaMenu = () => {
   const { data: user } = useUser();
-  const { data } = useNotifications();
+  const { data, isLoading } = useNotifications();
   const { socket, setNotifications, notifications } = useWebSocketContext();
   const { setIsLoggedIn } = useAuthContext();
   const navigate = useNavigate();
@@ -66,8 +66,8 @@ export const UserAreaMenu = () => {
   };
 
   useEffect(() => {
-    setNotifications(data.notifications);
-  }, [data, setNotifications]);
+    if (!isLoading) setNotifications(data.notifications);
+  }, [data, setNotifications, isLoading]);
 
   useEffect(() => {
     if (socket.readyState !== 0)
