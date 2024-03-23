@@ -1,5 +1,5 @@
 import { useLoaderData } from 'react-router';
-import { useNavigation } from 'react-router-dom';
+import { useNavigation, useOutletContext } from 'react-router-dom';
 
 import {
   Banner,
@@ -28,10 +28,11 @@ export const loader =
   };
 
 const AnimalsPage = ({ page }) => {
+  const { user } = useOutletContext();
   const { params } = useLoaderData();
   const navigation = useNavigation();
 
-  const { data } = useAnimals(page, params);
+  const { data: animals } = useAnimals(page, params);
 
   const isLoading = navigation.state === 'loading';
 
@@ -43,14 +44,14 @@ const AnimalsPage = ({ page }) => {
 
         <FilterBar page={page} />
         <ul className="flex justify-center gap-4 flex-wrap p-6">
-          {data.animals.map((animal) => (
+          {animals.animals.map((animal) => (
             <Skeleton isLoaded={!isLoading} key={animal.id}>
-              <PetCard key={animal.id} animal={animal} />
+              <PetCard key={animal.id} animal={animal} user={user} />
             </Skeleton>
           ))}
         </ul>
         <footer className="mx-auto">
-          <PagePagination data={data} />
+          <PagePagination data={animals} />
         </footer>
       </main>
     </>

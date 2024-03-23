@@ -21,7 +21,7 @@ import { MinimalLogo } from '../assets/logos';
 import { HeartIcon, PetSize, UnderlineVector } from '../assets/svg';
 import { BUCKET_URL } from '../config/config';
 
-export const PetCard = ({ animal }) => {
+export const PetCard = ({ animal, user }) => {
   return (
     <Card className="max-w-72">
       {/* Header */}
@@ -95,6 +95,7 @@ export const PetCard = ({ animal }) => {
           numFavs={animal.numFavs}
           id={animal.id}
           userFavs={animal.userFavs}
+          data={user}
         />
 
         <Button

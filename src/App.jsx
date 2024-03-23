@@ -43,6 +43,7 @@ import { useAnimalImagesContext } from './context/AnimalImagesContext.jsx';
 import NotFoundPage from './pages/Error/NotFound/NotFoundPage.jsx';
 import ProtectedRoute from './pages/Private/ProtectedRoute.jsx';
 import { useModalContext } from './context/ModalContext.jsx';
+import { useAuthContext } from './context/AuthContext.jsx';
 
 export const queryClient = new QueryClient({
   defaultOptions: {
@@ -52,13 +53,18 @@ export const queryClient = new QueryClient({
   },
 });
 
-const router = (bioModalOnClose, shelterModalOnClose, animalImages) =>
+const router = (
+  bioModalOnClose,
+  shelterModalOnClose,
+  animalImages,
+  isLoggedIn
+) =>
   createBrowserRouter([
     {
       path: '/',
       element: <AppLayout />,
       errorElement: <ErrorPage />,
-      loader: notificationsLoader(queryClient),
+      loader: notificationsLoader(queryClient, isLoggedIn),
       children: [
         //* Auth Routes
         {
@@ -114,7 +120,7 @@ const router = (bioModalOnClose, shelterModalOnClose, animalImages) =>
         {
           path: 'private',
           element: <ProtectedRoute />,
-          loader: currentUserLoader(queryClient),
+          loader: currentUserLoader(queryClient, isLoggedIn),
           children: [
             {
               path: 'adopter',
@@ -163,12 +169,18 @@ const router = (bioModalOnClose, shelterModalOnClose, animalImages) =>
 function App() {
   const { images: animalImages } = useAnimalImagesContext();
   const { bioModal, shelterModal } = useModalContext();
+  const { isLoggedIn } = useAuthContext();
 
   return (
     <QueryClientProvider client={queryClient}>
       <ReactQueryDevtools initialIsOpen={false} />
       <RouterProvider
-        router={router(bioModal.onClose, shelterModal.onClose, animalImages)}
+        router={router(
+          bioModal.onClose,
+          shelterModal.onClose,
+          animalImages,
+          isLoggedIn
+        )}
       />
     </QueryClientProvider>
   );
