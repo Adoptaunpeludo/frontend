@@ -3,64 +3,42 @@ import { useNavigation } from 'react-router-dom';
 
 import { Skeleton } from '@nextui-org/react';
 import { FilterBar, PagePagination, TitleSection } from '../../../components';
-import { handleNotFoundError } from '../../../utils/handleError';
 import { animalsQuery, useAnimals } from '../Landing/useAnimals';
-import {
-  shelterAnimalsQuery,
-  useShelterAnimals,
-} from '../Shelters/ShelterDetails/useShelterDetails';
 import { PetCard } from './components/PetCard';
 
-export const loaderAnimals =
+export const loader =
   (queryClient, page) =>
-  async ({ request }) => {
-    const params = Object.fromEntries([
+  async ({ request, params }) => {
+    const filters = Object.fromEntries([
       ...new URL(request.url).searchParams.entries(),
     ]);
 
-    if (params.name) params.name = params.name.toLowerCase();
+    if (filters.name) filters.name = filters.name.toLowerCase();
 
-    //TODO: TryCatch
-    await queryClient.ensureQueryData(animalsQuery(page, params));
-
-    return { params };
-  };
-
-export const loaderShelterAnimals =
-  (queryClient) =>
-  async ({ params }) => {
-    console.log({ params });
     try {
-      const { id } = params;
-      await queryClient.ensureQueryData(shelterAnimalsQuery(id));
-      return params;
-    } catch (error) {
-      if (error.response.status === 404) {
-        const notFoundError = handleNotFoundError(error);
-        throw notFoundError;
-      }
+      await queryClient.ensureQueryData(animalsQuery(page, filters, params));
 
+      return { filters, params };
+    } catch (error) {
+      console.log({ error });
       throw error;
     }
   };
 
 const AnimalsPage = ({ page }) => {
-  const params = useLoaderData();
+  const { params, filters } = useLoaderData();
   const navigation = useNavigation();
-  const { id } = params;
-  const { data } =
-    page !== 'shelterAnimals'
-      ? useAnimals(page, params)
-      : useShelterAnimals(id);
+  const { shelterName } = params;
+  const { data } = useAnimals(page, filters, params);
 
   const isLoading = navigation.state === 'loading';
-  console.log({ data });
+
   return (
     <main className="max-w-screen-xl w-full flex  flex-col justify-center  gap-12 h-full  py-12  mx-auto flex-grow">
-      {page !== 'shelterAnimals' ? (
+      {page !== 'shelters' ? (
         <TitleSection title={page === 'cats' ? 'Gatetes' : 'Perretes'} />
       ) : (
-        <TitleSection title={id} />
+        <TitleSection title={shelterName} />
       )}
 
       <FilterBar page={page} />
