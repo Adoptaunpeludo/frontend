@@ -19,7 +19,6 @@ import { useUser } from '../Private/useUser.js';
 
 const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-
   const { data: user, isLoading } = useUser();
 
   const handleMenuOpenChange = (open) => {

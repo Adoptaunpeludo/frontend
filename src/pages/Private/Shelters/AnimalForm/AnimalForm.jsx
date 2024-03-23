@@ -100,7 +100,7 @@ export const loader =
         throw notFoundError;
       }
 
-      throw error;
+      return error;
     }
   };
 

@@ -1,11 +1,13 @@
-import { Outlet, redirect, useNavigate } from 'react-router-dom';
+import { Outlet, redirect } from 'react-router-dom';
 import { useUser, userQuery } from './useUser';
 import { toast } from 'react-toastify';
+import { useWebSocketContext } from '../../context/WebSocketContext';
 import { useEffect } from 'react';
 
 export const loader = (queryClient) => async () => {
   try {
     const data = await queryClient.ensureQueryData(userQuery);
+
     return data;
   } catch (error) {
     console.log(error);
@@ -15,12 +17,13 @@ export const loader = (queryClient) => async () => {
 };
 
 const ProtectedRoute = () => {
-  // const { data } = useUser();
-  // const navigate = useNavigate();
+  const { data: user } = useUser();
+  const { socket } = useWebSocketContext();
 
-  // useEffect(() => {
-  //   navigate(`/private/${data.role}`);
-  // }, [data.role, navigate]);
+  useEffect(() => {
+    if (socket.readyState !== 0)
+      socket.send(JSON.stringify({ userId: user.id }));
+  }, [socket, user.id]);
 
   return <Outlet />;
 };

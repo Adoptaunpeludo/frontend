@@ -8,6 +8,7 @@ import { AuthContextProvider } from './context/AuthContext.jsx';
 import { AnimalImagesContextProvider } from './context/AnimalImagesContext.jsx';
 
 import { ModalContextProvider } from './context/ModalContext.jsx';
+import { WebSocketContextProvider } from './context/WebSocketContext.jsx';
 
 const isLoggedIn = localStorage.getItem('isLoggedIn');
 
@@ -16,7 +17,9 @@ ReactDOM.createRoot(document.getElementById('root')).render(
     <AuthContextProvider initialIsLoggedIn={Boolean(isLoggedIn)}>
       <AnimalImagesContextProvider>
         <ModalContextProvider>
-          <App />
+          <WebSocketContextProvider>
+            <App />
+          </WebSocketContextProvider>
         </ModalContextProvider>
       </AnimalImagesContextProvider>
     </AuthContextProvider>

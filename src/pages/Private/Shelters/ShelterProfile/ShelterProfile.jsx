@@ -19,7 +19,6 @@ export const loader = (queryClient) => async () => {
     const data = await queryClient.ensureQueryData(
       userAnimalsQuery('shelter', { limit: 100 })
     );
-
     return data;
   } catch (error) {
     console.log(error);

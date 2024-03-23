@@ -1,9 +1,11 @@
 import {
+  Badge,
   Dropdown,
   DropdownItem,
   DropdownMenu,
   DropdownTrigger,
   Link,
+  Spinner,
   User,
 } from '@nextui-org/react';
 import { IconUserFilled } from '@tabler/icons-react';
@@ -14,9 +16,28 @@ import { logout } from '../pages/Auth/authService.js';
 
 import { useAuthContext } from '../context/AuthContext.jsx';
 import { useUser } from '../pages/Private/useUser.js';
+import {
+  useNotifications,
+  userNotificationsQuery,
+} from '../pages/Private/useNotifications.js';
+import { useWebSocketContext } from '../context/WebSocketContext.jsx';
+
+import { useEffect } from 'react';
+
+export const loader = (queryClient) => async () => {
+  try {
+    const data = await queryClient.ensureQueryData(userNotificationsQuery);
+    return data;
+  } catch (error) {
+    console.log(error);
+    return error;
+  }
+};
 
 export const UserAreaMenu = () => {
-  const { data: user } = useUser();
+  const { data: user, isLoading: isLoadingUser } = useUser();
+  const { data, isLoading: isLoadingNotifications } = useNotifications();
+  const { socket, setNotifications, notifications } = useWebSocketContext();
   const { setIsLoggedIn } = useAuthContext();
   const navigate = useNavigate();
   const queryClient = useQueryClient();
@@ -29,28 +50,59 @@ export const UserAreaMenu = () => {
     navigate('/');
   };
 
-  if (!user) return;
+  useEffect(() => {
+    if (isLoadingNotifications) return;
+    setNotifications(data.notifications);
+  }, [data.notifications, setNotifications, isLoadingNotifications]);
+
+  useEffect(() => {
+    if (socket.readyState !== 0)
+      socket.send(JSON.stringify({ userId: user.id }));
+  }, [socket, user.id]);
+
+  if (isLoadingNotifications || isLoadingUser) return <Spinner />;
+
+  if (socket.readyState !== 0)
+    socket.onmessage = (event) => {
+      console.log(event.data);
+
+      const message = JSON.parse(event.data);
+      queryClient.invalidateQueries({
+        queryKey: ['animals'],
+      });
+      console.log('Message received: ' + message);
+      setNotifications((notifications) => [...notifications, message]);
+    };
 
   const { avatar, firstName, lastName, username, email, role } = user;
 
   return (
     <Dropdown placement="bottom-end">
-      <DropdownTrigger>
-        <User
-          name={username}
-          description={`${firstName === null ? 'J.' : firstName} ${
-            lastName === null ? 'Doe' : lastName
-          }`}
-          avatarProps={{
-            src: `${BUCKET_URL}/${avatar}`,
-            isBordered: true,
-            // color: isOnline ? 'success' : 'danger',
-            as: 'button',
-            showFallback: true,
-            fallback: <IconUserFilled />,
-          }}
-        />
-      </DropdownTrigger>
+      <Badge
+        content={
+          data.total > notifications.length ? data.total : notifications.length
+        }
+        size="lg"
+        color="primary"
+        placement="top-left"
+      >
+        <DropdownTrigger>
+          <User
+            name={username}
+            description={`${firstName === null ? 'J.' : firstName} ${
+              lastName === null ? 'Doe' : lastName
+            }`}
+            avatarProps={{
+              src: `${BUCKET_URL}/${avatar}`,
+              isBordered: true,
+              // color: isOnline ? 'success' : 'danger',
+              as: 'button',
+              showFallback: true,
+              fallback: <IconUserFilled />,
+            }}
+          />
+        </DropdownTrigger>
+      </Badge>
       <DropdownMenu aria-label="Profile Actions" variant="flat">
         <DropdownItem
           key="signedMail"
