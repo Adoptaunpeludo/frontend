@@ -33,6 +33,14 @@ const ImageUploadModal = ({ page, id, slug }) => {
 
   const imageFileValidation = (event, maxSize, maxW, maxH) => {
     const file = event.target.files.item(0);
+    const allowedMimeTypes = ['image/jpeg', 'image/png', 'image/gif'];
+    const fileType = file.type;
+
+    if (!allowedMimeTypes.includes(fileType)) {
+      setFileError('Solo se admiten archivos tipo jpeg/jpg, png o gif');
+      return;
+    }
+
     const image = new Image();
     image.src = URL.createObjectURL(file);
 
@@ -113,7 +121,7 @@ const ImageUploadModal = ({ page, id, slug }) => {
                         id="file_input"
                         type="file"
                         style={
-                          fileError ? { color: 'danger' } : { color: 'black' }
+                          fileError ? { color: 'red' } : { color: 'black' }
                         }
                         onChange={(e) => {
                           setFileError('');

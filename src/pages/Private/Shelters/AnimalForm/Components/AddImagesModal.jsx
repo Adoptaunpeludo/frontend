@@ -27,6 +27,14 @@ const AddImagesModal = ({ onSetImages }) => {
 
   const imageFileValidation = (event, maxSize, maxW, maxH) => {
     const file = event.target.files.item(0);
+    const allowedMimeTypes = ['image/jpeg', 'image/png', 'image/gif'];
+    const fileType = file.type;
+
+    if (!allowedMimeTypes.includes(fileType)) {
+      setFileError('Solo se admiten archivos tipo jpeg/jpg, png o gif');
+      return;
+    }
+
     const image = new Image();
     image.src = URL.createObjectURL(file);
 
