@@ -1,8 +1,8 @@
 import { Spinner } from '@nextui-org/react';
 import { Goals } from '../../../../../components';
-import { useAnimals } from '../../../Landing/useAnimals';
-export const ShelterRescues = () => {
-  const { data, isLoading } = useAnimals('all');
+import { useShelterAnimals } from '../useShelterDetails';
+export const ShelterRescues = ({ shelterId }) => {
+  const { data, isLoading } = useShelterAnimals(shelterId);
 
   if (isLoading) return <Spinner />;
 
