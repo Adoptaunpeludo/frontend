@@ -58,6 +58,7 @@ export function FilterBar({ page }) {
         });
     }
 
+    searchParams.delete('page');
     setSearchParams(searchParams);
   };
 
