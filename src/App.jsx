@@ -90,8 +90,6 @@ const router = (bioModalOnClose, shelterModalOnClose, animalImages) =>
           loader: shelterDetailsLoader(queryClient),
         },
         {
-          //Animals list of a specific shelter
-
           path: 'animals/:shelterName',
           element: <AnimalsPage page={'shelters'} />,
           loader: animalsLoader(queryClient, 'shelters'),
@@ -154,7 +152,6 @@ const router = (bioModalOnClose, shelterModalOnClose, animalImages) =>
           ],
         },
         //* End Private Routes
-
         //* Not Found Routes
         {
           path: '404',

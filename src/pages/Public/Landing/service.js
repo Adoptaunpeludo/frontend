@@ -13,15 +13,11 @@ export const getDogs = async (params = {}) => {
 };
 
 export const getAnimals = async (params = {}, shelterName = '') => {
-  console.log(shelterName);
-
   const endPoint = shelterName
     ? `/animals?shelterName=${shelterName}`
     : '/animals';
 
   const { data } = await fetchData(endPoint, params);
-
-  console.log({ data });
 
   return data;
 };

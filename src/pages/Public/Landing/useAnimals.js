@@ -4,10 +4,6 @@ import { getAnimals, getCats, getDogs } from './service';
 export const animalsQuery = (type, filters = {}, params = {}) => {
   let queryFn;
 
-  console.log({ type });
-  console.log({ params });
-  console.log({ filters });
-
   if (type === 'cats') queryFn = () => getCats(filters);
   if (type === 'dogs') queryFn = () => getDogs(filters);
   if (type === 'all') queryFn = () => getAnimals(filters);
