@@ -17,6 +17,7 @@ import {
   LandingPage,
   LoginPage,
   RegisterPage,
+  ShelterDetailsPage,
   ShelterProfile,
   SheltersPage,
   VerifyEmail,
@@ -31,11 +32,12 @@ import { loader as currentUserLoader } from './pages/Private/ProtectedRoute.jsx'
 import { loader as updateAnimalLoader } from './pages/Private/Shelters/AnimalForm/AnimalForm.jsx';
 import { loader as userAnimalsLoader } from './pages/Private/Shelters/loader.js';
 import { loader as animalDetailsLoader } from './pages/Public/Animals/AnimalDetails/AnimalDetailsPage.jsx';
-import { loader as animalsLoader } from './pages/Public/Animals/AnimalsPage.jsx';
+import {
+  loaderAnimals as animalsLoader,
+  loaderShelterAnimals as animalsShelterLoader,
+} from './pages/Public/Animals/AnimalsPage.jsx';
 import { loader as landingAnimalsLoader } from './pages/Public/Landing/LandingPage.jsx';
-import ShelterDetailsPage, {
-  loader as shelterDetailsLoader,
-} from './pages/Public/Shelters/ShelterDetails/ShelterDetailsPage.jsx';
+import { loader as shelterDetailsLoader } from './pages/Public/Shelters/ShelterDetails/ShelterDetailsPage.jsx';
 import { loader as sheltersLoader } from './pages/Public/Shelters/SheltersPage.jsx';
 
 import { useAnimalImagesContext } from './context/AnimalImagesContext.jsx';
@@ -89,6 +91,13 @@ const router = (bioModalOnClose, shelterModalOnClose, animalImages) =>
           path: 'shelters/:username',
           element: <ShelterDetailsPage />,
           loader: shelterDetailsLoader(queryClient),
+        },
+        {
+          //Animals list of a specific shelter
+
+          path: 'animals/:id',
+          element: <AnimalsPage page={'shelterAnimals'} />,
+          loader: animalsShelterLoader(queryClient),
         },
         {
           path: 'animals/cats',
