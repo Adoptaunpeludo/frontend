@@ -5,9 +5,15 @@ import {
   Skeleton,
   Textarea,
 } from '@nextui-org/react';
-import { IconSend2 } from '@tabler/icons-react';
+import { IconSend2, IconCircleX } from '@tabler/icons-react';
 import { useState } from 'react';
-import { Form, redirect, useLoaderData, useNavigation } from 'react-router-dom';
+import {
+  Form,
+  redirect,
+  useLoaderData,
+  useNavigation,
+  useNavigate,
+} from 'react-router-dom';
 import { H2Title, H4Title, Panel } from '../../../../components';
 
 import {
@@ -109,6 +115,7 @@ const AnimalForm = () => {
   const { data, isLoading } = useAnimalDetails(slug);
 
   const navigation = useNavigation();
+  const navigate = useNavigate();
 
   const isSubmitting = navigation.state === 'submitting';
 
@@ -173,6 +180,16 @@ const AnimalForm = () => {
           </Panel>
         </section>
         <div className="flex justify-center gap-4 w-full">
+          <Button
+            color="primary"
+            variant="solid"
+            size="sm"
+            startContent={<IconCircleX />}
+            className="px-10 my-4 font-poppins font-semibold text-sm"
+            onPress={() => navigate(-1)}
+          >
+            Cancelar
+          </Button>
           <Button
             color="primary"
             variant="solid"
