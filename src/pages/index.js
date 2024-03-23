@@ -11,5 +11,5 @@ export { default as UserFormBio } from './Private/shared/components/UserFormBio.
 export { default as AnimalDetailsPage } from './Public/Animals/AnimalDetails/AnimalDetailsPage';
 export { default as AnimalsPage } from './Public/Animals/AnimalsPage.jsx';
 export { default as LandingPage } from './Public/Landing/LandingPage';
-export { default as ShelterDetailsPage } from './Public/Shelters/ShelterDetails/ShelterDetailsPage.jsx';
+export { default as ShelterDetailsPage } from './Public/Shelters/ShelterDetails/ShelterDetailsPage';
 export { default as SheltersPage } from './Public/Shelters/SheltersPage';
