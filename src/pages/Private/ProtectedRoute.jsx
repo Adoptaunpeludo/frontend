@@ -4,7 +4,8 @@ import { toast } from 'react-toastify';
 import { useWebSocketContext } from '../../context/WebSocketContext';
 import { useEffect } from 'react';
 
-export const loader = (queryClient) => async () => {
+export const loader = (queryClient, isLoggedIn) => async () => {
+  if (!isLoggedIn) return null;
   try {
     const data = await queryClient.ensureQueryData(userQuery);
 

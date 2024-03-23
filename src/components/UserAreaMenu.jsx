@@ -14,7 +14,6 @@ import { BUCKET_URL } from '../config/config.js';
 import { logout } from '../pages/Auth/authService.js';
 
 import { useAuthContext } from '../context/AuthContext.jsx';
-import { useUser } from '../pages/Private/useUser.js';
 import {
   useNotifications,
   userNotificationsQuery,
@@ -22,8 +21,11 @@ import {
 import { useWebSocketContext } from '../context/WebSocketContext.jsx';
 
 import { useEffect } from 'react';
+import { useUser } from '../pages/Private/useUser.js';
 
-export const loader = (queryClient) => async () => {
+export const loader = (queryClient, isLoggedIn) => async () => {
+  console.log({ isLoggedIn });
+  if (!isLoggedIn) return null;
   try {
     const data = await queryClient.ensureQueryData(userNotificationsQuery);
     return data;
@@ -35,7 +37,7 @@ export const loader = (queryClient) => async () => {
 
 export const UserAreaMenu = () => {
   const { data: user } = useUser();
-  const { data, isLoading } = useNotifications();
+  const { data } = useNotifications();
   const { socket, setNotifications, notifications } = useWebSocketContext();
   const { setIsLoggedIn } = useAuthContext();
   const navigate = useNavigate();
@@ -64,8 +66,8 @@ export const UserAreaMenu = () => {
   };
 
   useEffect(() => {
-    if (!isLoading) setNotifications(data.notifications);
-  }, [data, setNotifications, isLoading]);
+    setNotifications(data.notifications);
+  }, [data, setNotifications]);
 
   useEffect(() => {
     if (socket.readyState !== 0)

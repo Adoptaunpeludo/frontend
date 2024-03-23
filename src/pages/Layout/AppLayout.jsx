@@ -2,16 +2,28 @@ import { NextUIProvider } from '@nextui-org/react';
 import { Outlet, ScrollRestoration, useNavigate } from 'react-router-dom';
 import Footer from './Footer';
 import Header from './Header';
+import { useUser } from '../Private/useUser';
+import { useNotifications } from '../Private/useNotifications';
+import { useAuthContext } from '../../context/AuthContext';
+import { useEffect } from 'react';
 
 const AppLayout = () => {
   const navigate = useNavigate();
+  const { data: user } = useUser();
+  const { data: notifications } = useNotifications();
+  const { setIsLoggedIn } = useAuthContext();
+
+  useEffect(() => {
+    const isLoggedIn = localStorage.getItem('isLoggedIn') === 'true';
+    setIsLoggedIn(isLoggedIn);
+  }, [setIsLoggedIn]);
 
   return (
     <>
       <NextUIProvider navigate={navigate}>
         <div className="min-h-screen flex flex-col">
           <Header />
-          <Outlet />
+          <Outlet context={{ user, notifications }} />
           <Footer />
         </div>
         <ScrollRestoration />

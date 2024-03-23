@@ -1,12 +1,11 @@
-import PropTypes from 'prop-types';
 import { useEffect, useState } from 'react';
 
 import { addFav } from '../pages/Public/Animals/service';
 import { useQueryClient } from '@tanstack/react-query';
 
-import { useUser } from '../pages/Private/useUser';
 import { Spinner } from '@nextui-org/react';
 import { handleFavError } from '../utils/handleFavsError';
+import { toast } from 'react-toastify';
 
 export const HeartIcon = ({
   size = 24,
@@ -14,10 +13,10 @@ export const HeartIcon = ({
   numFavs,
   userFavs,
   id,
+  data,
   ...props
 }) => {
-  const { data } = useUser();
-  const [liked, setLiked] = useState(false);
+  const [liked, setLiked] = useState(userFavs.includes(data?.id));
   const [isLoading, setIsLoading] = useState(false);
   const queryClient = useQueryClient();
 
@@ -26,6 +25,7 @@ export const HeartIcon = ({
   }, [data?.id, userFavs]);
 
   const toggleLike = async () => {
+    if (!data) return toast.warn('Loguea primero por favor');
     try {
       setIsLoading(true);
       await addFav(id);
@@ -69,12 +69,4 @@ export const HeartIcon = ({
       {isLoading ? <Spinner size="sm" /> : <span>{numFavs}</span>}
     </div>
   );
-};
-
-HeartIcon.propTypes = {
-  size: PropTypes.number,
-  width: PropTypes.number,
-  height: PropTypes.number,
-  strokeWidth: PropTypes.number,
-  fill: PropTypes.string,
 };
