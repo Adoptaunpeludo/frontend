@@ -23,6 +23,7 @@ import {
 } from './components';
 import { animalDetailsQuery, useAnimalDetails } from '../useAnimalDetails';
 import { IconHeart } from '@tabler/icons-react';
+import { useState } from 'react';
 export const loader =
   (queryClient) =>
   async ({ params }) => {
@@ -43,11 +44,10 @@ export const loader =
 const AnimalDetailsPage = () => {
   const params = useLoaderData();
 
-  console.log('animal details');
-
   const { slug } = params;
 
   const { data, isLoading } = useAnimalDetails(slug);
+  const [images, setImages] = useState(data.images);
 
   if (isLoading) return <Spinner />;
 
@@ -62,9 +62,9 @@ const AnimalDetailsPage = () => {
           {/* TODO: check loading image put spinner reservate space */}
           <div className="relative container lg:w-164">
             <Image
-              src={`${BUCKET_URL}/${data.images[0]}`}
+              src={`${BUCKET_URL}/${images[0]}`}
               className=" xl:w-200 xl:max-h-[36rem] object-cover object-top aspect-4/3 flex-1"
-              loading="lazy"
+              // loading="lazy"
               alt={slug}
               radius="sm"
             />
@@ -79,7 +79,7 @@ const AnimalDetailsPage = () => {
             </AdoptButton>
           </div>
 
-          <AnimalGallery animalImages={data.images} />
+          <AnimalGallery animalImages={images} onSetImages={setImages} />
 
           <p className="p-2">{data.description}</p>
         </section>
