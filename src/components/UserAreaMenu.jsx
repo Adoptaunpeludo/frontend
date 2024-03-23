@@ -43,6 +43,7 @@ export const UserAreaMenu = () => {
 
   const handleLogout = async () => {
     await logout();
+    socket.close();
     setIsLoggedIn(false);
     localStorage.setItem('isLoggedIn', false);
     queryClient.removeQueries([
@@ -73,14 +74,18 @@ export const UserAreaMenu = () => {
 
   if (socket.readyState !== 0)
     socket.onmessage = (event) => {
-      console.log(event.data);
-
       const message = JSON.parse(event.data);
-      queryClient.invalidateQueries({
-        queryKey: ['animals'],
-      });
-      console.log('Message received: ' + message);
-      setNotifications((notifications) => [...notifications, message]);
+      if (message.type === 'animal-changed') {
+        queryClient.invalidateQueries({
+          queryKey: ['animals'],
+        });
+        setNotifications((notifications) => [...notifications, message]);
+      }
+
+      if (message.type.startsWith('user'))
+        queryClient.invalidateQueries({
+          queryKey: ['shelters'],
+        });
     };
 
   const { avatar, firstName, lastName, username, email, role } = user;
