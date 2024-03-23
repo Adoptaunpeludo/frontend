@@ -107,7 +107,7 @@ const ShelterDetailsPage = () => {
         <Button
           className="font-lobster w-80 py-6 mx-2 text-white text-3xl"
           color="primary"
-          href="# " //pte endpoint
+          href={`/animals/${data.id}`} //pte endpoint
           as={Link}
         >
           Ver peludos en adopción
