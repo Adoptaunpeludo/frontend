@@ -79,7 +79,9 @@ export const UserAreaMenu = () => {
   return (
     <Dropdown placement="bottom-end">
       <Badge
-        content={notifications.length}
+        content={
+          data.total > notifications.length ? data.total : notifications.length
+        }
         size="lg"
         color="primary"
         placement="top-left"
