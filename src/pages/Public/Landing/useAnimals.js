@@ -21,6 +21,6 @@ export const useAnimals = (type, params = {}) => {
   const { data, isLoading, isFetching, isError } = useQuery(
     animalsQuery(type, params)
   );
-
+  console.log({ data });
   return { data, isLoading, isFetching, isError };
 };
