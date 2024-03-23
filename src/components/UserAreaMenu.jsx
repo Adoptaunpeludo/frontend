@@ -24,6 +24,7 @@ import { useEffect } from 'react';
 import { useUser } from '../pages/Private/useUser.js';
 
 export const loader = (queryClient, isLoggedIn) => async () => {
+  console.log({ isLoggedIn });
   if (!isLoggedIn) return null;
   try {
     const data = await queryClient.ensureQueryData(userNotificationsQuery);

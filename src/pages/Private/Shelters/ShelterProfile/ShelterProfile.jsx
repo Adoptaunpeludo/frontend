@@ -13,6 +13,7 @@ import ShelterProfileInfo from './components/ShelterProfileInfo';
 import UserBioInfo from './components/UserBioInfo';
 import { userAnimalsQuery } from '../useUserAnimals';
 import { updateProfile } from '../../shared/service/updateUserService';
+import { isAxiosError } from 'axios';
 
 export const loader = (queryClient) => async () => {
   try {
@@ -22,7 +23,7 @@ export const loader = (queryClient) => async () => {
     return data;
   } catch (error) {
     console.log(error);
-    return error;
+    throw error;
   }
 };
 
@@ -41,9 +42,9 @@ export const action =
         closeShelterModal();
         return null;
       } catch (error) {
-        console.log(error);
-        toast.error('Error actualizando perfil del Refugio');
-        return null;
+        if (isAxiosError(error) && error.response.status === 400)
+          return toast.error('Error actualizando el perfil del Refugio');
+        throw error;
       }
     }
 
@@ -56,9 +57,9 @@ export const action =
         toast.success(`Anuncio de adopción borrado`);
         return null;
       } catch (error) {
-        console.log(error);
-        toast.error('Error borrando el anuncio de adopción');
-        return null;
+        if (isAxiosError(error) && error.response.status === 400)
+          return toast.error('Error borrando el anuncio de adopción');
+        throw error;
       }
     }
   };

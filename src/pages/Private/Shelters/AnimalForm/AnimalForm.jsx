@@ -38,6 +38,7 @@ import {
   useAnimalDetails,
 } from '../../../Public/Animals/useAnimalDetails';
 import { handleNotFoundError } from '../../../../utils/handleError';
+import { isAxiosError } from 'axios';
 
 export const action =
   (animalImages, queryClient) =>
@@ -63,9 +64,9 @@ export const action =
         toast.success(`Animal ${animal.name} puesto en adopción`);
         return redirect(`/animals/${animal.type}s/${animal.slug}`);
       } catch (error) {
-        console.log(error);
-        toast.error('Error creando anuncio de adopción');
-        return null;
+        if (isAxiosError(error) && error.response.status === 400)
+          return toast.error('Error creando el anuncio de adopción');
+        throw error;
       }
     }
 
@@ -80,9 +81,9 @@ export const action =
         toast.success(`Animal ${animal.name} Actualizado`);
         return redirect(`/animals/${animal.type}s/${animal.slug}`);
       } catch (error) {
-        console.log(error);
-        toast.error('Error creando anuncio de adopción');
-        return null;
+        if (isAxiosError(error) && error.response.status === 400)
+          return toast.error('Error actualizando el anuncio de adopción');
+        throw error;
       }
     }
   };

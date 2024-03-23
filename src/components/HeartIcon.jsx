@@ -6,6 +6,7 @@ import { useQueryClient } from '@tanstack/react-query';
 import { Spinner } from '@nextui-org/react';
 import { handleFavError } from '../utils/handleFavsError';
 import { toast } from 'react-toastify';
+import { isAxiosError } from 'axios';
 
 export const HeartIcon = ({
   size = 24,
@@ -38,7 +39,8 @@ export const HeartIcon = ({
         },
       ]);
     } catch (error) {
-      await handleFavError(error, id, queryClient);
+      if (isAxiosError(error) && error.response.status === 400)
+        await handleFavError(error, id, queryClient);
       throw error;
     } finally {
       setIsLoading(false);

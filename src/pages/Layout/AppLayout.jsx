@@ -14,9 +14,9 @@ const AppLayout = () => {
   const { setIsLoggedIn } = useAuthContext();
 
   useEffect(() => {
-    const isLoggedIn = sessionStorage.getItem('isLoggedIn') === 'true';
+    const isLoggedIn = sessionStorage.getItem('isLoggedIn') === 'true' && user;
     setIsLoggedIn(isLoggedIn);
-  }, [setIsLoggedIn]);
+  }, [setIsLoggedIn, user]);
 
   return (
     <>
