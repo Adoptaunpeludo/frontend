@@ -1,2 +1,3 @@
 export const BUCKET_URL = 'https://aup-s3images.s3.eu-west-3.amazonaws.com';
 export const FALLBACK_IMAGE_CARD = '/no-image-card.jpg';
+export const WB_SERVER = 'ws://3.228.164.55:3070';
