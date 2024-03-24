@@ -26,35 +26,35 @@ const AnimalsPage = ({ page }) => {
   const { user } = useOutletContext();
   const { params, filters } = useLoaderData();
   const navigation = useNavigation();
-  const { shelterName } = params;
-  const { data: animals } = useAnimals(page, filters, params);
-  const isLoading = navigation.state === 'loading';
-  const isLogged = user !== undefined;
-  return (
-    <main className="max-w-screen-xl w-full flex  flex-col justify-center  gap-12 h-full  py-12  mx-auto flex-grow">
-      {page !== 'shelters' ? (
-        <TitleSection title={page === 'cats' ? 'Gatetes' : 'Perretes'} />
-      ) : (
-        <TitleSection title={shelterName} />
-      )}
 
-      <FilterBar page={page} />
-      <ul className="flex justify-center gap-4 flex-wrap p-6">
-        {animals.animals.map((animal) => (
-          <Skeleton isLoaded={!isLoading} key={animal.id}>
-            <PetCard
-              key={animal.id}
-              animal={animal}
-              user={user}
-              isLogged={isLogged}
-            />
-          </Skeleton>
-        ))}
-      </ul>
-      <footer className="mx-auto">
-        <PagePagination data={animals} />
-      </footer>
-    </main>
+  const { shelterName } = params;
+
+  const { data: animals } = useAnimals(page, filters, params);
+
+  const isLoading = navigation.state === 'loading';
+
+  return (
+    <>
+      <main className="max-w-screen-xl w-full flex  flex-col justify-center  gap-12 h-full  py-12  mx-auto flex-grow">
+        {page !== 'shelters' ? (
+          <TitleSection title={page === 'cats' ? 'Gatetes' : 'Perretes'} />
+        ) : (
+          <TitleSection title={shelterName} />
+        )}
+
+        <FilterBar page={page} />
+        <ul className="flex justify-center gap-4 flex-wrap p-6">
+          {animals.animals.map((animal) => (
+            <Skeleton isLoaded={!isLoading} key={animal.id}>
+              <PetCard key={animal.id} animal={animal} user={user} />
+            </Skeleton>
+          ))}
+        </ul>
+        <footer className="mx-auto">
+          <PagePagination data={animals} />
+        </footer>
+      </main>
+    </>
   );
 };
 
