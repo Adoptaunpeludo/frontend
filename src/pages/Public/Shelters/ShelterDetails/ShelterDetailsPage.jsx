@@ -1,4 +1,4 @@
-import { Avatar, Button, Image, Link, Spinner } from '@nextui-org/react';
+import { Avatar, Button, Image, Link } from '@nextui-org/react';
 import { IconHome } from '@tabler/icons-react';
 import { useLoaderData } from 'react-router-dom';
 import {
@@ -43,9 +43,7 @@ const ShelterDetailsPage = () => {
 
   const { username } = params;
 
-  const { data, isLoading } = useShelterDetails(username);
-
-  if (isLoading) return <Spinner />;
+  const { data } = useShelterDetails(username);
 
   return (
     <main className="max-w-screen-xl w-full flex  flex-col justify-center  gap-12 h-full  py-12  mx-auto flex-grow">

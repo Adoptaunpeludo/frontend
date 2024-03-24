@@ -23,8 +23,6 @@ const Header = () => {
   const { isLoggedIn } = useAuthContext();
   const { isLoading } = useUser();
 
-  console.log({ isLoggedIn });
-
   const handleMenuOpenChange = (open) => {
     setIsMenuOpen(open);
   };

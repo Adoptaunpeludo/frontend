@@ -1,54 +1,90 @@
-import { createContext, useContext, useEffect, useState } from 'react';
+import { createContext, useContext, useEffect, useRef, useState } from 'react';
 import { WB_SERVER } from '../config/config';
+import { useQueryClient } from '@tanstack/react-query';
 
 const WebSocketContext = createContext();
 
-const WebSocketContextProvider = ({ children }) => {
-  const [socket, setSocket] = useState();
-  const [notifications, setNotifications] = useState([]);
+const WebSocketContextProvider = ({ children, user }) => {
+  const [isReady, setIsReady] = useState(false);
+  const [message, setMessage] = useState(null);
+  const queryClient = useQueryClient();
+
+  const ws = useRef(null);
 
   useEffect(() => {
-    const connectToSocketServer = () => {
+    const connectToSocketServer = async () => {
       const socket = new WebSocket(WB_SERVER);
 
       socket.onopen = () => {
-        console.log('Connected');
-        // Configurar intervalo de ping en el cliente
+        setIsReady(true);
+        console.log('Connected to ws server');
         const pingInterval = setInterval(() => {
           if (socket.readyState === socket.OPEN) {
             socket.send(JSON.stringify({ type: 'ping' }));
           }
-        }, 30000); // Enviar un ping cada 30 segundos
+        }, 58000);
+
+        if (socket.readyState !== 0)
+          socket.send(JSON.stringify({ token: user.wsToken }));
 
         socket.onmessage = (event) => {
-          const data = JSON.parse(event.data);
-          // Si recibimos un mensaje de pong, podemos restablecer el temporizador
-          if (data.type === 'pong') {
+          const message = JSON.parse(event.data);
+
+          if (message.type === 'pong') {
             clearInterval(pingInterval);
-          } else {
-            // Manejar otros tipos de mensajes recibidos
+          }
+
+          if (message.type === 'animal-changed') {
+            queryClient.invalidateQueries({
+              queryKey: ['animals'],
+            });
+          }
+
+          if (message.type === 'user-connected') {
+            const { username } = message;
+            queryClient.invalidateQueries([
+              {
+                queryKey: ['shelters'],
+              },
+              {
+                queryKey: ['shelters-details', username],
+              },
+            ]);
+          }
+
+          if (message.type === 'user-disconnected') {
+            const { username } = message;
+            queryClient.invalidateQueries([
+              {
+                queryKey: ['shelters'],
+              },
+              {
+                queryKey: ['shelters-details', username],
+              },
+            ]);
           }
         };
 
         socket.onclose = () => {
-          console.log('Disconnected');
+          setIsReady(false);
+          console.log('Disconnected from ws server');
           clearInterval(pingInterval);
-          setTimeout(() => {
-            connectToSocketServer();
-            //* TODO: Random number
-          }, 1500);
+          // setTimeout(() => {
+          //   connectToSocketServer();
+          //   //* TODO: Random number
+          // }, 10000);
         };
       };
 
-      setSocket(socket);
+      socket.onmessage = (event) => setMessage(event.data);
+
+      ws.current = socket;
     };
     connectToSocketServer();
-  }, []);
+  }, [queryClient, user]);
 
   return (
-    <WebSocketContext.Provider
-      value={{ socket, notifications, setNotifications }}
-    >
+    <WebSocketContext.Provider value={{ isReady, message, socket: ws.current }}>
       {children}
     </WebSocketContext.Provider>
   );
