@@ -48,7 +48,7 @@ export const cities = [
   { label: 'Toledo', value: 'Toledo' },
   { label: 'Valencia', value: 'Valencia/València' },
   { label: 'Valladolid', value: 'Valladolid' },
-  { label: 'Bizkaia', value: 'Bizkaia' },
+  { label: 'Vizcaya', value: 'Bizkaia' },
   { label: 'Zamora', value: 'Zamora' },
   { label: 'Zaragoza', value: 'Zaragoza' },
 ];

@@ -17,9 +17,9 @@ import {
   UilVenus,
 } from '@iconscout/react-unicons';
 
-import { MinimalLogo } from '../assets/logos';
-import { HeartIcon, PetSize, UnderlineVector } from '../assets/svg';
-import { BUCKET_URL } from '../config/config';
+import { MinimalLogo } from '../../../../assets/logos';
+import { HeartIcon, PetSize, UnderlineVector } from '../../../../assets/svg';
+import { BUCKET_URL, FALLBACK_IMAGE_CARD } from '../../../../config/config';
 
 export const PetCard = ({ animal, user }) => {
   return (
@@ -30,6 +30,7 @@ export const PetCard = ({ animal, user }) => {
           src={`${BUCKET_URL}/${animal.images[0]}`}
           alt={animal.name}
           className="w-80 h-full object-cover min-h-[320px]"
+          fallbackSrc={`${FALLBACK_IMAGE_CARD}`}
         />
 
         {/* Etiqueta absolutamente posicionada para 'gato' */}

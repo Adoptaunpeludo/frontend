@@ -61,6 +61,7 @@ export function FilterBar({ page }) {
         });
     }
 
+    searchParams.delete('page');
     setSearchParams(searchParams);
   };
 
@@ -96,7 +97,7 @@ export function FilterBar({ page }) {
               key={size.value}
               value={size.value}
               className="capitalize"
-              textValue={size.value}
+              textValue={size.label}
             >
               {size.label}
             </SelectItem>
@@ -118,7 +119,7 @@ export function FilterBar({ page }) {
               key={gender.value}
               value={gender.value}
               className="capitalize"
-              textValue={gender.value}
+              textValue={gender.label}
             >
               {gender.label}
             </SelectItem>
@@ -140,7 +141,7 @@ export function FilterBar({ page }) {
               key={age.value}
               value={age.value}
               className="capitalize"
-              textValue={age.value}
+              textValue={age.label}
             >
               {age.label}
             </SelectItem>
@@ -161,7 +162,7 @@ export function FilterBar({ page }) {
             key={city.value}
             value={city.value}
             className="capitalize"
-            textValue={city.value}
+            textValue={city.label}
           >
             {city.label}
           </SelectItem>

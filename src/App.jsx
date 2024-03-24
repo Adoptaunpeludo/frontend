@@ -17,6 +17,7 @@ import {
   LandingPage,
   LoginPage,
   RegisterPage,
+  ShelterDetailsPage,
   ShelterProfile,
   SheltersPage,
   VerifyEmail,
@@ -32,6 +33,7 @@ import { loader as updateAnimalLoader } from './pages/Private/Shelters/AnimalFor
 import { loader as animalDetailsLoader } from './pages/Public/Animals/AnimalDetails/AnimalDetailsPage.jsx';
 import { loader as animalsLoader } from './pages/Public/Animals/AnimalsPage.jsx';
 import { loader as landingAnimalsLoader } from './pages/Public/Landing/LandingPage.jsx';
+import { loader as shelterDetailsLoader } from './pages/Public/Shelters/ShelterDetails/ShelterDetailsPage.jsx';
 import { loader as currentUserLoader } from './pages/Private/ProtectedRoute.jsx';
 import { loader as userAnimalsLoader } from './pages/Private/Shelters/ShelterProfile/ShelterProfile.jsx';
 import { loader as userFavsLoader } from './pages/Private/Adopters/AdopterProfile/AdopterProfile.jsx';
@@ -95,6 +97,16 @@ const router = (
           loader: sheltersLoader(queryClient, 'shelters'),
         },
         {
+          path: 'shelters/:username',
+          element: <ShelterDetailsPage />,
+          loader: shelterDetailsLoader(queryClient),
+        },
+        {
+          path: 'animals/:shelterName',
+          element: <AnimalsPage page={'shelters'} />,
+          loader: animalsLoader(queryClient, 'shelters'),
+        },
+        {
           path: 'animals/cats',
           element: <AnimalsPage page={'cats'} />,
           loader: animalsLoader(queryClient, 'cats'),
@@ -152,7 +164,6 @@ const router = (
           ],
         },
         //* End Private Routes
-
         //* Not Found Routes
         {
           path: '404',

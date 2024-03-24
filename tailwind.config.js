@@ -7,16 +7,16 @@ export default {
   content: [
     './index.html',
     './src/**/*.{js,ts,jsx,tsx}',
-    './node_modules/@nextui-org/theme/dist/**/*.{js,ts,jsx,tsx}'
+    './node_modules/@nextui-org/theme/dist/**/*.{js,ts,jsx,tsx}',
   ],
   theme: {
     fontFamily: {
       lobster: ['Lobster'],
-      poppins: ['Poppins']
+      poppins: ['Poppins'],
     },
     extend: {
       aspectRatio: {
-        '4/3': '4 / 3'
+        '4/3': '4 / 3',
       },
       width: {
         128: '32rem' /*512*/,
@@ -63,7 +63,7 @@ export default {
         292: '114rem' /*1824*/,
         296: '116rem' /*1856*/,
         300: '118rem' /*1888*/,
-        304: '120rem' /*1920*/
+        304: '120rem' /*1920*/,
       },
       height: {
         128: '32rem' /*512*/,
@@ -110,9 +110,12 @@ export default {
         292: '114rem' /*1824*/,
         296: '116rem' /*1856*/,
         300: '118rem' /*1888*/,
-        304: '120rem' /*1920*/
-      }
-    }
+        304: '120rem' /*1920*/,
+      },
+      backgroundImage: {
+        detail: 'url(/no-image-detail.jpg)',
+      },
+    },
   },
   darkMode: 'class',
   plugins: [
@@ -136,9 +139,9 @@ export default {
               700: '#4c4d58',
               800: '#41414b',
               900: '#393941',
-              950: '#18181b'
-            }
-          }
+              950: '#18181b',
+            },
+          },
         },
         dark: {
           colors: {
@@ -158,9 +161,9 @@ export default {
               700: '#525252',
               800: '#464646',
               900: '#3d3d3d',
-              950: '#292929'
-            }
-          }
+              950: '#292929',
+            },
+          },
           // ... rest of the colors
         },
         mytheme: {
@@ -169,12 +172,12 @@ export default {
           colors: {
             primary: {
               DEFAULT: '#BEF264',
-              foreground: '#000000'
+              foreground: '#000000',
             },
-            focus: '#BEF264'
-          }
-        }
-      }
-    })
-  ]
+            focus: '#BEF264',
+          },
+        },
+      },
+    }),
+  ],
 };

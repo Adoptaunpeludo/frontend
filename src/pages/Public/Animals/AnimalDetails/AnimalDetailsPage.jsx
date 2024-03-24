@@ -4,6 +4,7 @@ import { MinimalLogo } from '../../../../assets/logos';
 import {
   AdoptButton,
   AsideDataColumn,
+  ContactShelter,
   H2Title,
   TitleSection,
 } from '../../../../components';
@@ -15,15 +16,11 @@ import {
   dogDescription,
 } from '../../../../utils/asideDataFields';
 import { handleNotFoundError } from '../../../../utils/handleError';
-import {
-  AnimalFavs,
-  AnimalGallery,
-  ContactShelter,
-  ShareSocialMedia,
-} from './components';
+import { AnimalFavs, AnimalGallery, ShareSocialMedia } from './components';
 import { animalDetailsQuery, useAnimalDetails } from '../useAnimalDetails';
 import { IconHeart } from '@tabler/icons-react';
 import { useState } from 'react';
+
 export const loader =
   (queryClient) =>
   async ({ params }) => {

@@ -1,15 +1,12 @@
 import { useLoaderData } from 'react-router';
 import { useNavigation } from 'react-router-dom';
 
-import {
-  FilterBar,
-  PagePagination,
-  ShelterCard,
-  TitleSection,
-} from '../../../components';
+import { FilterBar, PagePagination, TitleSection } from '../../../components';
 
-import { sheltersQuery, useShelters } from './useShelters';
 import { Skeleton } from '@nextui-org/react';
+import { useUser } from '../../Private/useUser';
+import { ShelterCard } from './components';
+import { sheltersQuery, useShelters } from './useShelters';
 
 export const loader =
   (queryClient) =>
@@ -29,7 +26,9 @@ const SheltersPage = ({ page }) => {
   const navigation = useNavigation();
 
   const { data } = useShelters(params);
+  const { data: userData } = useUser();
   const isLoading = navigation.state === 'loading';
+  const isLogged = userData !== undefined;
 
   return (
     <main className="max-w-screen-xl w-full flex  flex-col justify-center  gap-12 h-full  py-12  mx-auto flex-grow">
@@ -38,7 +37,11 @@ const SheltersPage = ({ page }) => {
       <ul className="flex justify-center gap-4 flex-wrap p-6">
         {data.users.map((shelter) => (
           <Skeleton isLoaded={!isLoading} key={shelter.id}>
-            <ShelterCard key={shelter.id} shelter={shelter} />
+            <ShelterCard
+              key={shelter.id}
+              shelter={shelter}
+              isLogged={isLogged}
+            />
           </Skeleton>
         ))}
       </ul>

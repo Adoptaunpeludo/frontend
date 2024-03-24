@@ -5,9 +5,16 @@ import {
   boolDataEnum,
   energyEnum,
   genderEnum,
+  legalFormEnum,
   moltingEnum,
-  potentialEnum
+  potentialEnum,
 } from './enumData';
+
+const isNullDataField = (field, dataEnum) => {
+  if (field !== null && field !== '')
+    return dataEnum.filter((item) => item.value === field)[0].label;
+  return '';
+};
 
 export const userInformation = ({
   createdAt,
@@ -17,7 +24,7 @@ export const userInformation = ({
   dni,
   phone_number,
   email,
-  city
+  city,
 }) => {
   const entryDate = new Date(createdAt);
   const userInformation = [
@@ -25,7 +32,7 @@ export const userInformation = ({
       fieldName: 'Fecha de entrada: ',
       value: `${entryDate.getDate()}/${
         entryDate.getMonth() + 1
-      }/${entryDate.getFullYear()}`
+      }/${entryDate.getFullYear()}`,
     },
     { fieldName: 'Usuario: ', value: username },
     { fieldName: 'Nombre: ', value: firstName },
@@ -33,7 +40,7 @@ export const userInformation = ({
     { fieldName: 'Dni: ', value: dni },
     { fieldName: 'Teléfono: ', value: phone_number },
     { fieldName: 'Email: ', value: email },
-    { fieldName: 'Ciudad: ', value: city }
+    { fieldName: 'Ciudad: ', value: city },
   ];
   return userInformation;
 };
@@ -45,10 +52,10 @@ export const animalShelterInfo = ({ createdAt, user, city }) => {
       fieldName: 'Fecha de entrada: ',
       value: `${entryDate.getDate()}/${
         entryDate.getMonth() + 1
-      }/${entryDate.getFullYear()}`
+      }/${entryDate.getFullYear()}`,
     },
     { fieldName: 'Usuario: ', value: user.username },
-    { fieldName: 'Ciudad: ', value: city }
+    { fieldName: 'Ciudad: ', value: city },
   ];
   return animalShelterInfo;
 };
@@ -60,12 +67,13 @@ export const animalBioInfo = ({ name, age, breed, gender, size }) => {
     { fieldName: 'Edad: ', value: `${age} años` },
     {
       fieldName: 'Sexo: ',
-      value: `${genderEnum.filter(item => item.value === gender)[0].label}`
+      value: isNullDataField(gender, genderEnum),
     },
     {
       fieldName: 'Tamaño: ',
-      value: `${animalSizeEnum.filter(item => item.value === size)[0].label}`
-    }
+
+      value: isNullDataField(size, animalSizeEnum),
+    },
   ];
   return animalBioInfo;
 };
@@ -76,39 +84,39 @@ export const dogDescription = ({
   moltingAmount,
   departmentAdapted,
   droolingPotential,
-  bark
+  bark,
 }) => {
   const dogDescription = [
     {
       fieldName: 'Fácil de entrenar: ',
-      value: `${boolDataEnum.filter(item => item.value === easyTrain)[0].label}`
+
+      value: isNullDataField(easyTrain, boolDataEnum),
     },
     {
       fieldName: 'Nivel de energía: ',
-      value: `${energyEnum.filter(item => item.value === energyLevel)[0].label}`
+
+      value: isNullDataField(energyLevel, energyEnum),
     },
     {
       fieldName: 'Cantidad de muda: ',
-      value: `${
-        moltingEnum.filter(item => item.value === moltingAmount)[0].label
-      }`
+
+      value: isNullDataField(moltingAmount, moltingEnum),
     },
     {
       fieldName: 'Nivel de babeo: ',
-      value: `${
-        potentialEnum.filter(item => item.value === droolingPotential)[0].label
-      }`
+
+      value: isNullDataField(droolingPotential, potentialEnum),
     },
     {
       fieldName: 'Intensidad de ladrido: ',
-      value: `${potentialEnum.filter(item => item.value === bark)[0].label}`
+
+      value: isNullDataField(bark, potentialEnum),
     },
     {
       fieldName: 'Adaptado a un piso: ',
-      value: `${
-        boolDataEnum.filter(item => item.value === departmentAdapted)[0].label
-      }`
-    }
+
+      value: isNullDataField(departmentAdapted, boolDataEnum),
+    },
   ];
   return dogDescription;
 };
@@ -120,47 +128,87 @@ export const catDescription = ({
   playLevel,
   kidsFriendly,
   scratchPotential,
-  toiletTrained
+  toiletTrained,
 }) => {
   const catDescription = [
     {
       fieldName: 'Fácil de entrenar: ',
-      value: `${boolDataEnum.filter(item => item.value === easyTrain)[0].label}`
+
+      value: isNullDataField(easyTrain, boolDataEnum),
     },
     {
       fieldName: 'Entrenado en el arenero: ',
-      value: `${
-        boolDataEnum.filter(item => item.value === toiletTrained)[0].label
-      }`
+
+      value: isNullDataField(toiletTrained, boolDataEnum),
     },
     {
       fieldName: 'Nivel de energía: ',
-      value: `${energyEnum.filter(item => item.value === energyLevel)[0].label}`
+
+      value: isNullDataField(energyLevel, energyEnum),
     },
     {
       fieldName: 'Cantidad de muda: ',
-      value: `${
-        moltingEnum.filter(item => item.value === moltingAmount)[0].label
-      }`
+
+      value: isNullDataField(moltingAmount, moltingEnum),
     },
     {
       fieldName: 'Nivel de Juego: ',
-      value: `${
-        potentialEnum.filter(item => item.value === playLevel)[0].label
-      }`
+
+      value: isNullDataField(playLevel, potentialEnum),
     },
     {
       fieldName: 'Tendencia a arañar: ',
-      value: `${
-        potentialEnum.filter(item => item.value === scratchPotential)[0].label
-      }`
+
+      value: isNullDataField(scratchPotential, potentialEnum),
     },
     {
       fieldName: 'Sociable con Niños: ',
-      value: `${
-        boolDataEnum.filter(item => item.value === kidsFriendly)[0].label
-      }`
-    }
+      value: isNullDataField(kidsFriendly, boolDataEnum),
+    },
   ];
   return catDescription;
+};
+
+export const shelterInformation = ({
+  createdAt,
+  username,
+  phoneNumber,
+  email,
+  city,
+  cif,
+  legalForms,
+}) => {
+  const entryDate = new Date(createdAt);
+  const shelterInformation = [
+    {
+      fieldName: 'Fecha de entrada: ',
+      value: `${entryDate.getDate()}/${
+        entryDate.getMonth() + 1
+      }/${entryDate.getFullYear()}`,
+    },
+    { fieldName: 'Nombre: ', value: username },
+    { fieldName: 'Teléfono: ', value: phoneNumber },
+    { fieldName: 'Email: ', value: email },
+    { fieldName: 'Ciudad: ', value: city },
+    { fieldName: 'Cif: ', value: cif },
+    {
+      fieldName: 'Forma Legal: ',
+      value: isNullDataField(legalForms, legalFormEnum),
+    },
+  ];
+  return shelterInformation;
+};
+
+export const vetInformation = ({ veterinaryFacilities, ownVet }) => {
+  const vetInformation = [
+    {
+      fieldName: 'Instalaciones veterinarias: ',
+      value: isNullDataField(veterinaryFacilities, boolDataEnum),
+    },
+    {
+      fieldName: 'Veterinario propio: ',
+      value: isNullDataField(ownVet, boolDataEnum),
+    },
+  ];
+  return vetInformation;
 };
