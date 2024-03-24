@@ -32,7 +32,6 @@ export const UserFormBio = ({ data }) => {
     data;
 
   useEffect(() => {
-    console.log('use effect bio');
     saveBioModal(updateBioModal);
   }, []);
 
@@ -78,7 +77,8 @@ export const UserFormBio = ({ data }) => {
                           type="text"
                           label="DNI"
                           name="dni"
-                          defaultValue={dni === '' ? 'Introduce tu email' : dni}
+                          defaultValue={dni ? dni : ''}
+                          placeholder="Introduce tu DNI"
                         />
                       </div>
                       <div className="flex w-full flex-wrap md:flex-nowrap gap-4">
@@ -88,9 +88,8 @@ export const UserFormBio = ({ data }) => {
                           type="text"
                           label="Nombre"
                           name="firstName"
-                          defaultValue={
-                            firstName === '' ? 'Introduce tu nombre' : firstName
-                          }
+                          defaultValue={firstName ? firstName : ''}
+                          placeholder="Introduce tu Nombre"
                         />
                         <Input
                           isDisabled={isSubmitting}
@@ -98,11 +97,8 @@ export const UserFormBio = ({ data }) => {
                           type="text"
                           label="Apellidos"
                           name="lastName"
-                          defaultValue={
-                            lastName === ''
-                              ? 'Introduce tus apellidos'
-                              : lastName
-                          }
+                          defaultValue={lastName ? lastName : ''}
+                          placeholder="Introduce tus apellidos"
                         />
                       </div>
                       <div className="flex w-full flex-wrap md:flex-nowrap gap-4">
@@ -112,11 +108,8 @@ export const UserFormBio = ({ data }) => {
                           type="tel"
                           label="Teléfono"
                           name="phoneNumber"
-                          defaultValue={
-                            phoneNumber === ''
-                              ? 'Introduce tu teléfono'
-                              : phoneNumber
-                          }
+                          defaultValue={phoneNumber ? phoneNumber : ''}
+                          placeholder="Introduce tu número de teléfono"
                         />
                         <SelectField
                           label="Ciudad"
@@ -150,7 +143,7 @@ export const UserFormBio = ({ data }) => {
                   className="px-10 font-poppins font-semibold text-sm"
                   type="submit"
                   name="intent"
-                  value={'shelter-user-profile'}
+                  value={'user-profile'}
                   isLoading={isSubmitting}
                 >
                   Enviar

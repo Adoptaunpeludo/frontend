@@ -1,26 +1,28 @@
-import { Outlet, redirect, useNavigate } from 'react-router-dom';
+import { Outlet } from 'react-router-dom';
 import { useUser, userQuery } from './useUser';
-import { toast } from 'react-toastify';
+import { useWebSocketContext } from '../../context/WebSocketContext';
 import { useEffect } from 'react';
 
-export const loader = (queryClient) => async () => {
+export const loader = (queryClient, isLoggedIn) => async () => {
+  if (!isLoggedIn) return null;
   try {
     const data = await queryClient.ensureQueryData(userQuery);
+
     return data;
   } catch (error) {
     console.log(error);
-    toast.error('Por favor primero haz Login con tu cuenta');
-    return redirect('/login');
+    throw error;
   }
 };
 
 const ProtectedRoute = () => {
-  // const { data } = useUser();
-  // const navigate = useNavigate();
+  const { data: user } = useUser();
+  const { socket } = useWebSocketContext();
 
-  // useEffect(() => {
-  //   navigate(`/private/${data.role}`);
-  // }, [data.role, navigate]);
+  useEffect(() => {
+    if (socket.readyState !== 0)
+      socket.send(JSON.stringify({ userId: user.id }));
+  }, [socket, user.id]);
 
   return <Outlet />;
 };

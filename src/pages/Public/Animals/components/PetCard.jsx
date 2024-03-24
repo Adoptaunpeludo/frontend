@@ -21,7 +21,7 @@ import { MinimalLogo } from '../../../../assets/logos';
 import { HeartIcon, PetSize, UnderlineVector } from '../../../../assets/svg';
 import { BUCKET_URL, FALLBACK_IMAGE_CARD } from '../../../../config/config';
 
-export const PetCard = ({ animal }) => {
+export const PetCard = ({ animal, user }) => {
   return (
     <Card className="max-w-72">
       {/* Header */}
@@ -92,7 +92,12 @@ export const PetCard = ({ animal }) => {
 
       {/* Footer */}
       <CardFooter className=" px-5 flex w-full flex-row justify-between items-center">
-        <HeartIcon />
+        <HeartIcon
+          numFavs={animal.numFavs}
+          id={animal.id}
+          userFavs={animal.userFavs}
+          data={user}
+        />
 
         <Button
           href={`/animals/${animal.type}s/${animal.slug}`}

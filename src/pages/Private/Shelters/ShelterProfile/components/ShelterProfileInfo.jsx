@@ -1,4 +1,4 @@
-import { Skeleton } from '@nextui-org/react';
+import { Skeleton, Spinner } from '@nextui-org/react';
 import { H2Title, H3Title } from '../../../../../components';
 import Accommodations from './Acommodations';
 import ShelterForm from '../../ShelterForm/ShelterForm';
@@ -42,7 +42,7 @@ const ShelterProfileInfo = ({ data, isLoading }) => {
             <span>Veterinario propio: {ownVet ? 'si' : 'no'}</span>
           </div>
         </div>
-        <Accommodations facilities={facilities} />
+        {isLoading ? <Spinner /> : <Accommodations facilities={facilities} />}
         <div id="description" className="flex flex-col gap-3 mx-3 py-3">
           <H3Title title="Descripción:" />
           <div>{description}</div>

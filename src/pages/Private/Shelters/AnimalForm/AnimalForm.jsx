@@ -5,9 +5,15 @@ import {
   Skeleton,
   Textarea,
 } from '@nextui-org/react';
-import { IconSend2 } from '@tabler/icons-react';
+import { IconSend2, IconCircleX } from '@tabler/icons-react';
 import { useState } from 'react';
-import { Form, redirect, useLoaderData, useNavigation } from 'react-router-dom';
+import {
+  Form,
+  redirect,
+  useLoaderData,
+  useNavigation,
+  useNavigate,
+} from 'react-router-dom';
 import { H2Title, H4Title, Panel } from '../../../../components';
 
 import {
@@ -30,8 +36,9 @@ import { toast } from 'react-toastify';
 import {
   animalDetailsQuery,
   useAnimalDetails,
-} from '../../../Public/Animals/AnimalDetails/useAnimalDetails';
+} from '../../../Public/Animals/useAnimalDetails';
 import { handleNotFoundError } from '../../../../utils/handleError';
+import { isAxiosError } from 'axios';
 
 export const action =
   (animalImages, queryClient) =>
@@ -41,7 +48,7 @@ export const action =
 
     console.log({ intent });
 
-    if (intent === 'create-adoption') {
+    if (intent === 'create-animal') {
       const imagesData = new FormData();
 
       animalImages?.forEach((image) => {
@@ -57,9 +64,9 @@ export const action =
         toast.success(`Animal ${animal.name} puesto en adopción`);
         return redirect(`/animals/${animal.type}s/${animal.slug}`);
       } catch (error) {
-        console.log(error);
-        toast.error('Error creando anuncio de adopción');
-        return null;
+        if (isAxiosError(error) && error.response.status === 400)
+          return toast.error('Error creando el anuncio de adopción');
+        throw error;
       }
     }
 
@@ -74,9 +81,9 @@ export const action =
         toast.success(`Animal ${animal.name} Actualizado`);
         return redirect(`/animals/${animal.type}s/${animal.slug}`);
       } catch (error) {
-        console.log(error);
-        toast.error('Error creando anuncio de adopción');
-        return null;
+        if (isAxiosError(error) && error.response.status === 400)
+          return toast.error('Error actualizando el anuncio de adopción');
+        throw error;
       }
     }
   };
@@ -94,7 +101,7 @@ export const loader =
         throw notFoundError;
       }
 
-      throw error;
+      return error;
     }
   };
 
@@ -109,6 +116,7 @@ const AnimalForm = () => {
   const { data, isLoading } = useAnimalDetails(slug);
 
   const navigation = useNavigation();
+  const navigate = useNavigate();
 
   const isSubmitting = navigation.state === 'submitting';
 
@@ -173,6 +181,16 @@ const AnimalForm = () => {
           </Panel>
         </section>
         <div className="flex justify-center gap-4 w-full">
+          <Button
+            color="primary"
+            variant="solid"
+            size="sm"
+            startContent={<IconCircleX />}
+            className="px-10 my-4 font-poppins font-semibold text-sm"
+            onPress={() => navigate(-1)}
+          >
+            Cancelar
+          </Button>
           <Button
             color="primary"
             variant="solid"

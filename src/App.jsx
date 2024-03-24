@@ -25,22 +25,27 @@ import {
 
 import { action as loginAction } from './pages/Auth/Login/LoginPage.jsx';
 import { action as registerAction } from './pages/Auth/Register/RegisterPage.jsx';
-import { action as mutateAnimalAction } from './pages/Private/Shelters/AnimalForm/AnimalForm.jsx';
 import { action as shelterProfileAction } from './pages/Private/Shelters/ShelterProfile/ShelterProfile.jsx';
+import { action as adopterProfileAction } from './pages/Private/Adopters/AdopterProfile/AdopterProfile.jsx';
+import { action as mutateAnimalAction } from './pages/Private/Shelters/AnimalForm/AnimalForm.jsx';
 
-import { loader as currentUserLoader } from './pages/Private/ProtectedRoute.jsx';
 import { loader as updateAnimalLoader } from './pages/Private/Shelters/AnimalForm/AnimalForm.jsx';
-import { loader as userAnimalsLoader } from './pages/Private/Shelters/loader.js';
 import { loader as animalDetailsLoader } from './pages/Public/Animals/AnimalDetails/AnimalDetailsPage.jsx';
 import { loader as animalsLoader } from './pages/Public/Animals/AnimalsPage.jsx';
 import { loader as landingAnimalsLoader } from './pages/Public/Landing/LandingPage.jsx';
 import { loader as shelterDetailsLoader } from './pages/Public/Shelters/ShelterDetails/ShelterDetailsPage.jsx';
+import { loader as currentUserLoader } from './pages/Private/ProtectedRoute.jsx';
+import { loader as userAnimalsLoader } from './pages/Private/Shelters/ShelterProfile/ShelterProfile.jsx';
+import { loader as userFavsLoader } from './pages/Private/Adopters/AdopterProfile/AdopterProfile.jsx';
 import { loader as sheltersLoader } from './pages/Public/Shelters/SheltersPage.jsx';
+import { loader as verifyEmailLoader } from './pages/Auth/VerifyEmail/VerifyEmailPage.jsx';
+import { loader as notificationsLoader } from './components/UserAreaMenu.jsx';
 
 import { useAnimalImagesContext } from './context/AnimalImagesContext.jsx';
-import { useModalContext } from './context/ModalContext.jsx';
 import NotFoundPage from './pages/Error/NotFound/NotFoundPage.jsx';
 import ProtectedRoute from './pages/Private/ProtectedRoute.jsx';
+import { useModalContext } from './context/ModalContext.jsx';
+import { useAuthContext } from './context/AuthContext.jsx';
 
 export const queryClient = new QueryClient({
   defaultOptions: {
@@ -50,12 +55,18 @@ export const queryClient = new QueryClient({
   },
 });
 
-const router = (bioModalOnClose, shelterModalOnClose, animalImages) =>
+const router = (
+  bioModalOnClose,
+  shelterModalOnClose,
+  animalImages,
+  isLoggedIn
+) =>
   createBrowserRouter([
     {
       path: '/',
       element: <AppLayout />,
       errorElement: <ErrorPage />,
+      loader: notificationsLoader(queryClient, isLoggedIn),
       children: [
         //* Auth Routes
         {
@@ -69,8 +80,9 @@ const router = (bioModalOnClose, shelterModalOnClose, animalImages) =>
           action: loginAction(queryClient),
         },
         {
-          path: 'users/verify-email/:token',
+          path: '/verify-email/:token',
           element: <VerifyEmail />,
+          loader: verifyEmailLoader,
         },
         //* End Auth Routes
         //* Public Routes
@@ -120,16 +132,16 @@ const router = (bioModalOnClose, shelterModalOnClose, animalImages) =>
         {
           path: 'private',
           element: <ProtectedRoute />,
-          loader: currentUserLoader(queryClient),
+          loader: currentUserLoader(queryClient, isLoggedIn),
           children: [
             {
               path: 'adopter',
-              //for test only
               element: <AdopterProfile />,
+              loader: userFavsLoader(queryClient),
+              action: adopterProfileAction(bioModalOnClose, queryClient),
             },
             {
               path: 'shelter',
-              //for test only
               element: <ShelterProfile />,
               loader: userAnimalsLoader(queryClient),
               action: shelterProfileAction(
@@ -168,12 +180,18 @@ const router = (bioModalOnClose, shelterModalOnClose, animalImages) =>
 function App() {
   const { images: animalImages } = useAnimalImagesContext();
   const { bioModal, shelterModal } = useModalContext();
+  const { isLoggedIn } = useAuthContext();
 
   return (
     <QueryClientProvider client={queryClient}>
       <ReactQueryDevtools initialIsOpen={false} />
       <RouterProvider
-        router={router(bioModal.onClose, shelterModal.onClose, animalImages)}
+        router={router(
+          bioModal.onClose,
+          shelterModal.onClose,
+          animalImages,
+          isLoggedIn
+        )}
       />
     </QueryClientProvider>
   );

@@ -16,11 +16,14 @@ import { useState } from 'react';
 import BrandNavLogo from '../../assets/logos/BrandNavLogo.jsx';
 import { UserAreaMenu } from '../../components/UserAreaMenu.jsx';
 import { useUser } from '../Private/useUser.js';
+import { useAuthContext } from '../../context/AuthContext.jsx';
 
 const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const { isLoggedIn } = useAuthContext();
+  const { isLoading } = useUser();
 
-  const { data: user, isLoading } = useUser();
+  console.log({ isLoggedIn });
 
   const handleMenuOpenChange = (open) => {
     setIsMenuOpen(open);
@@ -81,7 +84,7 @@ const Header = () => {
           <Spinner />
         ) : (
           <NavbarItem>
-            {!user ? (
+            {!isLoggedIn ? (
               <Button
                 as={Link}
                 color="primary"

@@ -1,4 +1,5 @@
 import {
+  Badge,
   Dropdown,
   DropdownItem,
   DropdownMenu,
@@ -13,44 +14,113 @@ import { BUCKET_URL } from '../config/config.js';
 import { logout } from '../pages/Auth/authService.js';
 
 import { useAuthContext } from '../context/AuthContext.jsx';
+import {
+  useNotifications,
+  userNotificationsQuery,
+} from '../pages/Private/useNotifications.js';
+import { useWebSocketContext } from '../context/WebSocketContext.jsx';
+
+import { useEffect } from 'react';
 import { useUser } from '../pages/Private/useUser.js';
+
+export const loader = (queryClient, isLoggedIn) => async () => {
+  console.log({ isLoggedIn });
+  if (!isLoggedIn) return null;
+  try {
+    const data = await queryClient.ensureQueryData(userNotificationsQuery);
+    return data;
+  } catch (error) {
+    console.log(error);
+    return error;
+  }
+};
 
 export const UserAreaMenu = () => {
   const { data: user } = useUser();
+  const { data, isLoading } = useNotifications();
+  const { socket, setNotifications, notifications } = useWebSocketContext();
   const { setIsLoggedIn } = useAuthContext();
   const navigate = useNavigate();
   const queryClient = useQueryClient();
 
   const handleLogout = async () => {
     await logout();
+    socket.close();
     setIsLoggedIn(false);
-    localStorage.setItem('isLoggedIn', false);
-    queryClient.removeQueries({ queryKey: ['user'] });
+    sessionStorage.setItem('isLoggedIn', false);
+    queryClient.removeQueries([
+      {
+        queryKey: ['user'],
+      },
+      {
+        queryKey: ['user-notifications'],
+      },
+      {
+        queryKey: ['user-favs'],
+      },
+      {
+        queryKey: ['user-animals'],
+      },
+    ]);
     navigate('/');
   };
 
-  if (!user) return;
+  useEffect(() => {
+    if (!isLoading) setNotifications(data.notifications);
+  }, [data, setNotifications, isLoading]);
+
+  useEffect(() => {
+    if (socket.readyState !== 0)
+      socket.send(JSON.stringify({ userId: user.id }));
+  }, [socket, user.id]);
+
+  if (socket.readyState !== 0)
+    socket.onmessage = (event) => {
+      const message = JSON.parse(event.data);
+      if (message.type === 'animal-changed') {
+        queryClient.invalidateQueries({
+          queryKey: ['animals'],
+        });
+        setNotifications((notifications) => [...notifications, message]);
+      }
+
+      if (message.type.startsWith('user'))
+        queryClient.invalidateQueries({
+          queryKey: ['shelters'],
+        });
+    };
 
   const { avatar, firstName, lastName, username, email, role } = user;
 
   return (
     <Dropdown placement="bottom-end">
-      <DropdownTrigger>
-        <User
-          name={username}
-          description={`${firstName === null ? 'J.' : firstName} ${
-            lastName === null ? 'Doe' : lastName
-          }`}
-          avatarProps={{
-            src: `${BUCKET_URL}/${avatar}`,
-            isBordered: true,
-            // color: isOnline ? 'success' : 'danger',
-            as: 'button',
-            showFallback: true,
-            fallback: <IconUserFilled />,
-          }}
-        />
-      </DropdownTrigger>
+      <Badge
+        content={
+          data?.total > notifications.length
+            ? data?.total
+            : notifications.length
+        }
+        size="lg"
+        color="primary"
+        placement="top-left"
+      >
+        <DropdownTrigger>
+          <User
+            name={username}
+            description={`${firstName === null ? 'J.' : firstName} ${
+              lastName === null ? 'Doe' : lastName
+            }`}
+            avatarProps={{
+              src: `${BUCKET_URL}/${avatar}`,
+              isBordered: true,
+              // color: isOnline ? 'success' : 'danger',
+              as: 'button',
+              showFallback: true,
+              fallback: <IconUserFilled />,
+            }}
+          />
+        </DropdownTrigger>
+      </Badge>
       <DropdownMenu aria-label="Profile Actions" variant="flat">
         <DropdownItem
           key="signedMail"

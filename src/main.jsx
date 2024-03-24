@@ -8,15 +8,18 @@ import { AuthContextProvider } from './context/AuthContext.jsx';
 import { AnimalImagesContextProvider } from './context/AnimalImagesContext.jsx';
 
 import { ModalContextProvider } from './context/ModalContext.jsx';
+import { WebSocketContextProvider } from './context/WebSocketContext.jsx';
 
-const isLoggedIn = localStorage.getItem('isLoggedIn');
+const isLoggedIn = sessionStorage.getItem('isLoggedIn') === 'true';
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
-    <AuthContextProvider initialIsLoggedIn={Boolean(isLoggedIn)}>
+    <AuthContextProvider initialIsLoggedIn={isLoggedIn}>
       <AnimalImagesContextProvider>
         <ModalContextProvider>
-          <App />
+          <WebSocketContextProvider>
+            <App />
+          </WebSocketContextProvider>
         </ModalContextProvider>
       </AnimalImagesContextProvider>
     </AuthContextProvider>

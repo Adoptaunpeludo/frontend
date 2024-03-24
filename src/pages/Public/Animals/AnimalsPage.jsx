@@ -1,5 +1,5 @@
 import { useLoaderData } from 'react-router';
-import { useNavigation } from 'react-router-dom';
+import { useNavigation, useOutletContext } from 'react-router-dom';
 
 import { Skeleton } from '@nextui-org/react';
 import { FilterBar, PagePagination, TitleSection } from '../../../components';
@@ -23,33 +23,38 @@ export const loader =
   };
 
 const AnimalsPage = ({ page }) => {
-  const { params, filters } = useLoaderData();
+  const { user } = useOutletContext();
+  const { params } = useLoaderData();
   const navigation = useNavigation();
+
   const { shelterName } = params;
-  const { data } = useAnimals(page, filters, params);
+
+  const { data: animals } = useAnimals(page, params);
 
   const isLoading = navigation.state === 'loading';
 
   return (
-    <main className="max-w-screen-xl w-full flex  flex-col justify-center  gap-12 h-full  py-12  mx-auto flex-grow">
-      {page !== 'shelters' ? (
-        <TitleSection title={page === 'cats' ? 'Gatetes' : 'Perretes'} />
-      ) : (
-        <TitleSection title={shelterName} />
-      )}
+    <>
+      <main className="max-w-screen-xl w-full flex  flex-col justify-center  gap-12 h-full  py-12  mx-auto flex-grow">
+        {page !== 'shelters' ? (
+          <TitleSection title={page === 'cats' ? 'Gatetes' : 'Perretes'} />
+        ) : (
+          <TitleSection title={shelterName} />
+        )}
 
-      <FilterBar page={page} />
-      <ul className="flex justify-center gap-4 flex-wrap p-6">
-        {data.animals.map((animal) => (
-          <Skeleton isLoaded={!isLoading} key={animal.id}>
-            <PetCard key={animal.id} animal={animal} />
-          </Skeleton>
-        ))}
-      </ul>
-      <footer className="mx-auto">
-        <PagePagination data={data} />
-      </footer>
-    </main>
+        <FilterBar page={page} />
+        <ul className="flex justify-center gap-4 flex-wrap p-6">
+          {animals.animals.map((animal) => (
+            <Skeleton isLoaded={!isLoading} key={animal.id}>
+              <PetCard key={animal.id} animal={animal} user={user} />
+            </Skeleton>
+          ))}
+        </ul>
+        <footer className="mx-auto">
+          <PagePagination data={animals} />
+        </footer>
+      </main>
+    </>
   );
 };
 

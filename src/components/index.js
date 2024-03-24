@@ -20,3 +20,4 @@ export { RescuesIcons } from './RescuesIcons';
 export { SelectField } from './SelectField';
 export { TitleSection } from './TitleSection';
 export { UserAreaMenu } from './UserAreaMenu';
+export { HeartIcon } from './HeartIcon';

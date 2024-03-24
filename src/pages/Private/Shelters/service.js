@@ -5,3 +5,11 @@ export const getUserAnimals = async (params = {}) => {
 
   return data;
 };
+
+export const getUserFavs = async () => {
+  const { data } = await fetchData('/users/me/favorites');
+
+  console.log({ data });
+
+  return data;
+};
