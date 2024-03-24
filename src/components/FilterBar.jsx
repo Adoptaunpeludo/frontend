@@ -80,6 +80,7 @@ export function FilterBar({ page }) {
         onValueChange={setName}
         name={page !== 'shelter' ? 'name' : 'username'}
         defaultValue={params?.name || ''}
+        classNames={{ inputWrapper: 'border-1 border-primary' }}
       />
       <Spacer x={0.5} />
       {page !== 'shelter' && (
@@ -91,6 +92,7 @@ export function FilterBar({ page }) {
           selectedKeys={size}
           onSelectionChange={setSize}
           defaultSelectedKeys={params?.size ? [params.size] : []}
+          classNames={{ trigger: 'border-1 border-primary' }}
         >
           {animalSizeEnum.map((size) => (
             <SelectItem
@@ -113,6 +115,7 @@ export function FilterBar({ page }) {
           selectedKeys={gender}
           onSelectionChange={setGender}
           defaultSelectedKeys={params?.gender ? [params.gender] : []}
+          classNames={{ trigger: 'border-1 border-primary' }}
         >
           {genderEnum.map((gender) => (
             <SelectItem
@@ -135,6 +138,7 @@ export function FilterBar({ page }) {
           defaultSelectedKeys={params?.age ? [params.age] : []}
           selectedKeys={age}
           onSelectionChange={setAge}
+          classNames={{ trigger: 'border-1 border-primary' }}
         >
           {ageRanges.map((age) => (
             <SelectItem
@@ -156,6 +160,7 @@ export function FilterBar({ page }) {
         defaultSelectedKeys={params?.city ? [params.city] : []}
         selectedKeys={city}
         onSelectionChange={setCity}
+        classNames={{ trigger: 'border-1 border-primary' }}
       >
         {cities.map((city) => (
           <SelectItem
@@ -168,10 +173,19 @@ export function FilterBar({ page }) {
           </SelectItem>
         ))}
       </Select>
-      <Button type="submit" color="primary">
+      <Button
+        type="submit"
+        color="primary"
+        className=" font-medium font-poppins"
+      >
         Buscar
       </Button>
-      <Button onPress={handleReset} color="primary" type="reset">
+      <Button
+        onPress={handleReset}
+        color="primary"
+        type="reset"
+        className=" font-medium font-poppins"
+      >
         Reset
       </Button>
       {/* TODO:Dont remove without final layout  */}
