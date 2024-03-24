@@ -7,7 +7,7 @@ export const getCurrentUser = async () => {
 };
 
 export const getUserNotifications = async () => {
-  const { data } = await fetchData('/users/me/notifications');
+  const { data } = await fetchData('/users/me/notifications?limit=100');
 
   return data;
 };

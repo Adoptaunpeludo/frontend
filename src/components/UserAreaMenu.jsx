@@ -20,15 +20,17 @@ import {
 } from '../pages/Private/useNotifications.js';
 import { useWebSocketContext } from '../context/WebSocketContext.jsx';
 
-import { useEffect } from 'react';
-import { useUser } from '../pages/Private/useUser.js';
+import { useEffect, useState } from 'react';
+import { useUser, userQuery } from '../pages/Private/useUser.js';
 
 export const loader = (queryClient, isLoggedIn) => async () => {
-  console.log({ isLoggedIn });
   if (!isLoggedIn) return null;
   try {
-    const data = await queryClient.ensureQueryData(userNotificationsQuery);
-    return data;
+    const notifications = await queryClient.ensureQueryData(
+      userNotificationsQuery
+    );
+    const user = await queryClient.ensureQueryData(userQuery);
+    return { notifications, user };
   } catch (error) {
     console.log(error);
     return error;
@@ -38,8 +40,9 @@ export const loader = (queryClient, isLoggedIn) => async () => {
 export const UserAreaMenu = () => {
   const { data: user } = useUser();
   const { data, isLoading } = useNotifications();
-  const { socket, setNotifications, notifications } = useWebSocketContext();
+  const [notifications, setNotifications] = useState([]);
   const { setIsLoggedIn } = useAuthContext();
+  const { socket } = useWebSocketContext();
   const navigate = useNavigate();
   const queryClient = useQueryClient();
 
@@ -48,7 +51,7 @@ export const UserAreaMenu = () => {
     socket.close();
     setIsLoggedIn(false);
     sessionStorage.setItem('isLoggedIn', false);
-    queryClient.removeQueries([
+    queryClient.invalidateQueries([
       {
         queryKey: ['user'],
       },
@@ -62,6 +65,7 @@ export const UserAreaMenu = () => {
         queryKey: ['user-animals'],
       },
     ]);
+
     navigate('/');
   };
 
@@ -69,37 +73,12 @@ export const UserAreaMenu = () => {
     if (!isLoading) setNotifications(data.notifications);
   }, [data, setNotifications, isLoading]);
 
-  useEffect(() => {
-    if (socket.readyState !== 0)
-      socket.send(JSON.stringify({ userId: user.id }));
-  }, [socket, user.id]);
-
-  if (socket.readyState !== 0)
-    socket.onmessage = (event) => {
-      const message = JSON.parse(event.data);
-      if (message.type === 'animal-changed') {
-        queryClient.invalidateQueries({
-          queryKey: ['animals'],
-        });
-        setNotifications((notifications) => [...notifications, message]);
-      }
-
-      if (message.type.startsWith('user'))
-        queryClient.invalidateQueries({
-          queryKey: ['shelters'],
-        });
-    };
-
   const { avatar, firstName, lastName, username, email, role } = user;
 
   return (
     <Dropdown placement="bottom-end">
       <Badge
-        content={
-          data?.total > notifications.length
-            ? data?.total
-            : notifications.length
-        }
+        content={notifications.length}
         size="lg"
         color="primary"
         placement="top-left"

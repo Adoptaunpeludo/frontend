@@ -6,6 +6,7 @@ import { useUser } from '../Private/useUser';
 import { useNotifications } from '../Private/useNotifications';
 import { useAuthContext } from '../../context/AuthContext';
 import { useEffect } from 'react';
+import { WebSocketContextProvider } from '../../context/WebSocketContext';
 
 const AppLayout = () => {
   const navigate = useNavigate();
@@ -14,8 +15,10 @@ const AppLayout = () => {
   const { setIsLoggedIn } = useAuthContext();
 
   useEffect(() => {
-    sessionStorage.setItem('isLoggedIn', user !== null);
-    const isLoggedIn = sessionStorage.getItem('isLoggedIn') === 'true' && user;
+    console.log({ user });
+    sessionStorage.setItem('isLoggedIn', user !== undefined);
+    const isLoggedIn =
+      sessionStorage.getItem('isLoggedIn') === 'true' && user !== null;
     setIsLoggedIn(isLoggedIn);
   }, [setIsLoggedIn, user]);
 
@@ -23,9 +26,11 @@ const AppLayout = () => {
     <>
       <NextUIProvider navigate={navigate}>
         <div className="min-h-screen flex flex-col">
-          <Header />
-          <Outlet context={{ user, notifications }} />
-          <Footer />
+          <WebSocketContextProvider user={user}>
+            <Header />
+            <Outlet context={{ user, notifications }} />
+            <Footer />
+          </WebSocketContextProvider>
         </div>
         <ScrollRestoration />
       </NextUIProvider>
