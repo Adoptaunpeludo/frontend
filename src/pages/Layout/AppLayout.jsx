@@ -6,17 +6,25 @@ import { useUser } from '../Private/useUser';
 import { useNotifications } from '../Private/useNotifications';
 import { useAuthContext } from '../../context/AuthContext';
 import { useEffect } from 'react';
+import { useWebSocketContext } from '../../context/WebSocketContext';
 
 const AppLayout = () => {
   const navigate = useNavigate();
   const { data: user } = useUser();
   const { data: notifications } = useNotifications();
   const { setIsLoggedIn } = useAuthContext();
+  const { socket } = useWebSocketContext();
 
   useEffect(() => {
     const isLoggedIn = sessionStorage.getItem('isLoggedIn') === 'true' && user;
     setIsLoggedIn(isLoggedIn);
   }, [setIsLoggedIn, user]);
+
+  useEffect(() => {
+    console.log('useEffect');
+    if (user && socket.readyState !== 0)
+      socket.send(JSON.stringify({ userId: user.id }));
+  }, [socket, user]);
 
   return (
     <>
