@@ -1,10 +1,7 @@
 import { useLoaderData } from 'react-router';
-import { useNavigation } from 'react-router-dom';
-
+import { useNavigation, useOutletContext } from 'react-router-dom';
 import { FilterBar, PagePagination, TitleSection } from '../../../components';
-
 import { Skeleton } from '@nextui-org/react';
-import { useUser } from '../../Private/useUser';
 import { ShelterCard } from './components';
 import { sheltersQuery, useShelters } from './useShelters';
 
@@ -24,11 +21,12 @@ export const loader =
 const SheltersPage = ({ page }) => {
   const { params } = useLoaderData();
   const navigation = useNavigation();
+  const { user } = useOutletContext();
 
   const { data } = useShelters(params);
-  const { data: userData } = useUser();
+
   const isLoading = navigation.state === 'loading';
-  const isLogged = userData !== undefined;
+  const isLogged = user !== undefined;
 
   return (
     <main className="max-w-screen-xl w-full flex  flex-col justify-center  gap-12 h-full  py-12  mx-auto flex-grow">
