@@ -17,12 +17,28 @@ import { H2Title, Panel, SelectField } from '../../../../components';
 import { Form, useNavigation } from 'react-router-dom';
 import { BUCKET_URL } from '../../../../config/config';
 import { useModalContext } from '../../../../context/ModalContext';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
+import { validateField } from '../../../../utils/validateField';
 
 export const UserFormBio = ({ data }) => {
   const updateBioModal = useDisclosure();
   const { isOpen, onOpen, onOpenChange, onClose } = updateBioModal;
   const { saveBioModal } = useModalContext();
+
+  const [credentials, setCredentials] = useState({});
+  const [errors, setErrors] = useState({});
+
+  const handleChange = (event) => {
+    const { name, value } = event.target;
+    setCredentials({ ...credentials, [name]: value });
+    setErrors({ ...errors, [name]: validateField(name, value) });
+    console.log(errors);
+    console.log(isFormValid);
+  };
+
+  const isFormValid = Object.values(errors).every((error) => error === '');
+
+  const disableButton = !isFormValid;
 
   const navigation = useNavigation();
 
@@ -78,6 +94,9 @@ export const UserFormBio = ({ data }) => {
                           label="DNI"
                           name="dni"
                           defaultValue={dni === '' ? 'Introduce tu email' : dni}
+                          color={errors.dni ? 'danger' : 'none'}
+                          errorMessage={errors.dni}
+                          onChange={handleChange}
                         />
                       </div>
                       <div className="flex w-full flex-wrap md:flex-nowrap gap-4">
@@ -90,6 +109,9 @@ export const UserFormBio = ({ data }) => {
                           defaultValue={
                             firstName === '' ? 'Introduce tu nombre' : firstName
                           }
+                          color={errors.firstName ? 'danger' : 'none'}
+                          errorMessage={errors.firstName}
+                          onChange={handleChange}
                         />
                         <Input
                           isDisabled={isSubmitting}
@@ -102,6 +124,9 @@ export const UserFormBio = ({ data }) => {
                               ? 'Introduce tus apellidos'
                               : lastName
                           }
+                          color={errors.lastName ? 'danger' : 'none'}
+                          errorMessage={errors.lastName}
+                          onChange={handleChange}
                         />
                       </div>
                       <div className="flex w-full flex-wrap md:flex-nowrap gap-4">
@@ -116,6 +141,7 @@ export const UserFormBio = ({ data }) => {
                               ? 'Introduce tu teléfono'
                               : phoneNumber
                           }
+                          onChange={handleChange}
                         />
                         <SelectField
                           label="Ciudad"
@@ -142,6 +168,7 @@ export const UserFormBio = ({ data }) => {
                   Cancelar
                 </Button>
                 <Button
+                  isDisabled={disableButton}
                   color="primary"
                   variant="solid"
                   size="sm"

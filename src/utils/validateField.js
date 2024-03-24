@@ -1,9 +1,14 @@
 export const validateField = (name, value, password) => {
   switch (name) {
     case 'username':
-      return value.trim().length < 3 ||
-        !/^[0-9A-Za-zÑñÁáÉéÍíÓóÚúÜü\s]+$/i.test(value.trim())
-        ? 'El nombre de usuario debe tener al menos 3 caracteres válidos'
+    case 'firstName':
+    case 'lastName':
+      return !/^[0-9a-zñáéíóúü\s]{3,30}$/i.test(value.trim())
+        ? `${
+            (name === 'firstName' && 'El nombre debe') ||
+            (name === 'lastName' && 'Los apellidos deben') ||
+            (name === 'username' && 'nombre de usuario debe')
+          } tener al menos 3 caracteres válidos.`
         : '';
     case 'email':
       return !/^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/i.test(value.trim())
@@ -16,7 +21,19 @@ export const validateField = (name, value, password) => {
     case 'repeatPassword':
       return value.trim() !== password ? 'Las contraseñas no coinciden' : '';
     case 'cif':
-      return value.trim().length !== 9 ? 'El cif debe tener 9 caracteres' : '';
+      return !/^[A-HJNP-SUVW]{1}[0-9]{7}[0-9A-J]$/i.test(value.trim())
+        ? 'El CIF no es válido.'
+        : '';
+    case 'dni':
+      return !/^[XYZ0-9]{1}[0-9]{7}[TRWAGMYFPDXBNJZSQVHLCKE]$/i.test(
+        value.trim()
+      )
+        ? 'El DNI no es válido.'
+        : '';
+    case 'phoneNumber':
+      return !/^(\+[0-9]{1,3})?[0-9]{6,14}$/.test(value.trim())
+        ? 'No es un número de teléfono válido.'
+        : '';
     default:
       return '';
   }
