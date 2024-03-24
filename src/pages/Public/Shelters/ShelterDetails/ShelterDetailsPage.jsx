@@ -5,7 +5,6 @@ import {
   AsideDataColumn,
   ContactShelter,
   H2Title,
-  ImageGallery,
   TitleSection,
 } from '../../../../components';
 import { BUCKET_URL } from '../../../../config/config';
@@ -20,6 +19,7 @@ import {
   SocialMediaAsideColumn,
 } from './components/';
 import { shelterDetailsQuery, useShelterDetails } from './useShelterDetails';
+import { AnimalGallery } from '../../Animals/AnimalDetails/components';
 
 export const loader =
   (queryClient) =>
@@ -78,7 +78,7 @@ const ShelterDetailsPage = () => {
             />
           </div>
 
-          <ImageGallery animalImages={data.images} />
+          <AnimalGallery animalImages={data.images} />
 
           <p className="p-2">{data.description}</p>
           <ContactShelter className="mx-auto" />

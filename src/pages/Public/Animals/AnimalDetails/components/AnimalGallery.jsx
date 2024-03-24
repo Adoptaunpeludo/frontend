@@ -1,5 +1,5 @@
 import { Image } from '@nextui-org/react';
-import { BUCKET_URL } from '../config/config';
+import { BUCKET_URL } from '../../../../../config/config';
 
 export const AnimalGallery = ({ animalImages, onSetImages }) => {
   const handleImageChange = (image, index) => {

@@ -12,7 +12,6 @@ export { H2Title } from './H2Title';
 export { H3Title } from './H3Title';
 export { H4Title } from './H4Title';
 export { Hero } from './Hero';
-export { ImageGallery } from './ImageGallery';
 export { LogoHeader } from './LogoHeader';
 export { PagePagination } from './Pagination';
 export { Panel } from './Panel';

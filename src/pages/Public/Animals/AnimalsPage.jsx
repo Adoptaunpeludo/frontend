@@ -24,12 +24,12 @@ export const loader =
 
 const AnimalsPage = ({ page }) => {
   const { user } = useOutletContext();
-  const { params } = useLoaderData();
+  const { params, filters } = useLoaderData();
   const navigation = useNavigation();
 
   const { shelterName } = params;
 
-  const { data: animals } = useAnimals(page, params);
+  const { data: animals } = useAnimals(page, filters, params);
 
   const isLoading = navigation.state === 'loading';
 
