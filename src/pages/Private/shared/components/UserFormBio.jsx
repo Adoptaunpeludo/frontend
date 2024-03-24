@@ -32,8 +32,11 @@ export const UserFormBio = ({ data }) => {
     const { name, value } = event.target;
     setCredentials({ ...credentials, [name]: value });
     setErrors({ ...errors, [name]: validateField(name, value) });
-    console.log(errors);
-    console.log(isFormValid);
+  };
+
+  const handleClose = () => {
+    setErrors({});
+    onClose();
   };
 
   const isFormValid = Object.values(errors).every((error) => error === '');
@@ -163,7 +166,7 @@ export const UserFormBio = ({ data }) => {
                   size="sm"
                   startContent={<IconCircleX />}
                   className="px-10 font-poppins font-semibold text-sm"
-                  onPress={onClose}
+                  onPress={() => handleClose()}
                 >
                   Cancelar
                 </Button>
