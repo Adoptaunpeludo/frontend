@@ -1,9 +1,9 @@
-import { Button, Checkbox, Input, Radio, RadioGroup } from '@nextui-org/react';
+import { Button, Input, Radio, RadioGroup } from '@nextui-org/react';
 import { IconLogin2 as LoginIcon } from '@tabler/icons-react';
 import { useState } from 'react';
 import { Form, Link, redirect } from 'react-router-dom';
 import { toast } from 'react-toastify';
-import { Hero, LogoHeader, Panel } from '../../../components';
+import { H2Title, Hero, LogoHeader, Panel } from '../../../components';
 import { handleAuthError } from '../../../utils/handleError';
 import { validateField } from '../../../utils/validateField';
 import { register, verifyEmail } from '../authService';
@@ -40,7 +40,7 @@ export const action = async (data) => {
 const RegisterPage = () => {
   const [credentials, setCredentials] = useState({});
   const [errors, setErrors] = useState({
-    role: 'Selecciona tipo de perfil',
+    role: '',
   });
 
   const handleChange = (event) => {
@@ -66,109 +66,128 @@ const RegisterPage = () => {
     <main className="bg-default-100 flex-grow">
       <Hero />
       <section
-        id="login"
+        id="register"
         className="max-w-screen-xl w-full flex flex-col gap-3 h-full justify-center py-12 mx-auto "
       >
         <LogoHeader />
-        <Panel>
+        <Panel className={'max-w-2xl mx-auto'}>
           <Form
             method="post"
-            className="flex flex-col gap-6 max-w-4xl mx-auto px-10 py-8"
+            className="flex flex-col gap-6  mx-auto px-10 py-8 justify-center"
           >
-            <div>Regístrate</div>
-            <div id="profile">
-              {/* TODO: useRadio hook to custom all inputs with the same styles  */}
-              <RadioGroup
-                name="role"
-                label="Perfil"
-                orientation="horizontal"
-                errorMessage={errors.role}
-                onChange={handleChange}
+            <H2Title title={'Regístrate'} className={'mx-auto'} />
+
+            <RadioGroup
+              name="role"
+              label="Perfil"
+              orientation="horizontal"
+              errorMessage={errors.role}
+              onChange={handleChange}
+              className="mx-auto"
+              classNames={{
+                label: 'mx-auto',
+              }}
+              isRequired
+            >
+              <Radio
+                value="shelter"
+                classNames={{
+                  wrapper: ' border-secondary ',
+                }}
               >
-                <Radio value="shelter">Protectora</Radio>
-                <Radio value="adopter">Adoptante</Radio>
-              </RadioGroup>
-            </div>
+                Protectora
+              </Radio>
+              <Radio
+                value="adopter"
+                classNames={{
+                  wrapper: ' border-secondary ',
+                }}
+              >
+                Adoptante
+              </Radio>
+            </RadioGroup>
 
             <div className="flex flex-col w-full gap-4">
-              {/* TODO: useInput hook to custom all inputs with the same styles  */}
               <div className="flex w-full flex-wrap md:flex-nowrap gap-4">
                 <Input
                   name="username"
                   className="min-w-72 "
+                  classNames={{ inputWrapper: 'border-1 border-primary' }}
                   type="text"
-                  label="Nombre de la protectora / adoptante" //TODO: toggle by profile
+                  label={`Nombre ${
+                    credentials.role === undefined
+                      ? ' '
+                      : credentials.role === 'shelter'
+                        ? 'de protectora'
+                        : 'de adoptante'
+                  }`}
                   placeholder="Introduce un nombre"
                   color={errors.username ? 'danger' : 'none'}
                   errorMessage={errors.username}
                   onBlur={handleChange}
-                ></Input>
+                  isRequired
+                />
 
                 <Input
                   name="email"
                   className="min-w-72 "
+                  classNames={{ inputWrapper: 'border-1 border-primary' }}
                   type="email"
                   label="Email"
                   placeholder="Introduce tu email"
                   color={errors.email ? 'danger' : 'none'}
                   errorMessage={errors.email}
                   onBlur={handleChange}
-                ></Input>
+                  isRequired
+                />
               </div>
               <div className="flex w-full flex-wrap md:flex-nowrap gap-4">
                 <Input
                   name="password"
                   className="min-w-72 "
+                  classNames={{ inputWrapper: 'border-1 border-primary' }}
                   type="password"
                   label="Password"
                   placeholder="Introduce tu password"
                   color={errors.password ? 'danger' : 'none'}
                   errorMessage={errors.password}
                   onChange={handleChange}
-                ></Input>
+                  isRequired
+                />
 
                 <Input
                   name="repeatPassword"
                   className="min-w-72 "
+                  classNames={{ inputWrapper: 'border-1 border-primary' }}
                   type="password"
-                  label="confirm password"
+                  label="confirmar password"
                   placeholder="Introduce tu password"
                   color={errors.repeatPassword ? 'danger' : 'none'}
                   errorMessage={errors.repeatPassword}
                   onChange={handleChange}
-                ></Input>
+                  isRequired
+                />
               </div>
             </div>
 
-            <div className="flex flex-col justify-start">
-              {/* TODO: useCheck hook to custom all inputs with the same styles  */}
-              <Checkbox checked={false} radius="full">
-                Acepto recibir otras comunicaciones de Adopta un peludo
-              </Checkbox>
-              <Checkbox checked={false} radius="full">
-                Autorizo a Adopta un peludo a almacenar y procesar mis datos
-                personales
-              </Checkbox>
-            </div>
             <div className="flex justify-center">
               <Button
                 isDisabled={enableButton}
                 type="submit"
                 color="primary"
-                href="#"
                 variant="solid"
                 size="lg"
                 endContent={<LoginIcon />}
-                className="px-10"
+                className="px-10 font-poppins"
               >
                 Regístrate
               </Button>
             </div>
-            <div className="flex justify-center gap-2">
-              <div>¿Ya tienes una cuenta?</div>
-              <div>
-                <Link to="/login">Inicia sesión</Link>
-              </div>
+            <div className="flex justify-center gap-1 font-medium font-poppins">
+              <span>¿Ya tienes una cuenta?</span>
+              <Link to="/login" className="text-tertiary">
+                Inicia sesión
+              </Link>
             </div>
           </Form>
         </Panel>

@@ -78,14 +78,15 @@ const LoginPage = () => {
             <div className="flex flex-col gap-3">
               <Input
                 type="email"
-                label="email"
+                label="Email"
                 name="email"
                 placeholder="Introduce tu email"
                 color={errors.email ? 'danger' : 'none'}
                 onBlur={handleChange}
                 errorMessage={errors.email}
-                required
-              ></Input>
+                isRequired
+                classNames={{ inputWrapper: 'border-1 border-primary' }}
+              />
               <Input
                 type="password"
                 name="password"
@@ -94,11 +95,12 @@ const LoginPage = () => {
                 color={errors.password ? 'danger' : 'none'}
                 errorMessage={errors.password}
                 onChange={handleChange}
-                required
-              ></Input>
+                isRequired
+                classNames={{ inputWrapper: 'border-1 border-primary' }}
+              />
             </div>
             <div className="flex justify-end">
-              <Link to="#" className="text-tertiary">
+              <Link to="#" className="text-tertiary font-poppins">
                 ¿Olvidaste tu password?
               </Link>
             </div>
@@ -115,13 +117,12 @@ const LoginPage = () => {
                 Iniciar sesión
               </Button>
             </div>
-            <div className="flex justify-center gap-1 font-medium">
-              <div>¿Necesitas crear una cuenta?</div>
-              <div>
-                <Link to="/register" className="text-tertiary">
-                  Regístrate
-                </Link>
-              </div>
+            <div className="flex justify-center gap-1 font-medium font-poppins">
+              <span>¿Necesitas crear una cuenta?</span>
+              <Link to="/register" className="text-tertiary">
+                Regístrate
+              </Link>
+              <div></div>
             </div>
           </Form>
         </Panel>
