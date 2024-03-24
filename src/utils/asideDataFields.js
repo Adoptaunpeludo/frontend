@@ -10,7 +10,7 @@ import {
   potentialEnum,
 } from './enumData';
 
-const isNullDataField = (field, dataEnum) => {
+export const isNullDataField = (field, dataEnum) => {
   if (field !== null && field !== '')
     return dataEnum.filter((item) => item.value === field)[0].label;
   return '';
