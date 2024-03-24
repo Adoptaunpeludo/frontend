@@ -25,7 +25,7 @@ const WebSocketContextProvider = ({ children, user }) => {
         }, 58000);
 
         if (socket.readyState !== 0)
-          socket.send(JSON.stringify({ token: user.wsToken }));
+          socket.send(JSON.stringify({ token: user?.wsToken }));
 
         socket.onmessage = (event) => {
           const message = JSON.parse(event.data);
@@ -43,24 +43,16 @@ const WebSocketContextProvider = ({ children, user }) => {
           if (message.type === 'user-connected') {
             const { username } = message;
             queryClient.invalidateQueries([
-              {
-                queryKey: ['shelters'],
-              },
-              {
-                queryKey: ['shelters-details', username],
-              },
+              'shelters',
+              ['shelters-details', username],
             ]);
           }
 
           if (message.type === 'user-disconnected') {
             const { username } = message;
             queryClient.invalidateQueries([
-              {
-                queryKey: ['shelters'],
-              },
-              {
-                queryKey: ['shelters-details', username],
-              },
+              'shelters',
+              ['shelters-details', username],
             ]);
           }
         };

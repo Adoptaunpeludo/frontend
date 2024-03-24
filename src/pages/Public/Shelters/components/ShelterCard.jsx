@@ -14,8 +14,13 @@ import { UilMapMarker, UilPlay } from '@iconscout/react-unicons';
 import { IconHome } from '@tabler/icons-react';
 import { UnderlineVector } from '../../../../assets/svg';
 import { BUCKET_URL, FALLBACK_IMAGE_CARD } from '../../../../config/config';
+import { useOutletContext } from 'react-router-dom';
 
 export const ShelterCard = ({ shelter, isLogged }) => {
+  const { user } = useOutletContext();
+
+  const isOnline = user.username === shelter.username ? true : shelter.isOnline;
+
   return (
     <Card className="max-w-72">
       {/* Header */}
@@ -36,7 +41,7 @@ export const ShelterCard = ({ shelter, isLogged }) => {
           <Avatar
             isBordered
             color={`${
-              isLogged ? (shelter.isOnline ? 'success' : 'danger') : 'default'
+              isLogged ? (isOnline ? 'success' : 'danger') : 'default'
             }`}
             className="w-24 h-24 bg-white"
             src={`${BUCKET_URL}/${shelter.images[0]}`}
