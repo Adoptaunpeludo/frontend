@@ -1,10 +1,10 @@
 import {
-  Avatar,
   Button,
   Card,
   CardBody,
   CardFooter,
   CardHeader,
+  Divider,
   Image,
   Link,
 } from '@nextui-org/react';
@@ -17,96 +17,81 @@ import {
   UilVenus,
 } from '@iconscout/react-unicons';
 
-import { IconHome } from '@tabler/icons-react';
+import { MinimalLogo } from '../../../../assets/logos';
 import { HeartIcon, PetSize, UnderlineVector } from '../../../../assets/svg';
 import { BUCKET_URL, FALLBACK_IMAGE_CARD } from '../../../../config/config';
-import { isNullDataField } from '../../../../utils/asideDataFields';
-import { animalSizeEnum, genderEnum } from '../../../../utils/enumData';
 
-export const PetCard = ({ animal, user, isLogged }) => {
-  console.log(animal.description);
+export const PetCard = ({ animal, user }) => {
   return (
     <Card className="max-w-72">
       {/* Header */}
       <CardHeader className="relative p-0 overflow-hidden">
-        {/* principal image*/}
         <Image
           src={`${BUCKET_URL}/${animal.images[0]}`}
           alt={animal.name}
-          className="w-80 object-cover h-52 aspect-square"
+          className="w-80 h-full object-cover min-h-[320px]"
           fallbackSrc={`${FALLBACK_IMAGE_CARD}`}
         />
 
+        {/* Etiqueta absolutamente posicionada para 'gato' */}
         <div className="absolute z-10 bottom-0 left-0 right-0 w-full">
           <UnderlineVector />
         </div>
-        {/* Avatar */}
-        <div className="absolute z-20 bottom-2 left-1/2 -translate-x-10 w-full back">
-          <Avatar
-            isBordered
-            color={`${
-              isLogged
-                ? animal.shelter.isOnline
-                  ? 'success'
-                  : 'danger'
-                : 'default'
-            }`}
-            className="w-24 h-24 bg-white"
-            src={`${BUCKET_URL}/${animal.shelter.avatar}`}
-            showFallback
-            fallback={<IconHome className="w-10 h-10 stroke-gray-600" />}
-          />
+
+        <div className="absolute z-10 bottom-0 left-1/2 -translate-x-10 w-full back">
+          <MinimalLogo />
         </div>
       </CardHeader>
 
       {/* Body */}
 
-      <CardBody className="flex flex-column overflow-visible py-2 gap-y-2">
+      <CardBody className="flex flex-column overflow-visible py-2 content-between">
         <h3 className="flex w-full font-lobster justify-center items-center text-4xl capitalize">
           {animal.name}
         </h3>
-        {/* description */}
-        <p className="my-3 flex-1 text-ellipsis overflow-hidden max-h-16">
-          {animal.description !== '' && animal.description !== undefined
-            ? animal.description
-            : `Peludo ${animal.name}`}
+        <p className="my-3 flex-1">
+          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque
+          imperdiet nulla ipsum. Cras et suscipit ligula. Nunc molestie ultrices
+          eros, eu vulputate enim hendrerit a.
         </p>
+        {/* Icons */}
+        <div className="flex flex-row justify-center gap-3">
+          {/* Size */}
+          <div className="flex flex-row justify-center items-center">
+            <PetSize></PetSize>
+            <span className="m-1">{animal.size}</span>
+          </div>
 
-        <section id="icons-line1" className="flex justify-between   ">
-          <article className="flex justify-start gap-1 items-center">
-            {/* Size */}
-            <PetSize />
-            <span>{isNullDataField(animal.size, animalSizeEnum)}</span>
-          </article>
-          <article className="flex justify-start gap-1 items-center">
+          <div>
             {/* Gender */}
             {animal.gender === 'male' ? (
-              <>
-                <UilMars className="fill-tertiary" />
-                <span>{isNullDataField(animal.gender, genderEnum)}</span>
-              </>
+              <div className="flex flex-row justify-center items-center">
+                <UilMars color="#3E73C7" />
+                <span>{animal.gender}</span>
+              </div>
             ) : (
-              <>
-                <UilVenus className="fill-tertiary" />
-                <span>{isNullDataField(animal.gender, genderEnum)}</span>
-              </>
+              <div className="flex flex-row justify-center items-center">
+                <UilVenus color="#3E73C7" />
+                <span>{animal.gender}</span>
+              </div>
             )}
-          </article>
-          <article className="flex justify-start items-center gap-1">
-            <UilSchedule className="fill-tertiary" />
-            <span>{`${animal.age} años`}</span>
-          </article>
-        </section>
-        <section id="icons-line2" className="flex justify-start ">
-          <article className="flex justify-start gap-1 items-center">
-            <UilMapMarker className="fill-tertiary" />
+          </div>
+          <div className="flex flex-row justify-center items-center">
+            <UilMapMarker color="#3E73C7" />
             <span>{animal.city}</span>
-          </article>
-        </section>
+          </div>
+          {/* Age */}
+          <div className="flex flex-row justify-center items-center">
+            <UilSchedule color="#3E73C7" />
+            <span>{animal.age}</span>
+          </div>
+        </div>
       </CardBody>
 
+      <Divider />
+
       {/* Footer */}
-      <CardFooter className=" px-5 flex w-full flex-row justify-between items-center border-t-1 border-primary">
+      <CardFooter className=" px-5 flex w-full flex-row justify-between items-center">
         <HeartIcon
           numFavs={animal.numFavs}
           id={animal.id}
@@ -118,9 +103,8 @@ export const PetCard = ({ animal, user, isLogged }) => {
           href={`/animals/${animal.type}s/${animal.slug}`}
           as={Link}
           color="primary"
-          className=" px-5 font-medium font-poppins capitalize"
         >
-          ver
+          <span className=" z-10 black font-bold">Ver</span>
           <UilPlay />
         </Button>
       </CardFooter>
