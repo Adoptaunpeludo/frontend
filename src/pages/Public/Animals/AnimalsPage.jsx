@@ -17,7 +17,6 @@ export const loader =
       await queryClient.ensureQueryData(animalsQuery(page, filters, params));
       return { filters, params };
     } catch (error) {
-      console.log({ error });
       throw error;
     }
   };
@@ -48,7 +47,7 @@ const AnimalsPage = ({ page }) => {
         </header>
         <section className="flex flex-col flex-auto">
           <ul className="flex justify-center gap-4 flex-wrap p-6">
-            {animals.animals.map((animal) => (
+            {animals?.animals.map((animal) => (
               <Skeleton isLoaded={!isLoading} key={animal.id}>
                 <PetCard key={animal.id} animal={animal} isLogged={isLogged} />
               </Skeleton>
