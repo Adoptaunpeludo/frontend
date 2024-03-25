@@ -23,6 +23,7 @@ export const UserAreaMenu = () => {
   const { data: notifications } = useNotifications();
   const navigate = useNavigate();
   const queryClient = useQueryClient();
+
   const handleLogout = async () => {
     try {
       await logout();
@@ -49,8 +50,6 @@ export const UserAreaMenu = () => {
     }
   };
 
-  const { avatar, firstName, lastName, username, email, role } = user;
-
   const userNotifications = notifications?.notifications;
 
   return (
@@ -63,12 +62,12 @@ export const UserAreaMenu = () => {
       >
         <DropdownTrigger>
           <User
-            name={username}
-            description={`${firstName === null ? 'J.' : firstName} ${
-              lastName === null ? 'Doe' : lastName
-            }`}
+            name={user?.username}
+            description={`${
+              user?.firstName === null ? 'J.' : user?.firstName
+            } ${user?.lastName === null ? 'Doe' : user?.lastName}`}
             avatarProps={{
-              src: `${BUCKET_URL}/${avatar}`,
+              src: `${BUCKET_URL}/${user?.avatar}`,
               isBordered: true,
               // color: isOnline ? 'success' : 'danger',
               as: 'button',
@@ -85,11 +84,11 @@ export const UserAreaMenu = () => {
           textValue="user email"
         >
           <p className="font-semibold capitalize">has iniciado sesión como</p>
-          <p className="font-semibold">{email}</p>
+          <p className="font-semibold">{user?.email}</p>
         </DropdownItem>
         <DropdownItem key="profile" textValue="user profile">
           <Link
-            href={`/private/${role}`}
+            href={`/private/${user?.role}`}
             color="foreground"
             className="capitalize w-full"
           >
@@ -98,7 +97,7 @@ export const UserAreaMenu = () => {
         </DropdownItem>
         <DropdownItem key="notifications" textValue="user notifications">
           <Link
-            href={`/private/${role}`}
+            href={`/private/${user?.role}`}
             color="foreground"
             className="capitalize w-full"
           >
@@ -107,7 +106,7 @@ export const UserAreaMenu = () => {
         </DropdownItem>
         <DropdownItem key="chats" textValue="user chats">
           <Link
-            href={`/private/${role}`}
+            href={`/private/${user?.role}`}
             color="foreground"
             className="capitalize w-full"
           >

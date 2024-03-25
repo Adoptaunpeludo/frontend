@@ -15,6 +15,7 @@ export const loader =
       await queryClient.ensureQueryData(sheltersQuery(params));
       return { params };
     } catch (error) {
+      console.log(error);
       throw error;
     }
   };
