@@ -8,7 +8,6 @@ import {
   NavbarMenu,
   NavbarMenuItem,
   NavbarMenuToggle,
-  Spinner,
 } from '@nextui-org/react';
 
 import { IconLogin2 as LoginIcon } from '@tabler/icons-react';
@@ -19,7 +18,7 @@ import { useUser } from '../Private/useUser.js';
 
 const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const { data: user, isFetching } = useUser();
+  const { data: user } = useUser();
 
   const handleMenuOpenChange = (open) => {
     setIsMenuOpen(open);
@@ -76,28 +75,24 @@ const Header = () => {
         ))}
       </NavbarContent>
       <NavbarContent justify="end">
-        {isFetching ? (
-          <Spinner />
-        ) : (
-          <NavbarItem>
-            {!user ? (
-              <Button
-                as={Link}
-                color="primary"
-                href="/login"
-                variant="solid"
-                size="sm"
-                endContent={<LoginIcon />}
-              >
-                Login
-              </Button>
-            ) : (
-              <div className="flex gap-2">
-                <UserAreaMenu />
-              </div>
-            )}
-          </NavbarItem>
-        )}
+        <NavbarItem>
+          {!user ? (
+            <Button
+              as={Link}
+              color="primary"
+              href="/login"
+              variant="solid"
+              size="sm"
+              endContent={<LoginIcon />}
+            >
+              Login
+            </Button>
+          ) : (
+            <div className="flex gap-2">
+              <UserAreaMenu />
+            </div>
+          )}
+        </NavbarItem>
       </NavbarContent>
       <NavbarMenu>
         {menuItems.map((item, index) => (
