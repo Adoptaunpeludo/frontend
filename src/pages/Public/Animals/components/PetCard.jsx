@@ -46,7 +46,7 @@ export const PetCard = ({ animal, isLogged }) => {
           <UnderlineVector />
         </div>
         {/* Avatar */}
-        <div className="absolute z-30 bottom-6 left-56  w-full back">
+        <div className="absolute z-30 bottom-6 left-56  w-full ">
           <Avatar
             isBordered
             color={`${
