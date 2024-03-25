@@ -14,9 +14,15 @@ import { BUCKET_URL } from '../config/config.js';
 import { logout } from '../pages/Auth/authService.js';
 import { useWebSocketContext } from '../context/WebSocketContext.jsx';
 import { toast } from 'react-toastify';
+import { useNotifications } from '../pages/Private/useNotifications.js';
+import { useUser } from '../pages/Private/useUser.js';
 
-export const UserAreaMenu = ({ user, notifications }) => {
+export const UserAreaMenu = () => {
   const { socket } = useWebSocketContext();
+  const { data: user } = useUser();
+  const {
+    data: { notifications },
+  } = useNotifications();
   const navigate = useNavigate();
   const queryClient = useQueryClient();
   const handleLogout = async () => {
@@ -46,6 +52,8 @@ export const UserAreaMenu = ({ user, notifications }) => {
   };
 
   const { avatar, firstName, lastName, username, email, role } = user;
+
+  console.log({ notifications });
 
   return (
     <Dropdown placement="bottom-end">

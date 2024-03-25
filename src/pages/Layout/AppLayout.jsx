@@ -40,12 +40,14 @@ const AppLayout = () => {
     sessionStorage.setItem('isLoggedIn', user ? true : false);
   }, [user]);
 
+  console.log({ notifications });
+
   return (
     <>
       <NextUIProvider navigate={navigate}>
         <div className="min-h-screen flex flex-col">
           <WebSocketContextProvider user={user}>
-            <Header user={user} notifications={notifications?.notifications} />
+            <Header />
             <Outlet context={{ user, notifications }} />
             <Footer />
           </WebSocketContextProvider>

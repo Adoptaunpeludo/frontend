@@ -15,11 +15,11 @@ import { IconLogin2 as LoginIcon } from '@tabler/icons-react';
 import { useState } from 'react';
 import BrandNavLogo from '../../assets/logos/BrandNavLogo.jsx';
 import { UserAreaMenu } from '../../components/UserAreaMenu.jsx';
-import { useNotifications } from '../Private/useNotifications.js';
+import { useUser } from '../Private/useUser.js';
 
-const Header = ({ user, notifications }) => {
+const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const { isFetching } = useNotifications();
+  const { data: user, isFetching } = useUser();
 
   const handleMenuOpenChange = (open) => {
     setIsMenuOpen(open);
@@ -93,7 +93,7 @@ const Header = ({ user, notifications }) => {
               </Button>
             ) : (
               <div className="flex gap-2">
-                <UserAreaMenu user={user} notifications={notifications} />
+                <UserAreaMenu />
               </div>
             )}
           </NavbarItem>
