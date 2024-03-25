@@ -45,7 +45,9 @@ export const PetCard = ({ animal, user }) => {
 
       {/* Body */}
 
-      <CardBody className="flex flex-column overflow-visible py-2 content-between">
+
+      <CardBody className="flex flex-column overflow-visible py-2 gap-y-2  h-48">
+
         <h3 className="flex w-full font-lobster justify-center items-center text-4xl capitalize">
           {animal.name}
         </h3>
