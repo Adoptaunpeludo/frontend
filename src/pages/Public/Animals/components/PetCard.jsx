@@ -61,7 +61,7 @@ export const PetCard = ({ animal, user, isLogged }) => {
 
       {/* Body */}
 
-      <CardBody className="flex flex-column overflow-visible py-2 gap-y-2">
+      <CardBody className="flex flex-column overflow-visible py-2 gap-y-2  h-48">
         <h3 className="flex w-full font-lobster justify-center items-center text-4xl capitalize">
           {animal.name}
         </h3>
