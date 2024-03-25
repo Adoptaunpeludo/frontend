@@ -13,9 +13,14 @@ import { WebSocketContextProvider } from '../../context/WebSocketContext';
 import { useEffect } from 'react';
 
 export const loader = (queryClient) => async () => {
-  const isLoggedIn = sessionStorage.getItem('isLoggedIn');
+  let isLoggedIn = sessionStorage.getItem('isLoggedIn');
+  isLoggedIn = isLoggedIn === null ? null : isLoggedIn === 'true';
 
-  if (isLoggedIn === null || !!isLoggedIn)
+  console.log({ isLoggedIn });
+
+  if (isLoggedIn === false) return { user: null, notifications: null };
+
+  if (isLoggedIn === null || isLoggedIn)
     try {
       const [user, notifications] = await Promise.all([
         await queryClient.ensureQueryData(userQuery),
@@ -32,7 +37,7 @@ const AppLayout = () => {
   const { user, notifications } = useLoaderData();
 
   useEffect(() => {
-    sessionStorage.setItem('isLoggedIn', !!user);
+    sessionStorage.setItem('isLoggedIn', user ? true : false);
   }, [user]);
 
   return (

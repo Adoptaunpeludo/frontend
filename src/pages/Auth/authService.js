@@ -25,7 +25,7 @@ export const verifyEmail = async (token) => {
     const response = await postData(`/auth/verify-email/${token}`);
     return response;
   } catch (error) {
-    return error
+    return error;
   }
 };
 
@@ -37,16 +37,11 @@ export const logout = async () => {
   }
 };
 
-// export const fetchAuthStatus = async () => {
-//   try {
-//     const response = await fetchData('users/me');
-//     console.log({ response });
-//     if (response.status === 200) {
-//       console.log(response.data.message);
-//       return { success: true, data: response.data };
-//     }
-//   } catch (error) {
-//     console.log(error.response.data.message);
-//     return { success: true };
-//   }
-// };
+export const resendValidationEmail = async (email) => {
+  try {
+    const response = await postData(`/auth/resend-validation-email/${email}`);
+    return response;
+  } catch (error) {
+    return error;
+  }
+};

@@ -13,18 +13,14 @@ import { useNavigate } from 'react-router-dom';
 import { BUCKET_URL } from '../config/config.js';
 import { logout } from '../pages/Auth/authService.js';
 import { useWebSocketContext } from '../context/WebSocketContext.jsx';
-import { useAuthContext } from '../context/AuthContext.jsx';
 import { toast } from 'react-toastify';
 
 export const UserAreaMenu = ({ user, notifications }) => {
-  const { setIsLoadingUser } = useAuthContext();
   const { socket } = useWebSocketContext();
   const navigate = useNavigate();
   const queryClient = useQueryClient();
-
   const handleLogout = async () => {
     try {
-      setIsLoadingUser(true);
       await logout();
       socket.close();
       sessionStorage.setItem('isLoggedIn', false);
@@ -42,10 +38,8 @@ export const UserAreaMenu = ({ user, notifications }) => {
           queryKey: ['user-animals'],
         },
       ]);
-      setIsLoadingUser(false);
       navigate('/');
     } catch (error) {
-      setIsLoadingUser(false);
       toast.error('Error haciendo logout');
       throw error;
     }

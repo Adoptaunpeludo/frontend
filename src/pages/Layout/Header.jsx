@@ -16,10 +16,12 @@ import { useState } from 'react';
 import BrandNavLogo from '../../assets/logos/BrandNavLogo.jsx';
 import { UserAreaMenu } from '../../components/UserAreaMenu.jsx';
 import { useNotifications } from '../Private/useNotifications.js';
+import { useUser } from '../Private/useUser.js';
 
 const Header = ({ user, notifications }) => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const { isLoading } = useNotifications();
+  const { isFetching: isFetchingNotifications } = useNotifications();
+  const { isFetching: isFetchingUser } = useUser();
 
   const handleMenuOpenChange = (open) => {
     setIsMenuOpen(open);
@@ -76,7 +78,7 @@ const Header = ({ user, notifications }) => {
         ))}
       </NavbarContent>
       <NavbarContent justify="end">
-        {isLoading ? (
+        {isFetchingNotifications || isFetchingUser ? (
           <Spinner />
         ) : (
           <NavbarItem>

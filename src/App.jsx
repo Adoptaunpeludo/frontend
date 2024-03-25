@@ -28,6 +28,7 @@ import { action as registerAction } from './pages/Auth/Register/RegisterPage.jsx
 import { action as shelterProfileAction } from './pages/Private/Shelters/ShelterProfile/ShelterProfile.jsx';
 import { action as adopterProfileAction } from './pages/Private/Adopters/AdopterProfile/AdopterProfile.jsx';
 import { action as mutateAnimalAction } from './pages/Private/Shelters/AnimalForm/AnimalForm.jsx';
+import { action as verifyEmailAction } from './pages/Auth/VerifyEmail/VerifyEmailPage.jsx';
 
 import { loader as updateAnimalLoader } from './pages/Private/Shelters/AnimalForm/AnimalForm.jsx';
 import { loader as animalDetailsLoader } from './pages/Public/Animals/AnimalDetails/AnimalDetailsPage.jsx';
@@ -44,7 +45,6 @@ import { useAnimalImagesContext } from './context/AnimalImagesContext.jsx';
 import NotFoundPage from './pages/Error/NotFound/NotFoundPage.jsx';
 import ProtectedRoute from './pages/Private/ProtectedRoute.jsx';
 import { useModalContext } from './context/ModalContext.jsx';
-import { useAuthContext } from './context/AuthContext.jsx';
 
 export const queryClient = new QueryClient({
   defaultOptions: {
@@ -54,12 +54,7 @@ export const queryClient = new QueryClient({
   },
 });
 
-const router = (
-  bioModalOnClose,
-  shelterModalOnClose,
-  animalImages,
-  setIsLoadingUser
-) =>
+const router = (bioModalOnClose, shelterModalOnClose, animalImages) =>
   createBrowserRouter([
     {
       path: '/',
@@ -76,12 +71,13 @@ const router = (
         {
           path: 'login',
           element: <LoginPage />,
-          action: loginAction(queryClient, setIsLoadingUser),
+          action: loginAction(queryClient),
         },
         {
           path: '/verify-email/:token',
           element: <VerifyEmail />,
           loader: verifyEmailLoader,
+          action: verifyEmailAction,
         },
         //* End Auth Routes
         //* Public Routes
@@ -131,6 +127,7 @@ const router = (
         {
           path: 'private',
           element: <ProtectedRoute />,
+          errorElement: <ErrorPage />,
           children: [
             {
               path: 'adopter',
@@ -178,19 +175,13 @@ const router = (
 function App() {
   const { images: animalImages } = useAnimalImagesContext();
   const { bioModal, shelterModal } = useModalContext();
-  const { setIsLoadingUser } = useAuthContext();
 
   return (
     <QueryClientProvider client={queryClient}>
       <ReactQueryDevtools initialIsOpen={false} />
 
       <RouterProvider
-        router={router(
-          bioModal.onClose,
-          shelterModal.onClose,
-          animalImages,
-          setIsLoadingUser
-        )}
+        router={router(bioModal.onClose, shelterModal.onClose, animalImages)}
       />
     </QueryClientProvider>
   );
