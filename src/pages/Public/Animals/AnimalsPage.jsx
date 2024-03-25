@@ -17,6 +17,7 @@ export const loader =
       await queryClient.ensureQueryData(animalsQuery(page, filters, params));
       return { filters, params };
     } catch (error) {
+      console.log(error);
       throw error;
     }
   };
