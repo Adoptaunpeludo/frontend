@@ -65,7 +65,6 @@ export const action =
 
 const AdopterProfile = () => {
   const { data, isFetching } = useUser();
-
   const { username } = data;
 
   return (

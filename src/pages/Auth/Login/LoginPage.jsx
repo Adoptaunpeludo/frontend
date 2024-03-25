@@ -27,6 +27,7 @@ export const action =
     } catch (error) {
       const message = handleAuthError(error);
       toast.error(message);
+
       return redirect('/login');
     }
   };

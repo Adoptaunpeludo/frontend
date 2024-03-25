@@ -15,13 +15,13 @@ import { IconLogin2 as LoginIcon } from '@tabler/icons-react';
 import { useState } from 'react';
 import BrandNavLogo from '../../assets/logos/BrandNavLogo.jsx';
 import { UserAreaMenu } from '../../components/UserAreaMenu.jsx';
+import { useNotifications } from '../Private/useNotifications.js';
 import { useUser } from '../Private/useUser.js';
-import { useAuthContext } from '../../context/AuthContext.jsx';
 
-const Header = () => {
+const Header = ({ user, notifications }) => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const { isLoggedIn } = useAuthContext();
-  const { isLoading } = useUser();
+  const { isFetching: isFetchingNotifications } = useNotifications();
+  const { isFetching: isFetchingUser } = useUser();
 
   const handleMenuOpenChange = (open) => {
     setIsMenuOpen(open);
@@ -78,11 +78,11 @@ const Header = () => {
         ))}
       </NavbarContent>
       <NavbarContent justify="end">
-        {isLoading ? (
+        {isFetchingNotifications || isFetchingUser ? (
           <Spinner />
         ) : (
           <NavbarItem>
-            {!isLoggedIn ? (
+            {!user ? (
               <Button
                 as={Link}
                 color="primary"
@@ -95,7 +95,7 @@ const Header = () => {
               </Button>
             ) : (
               <div className="flex gap-2">
-                <UserAreaMenu />
+                <UserAreaMenu user={user} notifications={notifications} />
               </div>
             )}
           </NavbarItem>

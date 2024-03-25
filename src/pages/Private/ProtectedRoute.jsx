@@ -1,20 +1,9 @@
-import { Outlet } from 'react-router-dom';
-import { userQuery } from './useUser';
-
-export const loader = (queryClient, isLoggedIn) => async () => {
-  if (!isLoggedIn) return null;
-  try {
-    const data = await queryClient.ensureQueryData(userQuery);
-
-    return data;
-  } catch (error) {
-    console.log(error);
-    throw error;
-  }
-};
+import { Navigate, Outlet, useOutletContext } from 'react-router-dom';
 
 const ProtectedRoute = () => {
-  return <Outlet />;
+  const { user } = useOutletContext();
+
+  return user ? <Outlet /> : <Navigate to={'/login'} />;
 };
 
 export default ProtectedRoute;

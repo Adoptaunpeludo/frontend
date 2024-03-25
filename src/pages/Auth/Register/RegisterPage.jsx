@@ -6,7 +6,7 @@ import { toast } from 'react-toastify';
 import { H2Title, Hero, LogoHeader, Panel } from '../../../components';
 import { handleAuthError } from '../../../utils/handleError';
 import { validateField } from '../../../utils/validateField';
-import { register, verifyEmail } from '../authService';
+import { register } from '../authService';
 
 export const action = async (data) => {
   const { request } = data;
@@ -24,8 +24,7 @@ export const action = async (data) => {
     registerData.username = registerData.username.toLowerCase();
     registerData.email = registerData.email.toLowerCase();
 
-    const data = await register(registerData);
-    await verifyEmail(data.token);
+    await register(registerData);
 
     toast.success('Usuario creado');
 
@@ -118,8 +117,8 @@ const RegisterPage = () => {
                     credentials.role === undefined
                       ? ' '
                       : credentials.role === 'shelter'
-                        ? 'de protectora'
-                        : 'de adoptante'
+                      ? 'de protectora'
+                      : 'de adoptante'
                   }`}
                   placeholder="Introduce un nombre"
                   color={errors.username ? 'danger' : 'none'}

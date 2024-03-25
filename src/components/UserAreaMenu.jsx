@@ -12,73 +12,45 @@ import { useQueryClient } from '@tanstack/react-query';
 import { useNavigate } from 'react-router-dom';
 import { BUCKET_URL } from '../config/config.js';
 import { logout } from '../pages/Auth/authService.js';
-
-import { useAuthContext } from '../context/AuthContext.jsx';
-import {
-  useNotifications,
-  userNotificationsQuery,
-} from '../pages/Private/useNotifications.js';
 import { useWebSocketContext } from '../context/WebSocketContext.jsx';
+import { toast } from 'react-toastify';
 
-import { useEffect, useState } from 'react';
-import { useUser, userQuery } from '../pages/Private/useUser.js';
-
-export const loader = (queryClient, isLoggedIn) => async () => {
-  if (!isLoggedIn) return null;
-  try {
-    const notifications = await queryClient.ensureQueryData(
-      userNotificationsQuery
-    );
-    const user = await queryClient.ensureQueryData(userQuery);
-    return { notifications, user };
-  } catch (error) {
-    console.log(error);
-    return error;
-  }
-};
-
-export const UserAreaMenu = () => {
-  const { data: user } = useUser();
-  const { data, isLoading } = useNotifications();
-  const [notifications, setNotifications] = useState([]);
-  const { setIsLoggedIn } = useAuthContext();
+export const UserAreaMenu = ({ user, notifications }) => {
   const { socket } = useWebSocketContext();
   const navigate = useNavigate();
   const queryClient = useQueryClient();
-
   const handleLogout = async () => {
-    await logout();
-    socket.close();
-    setIsLoggedIn(false);
-    sessionStorage.setItem('isLoggedIn', false);
-    queryClient.invalidateQueries([
-      {
-        queryKey: ['user'],
-      },
-      {
-        queryKey: ['user-notifications'],
-      },
-      {
-        queryKey: ['user-favs'],
-      },
-      {
-        queryKey: ['user-animals'],
-      },
-    ]);
-
-    navigate('/');
+    try {
+      await logout();
+      socket.close();
+      sessionStorage.setItem('isLoggedIn', false);
+      queryClient.removeQueries([
+        {
+          queryKey: ['user'],
+        },
+        {
+          queryKey: ['user-notifications'],
+        },
+        {
+          queryKey: ['user-favs'],
+        },
+        {
+          queryKey: ['user-animals'],
+        },
+      ]);
+      navigate('/');
+    } catch (error) {
+      toast.error('Error haciendo logout');
+      throw error;
+    }
   };
-
-  useEffect(() => {
-    if (!isLoading) setNotifications(data.notifications);
-  }, [data, setNotifications, isLoading]);
 
   const { avatar, firstName, lastName, username, email, role } = user;
 
   return (
     <Dropdown placement="bottom-end">
       <Badge
-        content={notifications.length}
+        content={notifications?.length}
         size="lg"
         color="primary"
         placement="top-left"
