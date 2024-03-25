@@ -35,9 +35,7 @@ const WebSocketContextProvider = ({ children, user }) => {
           }
 
           if (message.type === 'animal-changed') {
-            queryClient.invalidateQueries({
-              queryKey: ['animals'],
-            });
+            queryClient.invalidateQueries(['animals', 'user-notifications']);
           }
 
           if (message.type === 'user-connected') {
