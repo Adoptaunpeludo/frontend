@@ -1,33 +1,46 @@
 import { NextUIProvider } from '@nextui-org/react';
-import { Outlet, ScrollRestoration, useNavigate } from 'react-router-dom';
+import {
+  Outlet,
+  ScrollRestoration,
+  useLoaderData,
+  useNavigate,
+} from 'react-router-dom';
 import Footer from './Footer';
 import Header from './Header';
-import { useUser } from '../Private/useUser';
-import { useNotifications } from '../Private/useNotifications';
-import { useAuthContext } from '../../context/AuthContext';
-import { useEffect } from 'react';
+import { userQuery } from '../Private/useUser';
+import { userNotificationsQuery } from '../Private/useNotifications';
 import { WebSocketContextProvider } from '../../context/WebSocketContext';
+import { useEffect } from 'react';
+
+export const loader = (queryClient) => async () => {
+  const isLoggedIn = sessionStorage.getItem('isLoggedIn');
+
+  if (isLoggedIn === null || !!isLoggedIn)
+    try {
+      const [user, notifications] = await Promise.all([
+        await queryClient.ensureQueryData(userQuery),
+        await queryClient.ensureQueryData(userNotificationsQuery),
+      ]);
+      return { notifications, user };
+    } catch (error) {
+      return { user: null, notifications: null };
+    }
+};
 
 const AppLayout = () => {
   const navigate = useNavigate();
-  const { data: user } = useUser();
-  const { data: notifications } = useNotifications();
-  const { setIsLoggedIn } = useAuthContext();
+  const { user, notifications } = useLoaderData();
 
   useEffect(() => {
-    console.log({ user });
-    sessionStorage.setItem('isLoggedIn', user !== undefined);
-    const isLoggedIn =
-      sessionStorage.getItem('isLoggedIn') === 'true' && user !== null;
-    setIsLoggedIn(isLoggedIn);
-  }, [setIsLoggedIn, user]);
+    sessionStorage.setItem('isLoggedIn', !!user);
+  }, [user]);
 
   return (
     <>
       <NextUIProvider navigate={navigate}>
         <div className="min-h-screen flex flex-col">
           <WebSocketContextProvider user={user}>
-            <Header />
+            <Header user={user} notifications={notifications?.notifications} />
             <Outlet context={{ user, notifications }} />
             <Footer />
           </WebSocketContextProvider>

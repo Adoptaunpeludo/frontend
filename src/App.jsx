@@ -34,12 +34,11 @@ import { loader as animalDetailsLoader } from './pages/Public/Animals/AnimalDeta
 import { loader as animalsLoader } from './pages/Public/Animals/AnimalsPage.jsx';
 import { loader as landingAnimalsLoader } from './pages/Public/Landing/LandingPage.jsx';
 import { loader as shelterDetailsLoader } from './pages/Public/Shelters/ShelterDetails/ShelterDetailsPage.jsx';
-import { loader as currentUserLoader } from './pages/Private/ProtectedRoute.jsx';
 import { loader as userAnimalsLoader } from './pages/Private/Shelters/ShelterProfile/ShelterProfile.jsx';
 import { loader as userFavsLoader } from './pages/Private/Adopters/AdopterProfile/AdopterProfile.jsx';
 import { loader as sheltersLoader } from './pages/Public/Shelters/SheltersPage.jsx';
 import { loader as verifyEmailLoader } from './pages/Auth/VerifyEmail/VerifyEmailPage.jsx';
-import { loader as notificationsLoader } from './components/UserAreaMenu.jsx';
+import { loader as userDataLoader } from './pages/Layout/AppLayout.jsx';
 
 import { useAnimalImagesContext } from './context/AnimalImagesContext.jsx';
 import NotFoundPage from './pages/Error/NotFound/NotFoundPage.jsx';
@@ -59,14 +58,14 @@ const router = (
   bioModalOnClose,
   shelterModalOnClose,
   animalImages,
-  isLoggedIn
+  setIsLoadingUser
 ) =>
   createBrowserRouter([
     {
       path: '/',
       element: <AppLayout />,
       errorElement: <ErrorPage />,
-      loader: notificationsLoader(queryClient, isLoggedIn),
+      loader: userDataLoader(queryClient),
       children: [
         //* Auth Routes
         {
@@ -77,7 +76,7 @@ const router = (
         {
           path: 'login',
           element: <LoginPage />,
-          action: loginAction(queryClient),
+          action: loginAction(queryClient, setIsLoadingUser),
         },
         {
           path: '/verify-email/:token',
@@ -132,7 +131,6 @@ const router = (
         {
           path: 'private',
           element: <ProtectedRoute />,
-          loader: currentUserLoader(queryClient, isLoggedIn),
           children: [
             {
               path: 'adopter',
@@ -180,7 +178,7 @@ const router = (
 function App() {
   const { images: animalImages } = useAnimalImagesContext();
   const { bioModal, shelterModal } = useModalContext();
-  const { isLoggedIn } = useAuthContext();
+  const { setIsLoadingUser } = useAuthContext();
 
   return (
     <QueryClientProvider client={queryClient}>
@@ -191,7 +189,7 @@ function App() {
           bioModal.onClose,
           shelterModal.onClose,
           animalImages,
-          isLoggedIn
+          setIsLoadingUser
         )}
       />
     </QueryClientProvider>
