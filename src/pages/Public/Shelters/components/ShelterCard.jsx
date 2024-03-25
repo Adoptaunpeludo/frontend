@@ -48,7 +48,7 @@ export const ShelterCard = ({ shelter, isLogged }) => {
 
       {/* Body */}
 
-      <CardBody className="flex flex-column overflow-visible py-2 content-between">
+      <CardBody className="flex flex-column overflow-visible py-2 content-between h-44">
         {/* username */}
         <h3 className="flex w-full font-lobster justify-center items-center text-3xl capitalize">
           {shelter.username}
