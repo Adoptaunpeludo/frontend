@@ -46,13 +46,13 @@ export const PetCard = ({ animal, isLogged }) => {
           <UnderlineVector />
         </div>
         {/* Avatar */}
-        <div className="absolute z-20 bottom-2 left-1/2 -translate-x-10 w-full back">
+        <div className="absolute z-30 bottom-6 left-56  w-full back">
           <Avatar
             isBordered
             color={`${
               isLogged ? (isOnline ? 'success' : 'danger') : 'default'
             }`}
-            className="w-24 h-24 bg-white"
+            className="w-10 h-10 bg-white"
             src={`${BUCKET_URL}/${animal.shelter.avatar}`}
             showFallback
             fallback={<IconHome className="w-10 h-10 stroke-gray-600" />}
