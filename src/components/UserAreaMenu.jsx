@@ -20,9 +20,7 @@ import { useUser } from '../pages/Private/useUser.js';
 export const UserAreaMenu = () => {
   const { socket } = useWebSocketContext();
   const { data: user } = useUser();
-  const {
-    data: { notifications },
-  } = useNotifications();
+  const { data: notifications } = useNotifications();
   const navigate = useNavigate();
   const queryClient = useQueryClient();
   const handleLogout = async () => {
@@ -53,12 +51,12 @@ export const UserAreaMenu = () => {
 
   const { avatar, firstName, lastName, username, email, role } = user;
 
-  console.log({ notifications });
+  const userNotifications = notifications?.notifications;
 
   return (
     <Dropdown placement="bottom-end">
       <Badge
-        content={notifications?.length}
+        content={userNotifications?.length}
         size="lg"
         color="primary"
         placement="top-left"

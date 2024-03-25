@@ -8,7 +8,7 @@ const Error = () => {
 
   console.log({ error });
 
-  if (error.response.status === 401) {
+  if (error?.response?.status === 401) {
     queryClient.removeQueries([
       'user',
       'user-favs',
