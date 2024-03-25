@@ -32,6 +32,7 @@ const AnimalsPage = ({ page }) => {
   const { data: animals } = useAnimals(page, filters, params);
 
   const isLoading = navigation.state === 'loading';
+  const isLogged = user !== undefined;
 
   return (
     <>
@@ -46,7 +47,7 @@ const AnimalsPage = ({ page }) => {
         <ul className="flex justify-center gap-4 flex-wrap p-6">
           {animals.animals.map((animal) => (
             <Skeleton isLoaded={!isLoading} key={animal.id}>
-              <PetCard key={animal.id} animal={animal} user={user} />
+              <PetCard key={animal.id} animal={animal} isLogged={isLogged} />
             </Skeleton>
           ))}
         </ul>
