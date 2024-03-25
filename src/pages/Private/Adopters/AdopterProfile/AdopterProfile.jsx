@@ -31,12 +31,12 @@ export const action =
       try {
         await updateProfile(formData, intent);
         queryClient.invalidateQueries({ queryKey: ['user'] });
-        toast.success('Perfil del Refugio actualizado');
+        toast.success('Perfil actualizado');
         closeBioModal();
         return null;
       } catch (error) {
         if (isAxiosError(error) && error.response.status === 400)
-          return toast.error('Error actualizando perfil del Refugio');
+          return toast.error('Error actualizando perfil');
         throw error;
       }
     }
