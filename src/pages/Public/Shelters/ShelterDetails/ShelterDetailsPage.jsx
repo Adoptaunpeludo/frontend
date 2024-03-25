@@ -44,7 +44,7 @@ const ShelterDetailsPage = () => {
 
   const { username } = params;
   const { data } = useShelterDetails(username);
-  const isOnline = user.username === username ? true : data.isOnline;
+  const isOnline = user?.username === username ? true : data.isOnline;
 
   return (
     <main className="max-w-screen-xl w-full flex  flex-col justify-center  gap-12 h-full  py-12  mx-auto flex-grow">
