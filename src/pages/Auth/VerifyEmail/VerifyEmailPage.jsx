@@ -4,8 +4,6 @@ import { Button, Input, Link, Spinner } from '@nextui-org/react';
 //import { verifyEmailQuery, useVerifyEmail } from "./useVerifyEmailPage";
 import { Form, useLoaderData } from 'react-router-dom';
 import { resendValidationEmail } from '../authService';
-import Header from '../../Layout/Header';
-import Footer from '../../Layout/Footer';
 
 // Error 500 - JWT Malformed
 // Error 400 -
@@ -23,7 +21,7 @@ export const action = async ({ request }) => {
     console.log({ res });
 
     if (res.status === 200) {
-      const { token } = res.data;
+      res.data;
       //return null
       //return redirect(/verify-email/${token});
     }
@@ -45,14 +43,14 @@ export const loader = async ({ params }) => {
     const res = await verifyEmail(token);
     if (res.status === 200) {
       return {
-        succes: true,
+        success: true,
         message: res?.data?.message,
       };
     }
     throw new Error(res.response.data.message);
   } catch (error) {
     return {
-      succes: false,
+      success: false,
       message: error.message,
     };
   }
@@ -60,7 +58,7 @@ export const loader = async ({ params }) => {
 
 const VerifyEmailPage = () => {
   const data = useLoaderData();
-  const { succes, message } = data;
+  const { success, message } = data;
 
   //debugger
   return (
@@ -73,7 +71,7 @@ const VerifyEmailPage = () => {
             {message || <Spinner />}
           </h3>
 
-          {succes ? (
+          {success ? (
             <>
               <div className="bg-red-500 flex flex-col">
                 <div className="mt-5 mx-5">

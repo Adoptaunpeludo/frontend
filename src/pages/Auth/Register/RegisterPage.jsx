@@ -25,7 +25,7 @@ export const action = async (data) => {
     registerData.email = registerData.email.toLowerCase();
 
     const data = await register(registerData);
-    await verifyEmail(data.token);
+    // await verifyEmail(data.token);
 
     toast.success('Usuario creado');
 
@@ -118,8 +118,8 @@ const RegisterPage = () => {
                     credentials.role === undefined
                       ? ' '
                       : credentials.role === 'shelter'
-                        ? 'de protectora'
-                        : 'de adoptante'
+                      ? 'de protectora'
+                      : 'de adoptante'
                   }`}
                   placeholder="Introduce un nombre"
                   color={errors.username ? 'danger' : 'none'}
