@@ -19,7 +19,8 @@ import { useOutletContext } from 'react-router-dom';
 export const ShelterCard = ({ shelter, isLogged }) => {
   const { user } = useOutletContext();
 
-  const isOnline = user.username === shelter.username ? true : shelter.isOnline;
+  const isOnline =
+    user?.username === shelter.username ? true : shelter.isOnline;
 
   return (
     <Card className="max-w-72">
