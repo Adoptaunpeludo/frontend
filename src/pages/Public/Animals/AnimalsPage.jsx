@@ -31,7 +31,7 @@ const AnimalsPage = ({ page }) => {
   const { data: animals } = useAnimals(page, filters, params);
 
   const isLoading = navigation.state === 'loading';
-  const isLogged = user !== undefined;
+  const isLogged = user !== null;
 
   return (
     <>
