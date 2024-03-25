@@ -1,6 +1,6 @@
-import { Avatar, Button, Image, Link, Spinner } from '@nextui-org/react';
+import { Avatar, Button, Image, Link } from '@nextui-org/react';
 import { IconHome } from '@tabler/icons-react';
-import { useLoaderData } from 'react-router-dom';
+import { useLoaderData, useOutletContext } from 'react-router-dom';
 import {
   AsideDataColumn,
   ContactShelter,
@@ -40,12 +40,11 @@ export const loader =
 
 const ShelterDetailsPage = () => {
   const params = useLoaderData();
+  const { user } = useOutletContext();
 
   const { username } = params;
-
-  const { data, isLoading } = useShelterDetails(username);
-
-  if (isLoading) return <Spinner />;
+  const { data } = useShelterDetails(username);
+  const isOnline = user?.username === username ? true : data.isOnline;
 
   return (
     <main className="max-w-screen-xl w-full flex  flex-col justify-center  gap-12 h-full  py-12  mx-auto flex-grow">
@@ -70,7 +69,7 @@ const ShelterDetailsPage = () => {
 
             <Avatar
               isBordered
-              color={data.isOnline ? 'success' : 'danger'}
+              color={isOnline ? 'success' : 'danger'}
               className="absolute right-5 top-5 z-10"
               src={`${BUCKET_URL}/${data.images[0]}`}
               showFallback

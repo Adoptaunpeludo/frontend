@@ -8,7 +8,6 @@ import { AuthContextProvider } from './context/AuthContext.jsx';
 import { AnimalImagesContextProvider } from './context/AnimalImagesContext.jsx';
 
 import { ModalContextProvider } from './context/ModalContext.jsx';
-import { WebSocketContextProvider } from './context/WebSocketContext.jsx';
 
 const isLoggedIn = sessionStorage.getItem('isLoggedIn') === 'true';
 
@@ -17,9 +16,7 @@ ReactDOM.createRoot(document.getElementById('root')).render(
     <AuthContextProvider initialIsLoggedIn={isLoggedIn}>
       <AnimalImagesContextProvider>
         <ModalContextProvider>
-          <WebSocketContextProvider>
-            <App />
-          </WebSocketContextProvider>
+          <App />
         </ModalContextProvider>
       </AnimalImagesContextProvider>
     </AuthContextProvider>

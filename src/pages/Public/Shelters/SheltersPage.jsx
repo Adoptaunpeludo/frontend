@@ -11,21 +11,24 @@ export const loader =
     const params = Object.fromEntries([
       ...new URL(request.url).searchParams.entries(),
     ]);
-
-    //TODO: TryCatch
-    await queryClient.ensureQueryData(sheltersQuery(params));
-
-    return { params };
+    try {
+      await queryClient.ensureQueryData(sheltersQuery(params));
+      return { params };
+    } catch (error) {
+      console.log(error);
+      throw error;
+    }
   };
 
 const SheltersPage = ({ page }) => {
   const { params } = useLoaderData();
-  const navigation = useNavigation();
   const { user } = useOutletContext();
-
   const { data } = useShelters(params);
 
+  const navigation = useNavigation();
+
   const isLoading = navigation.state === 'loading';
+
   const isLogged = user !== undefined;
 
   return (
@@ -33,7 +36,7 @@ const SheltersPage = ({ page }) => {
       <TitleSection title={'asociaciones'} />
       <FilterBar page={page} className="" />
       <ul className="flex justify-center gap-4 flex-wrap p-6">
-        {data.users.map((shelter) => (
+        {data?.users.map((shelter) => (
           <Skeleton isLoaded={!isLoading} key={shelter.id}>
             <ShelterCard
               key={shelter.id}

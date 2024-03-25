@@ -85,7 +85,9 @@ export function FilterBar({ page }) {
         onValueChange={setName}
         name={page !== 'shelter' ? 'name' : 'username'}
         defaultValue={params?.name || ''}
+
         classNames={inputStyleConfig}
+
       />
       <Spacer x={0.5} />
       {page !== 'shelter' && (
@@ -97,7 +99,9 @@ export function FilterBar({ page }) {
           selectedKeys={size}
           onSelectionChange={setSize}
           defaultSelectedKeys={params?.size ? [params.size] : []}
+
           classNames={selectStyleConfig}
+
         >
           {animalSizeEnum.map((size) => (
             <SelectItem
@@ -120,7 +124,9 @@ export function FilterBar({ page }) {
           selectedKeys={gender}
           onSelectionChange={setGender}
           defaultSelectedKeys={params?.gender ? [params.gender] : []}
+
           classNames={selectStyleConfig}
+
         >
           {genderEnum.map((gender) => (
             <SelectItem
@@ -143,7 +149,9 @@ export function FilterBar({ page }) {
           defaultSelectedKeys={params?.age ? [params.age] : []}
           selectedKeys={age}
           onSelectionChange={setAge}
+
           classNames={selectStyleConfig}
+
         >
           {ageRanges.map((age) => (
             <SelectItem
@@ -165,7 +173,9 @@ export function FilterBar({ page }) {
         defaultSelectedKeys={params?.city ? [params.city] : []}
         selectedKeys={city}
         onSelectionChange={setCity}
+
         classNames={selectStyleConfig}
+
       >
         {cities.map((city) => (
           <SelectItem
@@ -178,6 +188,7 @@ export function FilterBar({ page }) {
           </SelectItem>
         ))}
       </Select>
+
       <Button type="submit" color="primary" className={buttonStyleConfig}>
         Buscar
       </Button>
@@ -187,6 +198,7 @@ export function FilterBar({ page }) {
         type="reset"
         className={buttonStyleConfig}
       >
+
         Reset
       </Button>
       {/* TODO:Dont remove without final layout  */}

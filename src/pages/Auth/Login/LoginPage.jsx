@@ -112,7 +112,7 @@ const LoginPage = () => {
                 variant="solid"
                 size="lg"
                 endContent={<LoginIcon />}
-                className="px-10 font-medium font-poppins"
+                className="px-10"
               >
                 Iniciar sesión
               </Button>
