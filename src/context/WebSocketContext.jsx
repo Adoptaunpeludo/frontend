@@ -1,12 +1,14 @@
 import { createContext, useContext, useEffect, useRef, useState } from 'react';
 import { WB_SERVER } from '../config/config';
 import { useQueryClient } from '@tanstack/react-query';
+import { useNotificationsContext } from './NotificationsContext';
 
 const WebSocketContext = createContext();
 
 const WebSocketContextProvider = ({ children, user }) => {
   const [isReady, setIsReady] = useState(false);
   const [message, setMessage] = useState(null);
+  const { setNotifications } = useNotificationsContext();
   const queryClient = useQueryClient();
 
   const ws = useRef(null);
@@ -29,16 +31,17 @@ const WebSocketContextProvider = ({ children, user }) => {
 
         socket.onmessage = (event) => {
           const message = JSON.parse(event.data);
-
-          if (message.type === 'pong') {
+          const { type, ...data } = message;
+          if (type === 'pong') {
             clearInterval(pingInterval);
           }
 
-          if (message.type === 'animal-changed') {
-            queryClient.invalidateQueries(['animals', 'user-notifications']);
+          if (type === 'animal-changed') {
+            setNotifications((notifications) => [...notifications, data]);
+            queryClient.invalidateQueries(['animals']);
           }
 
-          if (message.type === 'user-connected') {
+          if (type === 'user-connected') {
             const { username } = message;
             queryClient.invalidateQueries([
               'shelters',
@@ -46,7 +49,7 @@ const WebSocketContextProvider = ({ children, user }) => {
             ]);
           }
 
-          if (message.type === 'user-disconnected') {
+          if (type === 'user-disconnected') {
             const { username } = message;
             queryClient.invalidateQueries([
               'shelters',

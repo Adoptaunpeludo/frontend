@@ -16,11 +16,14 @@ import { useWebSocketContext } from '../context/WebSocketContext.jsx';
 import { toast } from 'react-toastify';
 import { useNotifications } from '../pages/Private/useNotifications.js';
 import { useUser } from '../pages/Private/useUser.js';
+import { useEffect } from 'react';
+import { useNotificationsContext } from '../context/NotificationsContext.jsx';
 
 export const UserAreaMenu = () => {
   const { socket } = useWebSocketContext();
   const { data: user } = useUser();
-  const { data: notifications } = useNotifications();
+  const { data: userNotifications } = useNotifications();
+  const { notifications, setNotifications } = useNotificationsContext();
   const navigate = useNavigate();
   const queryClient = useQueryClient();
 
@@ -50,12 +53,14 @@ export const UserAreaMenu = () => {
     }
   };
 
-  const userNotifications = notifications?.notifications;
+  useEffect(() => {
+    setNotifications(userNotifications.notifications);
+  }, [userNotifications, setNotifications]);
 
   return (
     <Dropdown placement="bottom-end">
       <Badge
-        content={userNotifications?.length}
+        content={notifications?.length}
         size="lg"
         color="primary"
         placement="top-left"

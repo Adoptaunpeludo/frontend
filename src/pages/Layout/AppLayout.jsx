@@ -11,6 +11,7 @@ import { userQuery } from '../Private/useUser';
 import { userNotificationsQuery } from '../Private/useNotifications';
 import { WebSocketContextProvider } from '../../context/WebSocketContext';
 import { useEffect } from 'react';
+import { NotificationsContextProvider } from '../../context/NotificationsContext';
 
 export const loader = (queryClient) => async () => {
   let isLoggedIn = sessionStorage.getItem('isLoggedIn');
@@ -46,11 +47,13 @@ const AppLayout = () => {
     <>
       <NextUIProvider navigate={navigate}>
         <div className="min-h-screen flex flex-col">
-          <WebSocketContextProvider user={user}>
-            <Header />
-            <Outlet context={{ user, notifications }} />
-            <Footer />
-          </WebSocketContextProvider>
+          <NotificationsContextProvider>
+            <WebSocketContextProvider user={user}>
+              <Header />
+              <Outlet context={{ user, notifications }} />
+              <Footer />
+            </WebSocketContextProvider>
+          </NotificationsContextProvider>
         </div>
         <ScrollRestoration />
       </NextUIProvider>
