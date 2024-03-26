@@ -3,11 +3,9 @@ import { IconEdit } from '@tabler/icons-react';
 import { Hero, TitleSection } from '../../../../components';
 import { DeleteUserModal, StatusAnimalsTable } from '../../shared';
 import { toast } from 'react-toastify';
-
-import { useUser } from '../../useUser';
 import { useAnimalImagesContext } from '../../../../context/AnimalImagesContext';
 import { useEffect } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigation, useOutletContext } from 'react-router-dom';
 import { deleteAnimal } from '../AnimalForm/service';
 import ShelterProfileInfo from './components/ShelterProfileInfo';
 import UserBioInfo from './components/UserBioInfo';
@@ -23,6 +21,7 @@ export const loader = (queryClient) => async () => {
     return data;
   } catch (error) {
     console.log(error);
+    toast.error('Error cargando perfil. ¿Estás logueado?');
     throw error;
   }
 };
@@ -65,9 +64,11 @@ export const action =
   };
 
 const ShelterProfile = () => {
-  const { data, isFetching } = useUser();
-
+  const { user: data } = useOutletContext();
+  const navigation = useNavigation();
   const { resetImages } = useAnimalImagesContext();
+
+  const isLoading = navigation.state === 'loading';
 
   useEffect(() => {
     resetImages();
@@ -76,7 +77,7 @@ const ShelterProfile = () => {
   const { username } = data;
 
   return (
-    <Skeleton className="bg-default-100 flex-grow" isLoaded={!isFetching}>
+    <Skeleton className="bg-default-100 flex-grow" isLoaded={!isLoading}>
       <main className="bg-default-100 flex-grow">
         <Hero />
 
@@ -90,9 +91,9 @@ const ShelterProfile = () => {
             className="flex gap-12 max-lg:flex-col "
           >
             <main className="flex flex-col max-w-3xl order-1 max-lg:order-2">
-              <ShelterProfileInfo isLoading={isFetching} data={data} />
+              <ShelterProfileInfo isLoading={isLoading} data={data} />
             </main>
-            <UserBioInfo data={data} isLoading={isFetching} />
+            <UserBioInfo data={data} isLoading={isLoading} />
             {/* <div id="NotificationsAside">
             <H2Title title="Mensajes" className="pb-5" />
             <div className="flex justify-between border-solid border-b-1 border-b-primary pb-3 items-center">
