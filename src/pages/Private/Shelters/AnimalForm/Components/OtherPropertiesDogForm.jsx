@@ -20,6 +20,7 @@ const OtherPropertiesDogForm = ({ data = {}, isDisabled }) => {
       <H3Title title="Otras Características" />
       <div className="flex w-full flex-wrap md:flex-nowrap gap-2 border-primary border-t-1 pt-3">
         <SelectField
+          isRequired
           label="Fácil de entrenar"
           className=""
           dataField={easyTrain}
@@ -28,6 +29,7 @@ const OtherPropertiesDogForm = ({ data = {}, isDisabled }) => {
           isDisabled={isDisabled}
         />
         <SelectField
+          isRequired
           label="Cantidad de muda"
           className=""
           name="moltingAmount"
@@ -36,6 +38,7 @@ const OtherPropertiesDogForm = ({ data = {}, isDisabled }) => {
           isDisabled={isDisabled}
         />
         <SelectField
+          isRequired
           label="Nivel de energía"
           className=""
           name="energyLevel"
@@ -46,6 +49,7 @@ const OtherPropertiesDogForm = ({ data = {}, isDisabled }) => {
       </div>
       <div className="flex w-full flex-wrap md:flex-nowrap gap-2 border-primary border-t-1 pt-3">
         <SelectField
+          isRequired
           label="Potencial de Babeo"
           className=""
           name="droolingPotential"
@@ -54,6 +58,7 @@ const OtherPropertiesDogForm = ({ data = {}, isDisabled }) => {
           isDisabled={isDisabled}
         />
         <SelectField
+          isRequired
           label="Tendencia a ladrar"
           className=""
           name="bark"
@@ -62,6 +67,7 @@ const OtherPropertiesDogForm = ({ data = {}, isDisabled }) => {
           isDisabled={isDisabled}
         />
         <SelectField
+          isRequired
           label="Acostumbrado a un piso"
           className=""
           name="departmentAdapted"

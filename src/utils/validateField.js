@@ -1,10 +1,14 @@
 export const validateField = (name, value, password) => {
   switch (name) {
+    case 'breed':
+    case 'name':
     case 'username':
     case 'firstName':
     case 'lastName':
       return !/^[0-9a-zñáéíóúü\s]{3,30}$/i.test(value.trim())
         ? `${
+            (name === 'breed' && 'El nombre de la raza debe') ||
+            (name === 'name' && 'El nombre debe') ||
             (name === 'firstName' && 'El nombre debe') ||
             (name === 'lastName' && 'Los apellidos deben') ||
             (name === 'username' && 'nombre de usuario debe')
