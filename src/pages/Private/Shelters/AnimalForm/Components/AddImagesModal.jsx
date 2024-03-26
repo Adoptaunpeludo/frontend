@@ -15,9 +15,9 @@ const AddImagesModal = ({ onSetImages }) => {
 
   const [fileError, setFileError] = useState();
 
-  const maxSizeInBytes = 1 * 1024 * 1024; // 1 MB
-  const maxWidth = 1920;
-  const maxHeight = 1080;
+  const maxSizeInBytes = 2 * 1024 * 1024; // 1 MB
+  // const maxWidth = 1920;
+  // const maxHeight = 1080;
 
   const handleClose = (onClose) => {
     setSelectedFile();
@@ -25,6 +25,34 @@ const AddImagesModal = ({ onSetImages }) => {
     onClose();
   };
 
+  const imageFileValidation = (event, maxSize) => {
+    const file = event.target.files.item(0);
+    const allowedMimeTypes = ['image/jpeg', 'image/png', 'image/gif'];
+    const fileType = file.type;
+
+    if (!allowedMimeTypes.includes(fileType)) {
+      setFileError('Solo se admiten archivos tipo jpeg/jpg, png o gif');
+      return;
+    }
+
+    const image = new Image();
+    image.src = URL.createObjectURL(file);
+
+    image.onload = () => {
+      if (file.size > maxSize) {
+        setFileError(
+          `La imagen excede el tamaño de archivo permitido (${
+            maxSize / 1024
+          } Kbytes)`
+        );
+      } else {
+        setFileError('');
+        return setSelectedFile(event.target.files.item(0));
+      }
+    };
+  };
+
+  /* with image dimensions validation
   const imageFileValidation = (event, maxSize, maxW, maxH) => {
     const file = event.target.files.item(0);
     const allowedMimeTypes = ['image/jpeg', 'image/png', 'image/gif'];
@@ -57,6 +85,7 @@ const AddImagesModal = ({ onSetImages }) => {
       }
     };
   };
+  */
 
   const handleAddImage = (onClose) => {
     if (!selectedFile || fileError) return;
@@ -96,9 +125,9 @@ const AddImagesModal = ({ onSetImages }) => {
                         setFileError('');
                         imageFileValidation(
                           e,
-                          maxSizeInBytes,
-                          maxWidth,
-                          maxHeight
+                          maxSizeInBytes
+                          // maxWidth,
+                          // maxHeight
                         );
                         // return setSelectedFile(e.target.files.item(0));
                       }}

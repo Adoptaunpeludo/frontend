@@ -18,16 +18,26 @@ import Accommodations from '../ShelterProfile/components/Acommodations';
 
 import { Form, useNavigation } from 'react-router-dom';
 import { useModalContext } from '../../../../context/ModalContext';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
+import { validateField } from '../../../../utils/validateField';
 
 const ShelterForm = ({ isSubmitting, data }) => {
   const updateShelterModal = useDisclosure();
   const { isOpen, onOpen, onOpenChange, onClose } = updateShelterModal;
   const { saveShelterModal } = useModalContext();
+  const [cifError, setCifError] = useState('');
 
   const navigation = useNavigation();
 
   isSubmitting = navigation.state === 'submitting';
+
+  const handleChange = (event) => {
+    const value = event.target.value;
+    const validateCif = validateField('cif', value);
+    setCifError(validateCif);
+  };
+
+  const isFormValid = !!cifError;
 
   const {
     cif,
@@ -83,6 +93,9 @@ const ShelterForm = ({ isSubmitting, data }) => {
                           name="cif"
                           defaultValue={cif === '' ? '' : cif}
                           isDisabled={isSubmitting}
+                          color={cifError ? 'danger' : 'none'}
+                          errorMessage={cifError}
+                          onChange={handleChange}
                         />
                         <SelectField
                           isDisabled={isSubmitting}
@@ -145,6 +158,7 @@ const ShelterForm = ({ isSubmitting, data }) => {
                   Cancelar
                 </Button>
                 <Button
+                  isDisabled={isFormValid}
                   color="primary"
                   variant="solid"
                   size="sm"

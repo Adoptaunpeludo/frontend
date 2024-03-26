@@ -22,16 +22,16 @@ const ImageUploadModal = ({ page, id, slug }) => {
   const [isLoading, setIsLoading] = useState(false);
   const [fileError, setFileError] = useState();
 
-  const maxSizeInBytes = 1 * 1024 * 1024; // 1 MB
-  const maxWidth = 1920;
-  const maxHeight = 1080;
+  const maxSizeInBytes = 2 * 1024 * 1024; // 1 MB
+  // const maxWidth = 1920;
+  // const maxHeight = 1080;
 
   const handleClose = (onClose) => {
     setFileError('');
     onClose();
   };
 
-  const imageFileValidation = (event, maxSize, maxW, maxH) => {
+  const imageFileValidation = (event, maxSize) => {
     const file = event.target.files.item(0);
     const allowedMimeTypes = ['image/jpeg', 'image/png', 'image/gif'];
     const fileType = file.type;
@@ -45,24 +45,52 @@ const ImageUploadModal = ({ page, id, slug }) => {
     image.src = URL.createObjectURL(file);
 
     image.onload = () => {
-      if (image.width > maxW || image.height > maxH) {
+      if (file.size > maxSize) {
         setFileError(
-          `La imagen excede las dimensiones admitidas (${maxW}x${maxH} px)`
+          `La imagen excede el tamaño de archivo permitido (${
+            maxSize / 1024
+          } Kbytes)`
         );
       } else {
-        if (file.size > maxSize) {
-          setFileError(
-            `La imagen excede el tamaño de archivo permitido (${
-              maxSize / 1024
-            } Kbytes)`
-          );
-        } else {
-          setFileError('');
-          setSelectedFile(event.target.files.item(0));
-        }
+        setFileError('');
+        setSelectedFile(event.target.files.item(0));
       }
     };
   };
+
+  // with image dimensions validation:
+  // const imageFileValidation = (event, maxSize, maxW, maxH) => {
+  //   const file = event.target.files.item(0);
+  //   const allowedMimeTypes = ['image/jpeg', 'image/png', 'image/gif'];
+  //   const fileType = file.type;
+
+  //   if (!allowedMimeTypes.includes(fileType)) {
+  //     setFileError('Solo se admiten archivos tipo jpeg/jpg, png o gif');
+  //     return;
+  //   }
+
+  //   const image = new Image();
+  //   image.src = URL.createObjectURL(file);
+
+  //   image.onload = () => {
+  //     if (image.width > maxW || image.height > maxH) {
+  //       setFileError(
+  //         `La imagen excede las dimensiones admitidas (${maxW}x${maxH} px)`
+  //       );
+  //     } else {
+  //       if (file.size > maxSize) {
+  //         setFileError(
+  //           `La imagen excede el tamaño de archivo permitido (${
+  //             maxSize / 1024
+  //           } Kbytes)`
+  //         );
+  //       } else {
+  //         setFileError('');
+  //         setSelectedFile(event.target.files.item(0));
+  //       }
+  //     }
+  //   };
+  // };
 
   const handleUploadFile = async (onClose) => {
     if (!selectedFile || fileError) return;
@@ -127,9 +155,9 @@ const ImageUploadModal = ({ page, id, slug }) => {
                           setFileError('');
                           imageFileValidation(
                             e,
-                            maxSizeInBytes,
-                            maxWidth,
-                            maxHeight
+                            maxSizeInBytes
+                            // maxWidth,
+                            // maxHeight
                           );
                         }}
                       />
