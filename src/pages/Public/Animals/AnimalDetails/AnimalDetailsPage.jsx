@@ -1,6 +1,6 @@
 import { Avatar, Image, Spinner } from '@nextui-org/react';
 import { IconHeart, IconHome } from '@tabler/icons-react';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useLoaderData, useOutletContext } from 'react-router-dom';
 import {
   AdoptButton,
@@ -47,6 +47,52 @@ const AnimalDetailsPage = () => {
   const isLogged = user !== null;
   if (isLoading) return <Spinner />;
   const isOnline = user?.username === data.user.username ? true : data.isOnline;
+
+  useEffect(() => {
+    // Title of page
+    document.title = `Adopta un peludo - ${slug}`;
+
+    // add meta tag og:Title
+    const metaOgTitle = document.createElement('meta');
+    metaOgTitle.setAttribute('property', 'og:title');
+    metaOgTitle.content = `Adopta un peludo - ${slug}`;
+    document.getElementsByTagName('head')[0].appendChild(metaOgTitle);
+
+    // add meta tag 'og:description'
+    const metaOgDescription = document.createElement('meta');
+    metaOgDescription.setAttribute('property', 'og:description');
+    metaOgDescription.content = `Conoce a nuestro peludo, ${data.name} y ayúdanos a encontrarle un hogar`;
+    document.getElementsByTagName('head')[0].appendChild(metaOgDescription);
+
+    // add meta tag 'og:image'
+    const metaOgImage = document.createElement('meta');
+    metaOgImage.setAttribute('property', 'og:image');
+    metaOgImage.content = `${
+      images[0] !== undefined ? `${BUCKET_URL}/${images[0]}` : ''
+    }`;
+    document.getElementsByTagName('head')[0].appendChild(metaOgImage);
+
+    // add meta tag 'og:url'
+    const metaOgUrl = document.createElement('meta');
+    metaOgUrl.setAttribute('property', 'og:url');
+    metaOgUrl.content = `https://www.adoptaunpeludo.com/animals/${data.type}s/${slug}`;
+    document.getElementsByTagName('head')[0].appendChild(metaOgUrl);
+
+    // add meta tag 'og:type'
+    const metaOgType = document.createElement('meta');
+    metaOgType.setAttribute('property', 'og:type');
+    metaOgType.content = 'article';
+    document.getElementsByTagName('head')[0].appendChild(metaOgType);
+
+    // Clean at unmount the component
+    return () => {
+      document.getElementsByTagName('head')[0].removeChild(metaOgTitle);
+      document.getElementsByTagName('head')[0].removeChild(metaOgDescription);
+      document.getElementsByTagName('head')[0].removeChild(metaOgImage);
+      document.getElementsByTagName('head')[0].removeChild(metaOgUrl);
+      document.getElementsByTagName('head')[0].removeChild(metaOgType);
+    };
+  }, []);
 
   return (
     <main className="max-w-screen-xl w-full flex  flex-col justify-center  gap-12 h-full  py-12  mx-auto flex-grow">
