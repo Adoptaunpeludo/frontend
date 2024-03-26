@@ -14,7 +14,7 @@ export const chatHistoryQuery = (document) => {
   };
 };
 
-export const useDocumentHistory = (username) => {
+export const useChatHistory = (username) => {
   const { data, isError, isFetching } = useQuery(chatHistoryQuery(username));
 
   return { data, isFetching, isError };

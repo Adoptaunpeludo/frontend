@@ -3,13 +3,14 @@ import { useEffect, useState } from 'react';
 import { chatStreamGeneratorUseCase } from '../../../core/use-cases/chat-stream-generator/chat-stream-generator.use-case';
 import { useScroll } from '../../../hooks/useScroll';
 import { useLoaderData } from 'react-router-dom';
-import { documentHistoryQuery, useDocumentHistory } from './useDocumentHistory';
+import { documentHistoryQuery } from './useDocumentHistory';
 import { mapChatHistory } from '../../../utils';
 import { toast } from 'react-toastify';
 import { Spinner } from '@nextui-org/react';
 import GptMessage from './components/GptMessage';
 import UserMessage from './components/UserMessage';
 import TextMessageBox from './components/TextMessageBox';
+import { useChatHistory } from './useChatHistory';
 
 export const loader =
   (queryClient) =>
@@ -24,9 +25,9 @@ export const loader =
   };
 
 const AssistantPage = () => {
-  const document = useLoaderData();
+  const username = useLoaderData();
   const [messages, setMessages] = useState([]);
-  const { data: chatHistory, isFetching } = useDocumentHistory(document);
+  const { data: chatHistory, isFetching } = useChatHistory(username);
   const { messagesEndRef } = useScroll(messages, isFetching);
 
   useEffect(() => {
