@@ -2,7 +2,7 @@
 export { default as LoginPage } from './Auth/Login/LoginPage';
 export { default as RegisterPage } from './Auth/Register/RegisterPage';
 export { default as VerifyEmail } from './Auth/VerifyEmail/VerifyEmailPage.jsx';
-export { default as RecoverPassword } from './Auth/RecoverPassword/RecoverPassword.jsx';
+export { default as ForgotPasswordPage } from './Auth/ForgotPasswordPage/ForgotPasswordPage.jsx';
 
 // Public
 export { default as AnimalDetailsPage } from './Public/Animals/AnimalDetails/AnimalDetailsPage';

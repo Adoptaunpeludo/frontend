@@ -21,17 +21,21 @@ import {
   ShelterProfile,
   SheltersPage,
   VerifyEmail,
-  RecoverPassword,
+  ForgotPasswordPage,
   NotificationsPage
 } from './pages/index.js';
 
+// Actions
 import { action as loginAction } from './pages/Auth/Login/LoginPage.jsx';
 import { action as registerAction } from './pages/Auth/Register/RegisterPage.jsx';
 import { action as shelterProfileAction } from './pages/Private/Shelters/ShelterProfile/ShelterProfile.jsx';
 import { action as adopterProfileAction } from './pages/Private/Adopters/AdopterProfile/AdopterProfile.jsx';
 import { action as mutateAnimalAction } from './pages/Private/Shelters/AnimalForm/AnimalForm.jsx';
 import { action as verifyEmailAction } from './pages/Auth/VerifyEmail/VerifyEmailPage.jsx';
+import { action as forgotPasswordAction } from './pages/Auth/ForgotPasswordPage/ForgotPasswordPage.jsx';
 
+
+// Loaders
 import { loader as updateAnimalLoader } from './pages/Private/Shelters/AnimalForm/AnimalForm.jsx';
 import { loader as animalDetailsLoader } from './pages/Public/Animals/AnimalDetails/AnimalDetailsPage.jsx';
 import { loader as animalsLoader } from './pages/Public/Animals/AnimalsPage.jsx';
@@ -82,10 +86,10 @@ const router = (bioModalOnClose, shelterModalOnClose, animalImages) =>
           action: verifyEmailAction,
         },
         {
-          path: '/recover-password',
-          element: <RecoverPassword />,
-          //loader: verifyEmailLoader,
-          //action: verifyEmailAction,
+          path: 'forgot-password',
+          element: <ForgotPasswordPage />,
+          action: forgotPasswordAction,
+          //actiloaderon: verifyEmailAction,
         },
         //* End Auth Routes
         //* Public Routes
