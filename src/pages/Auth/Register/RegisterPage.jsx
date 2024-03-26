@@ -3,7 +3,12 @@ import { IconLogin2 as LoginIcon } from '@tabler/icons-react';
 import { useState } from 'react';
 import { Form, Link, redirect } from 'react-router-dom';
 import { toast } from 'react-toastify';
-import { H2Title, Hero, LogoHeader, Panel } from '../../../components';
+import { H2Title, LogoHeader, Panel } from '../../../components';
+import {
+  inputStyleConfig,
+  radioGroupStyleConfig,
+  radioStyleConfig,
+} from '../../../utils/configFormFields';
 import { handleAuthError } from '../../../utils/handleError';
 import { validateField } from '../../../utils/validateField';
 import { register } from '../authService';
@@ -62,11 +67,10 @@ const RegisterPage = () => {
   );
 
   return (
-    <main className="bg-default-100 flex-grow">
-      <Hero />
+    <main className="bg-default-100 flex-grow ">
       <section
         id="register"
-        className="max-w-screen-xl w-full flex flex-col gap-3 h-full justify-center py-12 mx-auto "
+        className="max-w-screen-xl w-full flex flex-col gap-3 h-full justify-center py-10 mx-auto "
       >
         <LogoHeader />
         <Panel className={'max-w-2xl mx-auto'}>
@@ -83,25 +87,13 @@ const RegisterPage = () => {
               errorMessage={errors.role}
               onChange={handleChange}
               className="mx-auto"
-              classNames={{
-                label: 'mx-auto',
-              }}
+              classNames={radioGroupStyleConfig}
               isRequired
             >
-              <Radio
-                value="shelter"
-                classNames={{
-                  wrapper: ' border-secondary ',
-                }}
-              >
+              <Radio value="shelter" classNames={radioStyleConfig}>
                 Protectora
               </Radio>
-              <Radio
-                value="adopter"
-                classNames={{
-                  wrapper: ' border-secondary ',
-                }}
-              >
+              <Radio value="adopter" classNames={radioStyleConfig}>
                 Adoptante
               </Radio>
             </RadioGroup>
@@ -111,14 +103,14 @@ const RegisterPage = () => {
                 <Input
                   name="username"
                   className="min-w-72 "
-                  classNames={{ inputWrapper: 'border-1 border-primary' }}
+                  classNames={inputStyleConfig}
                   type="text"
                   label={`Nombre ${
                     credentials.role === undefined
                       ? ' '
                       : credentials.role === 'shelter'
-                      ? 'de protectora'
-                      : 'de adoptante'
+                        ? 'de protectora'
+                        : 'de adoptante'
                   }`}
                   placeholder="Introduce un nombre"
                   color={errors.username ? 'danger' : 'none'}
@@ -130,7 +122,7 @@ const RegisterPage = () => {
                 <Input
                   name="email"
                   className="min-w-72 "
-                  classNames={{ inputWrapper: 'border-1 border-primary' }}
+                  classNames={inputStyleConfig}
                   type="email"
                   label="Email"
                   placeholder="Introduce tu email"
@@ -144,7 +136,7 @@ const RegisterPage = () => {
                 <Input
                   name="password"
                   className="min-w-72 "
-                  classNames={{ inputWrapper: 'border-1 border-primary' }}
+                  classNames={inputStyleConfig}
                   type="password"
                   label="Password"
                   placeholder="Introduce tu password"
@@ -157,7 +149,7 @@ const RegisterPage = () => {
                 <Input
                   name="repeatPassword"
                   className="min-w-72 "
-                  classNames={{ inputWrapper: 'border-1 border-primary' }}
+                  classNames={inputStyleConfig}
                   type="password"
                   label="confirmar password"
                   placeholder="Introduce tu password"

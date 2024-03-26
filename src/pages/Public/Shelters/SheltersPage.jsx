@@ -26,10 +26,8 @@ const SheltersPage = ({ page }) => {
   const { data } = useShelters(params);
 
   const navigation = useNavigation();
-
   const isLoading = navigation.state === 'loading';
-
-  const isLogged = user !== undefined;
+  const isLogged = user !== null;
 
   return (
     <main className="max-w-screen-xl w-full flex  flex-col justify-center  gap-12 h-full  py-12  mx-auto flex-grow">
