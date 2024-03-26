@@ -1,16 +1,14 @@
-import { Button, Spinner } from '@nextui-org/react';
+import { Button } from '@nextui-org/react';
 import { useRef, useState } from 'react';
-import { useDocumentsContext } from '../../../context/DocumentsContext';
 import { useParams } from 'react-router-dom';
-import DeleteModal from '../delete-modal/DeleteHistoryModal';
+// import DeleteModal from '../delete-modal/DeleteHistoryModal';
 
 const TextMessageBox = ({
   onSendMessage,
   placeholder = '',
   disableCorrections = false,
-  onDeleteMessages,
+  // onDeleteMessages,
 }) => {
-  const { selectFile, isLoading } = useDocumentsContext();
   const [message, setMessage] = useState('');
   const inputRef = useRef < HTMLInputElement > null;
 
@@ -23,7 +21,6 @@ const TextMessageBox = ({
 
     setMessage('');
     inputRef.current?.focus();
-    selectFile(null);
   };
 
   return (
@@ -34,7 +31,7 @@ const TextMessageBox = ({
     >
       <div className="flex-grow">
         <div className="relative w-full bg-primary p-2 bg-opacity-25 rounded-md flex gap-1 shadow-xl">
-          <DeleteModal bot={'assistant'} deleteMessages={onDeleteMessages} />
+          {/* <DeleteModal bot={'assistant'} deleteMessages={onDeleteMessages} /> */}
           <input
             ref={inputRef}
             type="text"
@@ -47,20 +44,15 @@ const TextMessageBox = ({
             spellCheck={!disableCorrections ? 'false' : 'true'}
             value={message}
             onChange={(e) => setMessage(e.target.value)}
-            disabled={isLoading}
           />
           <div className="">
-            {isLoading ? (
-              <Spinner />
-            ) : (
-              <Button
-                className="bg-tertiary min-w-10 min-h-fit sm:w-20"
-                type="submit"
-              >
-                <span className="mr-2 hidden sm:block text-white">Send</span>
-                <i className=" fa-regular fa-paper-plane text-white"></i>
-              </Button>
-            )}
+            <Button
+              className="bg-tertiary min-w-10 min-h-fit sm:w-20"
+              type="submit"
+            >
+              <span className="mr-2 hidden sm:block text-white">Send</span>
+              <i className=" fa-regular fa-paper-plane text-white"></i>
+            </Button>
           </div>
         </div>
       </div>

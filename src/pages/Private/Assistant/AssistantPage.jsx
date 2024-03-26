@@ -1,16 +1,14 @@
 import { useEffect, useState } from 'react';
-
-import { chatStreamGeneratorUseCase } from '../../../core/use-cases/chat-stream-generator/chat-stream-generator.use-case';
-import { useScroll } from '../../../hooks/useScroll';
 import { useLoaderData } from 'react-router-dom';
-import { documentHistoryQuery } from './useDocumentHistory';
-import { mapChatHistory } from '../../../utils';
 import { toast } from 'react-toastify';
 import { Spinner } from '@nextui-org/react';
 import GptMessage from './components/GptMessage';
 import UserMessage from './components/UserMessage';
 import TextMessageBox from './components/TextMessageBox';
-import { useChatHistory } from './useChatHistory';
+import { chatHistoryQuery, useChatHistory } from './useChatHistory';
+import { useScroll } from '../../../hooks/useScroll';
+import { chatStreamGenerator } from './service';
+import { mapChatHistory } from '../../../utils/mapChatHistory';
 
 export const loader =
   (queryClient) =>
@@ -19,7 +17,7 @@ export const loader =
 
     if (username) return;
 
-    await queryClient.ensureQueryData(documentHistoryQuery(params.name));
+    await queryClient.ensureQueryData(chatHistoryQuery(username));
 
     return username;
   };
@@ -45,12 +43,12 @@ const AssistantPage = () => {
     setMessages((prev) => [...prev, { text, isGpt: false }]);
 
     try {
-      const stream = chatStreamGeneratorUseCase(
+      const stream = chatStreamGenerator(
         {
           document,
           question: text,
         },
-        'assistant/user-question'
+        'chat/user-question'
       );
 
       setMessages((prev) => [...prev, { text: '', isGpt: true }]);
