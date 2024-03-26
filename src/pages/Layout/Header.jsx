@@ -8,17 +8,19 @@ import {
   NavbarMenu,
   NavbarMenuItem,
   NavbarMenuToggle,
+  Spinner,
 } from '@nextui-org/react';
 
 import { IconLogin2 as LoginIcon } from '@tabler/icons-react';
 import { useState } from 'react';
 import BrandNavLogo from '../../assets/logos/BrandNavLogo.jsx';
 import { UserAreaMenu } from '../../components/UserAreaMenu.jsx';
+
 import { useUser } from '../Private/useUser.js';
 
 const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const { data: user } = useUser();
+  const { data: user, isLoading } = useUser();
 
   const handleMenuOpenChange = (open) => {
     setIsMenuOpen(open);
@@ -45,6 +47,11 @@ const Header = () => {
       href: '/shelters',
       color: 'foreground',
     },
+    {
+      name: 'Asistente',
+      href: `/private/assistant/${user?.username}`,
+      color: 'foreground',
+    },
   ];
 
   return (
@@ -66,17 +73,31 @@ const Header = () => {
       </NavbarContent>
 
       <NavbarContent className="hidden sm:flex " justify="center">
-        {menuItems.map((item, index) => (
-          <NavbarItem key={`${item.name}-${index}`}>
-            <Link color={item.color} href={item.href}>
-              {item.name}
+        {menuItems.map((item, index) => {
+          if (item.name === 'Asistente') {
+            return null;
+          }
+          return (
+            <NavbarItem key={`${item.name}-${index}`}>
+              <Link color={item.color} href={item.href}>
+                {item.name}
+              </Link>
+            </NavbarItem>
+          );
+        })}
+        {user && (
+          <NavbarItem key={`${menuItems.at(-1).name}`}>
+            <Link color={menuItems.at(-1).color} href={menuItems.at(-1).href}>
+              {menuItems.at(-1).name}
             </Link>
           </NavbarItem>
-        ))}
+        )}
       </NavbarContent>
       <NavbarContent justify="end">
         <NavbarItem>
-          {!user ? (
+          {isLoading ? (
+            <Spinner />
+          ) : !user ? (
             <Button
               as={Link}
               color="primary"
@@ -89,7 +110,7 @@ const Header = () => {
             </Button>
           ) : (
             <div className="flex gap-2">
-              <UserAreaMenu />
+              <UserAreaMenu user={user} />
             </div>
           )}
         </NavbarItem>

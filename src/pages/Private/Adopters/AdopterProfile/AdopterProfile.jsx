@@ -1,12 +1,11 @@
 import { Hero, TitleSection } from '../../../../components';
 import { DeleteUserModal, ImagesFrame, StatusAnimalsTable } from '../../shared';
-import { useUser } from '../../useUser';
 import { userAnimalsQuery } from '../../Shelters/useUserAnimals';
 
 import UserBioInfo from '../../Shelters/ShelterProfile/components/UserBioInfo';
 import { updateProfile } from '../../shared/service/updateUserService';
 import { toast } from 'react-toastify';
-import { Form } from 'react-router-dom';
+import { Form, useNavigation, useOutletContext } from 'react-router-dom';
 import { deleteFav } from '../../../Public/Animals/service';
 import { isAxiosError } from 'axios';
 
@@ -17,7 +16,8 @@ export const loader = (queryClient) => async () => {
     return data;
   } catch (error) {
     console.log({ error });
-    throw error;
+    toast.error('Error cargando perfil, ¿Estás logueado?');
+    return error;
   }
 };
 
@@ -64,7 +64,10 @@ export const action =
   };
 
 const AdopterProfile = () => {
-  const { data, isFetching } = useUser();
+  const { user: data } = useOutletContext();
+  const navigation = useNavigation();
+
+  const isLoading = navigation.state === 'loading';
   const { username } = data;
 
   return (
@@ -86,7 +89,7 @@ const AdopterProfile = () => {
               </Form>
             </section>
           </main>
-          <UserBioInfo data={data} isLoading={isFetching} />
+          <UserBioInfo data={data} isLoading={isLoading} />
           {/* <div id="NotificationsAside">
               <H2Title title="Mensajes" className="pb-5" />
               <div className="flex justify-between border-solid border-b-1 border-b-primary pb-3 items-center">

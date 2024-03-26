@@ -1,6 +1,7 @@
-import { Image, Spinner } from '@nextui-org/react';
-import { useLoaderData } from 'react-router-dom';
-import { MinimalLogo } from '../../../../assets/logos';
+import { Avatar, Image, Spinner } from '@nextui-org/react';
+import { IconHeart, IconHome } from '@tabler/icons-react';
+import { useEffect, useState } from 'react';
+import { useLoaderData, useOutletContext } from 'react-router-dom';
 import {
   AdoptButton,
   AsideDataColumn,
@@ -16,10 +17,8 @@ import {
   dogDescription,
 } from '../../../../utils/asideDataFields';
 import { handleNotFoundError } from '../../../../utils/handleError';
-import { AnimalFavs, AnimalGallery, ShareSocialMedia } from './components';
 import { animalDetailsQuery, useAnimalDetails } from '../useAnimalDetails';
-import { IconHeart } from '@tabler/icons-react';
-import { useState } from 'react';
+import { AnimalFavs, AnimalGallery, ShareSocialMedia } from './components';
 
 export const loader =
   (queryClient) =>
@@ -40,13 +39,93 @@ export const loader =
 
 const AnimalDetailsPage = () => {
   const params = useLoaderData();
-
+  const { user } = useOutletContext();
   const { slug } = params;
 
   const { data, isLoading } = useAnimalDetails(slug);
   const [images, setImages] = useState(data.images);
-
+  const isLogged = user !== null;
   if (isLoading) return <Spinner />;
+  const isOnline = user?.username === data.user.username ? true : data.isOnline;
+
+  useEffect(() => {
+    // Title of page
+    document.title = `Adopta un peludo - ${slug}`;
+    const metaDescription = document.createElement('meta');
+    metaDescription.setAttribute('name', 'description');
+    metaDescription.content = `Conoce a nuestro peludo, ${data.name} y ayúdanos a encontrarle un hogar`;
+    document.getElementsByTagName('head')[0].appendChild(metaDescription);
+    // add meta tag 'og:image'
+    const metaOgImage = document.createElement('meta');
+    metaOgImage.setAttribute('property', 'og:image');
+    metaOgImage.content = `${
+      images[0] !== undefined ? `${BUCKET_URL}/${images[0]}` : ''
+    }`;
+    document.getElementsByTagName('head')[0].appendChild(metaOgImage);
+    // add meta tag 'twitter:image'
+    const metaTwitterImage = document.createElement('meta');
+    metaTwitterImage.setAttribute('property', 'twitter:image');
+    metaTwitterImage.content = `${
+      images[0] !== undefined ? `${BUCKET_URL}/${images[0]}` : ''
+    }`;
+    document.getElementsByTagName('head')[0].appendChild(metaTwitterImage);
+
+    // add meta tag og:Title
+    const metaOgTitle = document.createElement('meta');
+    metaOgTitle.setAttribute('property', 'og:title');
+    metaOgTitle.content = `Adopta un peludo - ${slug}`;
+    document.getElementsByTagName('head')[0].appendChild(metaOgTitle);
+    // add meta tag twitter:Title
+    const metaTwitterTitle = document.createElement('meta');
+    metaTwitterTitle.setAttribute('property', 'twitter:title');
+    metaTwitterTitle.content = `Adopta un peludo - ${slug}`;
+    document.getElementsByTagName('head')[0].appendChild(metaTwitterTitle);
+
+    // add meta tag 'og:description'
+    const metaOgDescription = document.createElement('meta');
+    metaOgDescription.setAttribute('property', 'og:description');
+    metaOgDescription.content = `Conoce a nuestro peludo, ${data.name} y ayúdanos a encontrarle un hogar`;
+    document.getElementsByTagName('head')[0].appendChild(metaOgDescription);
+    // add meta tag 'Twitter:description'
+    const metaTwitterDescription = document.createElement('meta');
+    metaTwitterDescription.setAttribute('property', 'twitter:description');
+    metaTwitterDescription.content = `Conoce a nuestro peludo, ${data.name} y ayúdanos a encontrarle un hogar`;
+    document
+      .getElementsByTagName('head')[0]
+      .appendChild(metaTwitterDescription);
+
+    // add meta tag 'og:url'
+    const metaOgUrl = document.createElement('meta');
+    metaOgUrl.setAttribute('property', 'og:url');
+    metaOgUrl.content = `https://www.adoptaunpeludo.com/animals/${data.type}s/${slug}`;
+    document.getElementsByTagName('head')[0].appendChild(metaOgUrl);
+
+    // add meta tag 'twitter:url'
+    const metaTwitterUrl = document.createElement('meta');
+    metaTwitterUrl.setAttribute('property', 'twitter:url');
+    metaTwitterUrl.content = `https://www.adoptaunpeludo.com/animals/${data.type}s/${slug}`;
+    document.getElementsByTagName('head')[0].appendChild(metaTwitterUrl);
+
+    // add meta tag 'og:type'
+    const metaOgType = document.createElement('meta');
+    metaOgType.setAttribute('property', 'og:type');
+    metaOgType.content = 'website';
+    document.getElementsByTagName('head')[0].appendChild(metaOgType);
+    // add meta tag 'Twitter:card'
+    const metaTwitterCard = document.createElement('meta');
+    metaTwitterCard.setAttribute('property', 'twitter:card');
+    metaTwitterCard.content = `summary_large_image`;
+    document.getElementsByTagName('head')[0].appendChild(metaTwitterCard);
+
+    // Clean at unmount the component
+    return () => {
+      document.getElementsByTagName('head')[0].removeChild(metaOgTitle);
+      document.getElementsByTagName('head')[0].removeChild(metaOgDescription);
+      document.getElementsByTagName('head')[0].removeChild(metaOgImage);
+      document.getElementsByTagName('head')[0].removeChild(metaOgUrl);
+      document.getElementsByTagName('head')[0].removeChild(metaOgType);
+    };
+  }, []);
 
   return (
     <main className="max-w-screen-xl w-full flex  flex-col justify-center  gap-12 h-full  py-12  mx-auto flex-grow">
@@ -56,22 +135,34 @@ const AnimalDetailsPage = () => {
 
       <section className="flex gap-12 max-xl:flex-col mx-auto">
         <section id="central-column" className="flex flex-col flex-1">
-          {/* TODO: check loading image put spinner reservate space */}
-          <div className="relative container lg:w-164">
+          <div className="relative container lg:w-164 rounded-lg bg-detail bg-cover bg-center">
             <Image
               src={`${BUCKET_URL}/${images[0]}`}
-              className=" xl:w-200 xl:max-h-[36rem] object-cover object-top aspect-4/3 flex-1"
-              // loading="lazy"
+              className=" xl:w-200 xl:max-h-[36rem] object-cover object-center aspect-4/3 flex-1"
+              loading="lazy"
               alt={slug}
               radius="sm"
+              disableSkeleton
             />
             <IconHeart
               size={40}
               className="absolute left-3 bottom-3 z-10  stroke-primary"
             />
-            {/* {TODO: change Minimal logo shelter avatar} */}
-            <MinimalLogo size={60} className="absolute right-5 top-5 z-10" />
-            <AdoptButton className="absolute right-5 bottom-5 z-10">
+
+            <Avatar
+              isBordered
+              color={`${
+                isLogged ? (isOnline ? 'success' : 'danger') : 'default'
+              }`}
+              className="absolute right-5 top-5 z-10 bg-white"
+              src={`${BUCKET_URL}/${data.user.Avatar}`}
+              showFallback
+              fallback={<IconHome className="w-10 h-10 stroke-gray-600" />}
+            />
+            <AdoptButton
+              className="absolute right-5 bottom-5 z-10"
+              adoptAnimal={`/shelters/${data.user.username}`}
+            >
               Adoptar
             </AdoptButton>
           </div>
@@ -103,7 +194,9 @@ const AnimalDetailsPage = () => {
       <footer className="flex px-4 justify-around items-center max-sm:flex-col max-sm:justify-start">
         <AnimalFavs numFavs={data.numFavs} />
         <ContactShelter />
-        <ShareSocialMedia />
+        <ShareSocialMedia
+          url={`https://www.adoptaunpeludo.com/animals/${data.type}s/${slug}`}
+        />
       </footer>
     </main>
   );

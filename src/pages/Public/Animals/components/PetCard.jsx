@@ -22,7 +22,10 @@ import { IconHome } from '@tabler/icons-react';
 import { useOutletContext } from 'react-router-dom';
 import { HeartIcon, PetSize, UnderlineVector } from '../../../../assets/svg';
 import { BUCKET_URL, FALLBACK_IMAGE_CARD } from '../../../../config/config';
-import { isNullDataField } from '../../../../utils/asideDataFields';
+import {
+  ageDataField,
+  isNullDataField,
+} from '../../../../utils/asideDataFields';
 import { buttonStyleConfig } from '../../../../utils/configFormFields';
 import { animalSizeEnum, genderEnum } from '../../../../utils/enumData';
 export const PetCard = ({ animal, isLogged }) => {
@@ -79,7 +82,7 @@ export const PetCard = ({ animal, isLogged }) => {
             <PetSize />
             <span>{isNullDataField(animal.size, animalSizeEnum)}</span>
           </article>
-          <article className="flex justify-start gap-1 items-center">
+          <article className="flex justify-start gap-0 items-center">
             {/* Gender */}
             {animal.gender === 'male' ? (
               <>
@@ -95,7 +98,7 @@ export const PetCard = ({ animal, isLogged }) => {
           </article>
           <article className="flex justify-start items-center gap-1">
             <UilSchedule className="fill-tertiary" />
-            <span>{`${animal.age} años`}</span>
+            <span>{ageDataField(animal.age)}</span>
           </article>
         </section>
         <section id="icons-line2" className="flex justify-start ">

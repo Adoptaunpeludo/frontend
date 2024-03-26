@@ -1,12 +1,14 @@
 import { createContext, useContext, useEffect, useRef, useState } from 'react';
 import { WB_SERVER } from '../config/config';
 import { useQueryClient } from '@tanstack/react-query';
+import { useNotificationsContext } from './NotificationsContext';
 
 const WebSocketContext = createContext();
 
 const WebSocketContextProvider = ({ children, user }) => {
   const [isReady, setIsReady] = useState(false);
   const [message, setMessage] = useState(null);
+  const { setNotifications } = useNotificationsContext();
   const queryClient = useQueryClient();
 
   const ws = useRef(null);
@@ -29,29 +31,32 @@ const WebSocketContextProvider = ({ children, user }) => {
 
         socket.onmessage = (event) => {
           const message = JSON.parse(event.data);
-
-          if (message.type === 'pong') {
+          const { type, ...data } = message;
+          if (type === 'pong') {
             clearInterval(pingInterval);
           }
 
-          if (message.type === 'animal-changed') {
-            queryClient.invalidateQueries(['animals', 'user-notifications']);
+          if (type === 'animal-changed') {
+            setNotifications((notifications) => [...notifications, data]);
+            queryClient.invalidateQueries({
+              queryKey: ['animals'],
+            });
+            queryClient.invalidateQueries({
+              queryKey: ['animal-details', data.animalSlug],
+            });
           }
 
-          if (message.type === 'user-connected') {
+          if (type.startsWith('user')) {
             const { username } = message;
-            queryClient.invalidateQueries([
-              'shelters',
-              ['shelters-details', username],
-            ]);
-          }
-
-          if (message.type === 'user-disconnected') {
-            const { username } = message;
-            queryClient.invalidateQueries([
-              'shelters',
-              ['shelters-details', username],
-            ]);
+            queryClient.invalidateQueries({
+              queryKey: ['shelters'],
+            });
+            queryClient.invalidateQueries({
+              queryKey: ['shelter-details', username],
+            });
+            queryClient.invalidateQueries({
+              queryKey: ['animals'],
+            });
           }
         };
 
