@@ -1,4 +1,5 @@
 import {
+  Badge,
   Dropdown,
   DropdownItem,
   DropdownMenu,
@@ -11,46 +12,71 @@ import { useQueryClient } from '@tanstack/react-query';
 import { useNavigate } from 'react-router-dom';
 import { BUCKET_URL } from '../config/config.js';
 import { logout } from '../pages/Auth/authService.js';
-
-import { useAuthContext } from '../context/AuthContext.jsx';
+import { useWebSocketContext } from '../context/WebSocketContext.jsx';
+import { toast } from 'react-toastify';
+import { useNotifications } from '../pages/Private/useNotifications.js';
 import { useUser } from '../pages/Private/useUser.js';
 
 export const UserAreaMenu = () => {
+  const { socket } = useWebSocketContext();
   const { data: user } = useUser();
-  const { setIsLoggedIn } = useAuthContext();
+  const { data: notifications } = useNotifications();
   const navigate = useNavigate();
   const queryClient = useQueryClient();
 
   const handleLogout = async () => {
-    await logout();
-    setIsLoggedIn(false);
-    localStorage.setItem('isLoggedIn', false);
-    queryClient.removeQueries();
-    navigate('/');
+    try {
+      await logout();
+      socket.close();
+      sessionStorage.setItem('isLoggedIn', false);
+      queryClient.removeQueries([
+        {
+          queryKey: ['user'],
+        },
+        {
+          queryKey: ['user-notifications'],
+        },
+        {
+          queryKey: ['user-favs'],
+        },
+        {
+          queryKey: ['user-animals'],
+        },
+      ]);
+      navigate('/');
+    } catch (error) {
+      toast.error('Error haciendo logout');
+      throw error;
+    }
   };
 
-  if (!user) return;
-
-  const { avatar, firstName, lastName, username, email, role } = user;
+  const userNotifications = notifications?.notifications;
 
   return (
     <Dropdown placement="bottom-end">
-      <DropdownTrigger>
-        <User
-          name={username}
-          description={`${firstName === null ? 'J.' : firstName} ${
-            lastName === null ? 'Doe' : lastName
-          }`}
-          avatarProps={{
-            src: `${BUCKET_URL}/${avatar}`,
-            isBordered: true,
-            // color: isOnline ? 'success' : 'danger',
-            as: 'button',
-            showFallback: true,
-            fallback: <IconUserFilled />,
-          }}
-        />
-      </DropdownTrigger>
+      <Badge
+        content={userNotifications?.length}
+        size="lg"
+        color="primary"
+        placement="top-left"
+      >
+        <DropdownTrigger>
+          <User
+            name={user?.username}
+            description={`${
+              user?.firstName === null ? 'J.' : user?.firstName
+            } ${user?.lastName === null ? 'Doe' : user?.lastName}`}
+            avatarProps={{
+              src: `${BUCKET_URL}/${user?.avatar}`,
+              isBordered: true,
+              // color: isOnline ? 'success' : 'danger',
+              as: 'button',
+              showFallback: true,
+              fallback: <IconUserFilled />,
+            }}
+          />
+        </DropdownTrigger>
+      </Badge>
       <DropdownMenu aria-label="Profile Actions" variant="flat">
         <DropdownItem
           key="signedMail"
@@ -58,11 +84,11 @@ export const UserAreaMenu = () => {
           textValue="user email"
         >
           <p className="font-semibold capitalize">has iniciado sesión como</p>
-          <p className="font-semibold">{email}</p>
+          <p className="font-semibold">{user?.email}</p>
         </DropdownItem>
         <DropdownItem key="profile" textValue="user profile">
           <Link
-            href={`/private/${role}`}
+            href={`/private/${user?.role}`}
             color="foreground"
             className="capitalize w-full"
           >
@@ -71,7 +97,7 @@ export const UserAreaMenu = () => {
         </DropdownItem>
         <DropdownItem key="notifications" textValue="user notifications">
           <Link
-            href={`/private/${role}`}
+            href={`/private/${user?.role}`}
             color="foreground"
             className="capitalize w-full"
           >
@@ -80,7 +106,7 @@ export const UserAreaMenu = () => {
         </DropdownItem>
         <DropdownItem key="chats" textValue="user chats">
           <Link
-            href={`/private/${role}`}
+            href={`/private/${user?.role}`}
             color="foreground"
             className="capitalize w-full"
           >

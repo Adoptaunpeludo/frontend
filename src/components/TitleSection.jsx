@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 export const TitleSection = ({ title, className }) => {
   return (
     <header
-      className={` ${className} border-solid border-t-1 border-b-1 border-t-primary border-b-primary py-8 h-100 `}
+      className={`  border-solid border-t-1 border-b-1 border-t-primary border-b-primary py-8 h-100 ${className}`}
     >
       <h1
         className="font-lobster text-7xl flex justify-center text-center"

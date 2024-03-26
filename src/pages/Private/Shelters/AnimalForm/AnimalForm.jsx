@@ -38,6 +38,7 @@ import {
   useAnimalDetails,
 } from '../../../Public/Animals/useAnimalDetails';
 import { handleNotFoundError } from '../../../../utils/handleError';
+import { isAxiosError } from 'axios';
 
 export const action =
   (animalImages, queryClient) =>
@@ -64,9 +65,9 @@ export const action =
         toast.success(`Animal ${animal.name} puesto en adopción`);
         return redirect(`/animals/${animal.type}s/${animal.slug}`);
       } catch (error) {
-        console.log(error);
-        toast.error('Error creando anuncio de adopción');
-        return null;
+        if (isAxiosError(error) && error.response.status === 400)
+          return toast.error('Error creando el anuncio de adopción');
+        throw error;
       }
     }
 
@@ -81,9 +82,9 @@ export const action =
         toast.success(`Animal ${animal.name} Actualizado`);
         return redirect(`/animals/${animal.type}s/${animal.slug}`);
       } catch (error) {
-        console.log(error);
-        toast.error('Error creando anuncio de adopción');
-        return null;
+        if (isAxiosError(error) && error.response.status === 400)
+          return toast.error('Error actualizando el anuncio de adopción');
+        throw error;
       }
     }
   };
@@ -91,6 +92,7 @@ export const action =
 export const loader =
   (queryClient) =>
   async ({ params }) => {
+    console.log({ params });
     try {
       const { slug } = params;
       await queryClient.ensureQueryData(animalDetailsQuery(slug));
@@ -100,8 +102,7 @@ export const loader =
         const notFoundError = handleNotFoundError(error);
         throw notFoundError;
       }
-
-      throw error;
+      return error;
     }
   };
 
@@ -155,23 +156,26 @@ const AnimalForm = () => {
             <div className="flex flex-col gap-6 max-w-4xl mx-auto px-10 ">
               <div className="flex w-full flex-col gap-4">
                 <AnimalBioForm
-                  data={data}
+                  data={data ? data : {}}
                   isDisabled={isSubmitting}
                   setErrorsState={setErrorsState}
                 />
                 {pet === 'cat' && (
                   <OtherPropertiesCatForm
-                    data={data}
+                    data={data ? data : {}}
                     isDisabled={isSubmitting}
                   />
                 )}
                 {pet === 'dog' && (
                   <OtherPropertiesDogForm
-                    data={data}
+                    data={data ? data : {}}
                     isDisabled={isSubmitting}
                   />
                 )}
-                <StatusShelterForm data={data} isDisabled={isSubmitting} />
+                <StatusShelterForm
+                  data={data ? data : {}}
+                  isDisabled={isSubmitting}
+                />
                 <H4Title title="Descripción:" className="mx-2" />
                 <Textarea
                   className="w-full "

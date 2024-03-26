@@ -12,10 +12,16 @@ import {
 import { UilMapMarker, UilPlay } from '@iconscout/react-unicons';
 
 import { IconHome } from '@tabler/icons-react';
-import { UnderlineVector } from '../assets/svg';
-import { BUCKET_URL, FALLBACK_IMAGE_CARD } from '../config/config';
+import { useOutletContext } from 'react-router-dom';
+import { UnderlineVector } from '../../../../assets/svg';
+import { BUCKET_URL, FALLBACK_IMAGE_CARD } from '../../../../config/config';
 
-export const ShelterCard = ({ shelter }) => {
+export const ShelterCard = ({ shelter, isLogged }) => {
+  const { user } = useOutletContext();
+
+  const isOnline =
+    user?.username === shelter.username ? true : shelter.isOnline;
+
   return (
     <Card className="max-w-72">
       {/* Header */}
@@ -32,21 +38,23 @@ export const ShelterCard = ({ shelter }) => {
           <UnderlineVector />
         </div>
         {/* Avatar */}
-        <div className="absolute z-20 bottom-2 left-1/2 -translate-x-10 w-full back">
+        <div className="absolute z-30 bottom-6 left-56  w-full">
           <Avatar
             isBordered
-            color={shelter.isOnline ? 'success' : 'danger'}
-            className="w-24 h-24"
+            color={`${
+              isLogged ? (isOnline ? 'success' : 'danger') : 'default'
+            }`}
+            className="w-10 h-10 bg-white"
             src={`${BUCKET_URL}/${shelter.images[0]}`}
             showFallback
-            fallback={<IconHome className="w-10 h-10" />}
+            fallback={<IconHome className="w-10 h-10 stroke-gray-600" />}
           />
         </div>
       </CardHeader>
 
       {/* Body */}
 
-      <CardBody className="flex flex-column overflow-visible py-2 content-between">
+      <CardBody className="flex flex-column overflow-visible py-2 content-between h-44">
         {/* username */}
         <h3 className="flex w-full font-lobster justify-center items-center text-3xl capitalize">
           {shelter.username}
@@ -72,7 +80,7 @@ export const ShelterCard = ({ shelter }) => {
       {/* Footer */}
       <CardFooter className=" flex w-full justify-center items-center border-t-1 border-primary">
         <Button
-          href={`/shelters/${shelter.id}`}
+          href={`/shelters/${shelter.username}`}
           as={Link}
           color="primary"
           size="sm"

@@ -17,6 +17,7 @@ import {
   LandingPage,
   LoginPage,
   RegisterPage,
+  ShelterDetailsPage,
   ShelterProfile,
   SheltersPage,
   VerifyEmail,
@@ -27,16 +28,18 @@ import { action as registerAction } from './pages/Auth/Register/RegisterPage.jsx
 import { action as shelterProfileAction } from './pages/Private/Shelters/ShelterProfile/ShelterProfile.jsx';
 import { action as adopterProfileAction } from './pages/Private/Adopters/AdopterProfile/AdopterProfile.jsx';
 import { action as mutateAnimalAction } from './pages/Private/Shelters/AnimalForm/AnimalForm.jsx';
+import { action as verifyEmailAction } from './pages/Auth/VerifyEmail/VerifyEmailPage.jsx';
 
 import { loader as updateAnimalLoader } from './pages/Private/Shelters/AnimalForm/AnimalForm.jsx';
 import { loader as animalDetailsLoader } from './pages/Public/Animals/AnimalDetails/AnimalDetailsPage.jsx';
 import { loader as animalsLoader } from './pages/Public/Animals/AnimalsPage.jsx';
 import { loader as landingAnimalsLoader } from './pages/Public/Landing/LandingPage.jsx';
-import { loader as currentUserLoader } from './pages/Private/ProtectedRoute.jsx';
+import { loader as shelterDetailsLoader } from './pages/Public/Shelters/ShelterDetails/ShelterDetailsPage.jsx';
 import { loader as userAnimalsLoader } from './pages/Private/Shelters/ShelterProfile/ShelterProfile.jsx';
 import { loader as userFavsLoader } from './pages/Private/Adopters/AdopterProfile/AdopterProfile.jsx';
 import { loader as sheltersLoader } from './pages/Public/Shelters/SheltersPage.jsx';
 import { loader as verifyEmailLoader } from './pages/Auth/VerifyEmail/VerifyEmailPage.jsx';
+import { loader as userDataLoader } from './pages/Layout/AppLayout.jsx';
 
 import { useAnimalImagesContext } from './context/AnimalImagesContext.jsx';
 import NotFoundPage from './pages/Error/NotFound/NotFoundPage.jsx';
@@ -57,6 +60,7 @@ const router = (bioModalOnClose, shelterModalOnClose, animalImages) =>
       path: '/',
       element: <AppLayout />,
       errorElement: <ErrorPage />,
+      loader: userDataLoader(queryClient),
       children: [
         //* Auth Routes
         {
@@ -73,6 +77,7 @@ const router = (bioModalOnClose, shelterModalOnClose, animalImages) =>
           path: '/verify-email/:token',
           element: <VerifyEmail />,
           loader: verifyEmailLoader,
+          action: verifyEmailAction,
         },
         //* End Auth Routes
         //* Public Routes
@@ -85,6 +90,16 @@ const router = (bioModalOnClose, shelterModalOnClose, animalImages) =>
           path: 'shelters',
           element: <SheltersPage page={'shelter'} />,
           loader: sheltersLoader(queryClient, 'shelters'),
+        },
+        {
+          path: 'shelters/:username',
+          element: <ShelterDetailsPage />,
+          loader: shelterDetailsLoader(queryClient),
+        },
+        {
+          path: 'animals/:shelterName',
+          element: <AnimalsPage page={'shelters'} />,
+          loader: animalsLoader(queryClient, 'shelters'),
         },
         {
           path: 'animals/cats',
@@ -112,7 +127,7 @@ const router = (bioModalOnClose, shelterModalOnClose, animalImages) =>
         {
           path: 'private',
           element: <ProtectedRoute />,
-          loader: currentUserLoader(queryClient),
+          errorElement: <ErrorPage />,
           children: [
             {
               path: 'adopter',
@@ -131,20 +146,19 @@ const router = (bioModalOnClose, shelterModalOnClose, animalImages) =>
               ),
             },
             {
-              path: 'shelter/create-animal',
-              element: <AnimalForm />,
-              action: mutateAnimalAction(animalImages, queryClient),
-            },
-            {
               path: 'shelter/update-animal/:slug',
               element: <AnimalForm />,
               action: mutateAnimalAction(animalImages, queryClient),
               loader: updateAnimalLoader(queryClient),
             },
+            {
+              path: 'shelter/create-animal',
+              element: <AnimalForm />,
+              action: mutateAnimalAction(animalImages, queryClient),
+            },
           ],
         },
         //* End Private Routes
-
         //* Not Found Routes
         {
           path: '404',
@@ -165,6 +179,7 @@ function App() {
   return (
     <QueryClientProvider client={queryClient}>
       <ReactQueryDevtools initialIsOpen={false} />
+
       <RouterProvider
         router={router(bioModal.onClose, shelterModal.onClose, animalImages)}
       />

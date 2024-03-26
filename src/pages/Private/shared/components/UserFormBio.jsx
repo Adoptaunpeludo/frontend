@@ -109,9 +109,8 @@ export const UserFormBio = ({ data }) => {
                           type="text"
                           label="Nombre"
                           name="firstName"
-                          defaultValue={
-                            firstName === '' ? 'Introduce tu nombre' : firstName
-                          }
+                          defaultValue={firstName ? firstName : ''}
+                          placeholder="Introduce tu Nombre"
                           color={errors.firstName ? 'danger' : 'none'}
                           errorMessage={errors.firstName}
                           onChange={handleChange}
@@ -122,11 +121,8 @@ export const UserFormBio = ({ data }) => {
                           type="text"
                           label="Apellidos"
                           name="lastName"
-                          defaultValue={
-                            lastName === ''
-                              ? 'Introduce tus apellidos'
-                              : lastName
-                          }
+                          defaultValue={lastName ? lastName : ''}
+                          placeholder="Introduce tus apellidos"
                           color={errors.lastName ? 'danger' : 'none'}
                           errorMessage={errors.lastName}
                           onChange={handleChange}
@@ -139,11 +135,8 @@ export const UserFormBio = ({ data }) => {
                           type="tel"
                           label="Teléfono"
                           name="phoneNumber"
-                          defaultValue={
-                            phoneNumber === ''
-                              ? 'Introduce tu teléfono'
-                              : phoneNumber
-                          }
+                          defaultValue={phoneNumber ? phoneNumber : ''}
+                          placeholder="Introduce tu número de teléfono"
                           onChange={handleChange}
                         />
                         <SelectField

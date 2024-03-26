@@ -1,6 +1,8 @@
 import { deleteData, fetchData, postData } from '../../../api/client';
 
 export const getAnimalDetails = async (slug) => {
+  if (!slug) return null;
+
   const { data } = await fetchData(`/animals/${slug}`);
 
   return data;

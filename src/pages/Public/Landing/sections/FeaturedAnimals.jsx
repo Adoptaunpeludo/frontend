@@ -1,12 +1,10 @@
 import { Spinner } from '@nextui-org/react';
-
+import { Panel } from '../../../../components';
 import FeaturedPets from '../components/FeaturedPets';
 import { useAnimals } from '../useAnimals';
-import { Panel } from '../../../../components';
 
 const FeaturedAnimals = ({ page }) => {
   const { data, isLoading } = useAnimals(page, { limit: 4 });
-
   const background =
     page === 'cats'
       ? "max-w-screen-xl w-full flex gap-3 justify-end max-sm:justify-center  px-5  h-max  bg-left-bottom bg-auto bg-no-repeat bg-[url('/backgrounds/featured-cats.jpg')]"

@@ -8,6 +8,7 @@ import { updateProfile } from '../../shared/service/updateUserService';
 import { toast } from 'react-toastify';
 import { Form } from 'react-router-dom';
 import { deleteFav } from '../../../Public/Animals/service';
+import { isAxiosError } from 'axios';
 
 export const loader = (queryClient) => async () => {
   try {
@@ -15,8 +16,8 @@ export const loader = (queryClient) => async () => {
 
     return data;
   } catch (error) {
-    console.log(error);
-    return error;
+    console.log({ error });
+    throw error;
   }
 };
 
@@ -30,13 +31,13 @@ export const action =
       try {
         await updateProfile(formData, intent);
         queryClient.invalidateQueries({ queryKey: ['user'] });
-        toast.success('Perfil del Refugio actualizado');
+        toast.success('Perfil actualizado');
         closeBioModal();
         return null;
       } catch (error) {
-        console.log(error);
-        toast.error('Error actualizando perfil del Refugio');
-        return null;
+        if (isAxiosError(error) && error.response.status === 400)
+          return toast.error('Error actualizando perfil');
+        throw error;
       }
     }
 
@@ -55,16 +56,15 @@ export const action =
         ]);
         return null;
       } catch (error) {
-        console.log(error);
-        toast.error('Error al borrar de favoritos');
-        return error;
+        if (isAxiosError(error) && error.response.status === 400)
+          return toast.error('Error al borrar de favoritos');
+        throw error;
       }
     }
   };
 
 const AdopterProfile = () => {
   const { data, isFetching } = useUser();
-
   const { username } = data;
 
   return (

@@ -3,7 +3,11 @@ import { IconLogin2 as LoginIcon } from '@tabler/icons-react';
 import { useState } from 'react';
 import { Form, Link, redirect } from 'react-router-dom';
 import { toast } from 'react-toastify';
-import { Hero, LogoHeader, Panel } from '../../../components';
+import { H3Title, LogoHeader, Panel } from '../../../components';
+import {
+  buttonStyleConfig,
+  inputStyleConfig,
+} from '../../../utils/configFormFields';
 import { handleAuthError } from '../../../utils/handleError';
 import { validateField } from '../../../utils/validateField';
 import { userQuery } from '../../Private/useUser';
@@ -22,11 +26,12 @@ export const action =
         queryKey: ['user'],
       });
       await queryClient.ensureQueryData(userQuery);
-      localStorage.setItem('isLoggedIn', true);
+      sessionStorage.setItem('isLoggedIn', true);
       return redirect('/');
     } catch (error) {
       const message = handleAuthError(error);
       toast.error(message);
+
       return redirect('/login');
     }
   };
@@ -59,69 +64,73 @@ const LoginPage = () => {
   );
 
   return (
-    <>
-      <main className="bg-default-100 flex-grow">
-        <Hero />
-        <section
-          id="login"
-          className="max-w-screen-xl w-full flex flex-col gap-3 h-full justify-center py-12 mx-auto"
-        >
-          <LogoHeader />
-          <Panel>
-            <Form
-              method="post"
-              className="flex flex-col gap-6 max-w-lg mx-auto px-10 py-8"
-            >
-              <div>Inicia sesión en tu cuenta para continuar</div>
-              <div className="flex flex-col gap-3">
-                <Input
-                  type="email"
-                  label="email"
-                  name="email"
-                  placeholder="Introduce tu email"
-                  color={errors.email ? 'danger' : 'none'}
-                  onBlur={handleChange}
-                  errorMessage={errors.email}
-                  required
-                ></Input>
-                <Input
-                  type="password"
-                  name="password"
-                  label="Password"
-                  placeholder="Introduce tu password"
-                  color={errors.password ? 'danger' : 'none'}
-                  errorMessage={errors.password}
-                  onChange={handleChange}
-                  required
-                ></Input>
-              </div>
-              <div className="flex justify-end">
-                <Link to="#">¿Olvidaste tu password?</Link>
-              </div>
-              <div className="flex justify-center">
-                <Button
-                  isDisabled={enableButton}
-                  type="submit"
-                  color="primary"
-                  variant="solid"
-                  size="lg"
-                  endContent={<LoginIcon />}
-                  className="px-10"
-                >
-                  Iniciar sesión
-                </Button>
-              </div>
-              <div className="flex justify-between">
-                <div>¿Necesitas crear una cuenta?</div>
-                <div>
-                  <Link to="/register">Regístrate</Link>
-                </div>
-              </div>
-            </Form>
-          </Panel>
-        </section>
-      </main>
-    </>
+    <main className="bg-default-100 flex-grow">
+      <section
+        id="login"
+        className="max-w-screen-xl w-full flex flex-col gap-3 justify-center py-10 mx-auto  "
+      >
+        <LogoHeader />
+        <Panel className={'max-w-md mx-auto'}>
+          <Form
+            method="post"
+            className="flex flex-col gap-6  mx-auto px-10 py-8"
+          >
+            <H3Title
+              title="Inicia sesión en tu cuenta para continuar"
+              className={'normal-case text-pretty'}
+            />
+            <div className="flex flex-col gap-3">
+              <Input
+                type="email"
+                label="Email"
+                name="email"
+                placeholder="Introduce tu email"
+                color={errors.email ? 'danger' : 'none'}
+                onBlur={handleChange}
+                errorMessage={errors.email}
+                isRequired
+                classNames={inputStyleConfig}
+              />
+              <Input
+                type="password"
+                name="password"
+                label="Password"
+                placeholder="Introduce tu password"
+                color={errors.password ? 'danger' : 'none'}
+                errorMessage={errors.password}
+                onChange={handleChange}
+                isRequired
+                classNames={inputStyleConfig}
+              />
+            </div>
+            <div className="flex justify-end">
+              <Link to="#" className="text-tertiary font-poppins">
+                ¿Olvidaste tu password?
+              </Link>
+            </div>
+            <div className="flex justify-center">
+              <Button
+                isDisabled={enableButton}
+                type="submit"
+                color="primary"
+                variant="solid"
+                size="lg"
+                endContent={<LoginIcon />}
+                className={buttonStyleConfig}
+              >
+                Iniciar sesión
+              </Button>
+            </div>
+            <div className="flex justify-center gap-1 font-medium font-poppins">
+              <span>¿Necesitas crear una cuenta?</span>
+              <Link to="/register" className="text-tertiary">
+                Regístrate
+              </Link>
+            </div>
+          </Form>
+        </Panel>
+      </section>
+    </main>
   );
 };
 

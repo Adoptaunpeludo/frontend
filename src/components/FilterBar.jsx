@@ -3,6 +3,11 @@ import { useState } from 'react';
 import { useLoaderData, useNavigate, useSearchParams } from 'react-router-dom';
 // import { PagePagination } from './Pagination';
 import {
+  buttonStyleConfig,
+  inputStyleConfig,
+  selectStyleConfig,
+} from '../utils/configFormFields';
+import {
   ageRanges,
   animalSizeEnum,
   cities,
@@ -61,6 +66,7 @@ export function FilterBar({ page }) {
         });
     }
 
+    searchParams.delete('page');
     setSearchParams(searchParams);
   };
 
@@ -79,6 +85,9 @@ export function FilterBar({ page }) {
         onValueChange={setName}
         name={page !== 'shelter' ? 'name' : 'username'}
         defaultValue={params?.name || ''}
+
+        classNames={inputStyleConfig}
+
       />
       <Spacer x={0.5} />
       {page !== 'shelter' && (
@@ -90,13 +99,16 @@ export function FilterBar({ page }) {
           selectedKeys={size}
           onSelectionChange={setSize}
           defaultSelectedKeys={params?.size ? [params.size] : []}
+
+          classNames={selectStyleConfig}
+
         >
           {animalSizeEnum.map((size) => (
             <SelectItem
               key={size.value}
               value={size.value}
               className="capitalize"
-              textValue={size.value}
+              textValue={size.label}
             >
               {size.label}
             </SelectItem>
@@ -112,13 +124,16 @@ export function FilterBar({ page }) {
           selectedKeys={gender}
           onSelectionChange={setGender}
           defaultSelectedKeys={params?.gender ? [params.gender] : []}
+
+          classNames={selectStyleConfig}
+
         >
           {genderEnum.map((gender) => (
             <SelectItem
               key={gender.value}
               value={gender.value}
               className="capitalize"
-              textValue={gender.value}
+              textValue={gender.label}
             >
               {gender.label}
             </SelectItem>
@@ -134,13 +149,16 @@ export function FilterBar({ page }) {
           defaultSelectedKeys={params?.age ? [params.age] : []}
           selectedKeys={age}
           onSelectionChange={setAge}
+
+          classNames={selectStyleConfig}
+
         >
           {ageRanges.map((age) => (
             <SelectItem
               key={age.value}
               value={age.value}
               className="capitalize"
-              textValue={age.value}
+              textValue={age.label}
             >
               {age.label}
             </SelectItem>
@@ -155,22 +173,32 @@ export function FilterBar({ page }) {
         defaultSelectedKeys={params?.city ? [params.city] : []}
         selectedKeys={city}
         onSelectionChange={setCity}
+
+        classNames={selectStyleConfig}
+
       >
         {cities.map((city) => (
           <SelectItem
             key={city.value}
             value={city.value}
             className="capitalize"
-            textValue={city.value}
+            textValue={city.label}
           >
             {city.label}
           </SelectItem>
         ))}
       </Select>
-      <Button type="submit" color="primary">
+
+      <Button type="submit" color="primary" className={buttonStyleConfig}>
         Buscar
       </Button>
-      <Button onPress={handleReset} color="primary" type="reset">
+      <Button
+        onPress={handleReset}
+        color="primary"
+        type="reset"
+        className={buttonStyleConfig}
+      >
+
         Reset
       </Button>
       {/* TODO:Dont remove without final layout  */}

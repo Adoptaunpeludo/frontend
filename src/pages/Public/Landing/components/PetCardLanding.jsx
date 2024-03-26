@@ -1,6 +1,9 @@
 import { Button, Card, CardBody, Image, Link } from '@nextui-org/react';
 import { IconPawFilled } from '@tabler/icons-react';
-const PetCardLanding = ({ image, name, age, breed, slug, type }) => {
+import { isNullDataField } from '../../../../utils/asideDataFields';
+import { buttonStyleConfig } from '../../../../utils/configFormFields';
+import { genderEnum } from '../../../../utils/enumData';
+const PetCardLanding = ({ image, name, age, gender, slug, type }) => {
   return (
     <Card
       className="bg-white max-w-xl rounded-2xl flex gap-3 py-2 px-4"
@@ -11,21 +14,23 @@ const PetCardLanding = ({ image, name, age, breed, slug, type }) => {
           <div className="relative col-span-6 sm:col-span-7">
             <Image
               alt={name}
-              className="object-cover h-28 w-60"
+              className="object-cover h-28 w-60 "
               shadow="md"
               src={`${image}`}
             />
           </div>
           <div className="relative col-span-6  sm:col-span-5 ">
             <div className="data flex flex-col   ">
-              <div className="name font-poppins text-3xl font-bold ">
+              <div className="font-poppins text-3xl font-bold capitalize">
                 {name}
               </div>
               <div className="breed-age flex gap-1 pb-4">
-                <span className="breed font-poppins text-sm font-bold">
-                  {breed}
+                <span className="font-poppins text-sm font-bold">
+                  {isNullDataField(gender, genderEnum)}
                 </span>
-                <span className="age font-poppins text-sm">{age}</span>
+                <span className="age font-poppins text-sm">{`${age} ${
+                  age === 1 ? 'año' : 'años'
+                }`}</span>
               </div>
             </div>
             <div className="flex flex-col justify-center mx-auto">
@@ -35,7 +40,7 @@ const PetCardLanding = ({ image, name, age, breed, slug, type }) => {
                 href={`/animals/${type}s/${slug}`}
                 color="primary"
                 endContent={<IconPawFilled />}
-                className="px-5"
+                className={buttonStyleConfig}
               >
                 Ver peludo
               </Button>
