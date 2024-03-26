@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { GptMessage, UserMessage, TextMessageBoxFile } from '../../components';
+
 import { chatStreamGeneratorUseCase } from '../../../core/use-cases/chat-stream-generator/chat-stream-generator.use-case';
 import { useScroll } from '../../../hooks/useScroll';
 import { useLoaderData } from 'react-router-dom';
@@ -7,6 +7,9 @@ import { documentHistoryQuery, useDocumentHistory } from './useDocumentHistory';
 import { mapChatHistory } from '../../../utils';
 import { toast } from 'react-toastify';
 import { Spinner } from '@nextui-org/react';
+import GptMessage from './components/GptMessage';
+import UserMessage from './components/UserMessage';
+import TextMessageBox from './components/TextMessageBox';
 
 export const loader =
   (queryClient) =>
@@ -88,7 +91,7 @@ const AssistantPage = () => {
         )}
       </div>
 
-      <TextMessageBoxFile
+      <TextMessageBox
         onSendMessage={handlePost}
         onDeleteMessages={handleDeleteMessages}
         placeholder="Escribe aquí tu pregunta"

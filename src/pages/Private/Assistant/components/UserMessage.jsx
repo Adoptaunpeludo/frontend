@@ -1,4 +1,4 @@
-const MyMessage = ({ text }) => {
+const UserMessage = ({ text }) => {
   return (
     <div className="sm:col-start-6 col-start-1 col-end-13 p-3 rounded-lg">
       <div className="flex items-center justify-start flex-row-reverse">
@@ -13,4 +13,4 @@ const MyMessage = ({ text }) => {
   );
 };
 
-export default MyMessage;
+export default UserMessage;
