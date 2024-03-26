@@ -38,23 +38,25 @@ const WebSocketContextProvider = ({ children, user }) => {
 
           if (type === 'animal-changed') {
             setNotifications((notifications) => [...notifications, data]);
-            queryClient.invalidateQueries(['animals']);
+            queryClient.invalidateQueries({
+              queryKey: ['animals'],
+            });
+            queryClient.invalidateQueries({
+              queryKey: ['animal-details', data.animalSlug],
+            });
           }
 
-          if (type === 'user-connected') {
+          if (type.startsWith('user')) {
             const { username } = message;
-            queryClient.invalidateQueries([
-              'shelters',
-              ['shelters-details', username],
-            ]);
-          }
-
-          if (type === 'user-disconnected') {
-            const { username } = message;
-            queryClient.invalidateQueries([
-              'shelters',
-              ['shelters-details', username],
-            ]);
+            queryClient.invalidateQueries({
+              queryKey: ['shelters'],
+            });
+            queryClient.invalidateQueries({
+              queryKey: ['shelter-details', username],
+            });
+            queryClient.invalidateQueries({
+              queryKey: ['animals'],
+            });
           }
         };
 
