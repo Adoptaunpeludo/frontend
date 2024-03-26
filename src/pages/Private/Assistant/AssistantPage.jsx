@@ -1,14 +1,14 @@
+import { Spinner } from '@nextui-org/react';
 import { useEffect, useState } from 'react';
 import { useLoaderData } from 'react-router-dom';
 import { toast } from 'react-toastify';
-import { Spinner } from '@nextui-org/react';
-import GptMessage from './components/GptMessage';
-import UserMessage from './components/UserMessage';
-import TextMessageBox from './components/TextMessageBox';
-import { chatHistoryQuery, useChatHistory } from './useChatHistory';
 import { useScroll } from '../../../hooks/useScroll';
-import { chatStreamGenerator } from './service';
 import { mapChatHistory } from '../../../utils/mapChatHistory';
+import GptMessage from './components/GptMessage';
+import TextMessageBox from './components/TextMessageBox';
+import UserMessage from './components/UserMessage';
+import { chatStreamGenerator } from './service';
+import { chatHistoryQuery, useChatHistory } from './useChatHistory';
 
 export const loader =
   (queryClient) =>
@@ -72,9 +72,9 @@ const AssistantPage = () => {
   };
 
   return (
-    <main className="max-w-screen-xl w-full flex  flex-col justify-center  gap-12 h-full  py-12  mx-auto flex-grow">
-      <div className="flex flex-col rounded-2xl flex-1 p-4 bg-primary bg-opacity-15">
-        <div className="flex flex-col flex-1 overflow-x-auto mb-4 overflow-scroll">
+    <main className="max-w-screen-xl  w-full flex  flex-col justify-center  gap-12    mx-auto  overflow-hidden h-[88vh]">
+      <div className="flex flex-col flex-1 background-panel rounded-xl h-156 overflow-y-hidden mx-10 my-10">
+        <div className="flex flex-col flex-1 overflow-x-auto mb-4 ">
           {isFetching ? (
             <Spinner />
           ) : (
@@ -95,12 +95,14 @@ const AssistantPage = () => {
           )}
         </div>
 
-        <TextMessageBox
-          onSendMessage={handlePost}
-          onDeleteMessages={handleDeleteMessages}
-          placeholder="Escribe aquí tu pregunta"
-          disableCorrections
-        />
+        <div className="bg-white">
+          <TextMessageBox
+            onSendMessage={handlePost}
+            onDeleteMessages={handleDeleteMessages}
+            placeholder="Escribe aquí tu pregunta"
+            disableCorrections
+          />
+        </div>
       </div>
     </main>
   );
