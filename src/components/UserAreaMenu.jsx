@@ -31,7 +31,6 @@ export const UserAreaMenu = () => {
     try {
       await logout();
       socket.close();
-      sessionStorage.setItem('isLoggedIn', false);
       queryClient.removeQueries([
         {
           queryKey: ['user'],

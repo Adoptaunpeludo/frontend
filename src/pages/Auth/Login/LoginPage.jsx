@@ -22,7 +22,6 @@ export const action =
         queryKey: ['user'],
       });
       await queryClient.ensureQueryData(userQuery);
-      sessionStorage.setItem('isLoggedIn', true);
       return redirect('/');
     } catch (error) {
       const message = handleAuthError(error);
