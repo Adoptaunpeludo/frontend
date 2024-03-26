@@ -16,6 +16,14 @@
   background-color: rgba(212, 212, 216, 0.8);
 }
 
+.chat-container {
+  @apply flex flex-col rounded-2xl h-full p-4;
+}
+
+.chat-messages {
+  @apply flex flex-col h-full overflow-x-auto mb-4 overflow-scroll;
+}
+
 /* ============= GLOBAL CSS =============== */
 
 *,

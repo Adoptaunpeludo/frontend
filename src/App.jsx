@@ -40,11 +40,13 @@ import { loader as userFavsLoader } from './pages/Private/Adopters/AdopterProfil
 import { loader as sheltersLoader } from './pages/Public/Shelters/SheltersPage.jsx';
 import { loader as verifyEmailLoader } from './pages/Auth/VerifyEmail/VerifyEmailPage.jsx';
 import { loader as userDataLoader } from './pages/Layout/AppLayout.jsx';
+import { loader as assistantChatLoader } from './pages/Private/Assistant/AssistantPage.jsx';
 
 import { useAnimalImagesContext } from './context/AnimalImagesContext.jsx';
 import NotFoundPage from './pages/Error/NotFound/NotFoundPage.jsx';
 import ProtectedRoute from './pages/Private/ProtectedRoute.jsx';
 import { useModalContext } from './context/ModalContext.jsx';
+import AssistantPage from './pages/Private/Assistant/AssistantPage.jsx';
 
 export const queryClient = new QueryClient({
   defaultOptions: {
@@ -129,6 +131,11 @@ const router = (bioModalOnClose, shelterModalOnClose, animalImages) =>
           element: <ProtectedRoute />,
           errorElement: <ErrorPage />,
           children: [
+            {
+              path: 'assistant',
+              element: <AssistantPage />,
+              loader: assistantChatLoader(queryClient),
+            },
             {
               path: 'adopter',
               element: <AdopterProfile />,
