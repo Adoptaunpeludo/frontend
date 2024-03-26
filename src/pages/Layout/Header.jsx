@@ -14,11 +14,12 @@ import { IconLogin2 as LoginIcon } from '@tabler/icons-react';
 import { useState } from 'react';
 import BrandNavLogo from '../../assets/logos/BrandNavLogo.jsx';
 import { UserAreaMenu } from '../../components/UserAreaMenu.jsx';
-import { useUser } from '../Private/useUser.js';
+
+import { useLoaderData } from 'react-router-dom';
 
 const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const { data: user } = useUser();
+  const { user } = useLoaderData();
 
   const handleMenuOpenChange = (open) => {
     setIsMenuOpen(open);
@@ -89,7 +90,7 @@ const Header = () => {
             </Button>
           ) : (
             <div className="flex gap-2">
-              <UserAreaMenu />
+              <UserAreaMenu user={user} />
             </div>
           )}
         </NavbarItem>
