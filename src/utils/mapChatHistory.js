@@ -1,7 +1,5 @@
 export const mapChatHistory = (history) => {
-  if (!history?.messages) return [];
-
-  return history.messages.map((message) => {
+  return history.map((message) => {
     if (message.type === 'AIMessage')
       return {
         isGpt: true,

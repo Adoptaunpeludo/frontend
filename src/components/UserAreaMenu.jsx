@@ -20,6 +20,7 @@ import { useNotificationsContext } from '../context/NotificationsContext.jsx';
 
 export const UserAreaMenu = ({ user }) => {
   const { socket } = useWebSocketContext();
+
   const { data: userNotifications } = useNotifications();
   const { notifications, setNotifications } = useNotificationsContext();
   const navigate = useNavigate();
@@ -45,6 +46,7 @@ export const UserAreaMenu = ({ user }) => {
       navigate('/');
     } catch (error) {
       toast.error('Error haciendo logout');
+
       throw error;
     }
   };

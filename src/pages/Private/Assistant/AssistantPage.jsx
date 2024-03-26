@@ -15,8 +15,6 @@ export const loader =
   async ({ params }) => {
     const { username } = params;
 
-    console.log({ username });
-
     if (!username) return null;
 
     try {
@@ -36,8 +34,8 @@ const AssistantPage = () => {
   const { messagesEndRef } = useScroll(messages, isFetching);
 
   useEffect(() => {
-    if (chatHistory) {
-      const history = mapChatHistory(chatHistory);
+    if (chatHistory?.history) {
+      const history = mapChatHistory(chatHistory.history);
       setMessages(history);
     }
   }, [chatHistory]);
