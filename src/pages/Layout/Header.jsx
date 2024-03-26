@@ -59,6 +59,7 @@ const Header = () => {
       isMenuOpen={isMenuOpen}
       onMenuOpenChange={handleMenuOpenChange}
       maxWidth="xl"
+      className="h-[7vh]"
     >
       <NavbarContent>
         <NavbarMenuToggle
