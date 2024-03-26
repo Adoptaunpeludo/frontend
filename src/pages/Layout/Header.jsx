@@ -48,7 +48,7 @@ const Header = () => {
     },
     {
       name: 'Asistente',
-      href: `/private/assistant/${user.username}`,
+      href: `/private/assistant/${user?.username}`,
       color: 'foreground',
     },
   ];

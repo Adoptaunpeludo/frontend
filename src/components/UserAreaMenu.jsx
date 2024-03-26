@@ -50,7 +50,7 @@ export const UserAreaMenu = ({ user }) => {
   };
 
   useEffect(() => {
-    setNotifications(userNotifications.notifications);
+    setNotifications(userNotifications?.notifications);
   }, [userNotifications, setNotifications]);
 
   return (
