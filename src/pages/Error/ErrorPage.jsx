@@ -1,6 +1,5 @@
 import { useQueryClient } from '@tanstack/react-query';
 import { Link, Navigate, useRouteError } from 'react-router-dom';
-import { toast } from 'react-toastify';
 // import img from '../assets/images/not-found.svg';
 const Error = () => {
   const error = useRouteError();
@@ -15,7 +14,6 @@ const Error = () => {
       'user-animals',
       'notifications',
     ]);
-    toast.error('No autenticado, haz login');
     return <Navigate to="/login" />;
   }
 
