@@ -15,12 +15,13 @@ import { logout } from '../pages/Auth/authService.js';
 import { useWebSocketContext } from '../context/WebSocketContext.jsx';
 import { toast } from 'react-toastify';
 import { useNotifications } from '../pages/Private/useNotifications.js';
-import { useUser } from '../pages/Private/useUser.js';
+import { useEffect } from 'react';
+import { useNotificationsContext } from '../context/NotificationsContext.jsx';
 
-export const UserAreaMenu = () => {
+export const UserAreaMenu = ({ user }) => {
   const { socket } = useWebSocketContext();
-  const { data: user } = useUser();
-  const { data: notifications } = useNotifications();
+  const { data: userNotifications } = useNotifications();
+  const { notifications, setNotifications } = useNotificationsContext();
   const navigate = useNavigate();
   const queryClient = useQueryClient();
 
@@ -28,21 +29,19 @@ export const UserAreaMenu = () => {
     try {
       await logout();
       socket.close();
-      sessionStorage.setItem('isLoggedIn', false);
-      queryClient.removeQueries([
-        {
-          queryKey: ['user'],
-        },
-        {
-          queryKey: ['user-notifications'],
-        },
-        {
-          queryKey: ['user-favs'],
-        },
-        {
-          queryKey: ['user-animals'],
-        },
-      ]);
+      queryClient.removeQueries({
+        queryKey: ['user'],
+      });
+      queryClient.removeQueries({
+        queryKey: ['user-notifications'],
+      });
+      queryClient.removeQueries({
+        queryKey: ['user-favs'],
+      });
+      queryClient.removeQueries({
+        queryKey: ['user-animals'],
+      });
+
       navigate('/');
     } catch (error) {
       toast.error('Error haciendo logout');
@@ -50,12 +49,14 @@ export const UserAreaMenu = () => {
     }
   };
 
-  const userNotifications = notifications?.notifications;
+  useEffect(() => {
+    setNotifications(userNotifications.notifications);
+  }, [userNotifications, setNotifications]);
 
   return (
     <Dropdown placement="bottom-end">
       <Badge
-        content={userNotifications?.length}
+        content={notifications?.length}
         size="lg"
         color="primary"
         placement="top-left"
