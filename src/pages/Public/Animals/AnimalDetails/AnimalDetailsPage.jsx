@@ -1,6 +1,7 @@
-import { Image, Spinner } from '@nextui-org/react';
-import { useLoaderData } from 'react-router-dom';
-import { MinimalLogo } from '../../../../assets/logos';
+import { Avatar, Image, Spinner } from '@nextui-org/react';
+import { IconHeart, IconHome } from '@tabler/icons-react';
+import { useState } from 'react';
+import { useLoaderData, useOutletContext } from 'react-router-dom';
 import {
   AdoptButton,
   AsideDataColumn,
@@ -16,10 +17,8 @@ import {
   dogDescription,
 } from '../../../../utils/asideDataFields';
 import { handleNotFoundError } from '../../../../utils/handleError';
-import { AnimalFavs, AnimalGallery, ShareSocialMedia } from './components';
 import { animalDetailsQuery, useAnimalDetails } from '../useAnimalDetails';
-import { IconHeart } from '@tabler/icons-react';
-import { useState } from 'react';
+import { AnimalFavs, AnimalGallery, ShareSocialMedia } from './components';
 
 export const loader =
   (queryClient) =>
@@ -40,13 +39,14 @@ export const loader =
 
 const AnimalDetailsPage = () => {
   const params = useLoaderData();
-
+  const { user } = useOutletContext();
   const { slug } = params;
 
   const { data, isLoading } = useAnimalDetails(slug);
   const [images, setImages] = useState(data.images);
-
+  const isLogged = user !== null;
   if (isLoading) return <Spinner />;
+  const isOnline = user?.username === data.user.username ? true : data.isOnline;
 
   return (
     <main className="max-w-screen-xl w-full flex  flex-col justify-center  gap-12 h-full  py-12  mx-auto flex-grow">
@@ -56,22 +56,34 @@ const AnimalDetailsPage = () => {
 
       <section className="flex gap-12 max-xl:flex-col mx-auto">
         <section id="central-column" className="flex flex-col flex-1">
-          {/* TODO: check loading image put spinner reservate space */}
-          <div className="relative container lg:w-164">
+          <div className="relative container lg:w-164 rounded-lg bg-detail bg-cover bg-center">
             <Image
               src={`${BUCKET_URL}/${images[0]}`}
-              className=" xl:w-200 xl:max-h-[36rem] object-cover object-top aspect-4/3 flex-1"
-              // loading="lazy"
+              className=" xl:w-200 xl:max-h-[36rem] object-cover object-center aspect-4/3 flex-1"
+              loading="lazy"
               alt={slug}
               radius="sm"
+              disableSkeleton
             />
             <IconHeart
               size={40}
               className="absolute left-3 bottom-3 z-10  stroke-primary"
             />
-            {/* {TODO: change Minimal logo shelter avatar} */}
-            <MinimalLogo size={60} className="absolute right-5 top-5 z-10" />
-            <AdoptButton className="absolute right-5 bottom-5 z-10">
+
+            <Avatar
+              isBordered
+              color={`${
+                isLogged ? (isOnline ? 'success' : 'danger') : 'default'
+              }`}
+              className="absolute right-5 top-5 z-10 bg-white"
+              src={`${BUCKET_URL}/${data.user.Avatar}`}
+              showFallback
+              fallback={<IconHome className="w-10 h-10 stroke-gray-600" />}
+            />
+            <AdoptButton
+              className="absolute right-5 bottom-5 z-10"
+              adoptAnimal={`/shelters/${data.user.username}`}
+            >
               Adoptar
             </AdoptButton>
           </div>
