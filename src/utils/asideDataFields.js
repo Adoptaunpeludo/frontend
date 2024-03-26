@@ -15,6 +15,9 @@ export const isNullDataField = (field, dataEnum) => {
     return dataEnum.filter((item) => item.value === field)[0].label;
   return '';
 };
+export const ageDataField = (age) => {
+  return `${age} ${age === 1 ? 'año' : 'años'}`;
+};
 
 export const userInformation = ({
   createdAt,
@@ -54,7 +57,7 @@ export const animalShelterInfo = ({ createdAt, user, city }) => {
         entryDate.getMonth() + 1
       }/${entryDate.getFullYear()}`,
     },
-    { fieldName: 'Usuario: ', value: user.username },
+    { fieldName: 'Protectora: ', value: user.username },
     { fieldName: 'Ciudad: ', value: city },
   ];
   return animalShelterInfo;
@@ -64,7 +67,7 @@ export const animalBioInfo = ({ name, age, breed, gender, size }) => {
   const animalBioInfo = [
     { fieldName: 'Nombre: ', value: name },
     { fieldName: 'Raza: ', value: breed },
-    { fieldName: 'Edad: ', value: `${age} años` },
+    { fieldName: 'Edad: ', value: ageDataField(age) },
     {
       fieldName: 'Sexo: ',
       value: isNullDataField(gender, genderEnum),
