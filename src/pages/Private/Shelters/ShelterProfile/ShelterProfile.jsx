@@ -5,13 +5,14 @@ import { DeleteUserModal, StatusAnimalsTable } from '../../shared';
 import { toast } from 'react-toastify';
 import { useAnimalImagesContext } from '../../../../context/AnimalImagesContext';
 import { useEffect } from 'react';
-import { Link, useNavigation, useOutletContext } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { deleteAnimal } from '../AnimalForm/service';
 import ShelterProfileInfo from './components/ShelterProfileInfo';
 import UserBioInfo from './components/UserBioInfo';
 import { userAnimalsQuery } from '../useUserAnimals';
 import { updateProfile } from '../../shared/service/updateUserService';
 import { isAxiosError } from 'axios';
+import { useUser } from '../../useUser';
 
 export const loader = (queryClient) => async () => {
   try {
@@ -64,11 +65,8 @@ export const action =
   };
 
 const ShelterProfile = () => {
-  const { user: data } = useOutletContext();
-  const navigation = useNavigation();
+  const { data, isFetching } = useUser();
   const { resetImages } = useAnimalImagesContext();
-
-  const isLoading = navigation.state === 'loading';
 
   useEffect(() => {
     resetImages();
@@ -77,24 +75,22 @@ const ShelterProfile = () => {
   const { username } = data;
 
   return (
-    <Skeleton className="bg-default-100 flex-grow" isLoaded={!isLoading}>
-      <main className="bg-default-100 flex-grow">
-        <Hero />
+    <main className="bg-default-100 flex-grow">
+      <Hero />
 
-        <section
-          id="SheltersProfile"
-          className="max-w-screen-xl w-full flex  flex-col justify-center  gap-12 h-full  py-12  mx-auto "
-        >
-          <TitleSection title={username} id=" shelterTitle" />
-          <section
-            id="sheltersProfile"
-            className="flex gap-12 max-lg:flex-col "
-          >
-            <main className="flex flex-col max-w-3xl order-1 max-lg:order-2">
-              <ShelterProfileInfo isLoading={isLoading} data={data} />
-            </main>
-            <UserBioInfo data={data} isLoading={isLoading} />
-            {/* <div id="NotificationsAside">
+      <section
+        id="SheltersProfile"
+        className="max-w-screen-xl w-full flex  flex-col justify-center  gap-12 h-full  py-12  mx-auto "
+      >
+        <TitleSection title={username} id=" shelterTitle" />
+        <section id="sheltersProfile" className="flex gap-12 max-lg:flex-col ">
+          <main className="flex flex-col max-w-3xl order-1 max-lg:order-2">
+            <ShelterProfileInfo isLoading={isFetching} data={data} />
+          </main>
+          <Skeleton isLoaded={!isFetching}>
+            <UserBioInfo data={data} isLoading={isFetching} />
+          </Skeleton>
+          {/* <div id="NotificationsAside">
             <H2Title title="Mensajes" className="pb-5" />
             <div className="flex justify-between border-solid border-b-1 border-b-primary pb-3 items-center">
             <User
@@ -108,27 +104,26 @@ const ShelterProfile = () => {
             {1}
             </div>
           </div> */}
-          </section>
-          <section id="petsTable" className="px-4">
-            <StatusAnimalsTable role={'shelter'} />
-            <Button
-              // isIconOnly={data !== undefined}
-              color="primary"
-              size="md"
-              startContent={<IconEdit />}
-              className="my-4"
-              as={Link}
-              to="/private/shelter/create-animal"
-            >
-              Crear Anuncio
-            </Button>
-          </section>
-          <footer className="border-solid border-t-1 border-t-danger py-8 h-100 flex justify-center">
-            <DeleteUserModal />
-          </footer>
         </section>
-      </main>
-    </Skeleton>
+        <section id="petsTable" className="px-4">
+          <StatusAnimalsTable role={'shelter'} />
+          <Button
+            // isIconOnly={data !== undefined}
+            color="primary"
+            size="md"
+            startContent={<IconEdit />}
+            className="my-4"
+            as={Link}
+            to="/private/shelter/create-animal"
+          >
+            Crear Anuncio
+          </Button>
+        </section>
+        <footer className="border-solid border-t-1 border-t-danger py-8 h-100 flex justify-center">
+          <DeleteUserModal />
+        </footer>
+      </section>
+    </main>
   );
 };
 
