@@ -13,7 +13,7 @@ export const AnimalGallery = ({ animalImages, onSetImages }) => {
   };
 
   return (
-    <div id="gallery" className="flex py-4 justify-around">
+    <div id="gallery" className="flex py-4 justify-start gap-4">
       {animalImages.map(
         (image, index) =>
           index !== 0 && (
@@ -21,7 +21,7 @@ export const AnimalGallery = ({ animalImages, onSetImages }) => {
               <Image
                 key={index}
                 src={`${BUCKET_URL}/${image}`}
-                className="aspect-auto h-16 object-cover cursor-pointer"
+                className="aspect-video h-16 object-cover cursor-pointer"
                 radius="sm"
                 onClick={() => handleImageChange(image, index)}
               />
