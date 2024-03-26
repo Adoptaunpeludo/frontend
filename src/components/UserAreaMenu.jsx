@@ -98,7 +98,8 @@ export const UserAreaMenu = () => {
         </DropdownItem>
         <DropdownItem key="notifications" textValue="user notifications">
           <Link
-            href={`/private/${role}`}
+            //href={`/private/${role}`}
+            href={`/private/notifications`}
             color="foreground"
             className="capitalize w-full"
           >

@@ -21,6 +21,8 @@ import {
   ShelterProfile,
   SheltersPage,
   VerifyEmail,
+  RecoverPassword,
+  NotificationsPage
 } from './pages/index.js';
 
 import { action as loginAction } from './pages/Auth/Login/LoginPage.jsx';
@@ -78,6 +80,12 @@ const router = (bioModalOnClose, shelterModalOnClose, animalImages) =>
           element: <VerifyEmail />,
           loader: verifyEmailLoader,
           action: verifyEmailAction,
+        },
+        {
+          path: '/recover-password',
+          element: <RecoverPassword />,
+          //loader: verifyEmailLoader,
+          //action: verifyEmailAction,
         },
         //* End Auth Routes
         //* Public Routes
@@ -155,6 +163,12 @@ const router = (bioModalOnClose, shelterModalOnClose, animalImages) =>
               element: <AnimalForm />,
               action: mutateAnimalAction(animalImages, queryClient),
               loader: updateAnimalLoader(queryClient),
+            },
+            {
+              path: 'notifications',
+              element: <NotificationsPage />,
+              //action: mutateAnimalAction(animalImages, queryClient),
+              //loader: updateAnimalLoader(queryClient),
             },
           ],
         },
