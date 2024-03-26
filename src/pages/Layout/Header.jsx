@@ -46,6 +46,11 @@ const Header = () => {
       href: '/shelters',
       color: 'foreground',
     },
+    {
+      name: 'Asistente',
+      href: `/private/assistant/${user.username}`,
+      color: 'foreground',
+    },
   ];
 
   return (

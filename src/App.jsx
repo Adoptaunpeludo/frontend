@@ -132,7 +132,7 @@ const router = (bioModalOnClose, shelterModalOnClose, animalImages) =>
           errorElement: <ErrorPage />,
           children: [
             {
-              path: 'assistant',
+              path: 'assistant/:username',
               element: <AssistantPage />,
               loader: assistantChatLoader(queryClient),
             },

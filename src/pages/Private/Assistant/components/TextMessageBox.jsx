@@ -1,6 +1,5 @@
 import { Button } from '@nextui-org/react';
 import { useRef, useState } from 'react';
-import { useParams } from 'react-router-dom';
 // import DeleteModal from '../delete-modal/DeleteHistoryModal';
 
 const TextMessageBox = ({
@@ -10,14 +9,12 @@ const TextMessageBox = ({
   // onDeleteMessages,
 }) => {
   const [message, setMessage] = useState('');
-  const inputRef = useRef < HTMLInputElement > null;
-
-  const params = useParams();
+  const inputRef = useRef(null);
 
   const handleSendMessage = (event) => {
     event.preventDefault();
 
-    if (params && params.name) onSendMessage(message, params.name);
+    onSendMessage(message);
 
     setMessage('');
     inputRef.current?.focus();

@@ -2,10 +2,10 @@ import { toast } from 'react-toastify';
 import { getChatHistory } from './service';
 import { useQuery } from '@tanstack/react-query';
 
-export const chatHistoryQuery = (document) => {
+export const chatHistoryQuery = (username) => {
   return {
-    queryKey: ['documentHistory', document],
-    queryFn: async () => getChatHistory(document),
+    queryKey: ['chat-history', username],
+    queryFn: async () => getChatHistory(username),
     staleTime: 1000,
     onError: (error) => {
       console.log(error);

@@ -15,11 +15,18 @@ export const loader =
   async ({ params }) => {
     const { username } = params;
 
-    if (username) return;
+    console.log({ username });
 
-    await queryClient.ensureQueryData(chatHistoryQuery(username));
+    if (!username) return null;
 
-    return username;
+    try {
+      await queryClient.ensureQueryData(chatHistoryQuery(username));
+
+      return username;
+    } catch (error) {
+      console.log(error);
+      throw error;
+    }
   };
 
 const AssistantPage = () => {
@@ -39,13 +46,12 @@ const AssistantPage = () => {
     setMessages([]);
   };
 
-  const handlePost = async (text, document) => {
+  const handlePost = async (text) => {
     setMessages((prev) => [...prev, { text, isGpt: false }]);
 
     try {
       const stream = chatStreamGenerator(
         {
-          document,
           question: text,
         },
         'chat/user-question'
@@ -68,35 +74,37 @@ const AssistantPage = () => {
   };
 
   return (
-    <div className="chat-container bg-primary bg-opacity-15">
-      <div className="chat-messages">
-        {isFetching ? (
-          <Spinner />
-        ) : (
-          <div className="grid grid-cols-12 gap-y-2">
-            <GptMessage
-              text={`Hola! soy tu Chat Bot, ¿Qué necesitas saber sobre el documento ${document}?`}
-            />
-            {messages.map((message, index) =>
-              message.isGpt ? (
-                <GptMessage key={index} text={message.text} />
-              ) : (
-                <UserMessage key={index} text={message.text} />
-              )
-            )}
+    <main className="max-w-screen-xl w-full flex  flex-col justify-center  gap-12 h-full  py-12  mx-auto flex-grow">
+      <div className="flex flex-col rounded-2xl flex-1 p-4 bg-primary bg-opacity-15">
+        <div className="flex flex-col flex-1 overflow-x-auto mb-4 overflow-scroll">
+          {isFetching ? (
+            <Spinner />
+          ) : (
+            <div className="grid grid-cols-12 gap-y-2">
+              <GptMessage
+                text={`Hola! soy tu Chat Bot, ¿Qué necesitas saber sobre adoptaunpeludo.com?`}
+              />
+              {messages.map((message, index) =>
+                message.isGpt ? (
+                  <GptMessage key={index} text={message.text} />
+                ) : (
+                  <UserMessage key={index} text={message.text} />
+                )
+              )}
 
-            <div ref={messagesEndRef} />
-          </div>
-        )}
+              <div ref={messagesEndRef} />
+            </div>
+          )}
+        </div>
+
+        <TextMessageBox
+          onSendMessage={handlePost}
+          onDeleteMessages={handleDeleteMessages}
+          placeholder="Escribe aquí tu pregunta"
+          disableCorrections
+        />
       </div>
-
-      <TextMessageBox
-        onSendMessage={handlePost}
-        onDeleteMessages={handleDeleteMessages}
-        placeholder="Escribe aquí tu pregunta"
-        disableCorrections
-      />
-    </div>
+    </main>
   );
 };
 
