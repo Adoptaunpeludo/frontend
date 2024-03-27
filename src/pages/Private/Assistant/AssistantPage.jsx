@@ -54,12 +54,9 @@ const AssistantPage = () => {
     setMessages((prev) => [...prev, { text, isGpt: false }]);
 
     try {
-      const stream = chatStreamGenerator(
-        {
-          question: text,
-        },
-        'chat/user-question'
-      );
+      const stream = chatStreamGenerator({
+        question: text,
+      });
 
       setMessages((prev) => [...prev, { text: '', isGpt: true }]);
 

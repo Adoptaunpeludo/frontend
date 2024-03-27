@@ -13,6 +13,7 @@ import { useNavigation, useParams } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import { deleteData } from '../../../../api/client';
 import TrashCan from './TrashCan';
+import { ASSISTANT_SERVER } from '../../../../config/config';
 
 export default function DeleteModal({ deleteMessages }) {
   const { isOpen, onOpen, onOpenChange } = useDisclosure();
@@ -25,7 +26,7 @@ export default function DeleteModal({ deleteMessages }) {
   const queryClient = useQueryClient();
 
   const handleDeleteHistory = async (onClose) => {
-    const url = `http://localhost:3777/api/chat/chat-history`;
+    const url = `${ASSISTANT_SERVER}/chat-history`;
 
     try {
       const { data } = await deleteData(url);

@@ -1,9 +1,10 @@
 import { postData } from '../../../api/client';
+import { ASSISTANT_SERVER } from '../../../config/config';
 
 export const getChatHistory = async (username) => {
   try {
     const { data } = await postData(
-      `http://localhost:3777/api/chat/create-chat/${username}`
+      `${ASSISTANT_SERVER}/create-chat/${username}`
     );
     return data;
   } catch (error) {
@@ -12,9 +13,9 @@ export const getChatHistory = async (username) => {
   }
 };
 
-export async function* chatStreamGenerator(payload, endpoint) {
+export async function* chatStreamGenerator(payload) {
   try {
-    const res = await fetch(`http://localhost:3777/api/${endpoint}`, {
+    const res = await fetch(`${ASSISTANT_SERVER}/user-question`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
