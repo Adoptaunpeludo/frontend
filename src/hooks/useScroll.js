@@ -1,21 +1,22 @@
 import { useEffect, useRef } from 'react';
 
-export const useScroll = (messages, isFetching) => {
+export const useScroll = (messages, isFirstLoad) => {
   const messagesEndRef = useRef(null);
 
   const scrollToBottom = (type) => {
+    console.log({ type });
     messagesEndRef.current?.scrollIntoView({ behavior: type });
   };
 
   useEffect(() => {
-    scrollToBottom('smooth');
-  }, [messages]);
+    if (!isFirstLoad) scrollToBottom('smooth');
+  }, [messages, isFirstLoad]);
 
   useEffect(() => {
-    if (!isFetching) {
+    if (isFirstLoad) {
       scrollToBottom('instant');
     }
-  }, [isFetching]);
+  }, [isFirstLoad]);
 
   return { messagesEndRef };
 };

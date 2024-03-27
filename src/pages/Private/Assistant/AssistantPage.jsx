@@ -30,8 +30,9 @@ export const loader =
 const AssistantPage = () => {
   const username = useLoaderData();
   const [messages, setMessages] = useState([]);
+  const [isFirstLoad, setIsFirstLoad] = useState([]);
   const { data: chatHistory, isFetching } = useChatHistory(username);
-  const { messagesEndRef } = useScroll(messages, isFetching);
+  const { messagesEndRef } = useScroll(messages, isFirstLoad);
 
   useEffect(() => {
     if (chatHistory?.history) {
@@ -40,11 +41,16 @@ const AssistantPage = () => {
     }
   }, [chatHistory]);
 
+  useEffect(() => {
+    setIsFirstLoad(true);
+  }, []);
+
   const handleDeleteMessages = () => {
     setMessages([]);
   };
 
   const handlePost = async (text) => {
+    setIsFirstLoad(false);
     setMessages((prev) => [...prev, { text, isGpt: false }]);
 
     try {
@@ -76,7 +82,7 @@ const AssistantPage = () => {
       <div className="flex flex-col flex-1 background-panel rounded-xl h-156 overflow-y-hidden mx-10 my-10">
         <div className="flex flex-col flex-1 overflow-x-auto mb-4 ">
           {isFetching ? (
-            <Spinner />
+            <Spinner className="self-center flex-1" />
           ) : (
             <div className="grid grid-cols-12 gap-y-2">
               <GptMessage
