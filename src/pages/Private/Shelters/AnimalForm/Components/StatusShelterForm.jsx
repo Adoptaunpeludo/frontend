@@ -8,6 +8,7 @@ const StatusShelterForm = ({ data = {}, isDisabled }) => {
       <H3Title title="Estado protectora" />
       <div className="flex w-full flex-wrap md:flex-nowrap gap-2 border-primary border-t-1 pt-3">
         <SelectField
+          isRequired
           label="Status"
           className="min-w-72"
           name="status"
@@ -17,6 +18,7 @@ const StatusShelterForm = ({ data = {}, isDisabled }) => {
         />
 
         <SelectField
+          isRequired
           label="Ciudad"
           className="min-w-72"
           name="city"

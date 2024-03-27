@@ -7,9 +7,11 @@ export const SelectField = ({
   name,
   className = '',
   isDisabled,
+  isRequired,
 }) => {
   return (
     <Select
+      isRequired={isRequired}
       isDisabled={isDisabled}
       className={className}
       label={label}

@@ -21,6 +21,7 @@ const OtherPropertiesCatForm = ({ data = {}, isDisabled }) => {
       <H3Title title="Otras Características" />
       <div className="flex w-full flex-wrap md:flex-nowrap gap-2 border-primary border-t-1 pt-3">
         <SelectField
+          isRequired
           label="Entrenado en el arenero"
           className=""
           name="toiletTrained"
@@ -29,6 +30,7 @@ const OtherPropertiesCatForm = ({ data = {}, isDisabled }) => {
           isDisabled={isDisabled}
         />
         <SelectField
+          isRequired
           label="Fácil de entrenar"
           className=""
           name="easyTrain"
@@ -37,6 +39,7 @@ const OtherPropertiesCatForm = ({ data = {}, isDisabled }) => {
           isDisabled={isDisabled}
         />
         <SelectField
+          isRequired
           label="Cantidad de muda"
           className=""
           name="moltingAmount"
@@ -45,6 +48,7 @@ const OtherPropertiesCatForm = ({ data = {}, isDisabled }) => {
           isDisabled={isDisabled}
         />
         <SelectField
+          isRequired
           label="Nivel de energía"
           className=""
           name="energyLevel"
@@ -55,6 +59,7 @@ const OtherPropertiesCatForm = ({ data = {}, isDisabled }) => {
       </div>
       <div className="flex w-full flex-wrap md:flex-nowrap gap-2 border-primary border-t-1 pt-3">
         <SelectField
+          isRequired
           label="Nivel de juego"
           className=""
           name="playLevel"
@@ -64,6 +69,7 @@ const OtherPropertiesCatForm = ({ data = {}, isDisabled }) => {
         />
 
         <SelectField
+          isRequired
           label="Tendencia a arañar"
           className=""
           name="scratchPotential"
@@ -72,6 +78,7 @@ const OtherPropertiesCatForm = ({ data = {}, isDisabled }) => {
           isDisabled={isDisabled}
         />
         <SelectField
+          isRequired
           label="Sociable con niños"
           className=""
           name="kidsFriendly"
