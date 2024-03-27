@@ -57,6 +57,9 @@ const WebSocketContextProvider = ({ children, user }) => {
             queryClient.invalidateQueries({
               queryKey: ['animals'],
             });
+            queryClient.invalidateQueries({
+              queryKey: ['animal-details'],
+            });
           }
         };
 
