@@ -68,7 +68,7 @@ const ShelterProfileInfo = ({ data, isLoading }) => {
             <section className="min-h-48 border-b-1 border-primary mb-5">
               <div id="description" className="flex flex-col gap-3 mx-3 pb-10 ">
                 <H3Title title="Descripción:" />
-                <span>
+                <span className="mx-3">
                   {description === '' ? 'Describe tu protectora' : description}
                 </span>
               </div>
