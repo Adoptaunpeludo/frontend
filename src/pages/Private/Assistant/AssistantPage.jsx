@@ -9,29 +9,30 @@ import TextMessageBox from './components/TextMessageBox';
 import UserMessage from './components/UserMessage';
 import { chatStreamGenerator } from './service';
 import { chatHistoryQuery, useChatHistory } from './useChatHistory';
+import { userQuery } from '../useUser';
 
-export const loader =
-  (queryClient) =>
-  async ({ params }) => {
-    const { username } = params;
+export const loader = (queryClient) => async () => {
+  const data = await queryClient.ensureQueryData(userQuery);
 
-    if (!username) return null;
+  console.log({ data });
 
-    try {
-      await queryClient.ensureQueryData(chatHistoryQuery(username));
+  const { wsToken: token, username } = data;
 
-      return username;
-    } catch (error) {
-      console.log(error);
-      throw error;
-    }
-  };
+  try {
+    await queryClient.ensureQueryData(chatHistoryQuery(token, username));
+
+    return { username, token };
+  } catch (error) {
+    console.log(error);
+    throw error;
+  }
+};
 
 const AssistantPage = () => {
-  const username = useLoaderData();
+  const { token, username } = useLoaderData();
   const [messages, setMessages] = useState([]);
   const [isFirstLoad, setIsFirstLoad] = useState([]);
-  const { data: chatHistory, isFetching } = useChatHistory(username);
+  const { data: chatHistory, isFetching } = useChatHistory(token, username);
   const { messagesEndRef } = useScroll(messages, isFirstLoad);
 
   useEffect(() => {
