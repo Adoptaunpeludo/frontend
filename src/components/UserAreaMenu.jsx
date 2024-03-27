@@ -21,7 +21,7 @@ import { useNotificationsContext } from '../context/NotificationsContext.jsx';
 export const UserAreaMenu = ({ user }) => {
   const { socket } = useWebSocketContext();
 
-  const { data: userNotifications } = useNotifications();
+  const { data: userNotifications, isFetching } = useNotifications();
   const { notifications, setNotifications } = useNotificationsContext();
   const navigate = useNavigate();
   const queryClient = useQueryClient();
@@ -62,6 +62,7 @@ export const UserAreaMenu = ({ user }) => {
         size="lg"
         color="primary"
         placement="top-left"
+        isInvisible={isFetching}
       >
         <DropdownTrigger>
           <User
