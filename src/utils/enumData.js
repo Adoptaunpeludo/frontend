@@ -112,14 +112,13 @@ export const animalSizeEnum = [
 
 export const facilitiesEnum = [
   { label: 'Casas de acogida', value: 'foster_homes' },
+  { label: 'Residencias propias', value: 'owned_facilities' },
+  { label: 'Instalaciones arrendadas', value: 'leased_facilities' },
+  { label: 'Residencias privadas (arrendadas)', value: 'private_residences' },
   {
     label: 'Instalaciones Municipales o públicas',
     value: 'municipal_or_public_facilities',
   },
-  { label: 'Instalaciones arrendadas', value: 'leased_facilities' },
-  { label: 'Residencias propias', value: 'owned_facilities' },
-
-  { label: 'Residencias privadas (arrendadas)', value: 'private_residences' },
 ];
 
 export const moltingEnum = [
