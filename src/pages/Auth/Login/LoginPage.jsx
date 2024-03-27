@@ -12,6 +12,7 @@ import { handleAuthError } from '../../../utils/handleError';
 import { validateField } from '../../../utils/validateField';
 import { userQuery } from '../../Private/useUser';
 import { login } from '../authService';
+import { createChat } from '../../Private/Assistant/service';
 
 export const action =
   (queryClient) =>
@@ -25,7 +26,8 @@ export const action =
       queryClient.invalidateQueries({
         queryKey: ['user'],
       });
-      await queryClient.ensureQueryData(userQuery);
+      const user = await queryClient.ensureQueryData(userQuery);
+      await createChat(user.wsToken);
       return redirect('/');
     } catch (error) {
       const message = handleAuthError(error);
@@ -43,7 +45,7 @@ const LoginPage = () => {
   const [errors, setErrors] = useState({});
   const navigation = useNavigation();
 
-  const isLoading = navigation.state === 'loading';
+  const isLoading = navigation.state === 'submitting';
 
   const handleChange = (event) => {
     const { name, value } = event.target;

@@ -1,7 +1,17 @@
-import { postData } from '../../../api/client';
+import { fetchData, postData } from '../../../api/client';
 import { ASSISTANT_SERVER } from '../../../config/config';
 
-export const getChatHistory = async (token) => {
+export const getChatHistory = async () => {
+  try {
+    const { data } = await fetchData(`${ASSISTANT_SERVER}/chat-history`);
+    return data;
+  } catch (error) {
+    console.log(error);
+    throw error;
+  }
+};
+
+export const createChat = async (token) => {
   try {
     const { data } = await postData(`${ASSISTANT_SERVER}/create-chat/${token}`);
     return data;
