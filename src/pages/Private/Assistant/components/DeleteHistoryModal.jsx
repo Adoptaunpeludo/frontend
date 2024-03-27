@@ -25,7 +25,7 @@ export default function DeleteModal({ deleteMessages }) {
   const queryClient = useQueryClient();
 
   const handleDeleteHistory = async (onClose) => {
-    const url = `http://localhost:3777/api/chat/chat-history/${username}`;
+    const url = `http://localhost:3777/api/chat/chat-history`;
 
     try {
       const { data } = await deleteData(url);
