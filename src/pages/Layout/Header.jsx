@@ -49,7 +49,7 @@ const Header = () => {
     },
     {
       name: 'Asistente',
-      href: `/private/assistant/`,
+      href: `/private/assistant`,
       color: 'foreground',
     },
   ];
