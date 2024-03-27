@@ -66,7 +66,7 @@ const Header = () => {
           aria-label={isMenuOpen ? 'Close menu' : 'Open menu'}
           className="sm:hidden"
         />
-        <NavbarBrand className="md:hidden lg:block">
+        <NavbarBrand>
           <Link href="/">
             <BrandNavLogo />
           </Link>
