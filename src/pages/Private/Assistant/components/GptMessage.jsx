@@ -1,13 +1,20 @@
 import Markdown from 'react-markdown';
 import TypingLoader from './loader/TypingLoader';
+import { Avatar } from '@nextui-org/react';
 
 const GptMessage = ({ text }) => {
   return (
     <div className="col-start-1 sm:col-end-9 col-end-12 p-3 rounded-lg ">
       <div className="flex flex-row items-start">
-        <div className="flex items-center justify-center h-10 w-10 rounded-full bg-primary flex-shrink-0 text-white">
-          <i className="fa fa-robot"></i>
-        </div>
+        <Avatar
+          showFallback
+          src="/asistente.webp"
+          fallback={
+            <div className="flex items-center justify-center h-10 w-10 rounded-full bg-primary flex-shrink-0 text-white">
+              <i className="fa fa-robot"></i>
+            </div>
+          }
+        />
         {text === '' ? (
           <TypingLoader />
         ) : (
