@@ -1,6 +1,7 @@
 import { Checkbox } from '@nextui-org/react';
 
 import { H4Title } from '../../../../../components';
+import { checkBoxStyleConfig } from '../../../../../utils/configFormFields';
 import { facilitiesEnum } from '../../../../../utils/enumData';
 
 const Accommodations = ({ facilities, isDisabled = true, className }) => {
@@ -21,6 +22,7 @@ const Accommodations = ({ facilities, isDisabled = true, className }) => {
             defaultValue={facilities.includes(facility.value)}
             name="facilities"
             value={facility.value}
+            classNames={checkBoxStyleConfig}
           >
             {facility.label}
           </Checkbox>
