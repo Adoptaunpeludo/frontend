@@ -4,12 +4,14 @@ import { useState } from 'react';
 import { useLoaderData, useOutletContext } from 'react-router-dom';
 import {
   AdoptButton,
+  AnimalGallery,
   AsideDataColumn,
   ContactShelter,
   H2Title,
   TitleSection,
 } from '../../../../components';
 import { BUCKET_URL } from '../../../../config/config';
+import { useMetadata } from '../../../../hooks/useMetadata';
 import {
   animalBioInfo,
   animalShelterInfo,
@@ -18,9 +20,7 @@ import {
 } from '../../../../utils/asideDataFields';
 import { handleNotFoundError } from '../../../../utils/handleError';
 import { animalDetailsQuery, useAnimalDetails } from '../useAnimalDetails';
-import { AnimalFavs, AnimalGallery, ShareSocialMedia } from './components';
-import { useMetadata } from '../../../../hooks/useMetadata';
-
+import { AnimalFavs, ShareSocialMedia } from './components';
 export const loader =
   (queryClient) =>
   async ({ params }) => {
