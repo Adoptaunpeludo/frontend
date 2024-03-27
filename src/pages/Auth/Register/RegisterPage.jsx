@@ -48,7 +48,7 @@ const RegisterPage = () => {
   });
   const navigation = useNavigation();
 
-  const isLoading = navigation.state === 'loading';
+  const isLoading = navigation.state === 'submitting';
 
   const handleChange = (event) => {
     const { name, value } = event.target;

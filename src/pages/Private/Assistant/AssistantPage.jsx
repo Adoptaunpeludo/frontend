@@ -1,6 +1,5 @@
 import { Spinner } from '@nextui-org/react';
 import { useEffect, useState } from 'react';
-import { useLoaderData } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import { useScroll } from '../../../hooks/useScroll';
 import { mapChatHistory } from '../../../utils/mapChatHistory';
@@ -9,19 +8,15 @@ import TextMessageBox from './components/TextMessageBox';
 import UserMessage from './components/UserMessage';
 import { chatStreamGenerator } from './service';
 import { chatHistoryQuery, useChatHistory } from './useChatHistory';
-import { userQuery } from '../useUser';
+import { useUser, userQuery } from '../useUser';
 
 export const loader = (queryClient) => async () => {
-  const data = await queryClient.ensureQueryData(userQuery);
-
-  console.log({ data });
-
-  const { wsToken: token, username } = data;
-
   try {
-    await queryClient.ensureQueryData(chatHistoryQuery(token, username));
-
-    return { username, token };
+    const user = await queryClient.ensureQueryData(userQuery);
+    const history = await queryClient.ensureQueryData(
+      chatHistoryQuery(user.username)
+    );
+    return history;
   } catch (error) {
     console.log(error);
     throw error;
@@ -29,15 +24,15 @@ export const loader = (queryClient) => async () => {
 };
 
 const AssistantPage = () => {
-  const { token, username } = useLoaderData();
+  const { data: user } = useUser();
   const [messages, setMessages] = useState([]);
   const [isFirstLoad, setIsFirstLoad] = useState([]);
-  const { data: chatHistory, isFetching } = useChatHistory(token, username);
-  const { messagesEndRef } = useScroll(messages, isFirstLoad);
+  const { data: chatHistory, isFetching } = useChatHistory(user.username);
+  const { messagesEndRef } = useScroll(messages, isFirstLoad, isFetching);
 
   useEffect(() => {
-    if (chatHistory?.history) {
-      const history = mapChatHistory(chatHistory.history);
+    if (chatHistory) {
+      const history = mapChatHistory(chatHistory);
       setMessages(history);
     }
   }, [chatHistory]);
