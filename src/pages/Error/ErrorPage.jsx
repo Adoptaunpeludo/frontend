@@ -21,13 +21,16 @@ const Error = () => {
     return <Navigate to="/404" />;
   } else
     return (
-      <div>
+      <section
+        id="login"
+        className="max-w-screen-xl w-full flex flex-col gap-3 justify-center py-10 mx-auto  "
+      >
         <h3 className="mb-2">Algo no ha ido bien...</h3>
         <p className="leading-6 mt-2 mb-4 text-foreground">{error.message}</p>
         <Link className="text-tertiary capitalize" to="/">
           De vuelta a casa
         </Link>
-      </div>
+      </section>
     );
 };
 export default Error;
