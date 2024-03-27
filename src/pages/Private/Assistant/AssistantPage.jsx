@@ -86,7 +86,7 @@ const AssistantPage = () => {
           ) : (
             <div className="grid grid-cols-12 gap-y-2">
               <GptMessage
-                text={`Hola! soy tu Chat Bot, ¿Qué necesitas saber sobre adoptaunpeludo.com?`}
+                text={`!Hola! soy tu Asistente... ¡y pa ti mi cola!, ¿Qué necesitas saber sobre adoptaunpeludo.com?`}
               />
               {messages.map((message, index) =>
                 message.isGpt ? (
