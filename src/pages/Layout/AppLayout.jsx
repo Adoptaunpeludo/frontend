@@ -13,7 +13,6 @@ import { WebSocketContextProvider } from '../../context/WebSocketContext';
 import { NotificationsContextProvider } from '../../context/NotificationsContext';
 
 export const loader = (queryClient) => async () => {
-  console.log('loader');
   try {
     const [user, notifications] = await Promise.all([
       await queryClient.ensureQueryData(userQuery),
