@@ -1,12 +1,14 @@
-import { Button } from '@nextui-org/react';
+import { Button, Input } from '@nextui-org/react';
+import { IconSend2 } from '@tabler/icons-react';
 import { useRef, useState } from 'react';
-// import DeleteModal from '../delete-modal/DeleteHistoryModal';
+import { inputStyleConfig } from '../../../../utils/configFormFields';
+import DeleteModal from './DeleteHistoryModal';
 
 const TextMessageBox = ({
   onSendMessage,
   placeholder = '',
   disableCorrections = false,
-  // onDeleteMessages,
+  onDeleteMessages,
 }) => {
   const [message, setMessage] = useState('');
   const inputRef = useRef(null);
@@ -27,28 +29,29 @@ const TextMessageBox = ({
       encType="multipart/form-data"
     >
       <div className="flex-grow">
-        <div className="relative w-full bg-primary p-2 bg-opacity-25 rounded-md flex gap-1 shadow-xl">
-          {/* <DeleteModal bot={'assistant'} deleteMessages={onDeleteMessages} /> */}
-          <input
+        <div className="relative w-full  rounded-md flex gap-1 ">
+          <DeleteModal deleteMessages={onDeleteMessages} />
+          <Input
             ref={inputRef}
             type="text"
             autoFocus
             name="message"
-            className="flex w-full border rounded-xl focus:outline-none focus:border-purple-300 pl-4 h-10 "
+            className="flex w-full border rounded-xl focus:outline-none focus:border-purple-300  "
             placeholder={placeholder}
             autoComplete={!disableCorrections ? 'off' : 'on'}
             autoCorrect={!disableCorrections ? 'off' : 'on'}
             spellCheck={!disableCorrections ? 'false' : 'true'}
             value={message}
             onChange={(e) => setMessage(e.target.value)}
+            classNames={inputStyleConfig}
           />
           <div className="">
             <Button
-              className="bg-tertiary min-w-10 min-h-fit sm:w-20"
+              className="bg-primary font-poppins "
               type="submit"
+              endContent={<IconSend2 className="stroke-foreground" />}
             >
-              <span className="mr-2 hidden sm:block text-white">Send</span>
-              <i className=" fa-regular fa-paper-plane text-white"></i>
+              <span className="mr-2 hidden sm:block text-foreground">Send</span>
             </Button>
           </div>
         </div>
