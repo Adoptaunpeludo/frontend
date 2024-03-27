@@ -1,6 +1,6 @@
 import { useEffect, useRef } from 'react';
 
-export const useScroll = (messages, isFirstLoad) => {
+export const useScroll = (messages, isFirstLoad, isFetching) => {
   const messagesEndRef = useRef(null);
 
   const scrollToBottom = (type) => {
@@ -9,14 +9,16 @@ export const useScroll = (messages, isFirstLoad) => {
   };
 
   useEffect(() => {
+    console.log('smooth');
     if (!isFirstLoad) scrollToBottom('smooth');
   }, [messages, isFirstLoad]);
 
   useEffect(() => {
-    if (isFirstLoad) {
+    console.log('instant');
+    if (isFirstLoad && !isFetching) {
       scrollToBottom('instant');
     }
-  }, [isFirstLoad]);
+  }, [isFirstLoad, isFetching]);
 
   return { messagesEndRef };
 };
