@@ -8,7 +8,8 @@ const GptMessage = ({ text }) => {
       <div className="flex flex-row items-start">
         <Avatar
           showFallback
-          src="/asistente.webp"
+          src="/avatar/asistente.webp"
+          className="min-w-[40px]"
           fallback={
             <div className="flex items-center justify-center h-10 w-10 rounded-full bg-primary flex-shrink-0 text-white">
               <i className="fa fa-robot"></i>
