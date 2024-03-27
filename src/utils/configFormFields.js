@@ -12,3 +12,7 @@ export const radioGroupStyleConfig = {
 export const radioStyleConfig = {
   wrapper: ' border-secondary ',
 };
+
+export const checkBoxStyleConfig = {
+  wrapper: 'border-2 border-primary ',
+};
