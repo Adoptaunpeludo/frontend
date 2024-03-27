@@ -2,13 +2,13 @@ import { Button, Input } from '@nextui-org/react';
 import { IconSend2 } from '@tabler/icons-react';
 import { useRef, useState } from 'react';
 import { inputStyleConfig } from '../../../../utils/configFormFields';
-// import DeleteModal from '../delete-modal/DeleteHistoryModal';
+import DeleteModal from './DeleteHistoryModal';
 
 const TextMessageBox = ({
   onSendMessage,
   placeholder = '',
   disableCorrections = false,
-  // onDeleteMessages,
+  onDeleteMessages,
 }) => {
   const [message, setMessage] = useState('');
   const inputRef = useRef(null);
@@ -30,7 +30,7 @@ const TextMessageBox = ({
     >
       <div className="flex-grow">
         <div className="relative w-full  rounded-md flex gap-1 ">
-          {/* <DeleteModal bot={'assistant'} deleteMessages={onDeleteMessages} /> */}
+          <DeleteModal deleteMessages={onDeleteMessages} />
           <Input
             ref={inputRef}
             type="text"
