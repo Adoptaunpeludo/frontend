@@ -30,7 +30,12 @@ import { useQueryClient } from '@tanstack/react-query';
 import { useEffect, useState } from 'react';
 import { Form } from 'react-router-dom';
 import { toast } from 'react-toastify';
-import { buttonStyleConfig } from '../../../../../utils/configFormFields';
+import { H3Title } from '../../../../../components';
+import {
+  buttonStyleConfig,
+  inputStyleConfig,
+  tableStyleConfig,
+} from '../../../../../utils/configFormFields';
 import { updateSocialMedia } from '../service';
 
 export const SocialMediaForm = ({ socialMedia = [] }) => {
@@ -46,14 +51,14 @@ export const SocialMediaForm = ({ socialMedia = [] }) => {
   const socialIcon = (name) => {
     switch (name) {
       case 'facebook':
-        return <IconBrandFacebook />;
+        return <IconBrandFacebook className="size-10" />;
       case 'instagram':
-        return <IconBrandInstagram />;
+        return <IconBrandInstagram className="size-10" />;
       case 'xtweet':
-        return <IconBrandX />;
+        return <IconBrandX className="size-10" />;
 
       default:
-        return <IconLink />;
+        return <IconLink className="size-10" />;
     }
   };
 
@@ -109,13 +114,16 @@ export const SocialMediaForm = ({ socialMedia = [] }) => {
           onOpenChange={onOpenChange}
           placement="center"
           className={`text-foreground bg-background border border-white`}
-          size="3xl"
+          size="lg"
         >
           <ModalContent>
             {(onClose) => (
               <>
-                <ModalHeader className="flex flex-col gap-1">
-                  Actualizar Redes Sociales
+                <ModalHeader className="flex flex-col ">
+                  <H3Title
+                    title="Actualiza tus Redes Sociales"
+                    className="border-b-1 border-primary normal-case"
+                  />
                 </ModalHeader>
                 <ModalBody>
                   {isLoading ? (
@@ -124,6 +132,8 @@ export const SocialMediaForm = ({ socialMedia = [] }) => {
                     <Table
                       aria-label="RRSS de la protectora"
                       className="mx-auto max-w-lg "
+                      shadow="none"
+                      classNames={tableStyleConfig}
                     >
                       <TableHeader>
                         <TableColumn>RRSS</TableColumn>
@@ -142,9 +152,11 @@ export const SocialMediaForm = ({ socialMedia = [] }) => {
                                 name="url"
                                 value={social.url}
                                 onChange={(e) => handleInputChange(e, index)}
+                                classNames={inputStyleConfig}
+                                // placeholder="@userName"
                               />
                             </TableCell>
-                            <TableCell>
+                            <TableCell className=" flex justify-center">
                               <div className="relative flex items-center gap-2">
                                 <Tooltip color="danger" content="Eliminar RRSS">
                                   <Button
@@ -173,7 +185,7 @@ export const SocialMediaForm = ({ socialMedia = [] }) => {
                     variant="solid"
                     size="sm"
                     startContent={<IconCircleX />}
-                    className="px-10 font-poppins font-semibold text-sm"
+                    className="px-10 font-poppins font-regular text-sm"
                     onPress={onClose}
                   >
                     Cancelar
@@ -182,8 +194,8 @@ export const SocialMediaForm = ({ socialMedia = [] }) => {
                     color="primary"
                     variant="solid"
                     size="sm"
-                    startContent={<IconSend2 />}
-                    className="px-10 font-poppins font-semibold text-sm"
+                    endContent={<IconSend2 />}
+                    className="px-10 font-poppins font-regular text-sm"
                     onPress={() => handleSubmit(onClose)}
                   >
                     Enviar
