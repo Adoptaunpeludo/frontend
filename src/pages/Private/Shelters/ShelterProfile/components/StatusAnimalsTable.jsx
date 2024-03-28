@@ -129,7 +129,7 @@ export const StatusAnimalsTable = ({ role }) => {
 
   return (
     <Skeleton isLoaded={!isFetching}>
-      <Table aria-label="Animals info">
+      <Table aria-label="Animals info" className="mb-5 ">
         <TableHeader columns={headerColumn} className="flex justify-center">
           {(column) => (
             <TableColumn key={column.uid} className="text-start ">
