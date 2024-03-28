@@ -55,6 +55,7 @@ const AnimalBioForm = ({ data = {}, isDisabled, setErrorsState }) => {
           label="Edad en años"
           name="age"
           min="0"
+          step="0.5"
           max="25"
           defaultValue={age ? age : ''}
         />
