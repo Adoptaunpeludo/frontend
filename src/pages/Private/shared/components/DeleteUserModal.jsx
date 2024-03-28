@@ -1,19 +1,19 @@
 import {
-  Modal,
-  ModalContent,
-  ModalHeader,
-  ModalBody,
-  ModalFooter,
   Button,
-  useDisclosure,
+  Modal,
+  ModalBody,
+  ModalContent,
+  ModalFooter,
+  ModalHeader,
   Spinner,
+  useDisclosure,
 } from '@nextui-org/react';
+import { IconAlertTriangle, IconTrashXFilled } from '@tabler/icons-react';
 import { useQueryClient } from '@tanstack/react-query';
 import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import { deleteUser } from '../service/userService';
-import { IconTrashXFilled } from '@tabler/icons-react';
-import { useNavigate } from 'react-router-dom';
 
 export default function DeleteUserModal() {
   const { isOpen, onOpen, onOpenChange } = useDisclosure();
@@ -52,38 +52,45 @@ export default function DeleteUserModal() {
         isOpen={isOpen}
         onOpenChange={onOpenChange}
         placement="center"
-        className={` text-foreground bg-danger border border-white text-white`}
+        className={` text-foreground border border-white `}
       >
         <ModalContent>
           {(onClose) => (
             <>
               <ModalHeader className="flex flex-col gap-1">
-                Borrar Usuario
+                <span className="border-b-1 border-primary mb-5 pb-1">
+                  Borrar Usuario
+                </span>
               </ModalHeader>
               <ModalBody>
                 {isLoading ? (
                   <Spinner />
                 ) : (
                   <>
-                    <p>¿Seguro que deseas borrar el usuario?</p>
-                    <small>Esta acción no se puede deshacer</small>
+                    <IconAlertTriangle className="size-20 mx-auto stroke-danger" />
+                    <p className="text-center font-poppins font-semibold text-lg">
+                      ¿Seguro que deseas borrar el usuario?
+                    </p>
+                    <small className="text-center font-poppins font-medium ">
+                      Esta acción no se puede deshacer
+                    </small>
                   </>
                 )}
               </ModalBody>
               <ModalFooter>
                 <Button
-                  className="text-white"
                   variant="light"
                   onPress={onClose}
                   disabled={isLoading}
+                  className="border-1 border-primary text-foreground font-poppins font-medium"
                 >
-                  Close
+                  Cerrar
                 </Button>
                 <Button
-                  className=" text-white"
                   color="danger"
                   onPress={handleDeleteUser}
                   disabled={isLoading}
+                  className=" text-white font-poppins font-medium"
                 >
                   Borrar
                 </Button>
