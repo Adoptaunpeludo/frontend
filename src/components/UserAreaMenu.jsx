@@ -67,9 +67,12 @@ export const UserAreaMenu = ({ user }) => {
         <DropdownTrigger>
           <User
             name={user?.username}
-            description={`${
-              user?.firstName === null ? 'J.' : user?.firstName
-            } ${user?.lastName === null ? 'Doe' : user?.lastName}`}
+            description={
+              <span className="block text-ellipsis overflow-hidden max-w-12 sm:max-w-full">
+                {user?.firstName === null ? '' : user?.firstName}{' '}
+                {user?.lastName === null ? '' : user?.lastName}
+              </span>
+            }
             avatarProps={{
               src: `${BUCKET_URL}/${user?.avatar}`,
               isBordered: true,

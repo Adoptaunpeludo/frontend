@@ -15,8 +15,9 @@ export const FacilitiesAsideColumn = ({ facilities }) => {
             <Checkbox
               isSelected={facilities.includes(facility.value)}
               isReadOnly
-              radius="sm"
+              radius="none"
               size="sm"
+              className="font-poppins"
             >
               {facility.label}
             </Checkbox>

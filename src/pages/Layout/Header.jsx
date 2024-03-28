@@ -79,7 +79,12 @@ const Header = () => {
             return null;
           }
           return (
-            <NavbarItem key={`${item.name}-${index}`}>
+            <NavbarItem
+              key={`${item.name}-${index}`}
+              onClick={(event) => {
+                console.log({ event });
+              }}
+            >
               <Link color={item.color} href={item.href}>
                 {item.name}
               </Link>
@@ -117,18 +122,31 @@ const Header = () => {
         </NavbarItem>
       </NavbarContent>
       <NavbarMenu>
-        {menuItems.map((item, index) => (
-          <NavbarMenuItem key={`${item.name}-${index}`}>
-            <Link
-              className="w-full"
-              href={item.href}
-              size="lg"
-              color={item.color}
-            >
-              {item.name}
+        {menuItems.map((item, index) => {
+          if (item.name === 'Asistente') {
+            return null;
+          }
+          return (
+            <NavbarMenuItem key={`${item.name}-${index}`}>
+              <Link
+                className="w-full"
+                href={item.href}
+                size="lg"
+                color={item.color}
+                onClick={() => setIsMenuOpen((isOpen) => !isOpen)}
+              >
+                {item.name}
+              </Link>
+            </NavbarMenuItem>
+          );
+        })}
+        {user && (
+          <NavbarItem key={`${menuItems.at(-1).name}`}>
+            <Link color={menuItems.at(-1).color} href={menuItems.at(-1).href}>
+              {menuItems.at(-1).name}
             </Link>
-          </NavbarMenuItem>
-        ))}
+          </NavbarItem>
+        )}
       </NavbarMenu>
     </Navbar>
   );
