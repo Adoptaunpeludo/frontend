@@ -26,11 +26,12 @@ import {
   IconSend2,
   IconTrashXFilled,
 } from '@tabler/icons-react';
+import { useQueryClient } from '@tanstack/react-query';
 import { useEffect, useState } from 'react';
 import { Form } from 'react-router-dom';
-import { updateSocialMedia } from '../service';
-import { useQueryClient } from '@tanstack/react-query';
 import { toast } from 'react-toastify';
+import { buttonStyleConfig } from '../../../../../utils/configFormFields';
+import { updateSocialMedia } from '../service';
 
 export const SocialMediaForm = ({ socialMedia = [] }) => {
   const { isOpen, onOpen, onOpenChange } = useDisclosure();
@@ -100,6 +101,7 @@ export const SocialMediaForm = ({ socialMedia = [] }) => {
         size="md"
         startContent={<IconEdit />}
         onPress={onOpen}
+        className={buttonStyleConfig}
       >
         Editar
         <Modal
