@@ -6,7 +6,7 @@ import {
 } from '@tabler/icons-react';
 import { H2Title, H3Title } from '../../../../../components';
 import { isNullDataField } from '../../../../../utils/asideDataFields';
-import { boolDataEnum } from '../../../../../utils/enumData';
+import { boolDataEnum, legalFormEnum } from '../../../../../utils/enumData';
 import { ImagesFrame } from '../../../shared';
 import ShelterForm from '../../ShelterForm/ShelterForm';
 import SocialMediaForm from '../../ShelterForm/components/SocialMediaForm';
@@ -28,10 +28,10 @@ const ShelterProfileInfo = ({ data, isLoading }) => {
     <>
       <div
         id="Profile"
-        className="flex flex-col gap-4 border-solid border-b-1 border-b-primary"
+        className="flex flex-col gap-4 border-b-1 border-b-primary"
       >
         <Skeleton isLoaded={!isLoading}>
-          <header className="">
+          <header>
             <H2Title title="Protectora" />
           </header>
         </Skeleton>
@@ -39,17 +39,26 @@ const ShelterProfileInfo = ({ data, isLoading }) => {
           <main>
             <section className="border-b-1 border-primary mb-5">
               <div id="legalFrame" className="flex gap-5 mx-5 pb-5">
-                <span id="cif" className="min-w-32">
+                <span id="cif" className="min-w-32 font-poppins">
                   CIF: {cif}
                 </span>
-                <span id="legalForm">Forma legal: {legalForms}</span>
+                <span
+                  id="legalForm"
+                  className="font-poppins"
+                >{`Forma legal: ${isNullDataField(
+                  legalForms,
+                  legalFormEnum
+                )}`}</span>
               </div>
 
-              <H3Title title="Instalaciones:" className="mx-5" />
-              <div id="veterinarianFacilities" className="flex gap-5 mx-10">
+              <H3Title title="Instalaciones:" className="mx-5 pb-3" />
+              <div
+                id="veterinarianFacilities"
+                className="flex gap-5 mx-10 font-poppins"
+              >
                 <span>
-                  Instalaciones veterinarias:
-                  {isNullDataField(veterinaryFacilities, boolDataEnum)}
+                  {`Instalaciones veterinarias: 
+                  ${isNullDataField(veterinaryFacilities, boolDataEnum)}`}
                 </span>
                 <span>
                   Veterinario propio: {isNullDataField(ownVet, boolDataEnum)}
@@ -66,7 +75,10 @@ const ShelterProfileInfo = ({ data, isLoading }) => {
               )}
             </section>
             <section className="min-h-48 border-b-1 border-primary mb-5">
-              <div id="description" className="flex flex-col gap-3 mx-3 pb-10 ">
+              <div
+                id="description"
+                className="flex flex-col gap-3 mx-3 pb-10 font-poppins"
+              >
                 <H3Title title="Descripción:" />
                 <span className="mx-3">
                   {description === '' ? 'Describe tu protectora' : description}
