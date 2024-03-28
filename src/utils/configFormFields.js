@@ -16,3 +16,9 @@ export const radioStyleConfig = {
 export const checkBoxStyleConfig = {
   wrapper: 'border-2 border-primary ',
 };
+
+export const tableStyleConfig = {
+  thead: 'font-poppins font-medium  text-tertiary',
+  th: 'text-center text-md',
+  td: '',
+};
