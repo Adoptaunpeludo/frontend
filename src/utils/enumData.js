@@ -65,48 +65,48 @@ export const legalFormEnum = [
 ];
 
 export const genderEnum = [
-  { label: 'Macho', value: 'male' },
+  { label: 'macho', value: 'male' },
   {
-    label: 'Hembra',
+    label: 'hembra',
     value: 'female',
   },
 ];
 
 export const adoptionPublishStatusEnum = [
-  { label: 'Pendiente', value: 'pending' },
+  { label: 'pendiente', value: 'pending' },
   {
-    label: 'Rechazado',
+    label: 'rechazado',
     value: 'rejected',
   },
   {
-    label: 'Publicado',
+    label: 'publicado',
     value: 'published',
   },
 ];
 
 export const statusPetEnum = [
-  { label: 'Adoptado', value: 'adopted' },
+  { label: 'adoptado', value: 'adopted' },
   {
-    label: 'En acogida',
+    label: 'en acogida',
     value: 'fostered',
   },
   {
-    label: 'Reservado',
+    label: 'reservado',
     value: 'reserved',
   },
   {
-    label: 'Esperando un hogar',
+    label: 'esperando un hogar',
     value: 'awaiting_home',
   },
 ];
 
 export const animalSizeEnum = [
-  { label: 'Pequeño', value: 'small' },
+  { label: 'pequeño', value: 'small' },
   {
-    label: 'Mediano',
+    label: 'mediano',
     value: 'medium',
   },
-  { label: 'Grande', value: 'big' },
+  { label: 'grande', value: 'big' },
   { label: 'Muy Grande', value: 'very_big' },
 ];
 
