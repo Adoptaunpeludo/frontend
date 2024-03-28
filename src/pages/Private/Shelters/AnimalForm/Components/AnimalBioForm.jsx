@@ -4,7 +4,7 @@ import { H3Title, SelectField } from '../../../../../components';
 import { useState } from 'react';
 import { validateField } from '../../../../../utils/validateField';
 
-const AnimalBioForm = ({ data = {}, isDisabled, setErrorsState }) => {
+const AnimalBioForm = ({ data = {}, isDisabled, setIsFormValid }) => {
   const { name, age, breed, size, gender } = data;
 
   const [petData, setPetData] = useState({});
@@ -14,8 +14,9 @@ const AnimalBioForm = ({ data = {}, isDisabled, setErrorsState }) => {
     const { name, value } = event.target;
     setPetData({ ...petData, [name]: value });
     setErrors({ ...errors, [name]: validateField(name, value) });
-    setErrorsState(errors);
   };
+
+  setIsFormValid(Object.values(errors).every((error) => error === ''));
 
   return (
     <div className="flex flex-col gap-2">
