@@ -91,7 +91,6 @@ const ShelterForm = ({ isSubmitting, data }) => {
                   <div className="flex flex-col gap-6 mx-auto px-10 py-8">
                     <H2Title title={username} className="mx-auto" />
                     <div className="flex flex-col w-full gap-4">
-                      {/* TODO: useInput hook to custom all inputs with the same styles  */}
                       <div className="flex w-full flex-wrap md:flex-nowrap gap-4">
                         <Input
                           className="min-w-72 "
@@ -104,6 +103,7 @@ const ShelterForm = ({ isSubmitting, data }) => {
                           errorMessage={cifError}
                           onChange={handleChange}
                           isRequired
+                          placeholder="X99999999"
                           classNames={inputStyleConfig}
                         />
                         <SelectField
