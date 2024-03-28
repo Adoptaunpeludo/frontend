@@ -10,6 +10,7 @@ import {
   TitleSection,
 } from '../../../../components';
 import { BUCKET_URL } from '../../../../config/config';
+import { useMetadata } from '../../../../hooks/useMetadata';
 import {
   animalBioInfo,
   animalShelterInfo,
@@ -19,7 +20,6 @@ import {
 import { handleNotFoundError } from '../../../../utils/handleError';
 import { animalDetailsQuery, useAnimalDetails } from '../useAnimalDetails';
 import { AnimalFavs, AnimalGallery, ShareSocialMedia } from './components';
-import { useMetadata } from '../../../../hooks/useMetadata';
 
 export const loader =
   (queryClient) =>
@@ -82,7 +82,7 @@ const AnimalDetailsPage = () => {
                 isLogged ? (isOnline ? 'success' : 'danger') : 'default'
               }`}
               className="absolute right-5 top-5 z-10 bg-white"
-              src={`${BUCKET_URL}/${data.user.Avatar}`}
+              src={`${BUCKET_URL}/${data.user.avatar}`}
               showFallback
               fallback={<IconHome className="w-10 h-10 stroke-gray-600" />}
             />
