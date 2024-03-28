@@ -44,7 +44,6 @@ export const action =
   (animalImages, queryClient) =>
   async ({ request, params }) => {
     let formData = await request.formData();
-    console.log(Object.fromEntries(formData));
     let intent = formData.get('intent');
 
     console.log({ intent });
@@ -122,9 +121,8 @@ const AnimalForm = () => {
   const isSubmitting = navigation.state === 'submitting';
 
   const [pet, usePet] = useState(data?.type || 'cat');
-  const [errorsState, setErrorsState] = useState({});
 
-  const isFormValid = Object.values(errorsState).every((error) => error === '');
+  const [isFormValid, setIsFormValid] = useState(true);
 
   return (
     <Skeleton
@@ -158,7 +156,7 @@ const AnimalForm = () => {
                 <AnimalBioForm
                   data={data ? data : {}}
                   isDisabled={isSubmitting}
-                  setErrorsState={setErrorsState}
+                  setIsFormValid={setIsFormValid}
                 />
                 {pet === 'cat' && (
                   <OtherPropertiesCatForm
