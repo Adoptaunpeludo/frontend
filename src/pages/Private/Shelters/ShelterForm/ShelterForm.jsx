@@ -37,6 +37,10 @@ const ShelterForm = ({ isSubmitting, data }) => {
     setCifError(validateCif);
   };
 
+  useEffect(() => {
+    setCifError('');
+  }, [isOpen]);
+
   const isFormValid = !!cifError;
 
   const {

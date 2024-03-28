@@ -34,10 +34,14 @@ export const UserFormBio = ({ data }) => {
     setErrors({ ...errors, [name]: validateField(name, value) });
   };
 
-  const handleClose = () => {
+  useEffect(() => {
     setErrors({});
-    onClose();
-  };
+  }, [isOpen]);
+
+  // const handleClose = () => {
+  //   setErrors({});
+  //   onClose();
+  // };
 
   const isFormValid = Object.values(errors).every((error) => error === '');
 
@@ -159,7 +163,8 @@ export const UserFormBio = ({ data }) => {
                   size="sm"
                   startContent={<IconCircleX />}
                   className="px-10 font-poppins font-semibold text-sm"
-                  onPress={() => handleClose()}
+                  // onPress={() => handleClose()}
+                  onPress={onClose}
                 >
                   Cancelar
                 </Button>
