@@ -1,6 +1,6 @@
-import { Button, Skeleton } from '@nextui-org/react';
+import { Button, Skeleton, User } from '@nextui-org/react';
 import { IconEdit } from '@tabler/icons-react';
-import { Hero, TitleSection } from '../../../../components';
+import { H2Title, Hero, TitleSection } from '../../../../components';
 import { DeleteUserModal, StatusAnimalsTable } from '../../shared';
 import { toast } from 'react-toastify';
 import { useAnimalImagesContext } from '../../../../context/AnimalImagesContext';
@@ -13,13 +13,16 @@ import { userAnimalsQuery } from '../useUserAnimals';
 import { updateProfile } from '../../shared/service/updateUserService';
 import { isAxiosError } from 'axios';
 import { useUser } from '../../useUser';
+import { useUserChats, userChatsQuery } from '../useUserChats';
+import { BUCKET_URL } from '../../../../config/config';
 
 export const loader = (queryClient) => async () => {
   try {
-    const data = await queryClient.ensureQueryData(
+    const animals = await queryClient.ensureQueryData(
       userAnimalsQuery('shelter', { limit: 100 })
     );
-    return data;
+    const chats = await queryClient.ensureQueryData(userChatsQuery());
+    return { chats, animals };
   } catch (error) {
     console.log(error);
     toast.error('Error cargando perfil. ¿Estás logueado?');
@@ -66,6 +69,9 @@ export const action =
 
 const ShelterProfile = () => {
   const { data, isFetching } = useUser();
+  const { data: chats } = useUserChats();
+
+  console.log({ chats });
   const { resetImages } = useAnimalImagesContext();
 
   useEffect(() => {
@@ -90,21 +96,26 @@ const ShelterProfile = () => {
           <Skeleton isLoaded={!isFetching}>
             <UserBioInfo data={data} isLoading={isFetching} />
           </Skeleton>
-          {/* <div id="NotificationsAside">
-            <H2Title title="Mensajes" className="pb-5" />
-            <div className="flex justify-between border-solid border-b-1 border-b-primary pb-3 items-center">
-            <User
-            name="Jane Doe"
-            avatarProps={{
-              src: 'https://i.pravatar.cc/150?u=a04258114e29026702d',
-              isBordered: true,
-              color: 'success',
-            }}
-            />
-            {1}
-            </div>
-          </div> */}
         </section>
+        <div id="NotificationsAside">
+          <H2Title title="Chats" className="pb-5" />
+          <div className="flex justify-between border-solid border-b-1 border-b-primary pb-3 items-center">
+            {chats.map((chat) => (
+              <Link key={chat.slug} to={`/private/chat/${chat.slug}`}>
+                <User
+                  name={`${chat.animal[0].name.toUpperCase()}/${
+                    chat.users[0].username
+                  }`}
+                  avatarProps={{
+                    src: `${BUCKET_URL}/${chat.animal[0].images[0]}`,
+                    isBordered: true,
+                    color: 'success',
+                  }}
+                />
+              </Link>
+            ))}
+          </div>
+        </div>
         <section id="petsTable" className="px-4">
           <StatusAnimalsTable role={'shelter'} />
           <Button
