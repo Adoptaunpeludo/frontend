@@ -9,17 +9,21 @@ import TextMessageBox from '../Assistant/components/TextMessageBox';
 import { useEffect } from 'react';
 import { useAdoptionChatContext } from '../../../context/AdoptionChatContext';
 import { toast } from 'react-toastify';
-import { currentChatQuery, useCurrentChat } from './useCurrentChat';
+// import { currentChatQuery, useCurrentChat } from './useCurrentChat';
+import { shelterDataQuery, useShelterData } from './useShelterData';
 
 export const loader =
   (queryClient) =>
   async ({ params }) => {
     try {
-      const chat = await queryClient.ensureQueryData(
-        currentChatQuery(params.chat)
+      // const chat = await queryClient.ensureQueryData(
+      //   currentChatQuery(params.chat)
+      // );
+      const shelter = await queryClient.ensureQueryData(
+        shelterDataQuery(params.chat.split('-').at(0))
       );
 
-      return { chat };
+      return { /*chat,*/ shelter };
     } catch (error) {
       console.log(error);
       throw error;
@@ -30,18 +34,24 @@ const AdoptionChatPage = () => {
   // const { data: user } = useUser();
   const params = useParams();
   const { chat } = params;
+  const parts = chat.split('-');
+  const shelter = parts.at(0);
+  const adopter = parts.at(-1);
+
   const { chatMessages, setChatMessages } = useAdoptionChatContext();
   const { socket } = useWebSocketContext();
   const { setRoom } = useAdoptionChatContext();
   const { data: user, isFetching: isFetchingUser } = useUser();
-  const { data: currentChat, isFetching: isFetchingCurrentChat } =
-    useCurrentChat(chat);
+  // const { data: currentChat, isFetching: isFetchingCurrentChat } =
+  //   useCurrentChat(chat);
+
+  const { data: shelterData, isFetching: isFetchingShelter } =
+    useShelterData(shelter);
+
+  console.log({ shelterData });
+
   const navigate = useNavigate();
 
-  const parts = chat.split('-');
-
-  const shelter = parts.at(0);
-  const adopter = parts.at(-1);
   // const [isFirstLoad, setIsFirstLoad] = useState([]);
   // const { data: chatHistory, isFetching } = useChatHistory(user.username);
   // const { messagesEndRef } = useScroll(messages, isFirstLoad, isFetching);
@@ -99,7 +109,7 @@ const AdoptionChatPage = () => {
     <main className="max-w-screen-xl  w-full flex  flex-col justify-center  gap-12    mx-auto  overflow-hidden h-[88vh]">
       <div className="flex flex-col flex-1 background-panel rounded-xl h-156 overflow-y-hidden mx-10 my-10">
         <div className="flex flex-col flex-1 overflow-x-auto mb-4">
-          {isFetchingUser || isFetchingCurrentChat ? (
+          {isFetchingUser || /*isFetchingCurrentChat ||*/ isFetchingShelter ? (
             <Spinner className="self-center flex-1 flex-col sm:w-3.5" />
           ) : (
             <div className="grid grid-cols-12 gap-y-2">
@@ -110,9 +120,7 @@ const AdoptionChatPage = () => {
                     text={message.text}
                     isSender={message.isSender}
                     avatar={
-                      message.isSender
-                        ? user.avatar
-                        : currentChat?.users[0]?.avatar[0]
+                      message.isSender ? user.avatar : shelterData?.avatar[0]
                     }
                   />
                 ) : (
@@ -121,9 +129,7 @@ const AdoptionChatPage = () => {
                     text={message.text}
                     isSender={message.isSender}
                     avatar={
-                      message.isSender
-                        ? user.avatar
-                        : currentChat?.users[0]?.avatar[0]
+                      message.isSender ? user.avatar : shelterData?.avatar[0]
                     }
                   />
                 )
