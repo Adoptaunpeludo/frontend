@@ -60,8 +60,8 @@ const AdoptionChatPage = () => {
   useEffect(() => {
     setRoom(chat);
 
-    return () => setRoom('');
-  }, [chat, setRoom, user]);
+    // return () => setRoom('');
+  }, [chat, setRoom]);
 
   useEffect(() => {
     setChatMessages([]);
@@ -83,7 +83,7 @@ const AdoptionChatPage = () => {
     // setIsFirstLoad(false);
     setChatMessages((prev) => [...prev, { text, isSender: true }]);
 
-    if (socket && socket.readyState !== 0)
+    if (socket && socket.readyState !== 0) {
       socket.send(
         JSON.stringify({
           type: 'chat-message',
@@ -92,6 +92,7 @@ const AdoptionChatPage = () => {
           username: user.username,
         })
       );
+    }
   };
 
   return (
@@ -111,7 +112,7 @@ const AdoptionChatPage = () => {
                     avatar={
                       message.isSender
                         ? user.avatar
-                        : currentChat.users[0].avatar[0]
+                        : currentChat?.users[0]?.avatar[0]
                     }
                   />
                 ) : (
@@ -122,7 +123,7 @@ const AdoptionChatPage = () => {
                     avatar={
                       message.isSender
                         ? user.avatar
-                        : currentChat.users[0].avatar[0]
+                        : currentChat?.users[0]?.avatar[0]
                     }
                   />
                 )

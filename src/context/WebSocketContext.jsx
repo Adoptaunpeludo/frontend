@@ -28,7 +28,7 @@ const WebSocketContextProvider = ({ children, user }) => {
           }
         }, 58000);
 
-        if (socket.readyState === socket.OPEN)
+        if (socket.readyState === socket.OPEN && user)
           socket.send(
             JSON.stringify({
               type: 'user-authentication',
@@ -36,15 +36,13 @@ const WebSocketContextProvider = ({ children, user }) => {
             })
           );
 
-        console.log({ room });
-
         if (socket.readyState === socket.OPEN && room) {
-          console.log(user.username);
           socket?.send(
             JSON.stringify({
               type: 'join-chat-room',
               username: user.username,
               room,
+              role: user.role,
             })
           );
         }
@@ -62,6 +60,11 @@ const WebSocketContextProvider = ({ children, user }) => {
                 ...prev,
                 { text: data.message, isSender: false },
               ]);
+              break;
+            case 'chat-created':
+              queryClient.invalidateQueries({
+                queryKey: ['user-chats', data.shelterUsername],
+              });
               break;
             case 'animal-changed':
               setNotifications((notifications) => [...notifications, data]);

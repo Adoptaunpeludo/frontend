@@ -5,7 +5,7 @@ export const currentChatQuery = (slug) => {
   return {
     queryKey: ['current-chat', slug],
     queryFn: () => getCurrentChat(slug),
-    staleTime: 0,
+    staleTime: 1000 * 60 * 15,
   };
 };
 

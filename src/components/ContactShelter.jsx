@@ -3,8 +3,9 @@ import { H2Title } from '.';
 import { ChatIcon } from '../assets/svg';
 import { useUser } from '../pages/Private/useUser';
 import { useNavigate } from 'react-router-dom';
-import { useAdoptionChatContext } from '../context/AdoptionChatContext';
+
 import { useWebSocketContext } from '../context/WebSocketContext';
+import { useAdoptionChatContext } from '../context/AdoptionChatContext';
 export const ContactShelter = ({ className, slug }) => {
   const { data: user } = useUser();
   const { setRoom } = useAdoptionChatContext();
@@ -14,14 +15,16 @@ export const ContactShelter = ({ className, slug }) => {
   const handleCreateChat = () => {
     const room = `${slug}-${user?.username}`;
 
-    setRoom(room);
-    if (socket.readyState === socket.OPEN && room)
+    if (socket.readyState === socket.OPEN) {
       socket.send(
         JSON.stringify({
           type: 'create-chat-room',
           room,
         })
       );
+    }
+
+    setRoom(room);
     navigate(`/private/chat/${slug}-${user?.username}`);
   };
 

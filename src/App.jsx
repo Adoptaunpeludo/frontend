@@ -145,7 +145,7 @@ const router = (bioModalOnClose, shelterModalOnClose, animalImages) =>
               action: adopterProfileAction(bioModalOnClose, queryClient),
             },
             {
-              path: 'shelter',
+              path: 'shelter/:username',
               element: <ShelterProfile />,
               loader: userAnimalsLoader(queryClient),
               action: shelterProfileAction(

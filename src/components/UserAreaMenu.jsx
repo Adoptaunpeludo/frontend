@@ -42,6 +42,9 @@ export const UserAreaMenu = ({ user }) => {
       queryClient.removeQueries({
         queryKey: ['user-animals'],
       });
+      queryClient.removeQueries({
+        queryKey: ['user-chats'],
+      });
 
       navigate('/');
     } catch (error) {
@@ -95,7 +98,7 @@ export const UserAreaMenu = ({ user }) => {
         </DropdownItem>
         <DropdownItem key="profile" textValue="user profile">
           <Link
-            href={`/private/${user?.role}`}
+            href={`/private/${user?.role}/${user?.username}`}
             color="foreground"
             className="capitalize w-full"
           >

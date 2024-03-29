@@ -50,8 +50,6 @@ const AnimalDetailsPage = () => {
   const isOnline =
     user?.username === data.user.username ? true : data.user.isOnline;
 
-  console.log({ data });
-
   useMetadata(data, slug, images);
 
   return (
