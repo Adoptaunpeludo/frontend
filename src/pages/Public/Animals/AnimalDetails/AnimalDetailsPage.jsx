@@ -120,7 +120,7 @@ const AnimalDetailsPage = () => {
       </section>
       <footer className="flex px-4 justify-around items-center max-sm:flex-col max-sm:justify-start">
         <AnimalFavs numFavs={data.numFavs} />
-        <ContactShelter />
+        <ContactShelter slug={slug} />
         <ShareSocialMedia
           url={`https://www.adoptaunpeludo.com/animals/${data.type}s/${slug}`}
         />
