@@ -11,7 +11,8 @@ import { userQuery } from '../Private/useUser';
 import { userNotificationsQuery } from '../Private/useNotifications';
 import { WebSocketContextProvider } from '../../context/WebSocketContext';
 import { NotificationsContextProvider } from '../../context/NotificationsContext';
-import { AdoptionChatContextProvider } from '../../context/AdoptionChatContext';
+import { useAdoptionChatContext } from '../../context/AdoptionChatContext';
+import { useEffect } from 'react';
 
 export const loader = (queryClient) => async () => {
   try {
@@ -33,15 +34,13 @@ const AppLayout = () => {
     <>
       <NextUIProvider navigate={navigate}>
         <div className="min-h-screen flex flex-col">
-          <AdoptionChatContextProvider>
-            <NotificationsContextProvider>
-              <WebSocketContextProvider user={user}>
-                <Header />
-                <Outlet context={{ user, notifications }} />
-                <Footer />
-              </WebSocketContextProvider>
-            </NotificationsContextProvider>
-          </AdoptionChatContextProvider>
+          <NotificationsContextProvider>
+            <WebSocketContextProvider user={user}>
+              <Header />
+              <Outlet context={{ user, notifications }} />
+              <Footer />
+            </WebSocketContextProvider>
+          </NotificationsContextProvider>
         </div>
         <ScrollRestoration />
       </NextUIProvider>

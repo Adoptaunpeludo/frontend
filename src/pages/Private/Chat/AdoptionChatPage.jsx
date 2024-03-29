@@ -23,8 +23,9 @@ import { toast } from 'react-toastify';
 
 const AdoptionChatPage = () => {
   // const { data: user } = useUser();
-  const { chatMessages, setChatMessages, setRoom } = useAdoptionChatContext();
+  const { chatMessages, setChatMessages } = useAdoptionChatContext();
   const { socket } = useWebSocketContext();
+  const { setRoom } = useAdoptionChatContext();
   const { data: user, isFetching: isFetchingUser } = useUser();
   const navigate = useNavigate();
 

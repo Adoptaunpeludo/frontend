@@ -3,9 +3,27 @@ import { H2Title } from '.';
 import { ChatIcon } from '../assets/svg';
 import { useUser } from '../pages/Private/useUser';
 import { useNavigate } from 'react-router-dom';
+import { useAdoptionChatContext } from '../context/AdoptionChatContext';
+import { useWebSocketContext } from '../context/WebSocketContext';
 export const ContactShelter = ({ className, slug }) => {
   const { data: user } = useUser();
+  const { setRoom } = useAdoptionChatContext();
+  const { socket } = useWebSocketContext();
   const navigate = useNavigate();
+
+  const handleCreateChat = () => {
+    const room = `${slug}-${user?.username}`;
+
+    setRoom(room);
+    if (socket.readyState === socket.OPEN && room)
+      socket.send(
+        JSON.stringify({
+          type: 'create-chat-room',
+          room,
+        })
+      );
+    navigate(`/private/chat/${slug}-${user?.username}`);
+  };
 
   return (
     <section
@@ -19,7 +37,7 @@ export const ContactShelter = ({ className, slug }) => {
       <Button
         isDisabled={!user || user?.role === 'shelter'}
         disableAnimation=""
-        onClick={() => navigate(`/private/chat/${slug}-${user?.username}`)}
+        onClick={handleCreateChat}
       >
         <ChatIcon className="size-14" />
       </Button>

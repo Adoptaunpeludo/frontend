@@ -36,15 +36,10 @@ const WebSocketContextProvider = ({ children, user }) => {
             })
           );
 
-        if (socket.readyState === socket.OPEN && room)
-          socket.send(
-            JSON.stringify({
-              type: 'create-chat-room',
-              room,
-            })
-          );
+        console.log({ room });
 
-        if (socket.readyState === socket.OPEN && room)
+        if (socket.readyState === socket.OPEN && room) {
+          console.log(user.username);
           socket?.send(
             JSON.stringify({
               type: 'join-chat-room',
@@ -52,6 +47,8 @@ const WebSocketContextProvider = ({ children, user }) => {
               room,
             })
           );
+        }
+
         socket.onmessage = (event) => {
           const message = JSON.parse(event.data);
           const { type, ...data } = message;
