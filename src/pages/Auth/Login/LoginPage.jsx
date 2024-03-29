@@ -101,7 +101,7 @@ const LoginPage = () => {
               />
             </div>
             <div className="flex justify-end">
-              <Link to="#" className="text-tertiary font-poppins">
+              <Link to="/forgot-password" className="text-tertiary font-poppins">
                 ¿Olvidaste tu password?
               </Link>
             </div>

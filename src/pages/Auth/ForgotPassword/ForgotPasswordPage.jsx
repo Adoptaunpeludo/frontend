@@ -41,7 +41,7 @@ const ForgotPasswordPage = () => {
               type="email"
               label="Email"
               name="email"
-              value="dorotea942@moxt5j3.cashbenties.com"
+              isRequired
             />
             <Button type="submit" color="primary" variant="solid" size="lg">
               Enviar
