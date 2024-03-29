@@ -1,12 +1,12 @@
 import { H3Title } from '../../../../components';
 import { BUCKET_URL } from '../../../../config/config';
-import ImageUploadModal from './ImageUploadModal';
 import DeleteImageModal from './DeleteImageModal';
+import ImageUploadModal from './ImageUploadModal';
 
 export const ImagesFrame = ({ images = [], page, id, slug, limit = 6 }) => {
   const style =
     page === 'update-animal'
-      ? 'max-w-4xl w-full flex flex-col h-full justify-center mx-auto my-4'
+      ? 'max-w-4xl w-full flex flex-col h-full justify-center mx-auto my-4 border-primary border-t-1 pt-2'
       : 'flex flex-col gap-5 mx-3';
 
   return (

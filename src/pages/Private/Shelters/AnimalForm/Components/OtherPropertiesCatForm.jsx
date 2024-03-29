@@ -1,10 +1,11 @@
+import { H2Title, SelectField } from '../../../../../components';
+import { selectStyleConfig } from '../../../../../utils/configFormFields';
 import {
   boolDataEnum,
   energyEnum,
   moltingEnum,
   potentialEnum,
 } from '../../../../../utils/enumData';
-import { H3Title, SelectField } from '../../../../../components';
 
 const OtherPropertiesCatForm = ({ data = {}, isDisabled }) => {
   const {
@@ -18,7 +19,7 @@ const OtherPropertiesCatForm = ({ data = {}, isDisabled }) => {
   } = data;
   return (
     <div className="flex flex-col gap-2">
-      <H3Title title="Otras Características" />
+      <H2Title title="Otras Características" />
       <div className="flex w-full flex-wrap md:flex-nowrap gap-2 border-primary border-t-1 pt-3">
         <SelectField
           isRequired
@@ -28,6 +29,7 @@ const OtherPropertiesCatForm = ({ data = {}, isDisabled }) => {
           dataField={toiletTrained}
           dataEnum={boolDataEnum}
           isDisabled={isDisabled}
+          classNames={selectStyleConfig}
         />
         <SelectField
           isRequired
@@ -37,6 +39,7 @@ const OtherPropertiesCatForm = ({ data = {}, isDisabled }) => {
           dataField={easyTrain}
           dataEnum={boolDataEnum}
           isDisabled={isDisabled}
+          classNames={selectStyleConfig}
         />
         <SelectField
           isRequired
@@ -46,6 +49,7 @@ const OtherPropertiesCatForm = ({ data = {}, isDisabled }) => {
           dataField={moltingAmount}
           dataEnum={moltingEnum}
           isDisabled={isDisabled}
+          classNames={selectStyleConfig}
         />
         <SelectField
           isRequired
@@ -55,9 +59,10 @@ const OtherPropertiesCatForm = ({ data = {}, isDisabled }) => {
           dataField={energyLevel}
           dataEnum={energyEnum}
           isDisabled={isDisabled}
+          classNames={selectStyleConfig}
         />
       </div>
-      <div className="flex w-full flex-wrap md:flex-nowrap gap-2 border-primary border-t-1 pt-3">
+      <div className="flex w-full flex-wrap md:flex-nowrap gap-2 pt-3">
         <SelectField
           isRequired
           label="Nivel de juego"
@@ -66,6 +71,7 @@ const OtherPropertiesCatForm = ({ data = {}, isDisabled }) => {
           dataField={playLevel}
           dataEnum={potentialEnum}
           isDisabled={isDisabled}
+          classNames={selectStyleConfig}
         />
 
         <SelectField
@@ -76,6 +82,7 @@ const OtherPropertiesCatForm = ({ data = {}, isDisabled }) => {
           dataField={scratchPotential}
           dataEnum={potentialEnum}
           isDisabled={isDisabled}
+          classNames={selectStyleConfig}
         />
         <SelectField
           isRequired
@@ -85,28 +92,10 @@ const OtherPropertiesCatForm = ({ data = {}, isDisabled }) => {
           dataField={kidsFriendly}
           dataEnum={boolDataEnum}
           isDisabled={isDisabled}
+          classNames={selectStyleConfig}
         />
       </div>
     </div>
   );
 };
 export default OtherPropertiesCatForm;
-
-//     "easyTrain": true,
-//     "energyLevel": "high",
-//     "moltingAmount": "light",
-//     "status": "awaiting_home",
-//     "type": "cat",
-//     "gender": "male",
-//     "numFavs": 0,
-//     "playLevel": "moderate",
-//     "kidsFriendly": false,
-//     "scratchPotential": "high",
-//     "toiletTrained": true,
-//     "city": "Granada",
-//     "user": {
-//         "avatar": "avatar.png",
-//         "username": "shelter1",
-//         "isOnline": false
-//     }
-// }

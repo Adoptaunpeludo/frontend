@@ -1,10 +1,11 @@
+import { H2Title, SelectField } from '../../../../../components';
+import { selectStyleConfig } from '../../../../../utils/configFormFields';
 import {
   boolDataEnum,
   energyEnum,
   moltingEnum,
   potentialEnum,
 } from '../../../../../utils/enumData';
-import { H3Title, SelectField } from '../../../../../components';
 
 const OtherPropertiesDogForm = ({ data = {}, isDisabled }) => {
   const {
@@ -17,7 +18,7 @@ const OtherPropertiesDogForm = ({ data = {}, isDisabled }) => {
   } = data;
   return (
     <div className="flex flex-col gap-2">
-      <H3Title title="Otras Características" />
+      <H2Title title="Otras Características" />
       <div className="flex w-full flex-wrap md:flex-nowrap gap-2 border-primary border-t-1 pt-3">
         <SelectField
           isRequired
@@ -27,6 +28,7 @@ const OtherPropertiesDogForm = ({ data = {}, isDisabled }) => {
           name="easyTrain"
           dataEnum={boolDataEnum}
           isDisabled={isDisabled}
+          classNames={selectStyleConfig}
         />
         <SelectField
           isRequired
@@ -36,6 +38,7 @@ const OtherPropertiesDogForm = ({ data = {}, isDisabled }) => {
           dataField={moltingAmount}
           dataEnum={moltingEnum}
           isDisabled={isDisabled}
+          classNames={selectStyleConfig}
         />
         <SelectField
           isRequired
@@ -45,9 +48,10 @@ const OtherPropertiesDogForm = ({ data = {}, isDisabled }) => {
           dataField={energyLevel}
           dataEnum={energyEnum}
           isDisabled={isDisabled}
+          classNames={selectStyleConfig}
         />
       </div>
-      <div className="flex w-full flex-wrap md:flex-nowrap gap-2 border-primary border-t-1 pt-3">
+      <div className="flex w-full flex-wrap md:flex-nowrap gap-2 pt-3">
         <SelectField
           isRequired
           label="Potencial de Babeo"
@@ -56,6 +60,7 @@ const OtherPropertiesDogForm = ({ data = {}, isDisabled }) => {
           dataField={droolingPotential}
           dataEnum={potentialEnum}
           isDisabled={isDisabled}
+          classNames={selectStyleConfig}
         />
         <SelectField
           isRequired
@@ -65,6 +70,7 @@ const OtherPropertiesDogForm = ({ data = {}, isDisabled }) => {
           dataField={bark}
           dataEnum={potentialEnum}
           isDisabled={isDisabled}
+          classNames={selectStyleConfig}
         />
         <SelectField
           isRequired
@@ -74,6 +80,7 @@ const OtherPropertiesDogForm = ({ data = {}, isDisabled }) => {
           dataField={departmentAdapted}
           dataEnum={boolDataEnum}
           isDisabled={isDisabled}
+          classNames={selectStyleConfig}
         />
       </div>
     </div>
