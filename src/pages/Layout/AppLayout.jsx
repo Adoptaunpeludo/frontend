@@ -11,8 +11,6 @@ import { userQuery } from '../Private/useUser';
 import { userNotificationsQuery } from '../Private/useNotifications';
 import { WebSocketContextProvider } from '../../context/WebSocketContext';
 import { NotificationsContextProvider } from '../../context/NotificationsContext';
-import { useAdoptionChatContext } from '../../context/AdoptionChatContext';
-import { useEffect } from 'react';
 
 export const loader = (queryClient) => async () => {
   try {
