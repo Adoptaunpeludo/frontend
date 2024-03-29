@@ -20,9 +20,10 @@ import {
   ShelterDetailsPage,
   ShelterProfile,
   SheltersPage,
-  VerifyEmail,
+  VerifyEmailPage,
   ForgotPasswordPage,
-  NotificationsPage
+  NotificationsPage,
+  ResetPasswordPage
 } from './pages/index.js';
 
 // Actions
@@ -32,7 +33,8 @@ import { action as shelterProfileAction } from './pages/Private/Shelters/Shelter
 import { action as adopterProfileAction } from './pages/Private/Adopters/AdopterProfile/AdopterProfile.jsx';
 import { action as mutateAnimalAction } from './pages/Private/Shelters/AnimalForm/AnimalForm.jsx';
 import { action as verifyEmailAction } from './pages/Auth/VerifyEmail/VerifyEmailPage.jsx';
-import { action as forgotPasswordAction } from './pages/Auth/ForgotPasswordPage/ForgotPasswordPage.jsx';
+import { action as forgotPasswordAction } from './pages/Auth/ForgotPassword/ForgotPasswordPage.jsx';
+import { action as resetPasswordAction } from './pages/Auth/ResetPassword/ResetPasswordPage.jsx';
 
 
 // Loaders
@@ -45,6 +47,7 @@ import { loader as userAnimalsLoader } from './pages/Private/Shelters/ShelterPro
 import { loader as userFavsLoader } from './pages/Private/Adopters/AdopterProfile/AdopterProfile.jsx';
 import { loader as sheltersLoader } from './pages/Public/Shelters/SheltersPage.jsx';
 import { loader as verifyEmailLoader } from './pages/Auth/VerifyEmail/VerifyEmailPage.jsx';
+//import { loader as resetPasswordLoader } from './pages/Auth/ResetPassword/ResetPasswordPage.jsx';
 import { loader as userDataLoader } from './pages/Layout/AppLayout.jsx';
 
 import { useAnimalImagesContext } from './context/AnimalImagesContext.jsx';
@@ -81,7 +84,7 @@ const router = (bioModalOnClose, shelterModalOnClose, animalImages) =>
         },
         {
           path: '/verify-email/:token',
-          element: <VerifyEmail />,
+          element: <VerifyEmailPage />,
           loader: verifyEmailLoader,
           action: verifyEmailAction,
         },
@@ -89,7 +92,12 @@ const router = (bioModalOnClose, shelterModalOnClose, animalImages) =>
           path: 'forgot-password',
           element: <ForgotPasswordPage />,
           action: forgotPasswordAction,
-          //actiloaderon: verifyEmailAction,
+        },
+        {
+          path: '/reset-password/:token',
+          element: <ResetPasswordPage />,
+          //loader: resetPasswordLoader,
+          action: resetPasswordAction,
         },
         //* End Auth Routes
         //* Public Routes

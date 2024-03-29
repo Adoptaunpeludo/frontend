@@ -1,8 +1,9 @@
 // Auth
 export { default as LoginPage } from './Auth/Login/LoginPage';
 export { default as RegisterPage } from './Auth/Register/RegisterPage';
-export { default as VerifyEmail } from './Auth/VerifyEmail/VerifyEmailPage.jsx';
-export { default as ForgotPasswordPage } from './Auth/ForgotPasswordPage/ForgotPasswordPage.jsx';
+export { default as VerifyEmailPage } from './Auth/VerifyEmail/VerifyEmailPage.jsx';
+export { default as ForgotPasswordPage } from './Auth/ForgotPassword/ForgotPasswordPage.jsx';
+export { default as ResetPasswordPage } from './Auth/ResetPassword/ResetPasswordPage.jsx';
 
 // Public
 export { default as AnimalDetailsPage } from './Public/Animals/AnimalDetails/AnimalDetailsPage';
@@ -19,12 +20,6 @@ export { default as ShelterProfile } from './Private/Shelters/ShelterProfile/She
 export { default as UserFormBio } from './Private/shared/components/UserFormBio.jsx';
 export { default as NotificationsPage } from './Private/NotificationsPage/NotificationsPage.jsx';
 
-
 // Other
 export { default as ErrorPage } from './Error/ErrorPage';
 export { default as AppLayout } from './Layout/AppLayout';
-
-
-
-
-

@@ -46,12 +46,21 @@ export const resendValidationEmail = async (email) => {
   }
 };
 
-
 export const ForgotPassword = async (email) => {
   try {
-    const response = await postData('/auth/forgot-password/',{email});
+    const response = await postData('/auth/forgot-password/', { email });
     return response;
   } catch (error) {
     return error;
   }
 };
+
+export const resetPassword = async ({password , token}) => {
+  try {
+    const response = await postData(`/auth/reset-password/${token}`, { password });
+    return response;
+  } catch (error) {
+    return error;
+  }
+
+}
