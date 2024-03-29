@@ -2,6 +2,7 @@ import { createContext, useContext, useEffect, useRef, useState } from 'react';
 import { WB_SERVER } from '../config/config';
 import { useQueryClient } from '@tanstack/react-query';
 import { useNotificationsContext } from './NotificationsContext';
+import { useAdoptionChatContext } from './AdoptionChatContext';
 
 const WebSocketContext = createContext();
 
@@ -9,6 +10,7 @@ const WebSocketContextProvider = ({ children, user }) => {
   const [isReady, setIsReady] = useState(false);
   const [message, setMessage] = useState(null);
   const { setNotifications } = useNotificationsContext();
+  const { setChatMessages, room } = useAdoptionChatContext();
   const queryClient = useQueryClient();
 
   const ws = useRef(null);
@@ -26,40 +28,81 @@ const WebSocketContextProvider = ({ children, user }) => {
           }
         }, 58000);
 
-        if (socket.readyState !== 0)
-          socket.send(JSON.stringify({ token: user?.wsToken }));
+        if (socket.readyState === socket.OPEN)
+          socket.send(
+            JSON.stringify({
+              type: 'user-authentication',
+              token: user?.wsToken,
+            })
+          );
 
+        if (socket.readyState === socket.OPEN && room)
+          socket.send(
+            JSON.stringify({
+              type: 'create-chat-room',
+              room,
+            })
+          );
+
+        if (socket.readyState === socket.OPEN && room)
+          socket?.send(
+            JSON.stringify({
+              type: 'join-chat-room',
+              username: user.username,
+              room,
+            })
+          );
         socket.onmessage = (event) => {
           const message = JSON.parse(event.data);
           const { type, ...data } = message;
-          if (type === 'pong') {
-            clearInterval(pingInterval);
-          }
 
-          if (type === 'animal-changed') {
-            setNotifications((notifications) => [...notifications, data]);
-            queryClient.invalidateQueries({
-              queryKey: ['animals'],
-            });
-            queryClient.invalidateQueries({
-              queryKey: ['animal-details', data.animalSlug],
-            });
-          }
-
-          if (type.startsWith('user')) {
-            const { username } = message;
-            queryClient.invalidateQueries({
-              queryKey: ['shelters'],
-            });
-            queryClient.invalidateQueries({
-              queryKey: ['shelter-details', username],
-            });
-            queryClient.invalidateQueries({
-              queryKey: ['animals'],
-            });
-            queryClient.invalidateQueries({
-              queryKey: ['animal-details'],
-            });
+          switch (type) {
+            case 'pong':
+              clearInterval(pingInterval);
+              break;
+            case 'chat-message':
+              setChatMessages((prev) => [
+                ...prev,
+                { text: data.message, isSender: false },
+              ]);
+              break;
+            case 'animal-changed':
+              setNotifications((notifications) => [...notifications, data]);
+              queryClient.invalidateQueries({
+                queryKey: ['animals'],
+              });
+              queryClient.invalidateQueries({
+                queryKey: ['animal-details', data.animalSlug],
+              });
+              break;
+            case 'user-connected':
+              queryClient.invalidateQueries({
+                queryKey: ['shelters'],
+              });
+              queryClient.invalidateQueries({
+                queryKey: ['shelter-details', message.username],
+              });
+              queryClient.invalidateQueries({
+                queryKey: ['animals'],
+              });
+              queryClient.invalidateQueries({
+                queryKey: ['animal-details'],
+              });
+              break;
+            case 'user-disconnected':
+              queryClient.invalidateQueries({
+                queryKey: ['shelters'],
+              });
+              queryClient.invalidateQueries({
+                queryKey: ['shelter-details', message.username],
+              });
+              queryClient.invalidateQueries({
+                queryKey: ['animals'],
+              });
+              queryClient.invalidateQueries({
+                queryKey: ['animal-details'],
+              });
+              break;
           }
         };
 
@@ -79,7 +122,7 @@ const WebSocketContextProvider = ({ children, user }) => {
       ws.current = socket;
     };
     connectToSocketServer();
-  }, [queryClient, user]);
+  }, [queryClient, user, setNotifications, setChatMessages, room]);
 
   return (
     <WebSocketContext.Provider value={{ isReady, message, socket: ws.current }}>
