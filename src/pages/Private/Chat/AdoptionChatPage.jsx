@@ -4,43 +4,44 @@ import { useUser } from '../useUser';
 import { useWebSocketContext } from '../../../context/WebSocketContext';
 import UserMessage from './components/UserMessage';
 import { useNavigate, useParams } from 'react-router-dom';
-import { useAnimalDetails } from '../../Public/Animals/useAnimalDetails';
-
 import TextMessageBox from '../Assistant/components/TextMessageBox';
 
 import { useEffect } from 'react';
 import { useAdoptionChatContext } from '../../../context/AdoptionChatContext';
 import { toast } from 'react-toastify';
+import { currentChatQuery, useCurrentChat } from './useCurrentChat';
 
-// export const loader = (queryClient) => async () => {
-//   try {
-//     const chat = await .....
-//   } catch (error) {
-//     console.log(error);
-//     throw error;
-//   }
-// };
+export const loader =
+  (queryClient) =>
+  async ({ params }) => {
+    try {
+      const chat = await queryClient.ensureQueryData(
+        currentChatQuery(params.chat)
+      );
+
+      return { chat };
+    } catch (error) {
+      console.log(error);
+      throw error;
+    }
+  };
 
 const AdoptionChatPage = () => {
   // const { data: user } = useUser();
+  const params = useParams();
+  const { chat } = params;
   const { chatMessages, setChatMessages } = useAdoptionChatContext();
   const { socket } = useWebSocketContext();
   const { setRoom } = useAdoptionChatContext();
   const { data: user, isFetching: isFetchingUser } = useUser();
+  const { data: currentChat, isFetching: isFetchingCurrentChat } =
+    useCurrentChat(chat);
   const navigate = useNavigate();
-
-  const params = useParams();
-
-  const { chat } = params;
 
   const parts = chat.split('-');
 
-  const slug = parts.slice(0, 2).join('-');
-
   const shelter = parts.at(0);
   const adopter = parts.at(-1);
-
-  const { data: animal, isFetching: isFetchingAnimal } = useAnimalDetails(slug);
   // const [isFirstLoad, setIsFirstLoad] = useState([]);
   // const { data: chatHistory, isFetching } = useChatHistory(user.username);
   // const { messagesEndRef } = useScroll(messages, isFirstLoad, isFetching);
@@ -58,7 +59,9 @@ const AdoptionChatPage = () => {
 
   useEffect(() => {
     setRoom(chat);
-  }, [chat, setRoom]);
+
+    return () => setRoom('');
+  }, [chat, setRoom, user]);
 
   useEffect(() => {
     setChatMessages([]);
@@ -94,9 +97,9 @@ const AdoptionChatPage = () => {
   return (
     <main className="max-w-screen-xl  w-full flex  flex-col justify-center  gap-12    mx-auto  overflow-hidden h-[88vh]">
       <div className="flex flex-col flex-1 background-panel rounded-xl h-156 overflow-y-hidden mx-10 my-10">
-        <div className="flex flex-col flex-1 overflow-x-auto mb-4 ">
-          {isFetchingUser || isFetchingAnimal ? (
-            <Spinner className="self-center flex-1" />
+        <div className="flex flex-col flex-1 overflow-x-auto mb-4">
+          {isFetchingUser || isFetchingCurrentChat ? (
+            <Spinner className="self-center flex-1 flex-col sm:w-3.5" />
           ) : (
             <div className="grid grid-cols-12 gap-y-2">
               {chatMessages.map((message, index) =>
@@ -105,14 +108,22 @@ const AdoptionChatPage = () => {
                     key={index}
                     text={message.text}
                     isSender={message.isSender}
-                    avatar={animal.user.avatar}
+                    avatar={
+                      message.isSender
+                        ? user.avatar
+                        : currentChat.users[0].avatar[0]
+                    }
                   />
                 ) : (
                   <UserMessage
                     key={index}
                     text={message.text}
                     isSender={message.isSender}
-                    avatar={user.avatar}
+                    avatar={
+                      message.isSender
+                        ? user.avatar
+                        : currentChat.users[0].avatar[0]
+                    }
                   />
                 )
               )}

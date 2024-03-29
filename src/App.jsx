@@ -41,6 +41,7 @@ import { loader as sheltersLoader } from './pages/Public/Shelters/SheltersPage.j
 import { loader as verifyEmailLoader } from './pages/Auth/VerifyEmail/VerifyEmailPage.jsx';
 import { loader as userDataLoader } from './pages/Layout/AppLayout.jsx';
 import { loader as assistantChatLoader } from './pages/Private/Assistant/AssistantPage.jsx';
+import { loader as currentChatLoader } from './pages/Private/Chat/AdoptionChatPage.jsx';
 
 import { useAnimalImagesContext } from './context/AnimalImagesContext.jsx';
 import NotFoundPage from './pages/Error/NotFound/NotFoundPage.jsx';
@@ -167,6 +168,7 @@ const router = (bioModalOnClose, shelterModalOnClose, animalImages) =>
             {
               path: 'chat/:chat',
               element: <AdoptionChatPage />,
+              loader: currentChatLoader(queryClient),
             },
           ],
         },
