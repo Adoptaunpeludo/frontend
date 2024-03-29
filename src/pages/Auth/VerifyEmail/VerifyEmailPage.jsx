@@ -1,14 +1,9 @@
 import { TitleSection } from '../../../components';
 import { verifyEmail } from '../../Auth/authService';
 import { Button, Input, Link, Spinner } from '@nextui-org/react';
-//import { verifyEmailQuery, useVerifyEmail } from "./useVerifyEmailPage";
 import { Form, useLoaderData } from 'react-router-dom';
 import { resendValidationEmail } from '../authService';
-
-// Error 500 - JWT Malformed
-// Error 400 -
-
-// TODO:
+import { useState } from 'react';
 
 export const action = async ({ request }) => {
   const formData = await request.formData();
@@ -17,16 +12,14 @@ export const action = async ({ request }) => {
 
   try {
     const { email } = credentials;
+    console.log(email);
     const res = await resendValidationEmail(email);
     console.log({ res });
 
-    if (res.status === 200) {
-      res.data;
-      //return null
-      //return redirect(/verify-email/${token});
-    }
-
     if (res.status === 400) {
+      throw new Error(res.response.data.message);
+    }
+    if (res.status === 500) {
       throw new Error(res.response.data.message);
     }
 
@@ -56,69 +49,75 @@ export const loader = async ({ params }) => {
   }
 };
 
+const RenderSuccessMessage = () => (
+  <div className="flex flex-col">
+    <div className="mt-5 mx-5">
+      <div className="flex justify-center">
+        <p>Tu email ha sido validado correctamente</p>
+      </div>
+      <div className="flex justify-center mt-5">
+        <Button
+          as={Link}
+          className="font-bold "
+          color="primary"
+          variant="solid"
+          href="/login"
+        >
+          Ir al login
+        </Button>
+      </div>
+    </div>
+  </div>
+);
+
+const RenderErrorMessage = () => {
+  const [isResendingEmail, setIsResendingEmail] = useState(false);
+
+  return (
+    <Form method="post" className="flex flex-col gap-6 max-w-lg  pt-8">
+      <p>
+        Hubo un error al validar tu cuenta, por favor introduce tu correo para
+        volver a intentarlo:
+      </p>
+      <Input
+        placeholder="Introduce tu email"
+        type="email"
+        label="Email"
+        name="email"
+      />
+
+      <Button
+        // ? TODO: Manage Disable button state?
+        type="submit"
+        color="primary"
+        variant="solid"
+        size="lg"
+        onClick={() => {
+          setIsResendingEmail(true);
+        }}
+      >
+        Enviar
+      </Button>
+      {isResendingEmail && (
+        <p className="text-center">Tu mensaje se ha enviado correctamente</p>
+      )}
+    </Form>
+  );
+};
+
 const VerifyEmailPage = () => {
   const data = useLoaderData();
   const { success, message } = data;
 
-  //debugger
   return (
     <main className="flex-1 flex flex-col items-center justify-center">
-      <TitleSection title="Verificación de email" />
-      <div className="flex-1 w-full flex justify-center items-center bg-blue-400">
-        {/* Contenedor para la caja blanca con máximo tamaño y márgenes automáticos */}
+      <TitleSection className="w-full" title="Verificación de email" />
+      <div className="flex-1 w-full flex justify-center items-center">
         <div className="bg-white shadow-lg rounded-lg p-8 mx-auto my-8 max-w-lg w-full">
           <h3 className="flex justify-center text-center text-balance">
             {message || <Spinner />}
           </h3>
-
-          {success ? (
-            <>
-              <div className="bg-red-500 flex flex-col">
-                <div className="mt-5 mx-5">
-                  <div className="flex justify-center mt-5">
-                    <Button
-                      as={Link}
-                      className="font-bold "
-                      color="primary"
-                      variant="solid"
-                      href="/login"
-                    >
-                      Ir al login
-                    </Button>
-                  </div>
-                </div>
-              </div>
-            </>
-          ) : (
-            <>
-              <Form
-                method="post"
-                className="flex flex-col gap-6 max-w-lg  pt-8"
-              >
-                <p>
-                  Hubo un error al validar tu cuenta, por favor introduce tu
-                  correo para volver a intentarlo:
-                </p>
-                <Input
-                  placeholder="Introduce tu email"
-                  type="email"
-                  label="Email"
-                  name="email"
-                  value="tanancio@gmail.com"
-                />
-
-                <Button
-                  //isDisabled={enableButton}
-                  type="submit"
-                  color="primary"
-                  variant="solid"
-                  size="lg"
-                >
-                  Enviar
-                </Button>
-              </Form>
-            </>
-          )}
+          {success ? <RenderSuccessMessage /> : <RenderErrorMessage />}
         </div>
       </div>
     </main>
