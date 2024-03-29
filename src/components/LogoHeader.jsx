@@ -1,8 +1,9 @@
-import LogoPortrait from "../assets/logos/LogoPortrait.svg?react";
-export const LogoHeader = () => {
+import { LogoPortrait } from './LogoPortrait';
+
+export const LogoHeader = ({ className, size }) => {
   return (
-    <div id="logo" className="h-40 w-max mx-auto ">
-      {<LogoPortrait />}
+    <div id="logo" className={`${className}`}>
+      <LogoPortrait size={size} />
     </div>
   );
 };

@@ -1,5 +1,5 @@
-import Imago from '../../../../assets/logos/imago.svg?react';
 import { AdoptButton } from '../../../../components';
+import { Imago } from '../components/Imago';
 
 const HeroHome = () => {
   return (

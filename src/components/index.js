@@ -15,6 +15,7 @@ export { H4Title } from './H4Title';
 export { HeartIcon } from './HeartIcon';
 export { Hero } from './Hero';
 export { LogoHeader } from './LogoHeader';
+export { LogoPortrait } from './LogoPortrait';
 export { PagePagination } from './Pagination';
 export { Panel } from './Panel';
 export { RescuesIcons } from './RescuesIcons';
