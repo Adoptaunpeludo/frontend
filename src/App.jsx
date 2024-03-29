@@ -47,6 +47,7 @@ import NotFoundPage from './pages/Error/NotFound/NotFoundPage.jsx';
 import ProtectedRoute from './pages/Private/ProtectedRoute.jsx';
 import { useModalContext } from './context/ModalContext.jsx';
 import AssistantPage from './pages/Private/Assistant/AssistantPage.jsx';
+import AdoptionChatPage from './pages/Private/Chat/AdoptionChatPage.jsx';
 
 export const queryClient = new QueryClient({
   defaultOptions: {
@@ -162,6 +163,10 @@ const router = (bioModalOnClose, shelterModalOnClose, animalImages) =>
               path: 'shelter/create-animal',
               element: <AnimalForm />,
               action: mutateAnimalAction(animalImages, queryClient),
+            },
+            {
+              path: 'chat/:chat',
+              element: <AdoptionChatPage />,
             },
           ],
         },
