@@ -139,7 +139,11 @@ export const StatusAnimalsTable = ({ role }) => {
           )}
         </TableHeader>
         <TableBody
-          emptyContent={'No hay peludos, crea el primero'}
+          emptyContent={`${
+            role === 'shelter'
+              ? 'No hay peludos, crea el primero'
+              : 'No hay peludos, elige el primero'
+          }`}
           items={animals}
         >
           {(item) => (
