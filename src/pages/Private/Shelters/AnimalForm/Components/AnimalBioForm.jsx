@@ -1,7 +1,11 @@
 import { Input } from '@nextui-org/react';
-import { animalSizeEnum, genderEnum } from '../../../../../utils/enumData';
-import { H3Title, SelectField } from '../../../../../components';
 import { useState } from 'react';
+import { H2Title, SelectField } from '../../../../../components';
+import {
+  inputStyleConfig,
+  selectStyleConfig,
+} from '../../../../../utils/configFormFields';
+import { animalSizeEnum, genderEnum } from '../../../../../utils/enumData';
 import { validateField } from '../../../../../utils/validateField';
 
 const AnimalBioForm = ({ data = {}, isDisabled, setIsFormValid }) => {
@@ -19,9 +23,9 @@ const AnimalBioForm = ({ data = {}, isDisabled, setIsFormValid }) => {
   setIsFormValid(Object.values(errors).every((error) => error === ''));
 
   return (
-    <div className="flex flex-col gap-2">
-      <H3Title title="Bio" />
-      <div className="flex w-full flex-wrap md:flex-nowrap gap-2 border-primary border-t-1 pt-3">
+    <div className="flex flex-col gap-3">
+      <H2Title title="Bio" />
+      <div className="flex w-full flex-wrap md:flex-nowrap  border-primary border-t-1 pt-3 gap-3">
         <Input
           isRequired
           isDisabled={isDisabled}
@@ -33,6 +37,7 @@ const AnimalBioForm = ({ data = {}, isDisabled, setIsFormValid }) => {
           errorMessage={errors.name}
           defaultValue={name ? name : ''}
           onChange={handleChange}
+          classNames={inputStyleConfig}
         />
         <Input
           isRequired
@@ -45,6 +50,7 @@ const AnimalBioForm = ({ data = {}, isDisabled, setIsFormValid }) => {
           errorMessage={errors.breed}
           defaultValue={breed ? breed : ''}
           onChange={handleChange}
+          classNames={inputStyleConfig}
         />
       </div>
       <div className="flex w-full flex-wrap md:flex-nowrap gap-2">
@@ -59,6 +65,7 @@ const AnimalBioForm = ({ data = {}, isDisabled, setIsFormValid }) => {
           step="0.5"
           max="25"
           defaultValue={age ? age : ''}
+          classNames={inputStyleConfig}
         />
         <SelectField
           isRequired
@@ -68,6 +75,7 @@ const AnimalBioForm = ({ data = {}, isDisabled, setIsFormValid }) => {
           name="gender"
           dataField={gender}
           dataEnum={genderEnum}
+          classNames={selectStyleConfig}
         />
         <SelectField
           isRequired
@@ -77,6 +85,7 @@ const AnimalBioForm = ({ data = {}, isDisabled, setIsFormValid }) => {
           name="size"
           dataField={size}
           dataEnum={animalSizeEnum}
+          classNames={selectStyleConfig}
         />
       </div>
     </div>

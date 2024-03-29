@@ -5,16 +5,16 @@ import {
   Skeleton,
   Textarea,
 } from '@nextui-org/react';
-import { IconSend2, IconCircleX } from '@tabler/icons-react';
+import { IconCircleX, IconSend2 } from '@tabler/icons-react';
 import { useState } from 'react';
 import {
   Form,
   redirect,
   useLoaderData,
-  useNavigation,
   useNavigate,
+  useNavigation,
 } from 'react-router-dom';
-import { H2Title, H4Title, Panel } from '../../../../components';
+import { H2Title, Panel, TitleSection } from '../../../../components';
 
 import {
   AnimalBioForm,
@@ -25,20 +25,25 @@ import {
 
 import { UploadImagesForm } from './Components/UploadImagesForm';
 
+import { isAxiosError } from 'axios';
+import { toast } from 'react-toastify';
 import { useAnimalImagesContext } from '../../../../context/AnimalImagesContext';
+import {
+  inputStyleConfig,
+  radioGroupStyleConfig,
+  radioStyleConfig,
+} from '../../../../utils/configFormFields';
+import { handleNotFoundError } from '../../../../utils/handleError';
+import {
+  animalDetailsQuery,
+  useAnimalDetails,
+} from '../../../Public/Animals/useAnimalDetails';
 import { ImagesFrame } from '../../shared';
 import {
   createPetAdoption,
   updatePetAdoption,
   uploadAnimalImages,
 } from './service';
-import { toast } from 'react-toastify';
-import {
-  animalDetailsQuery,
-  useAnimalDetails,
-} from '../../../Public/Animals/useAnimalDetails';
-import { handleNotFoundError } from '../../../../utils/handleError';
-import { isAxiosError } from 'axios';
 
 export const action =
   (animalImages, queryClient) =>
@@ -120,111 +125,151 @@ const AnimalForm = () => {
 
   const isSubmitting = navigation.state === 'submitting';
 
-  const [pet, usePet] = useState(data?.type || 'cat');
+  const [pet, usePet] = useState(data?.type || '');
 
   const [isFormValid, setIsFormValid] = useState(true);
 
   return (
-    <Skeleton
-      isLoaded={!isLoading}
-      className=" max-w-4xl mx-auto flex flex-col py-4 px-10 justify-center"
-    >
-      <Form method="post">
-        <h3 className="py-4 text-center">
-          {slug ? 'Editar Anuncio' : 'Nuevo anuncio de adopción'}
-        </h3>
-
-        <section className="max-w-screen-xl w-full flex flex-col h-full justify-center mx-auto ">
-          <Panel className=" max-w-4xl mx-auto flex flex-col py-4 px-10 justify-center">
-            <H2Title title="Peludo" className="mx-auto pb-5" />
-            <div className="max-w-96 flex flex-col justify-center rounded-lg bg-default-100 mx-auto px-10 py-2">
-              <RadioGroup
-                isDisabled={isSubmitting}
-                orientation="horizontal"
-                name="type"
-                className="flex justify-center font-semibold"
-                value={pet}
-                onValueChange={usePet}
-                isReadOnly={data?.type}
-              >
-                <Radio value={'cat'}>Gato</Radio>
-                <Radio value={'dog'}>Perro</Radio>
-              </RadioGroup>
-            </div>
-            <div className="flex flex-col gap-6 max-w-4xl mx-auto px-10 ">
-              <div className="flex w-full flex-col gap-4">
-                <AnimalBioForm
-                  data={data ? data : {}}
-                  isDisabled={isSubmitting}
-                  setIsFormValid={setIsFormValid}
-                />
-                {pet === 'cat' && (
-                  <OtherPropertiesCatForm
-                    data={data ? data : {}}
-                    isDisabled={isSubmitting}
-                  />
-                )}
-                {pet === 'dog' && (
-                  <OtherPropertiesDogForm
-                    data={data ? data : {}}
-                    isDisabled={isSubmitting}
-                  />
-                )}
-                <StatusShelterForm
-                  data={data ? data : {}}
-                  isDisabled={isSubmitting}
-                />
-                <H4Title title="Descripción:" className="mx-2" />
-                <Textarea
-                  className="w-full "
-                  name="description"
-                  label="Descripción"
-                  isDisabled={isSubmitting}
-                  defaultValue={data?.description ? data?.description : ''}
-                />
-              </div>
-            </div>
-            {!data && (
-              <UploadImagesForm images={images} setImages={setImages} />
-            )}
-          </Panel>
-        </section>
-        <div className="flex justify-center gap-4 w-full">
-          <Button
-            color="primary"
-            variant="solid"
-            size="sm"
-            startContent={<IconCircleX />}
-            className="px-10 my-4 font-poppins font-semibold text-sm"
-            onPress={() => navigate(-1)}
-          >
-            Cancelar
-          </Button>
-          <Button
-            isDisabled={!isFormValid}
-            color="primary"
-            variant="solid"
-            size="sm"
-            startContent={<IconSend2 />}
-            className="px-10 my-4 font-poppins font-semibold text-sm"
-            type="submit"
-            name="intent"
-            value={slug ? 'update-animal' : 'create-animal'}
-            isLoading={isSubmitting}
-          >
-            {slug ? 'Editar Anuncio' : 'Crear Anuncio'}
-          </Button>
-        </div>
-      </Form>
-      {data && (
-        <ImagesFrame
-          images={data.images}
-          page="update-animal"
-          id={data.id}
-          slug={data.slug}
+    <main className="bg-default-100 flex-grow">
+      <section
+        id="AnimalCreateUpdatePage"
+        className="max-w-screen-xl w-full flex  flex-col justify-center  h-full  py-12  mx-auto gap-5"
+      >
+        <TitleSection
+          title={data?.name !== undefined ? data.name : 'Nuevo peludo'}
+          id=" AnimalTitle"
         />
-      )}
-    </Skeleton>
+        <section id="AnimalDataForm">
+          <Form method="post">
+            <H2Title
+              title={
+                slug
+                  ? 'Edita el anuncio de adopción del peludo'
+                  : 'Nuevo anuncio de adopción'
+              }
+              className=" normal-case"
+            />
+            <Panel className={'flex-col mx-5 my-5 py-5'}>
+              <section className="max-w-screen-xl flex flex-col justify-center flex-grow px-5 gap-10">
+                <div className="flex flex-col mx-auto">
+                  <RadioGroup
+                    isDisabled={isSubmitting}
+                    orientation="horizontal"
+                    name="type"
+                    className="font-bold"
+                    value={pet}
+                    onValueChange={usePet}
+                    isReadOnly={data?.type}
+                    label="Peludo"
+                    classNames={radioGroupStyleConfig}
+                  >
+                    <Radio value={'cat'} classNames={radioStyleConfig}>
+                      Gato
+                    </Radio>
+                    <Radio value={'dog'} classNames={radioStyleConfig}>
+                      Perro
+                    </Radio>
+                  </RadioGroup>
+                </div>
+                <Skeleton isLoaded={!isLoading}>
+                  <AnimalBioForm
+                    data={data ? data : {}}
+                    isDisabled={isSubmitting}
+                    setIsFormValid={setIsFormValid}
+                  />
+                </Skeleton>
+                <Skeleton isLoaded={!isLoading}>
+                  <section id="AnimalOtherFeatures">
+                    {pet === 'cat' && (
+                      <OtherPropertiesCatForm
+                        data={data ? data : {}}
+                        isDisabled={isSubmitting}
+                      />
+                    )}
+
+                    {pet === 'dog' && (
+                      <OtherPropertiesDogForm
+                        data={data ? data : {}}
+                        isDisabled={isSubmitting}
+                      />
+                    )}
+                  </section>
+                </Skeleton>
+                <Skeleton isLoaded={!isLoading}>
+                  <section id="shelterStatus">
+                    <StatusShelterForm
+                      data={data ? data : {}}
+                      isDisabled={isSubmitting}
+                    />
+                  </section>
+                </Skeleton>
+                <section
+                  id="animalDescription "
+                  className="flex flex-col gap-2"
+                >
+                  <H2Title title="Descripción:" className="mx-2" />
+                  <Textarea
+                    className="w-full border-primary border-t-1 pt-3"
+                    name="description"
+                    label="Descripción"
+                    isDisabled={isSubmitting}
+                    defaultValue={data?.description ? data?.description : ''}
+                    classNames={inputStyleConfig}
+                    isRequired
+                  />
+                </section>
+                <Skeleton isLoaded={!isLoading}>
+                  {!data && (
+                    <UploadImagesForm images={images} setImages={setImages} />
+                  )}
+                </Skeleton>
+              </section>
+              <Skeleton isLoaded={!isLoading}>
+                <section
+                  id="buttonsForm"
+                  className="flex justify-center gap-4 w-full"
+                >
+                  <Button
+                    color="primary"
+                    variant="solid"
+                    size="sm"
+                    startContent={<IconCircleX />}
+                    className="px-10 my-4 font-poppins font-regular text-sm"
+                    onPress={() => navigate(-1)}
+                  >
+                    Cancelar
+                  </Button>
+                  <Button
+                    isDisabled={!isFormValid}
+                    color="primary"
+                    variant="solid"
+                    size="sm"
+                    endContent={<IconSend2 />}
+                    className="px-10 my-4 font-poppins font-regular text-sm"
+                    type="submit"
+                    name="intent"
+                    value={slug ? 'update-animal' : 'create-animal'}
+                    isLoading={isSubmitting}
+                  >
+                    {slug ? 'Editar Anuncio' : 'Crear Anuncio'}
+                  </Button>
+                </section>
+              </Skeleton>
+            </Panel>
+          </Form>
+        </section>
+      </section>
+      <Skeleton isLoaded={!isLoading}>
+        {data && (
+          <ImagesFrame
+            images={data.images}
+            page="update-animal"
+            id={data.id}
+            slug={data.slug}
+          />
+        )}
+      </Skeleton>
+    </main>
   );
 };
 export default AnimalForm;

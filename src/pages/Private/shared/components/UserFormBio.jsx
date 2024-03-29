@@ -8,16 +8,24 @@ import {
   ModalFooter,
   ModalHeader,
   useDisclosure,
-  // useDisclosure,
 } from '@nextui-org/react';
-import { IconCircleX, IconEdit, IconSend2 } from '@tabler/icons-react';
+import {
+  IconCircleX,
+  IconEdit,
+  IconSend2,
+  IconUserFilled,
+} from '@tabler/icons-react';
+import { H2Title, H3Title, Panel, SelectField } from '../../../../components';
 import { cities } from '../../../../utils/enumData';
-import { H2Title, Panel, SelectField } from '../../../../components';
 
+import { useEffect, useState } from 'react';
 import { Form, useNavigation } from 'react-router-dom';
 import { BUCKET_URL } from '../../../../config/config';
 import { useModalContext } from '../../../../context/ModalContext';
-import { useEffect, useState } from 'react';
+import {
+  inputStyleConfig,
+  selectStyleConfig,
+} from '../../../../utils/configFormFields';
 import { validateField } from '../../../../utils/validateField';
 
 export const UserFormBio = ({ data }) => {
@@ -64,7 +72,7 @@ export const UserFormBio = ({ data }) => {
       size="md"
       startContent={<IconEdit />}
       onPress={onOpen}
-      className="max-w-[100px] my-4"
+      className={'max-w-[100px] my-4 font-poppins font-medium'}
     >
       Editar
       <Modal
@@ -80,8 +88,10 @@ export const UserFormBio = ({ data }) => {
           <ModalContent>
             <>
               <ModalHeader className="flex flex-col gap-1">
-                {/* <Hero /> */}
-                Actualizar Perfil de Usuario
+                <H3Title
+                  title="Actualiza tu perfil de usuario"
+                  className="border-b-1 border-primary normal-case"
+                />
               </ModalHeader>
               <ModalBody>
                 <Panel className="max-w-4xl mx-auto">
@@ -89,10 +99,13 @@ export const UserFormBio = ({ data }) => {
                     <Avatar
                       className="w-40 h-40 bg-white self-center"
                       src={`${BUCKET_URL}/${avatar}`}
+                      showFallback
+                      fallback={<IconUserFilled className="size-20" />}
+                      isBordered
+                      color="primary"
                     />
                     <H2Title title={username} className="mx-auto" />
                     <div className="flex flex-col w-full gap-4">
-                      {/* TODO: useInput hook to custom all inputs with the same styles  */}
                       <div className="flex w-full flex-wrap md:flex-nowrap gap-4">
                         <Input
                           isDisabled={isSubmitting}
@@ -100,10 +113,15 @@ export const UserFormBio = ({ data }) => {
                           type="text"
                           label="DNI"
                           name="dni"
-                          defaultValue={dni === '' ? 'Introduce tu email' : dni}
+                          defaultValue={dni}
                           color={errors.dni ? 'danger' : 'none'}
                           errorMessage={errors.dni}
                           onChange={handleChange}
+                          placeholder={
+                            dni === null ? 'Introduce tu DNI, 99999999X' : dni
+                          }
+                          isRequired
+                          classNames={inputStyleConfig}
                         />
                       </div>
                       <div className="flex w-full flex-wrap md:flex-nowrap gap-4">
@@ -118,6 +136,8 @@ export const UserFormBio = ({ data }) => {
                           color={errors.firstName ? 'danger' : 'none'}
                           errorMessage={errors.firstName}
                           onChange={handleChange}
+                          isRequired
+                          classNames={inputStyleConfig}
                         />
                         <Input
                           isDisabled={isSubmitting}
@@ -130,6 +150,8 @@ export const UserFormBio = ({ data }) => {
                           color={errors.lastName ? 'danger' : 'none'}
                           errorMessage={errors.lastName}
                           onChange={handleChange}
+                          isRequired
+                          classNames={inputStyleConfig}
                         />
                       </div>
                       <div className="flex w-full flex-wrap md:flex-nowrap gap-4">
@@ -142,6 +164,9 @@ export const UserFormBio = ({ data }) => {
                           defaultValue={phoneNumber ? phoneNumber : ''}
                           placeholder="Introduce tu número de teléfono"
                           onChange={handleChange}
+                          errorMessage={errors.phoneNumber}
+                          isRequired
+                          classNames={inputStyleConfig}
                         />
                         <SelectField
                           label="Ciudad"
@@ -150,6 +175,8 @@ export const UserFormBio = ({ data }) => {
                           dataField={city}
                           dataEnum={cities}
                           isDisabled={isSubmitting}
+                          isRequired
+                          classNames={selectStyleConfig}
                         />
                       </div>
                     </div>
@@ -173,8 +200,8 @@ export const UserFormBio = ({ data }) => {
                   color="primary"
                   variant="solid"
                   size="sm"
-                  startContent={<IconSend2 />}
-                  className="px-10 font-poppins font-semibold text-sm"
+                  endContent={<IconSend2 />}
+                  className="px-10 font-poppins font-medium text-sm"
                   type="submit"
                   name="intent"
                   value={'user-profile'}

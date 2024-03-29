@@ -11,14 +11,19 @@ import {
 } from '@nextui-org/react';
 import { IconCircleX, IconEdit, IconSend2 } from '@tabler/icons-react';
 
-import { boolDataEnum, legalFormEnum } from '../../../../utils/enumData';
 import { H2Title, H3Title, Panel, SelectField } from '../../../../components';
+import { boolDataEnum, legalFormEnum } from '../../../../utils/enumData';
 
 import Accommodations from '../ShelterProfile/components/Acommodations';
 
+import { useEffect, useState } from 'react';
 import { Form, useNavigation } from 'react-router-dom';
 import { useModalContext } from '../../../../context/ModalContext';
-import { useEffect, useState } from 'react';
+import {
+  buttonStyleConfig,
+  inputStyleConfig,
+  selectStyleConfig,
+} from '../../../../utils/configFormFields';
 import { validateField } from '../../../../utils/validateField';
 
 const ShelterForm = ({ isSubmitting, data }) => {
@@ -64,7 +69,7 @@ const ShelterForm = ({ isSubmitting, data }) => {
       size="md"
       startContent={<IconEdit />}
       onPress={onOpen}
-      className="max-w-[100px]"
+      className={buttonStyleConfig}
     >
       Editar
       <Modal
@@ -79,8 +84,10 @@ const ShelterForm = ({ isSubmitting, data }) => {
           <ModalContent>
             <>
               <ModalHeader className="flex flex-col gap-1">
-                {/* <Hero /> */}
-                Actualizar Perfil de Shelter
+                <H3Title
+                  title="Actualiza los datos de tu protectora"
+                  className="border-b-1 border-primary normal-case"
+                />
               </ModalHeader>
 
               <ModalBody>
@@ -88,7 +95,6 @@ const ShelterForm = ({ isSubmitting, data }) => {
                   <div className="flex flex-col gap-6 mx-auto px-10 py-8">
                     <H2Title title={username} className="mx-auto" />
                     <div className="flex flex-col w-full gap-4">
-                      {/* TODO: useInput hook to custom all inputs with the same styles  */}
                       <div className="flex w-full flex-wrap md:flex-nowrap gap-4">
                         <Input
                           className="min-w-72 "
@@ -100,6 +106,9 @@ const ShelterForm = ({ isSubmitting, data }) => {
                           color={cifError ? 'danger' : 'none'}
                           errorMessage={cifError}
                           onChange={handleChange}
+                          isRequired
+                          placeholder="X99999999"
+                          classNames={inputStyleConfig}
                         />
                         <SelectField
                           isDisabled={isSubmitting}
@@ -108,6 +117,8 @@ const ShelterForm = ({ isSubmitting, data }) => {
                           name="legalForms"
                           dataField={legalForms}
                           dataEnum={legalFormEnum}
+                          isRequired
+                          classNames={selectStyleConfig}
                         />
                       </div>
                       <div className="flex w-full justify-around gap-4 flex-wrap md:flex-nowrap py-2">
@@ -118,6 +129,8 @@ const ShelterForm = ({ isSubmitting, data }) => {
                           name="veterinaryFacilities"
                           dataField={veterinaryFacilities}
                           dataEnum={boolDataEnum}
+                          isRequired
+                          classNames={selectStyleConfig}
                         />
                         <SelectField
                           isDisabled={isSubmitting}
@@ -126,6 +139,8 @@ const ShelterForm = ({ isSubmitting, data }) => {
                           name="ownVet"
                           dataField={ownVet}
                           dataEnum={boolDataEnum}
+                          isRequired
+                          classNames={selectStyleConfig}
                         />
                       </div>
                       <Accommodations
@@ -139,11 +154,10 @@ const ShelterForm = ({ isSubmitting, data }) => {
                           className="w-full "
                           label="Descripción"
                           name="description"
-                          defaultValue={
-                            description === ''
-                              ? 'Describe tu protectora'
-                              : description
-                          }
+                          isRequired
+                          defaultValue={description}
+                          placeholder="Describe tu protectora"
+                          classNames={inputStyleConfig}
                         />
                       </div>
                     </div>
@@ -156,7 +170,7 @@ const ShelterForm = ({ isSubmitting, data }) => {
                   variant="solid"
                   size="sm"
                   startContent={<IconCircleX />}
-                  className="px-10 font-poppins font-semibold text-sm"
+                  className="px-10 font-poppins font-medium text-sm"
                   onPress={onClose}
                 >
                   Cancelar
@@ -166,8 +180,8 @@ const ShelterForm = ({ isSubmitting, data }) => {
                   color="primary"
                   variant="solid"
                   size="sm"
-                  startContent={<IconSend2 />}
-                  className="px-10 font-poppins font-semibold text-sm"
+                  endContent={<IconSend2 />}
+                  className="px-10 font-poppins font-medium text-sm"
                   type="submit"
                   name="intent"
                   value={'shelter-profile'}

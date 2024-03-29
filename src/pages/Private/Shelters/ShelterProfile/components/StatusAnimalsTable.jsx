@@ -21,6 +21,7 @@ import {
   statusColorMap,
 } from '../../../shared/components/configAnimalsTable';
 
+import { translateStatusAnimals } from '../../../../../utils/translateDataTable';
 import { useUserAnimals } from '../../useUserAnimals';
 import DeleteAnimalModal from './DeleteAnimalModal';
 
@@ -32,8 +33,8 @@ export const StatusAnimalsTable = ({ role }) => {
     role === 'shelter' && { limit: 100 }
   );
 
-  const { animals } = data;
-
+  const animals = translateStatusAnimals(data.animals);
+  //const
   const renderCell = React.useCallback((animal, columnKey) => {
     const cellValue = animal[columnKey];
     // if (isLoading) return <Spinner />;
@@ -129,7 +130,7 @@ export const StatusAnimalsTable = ({ role }) => {
 
   return (
     <Skeleton isLoaded={!isFetching}>
-      <Table aria-label="Animals info">
+      <Table aria-label="Animals info" className="mb-5 max-h-96" isHeaderSticky>
         <TableHeader columns={headerColumn} className="flex justify-center">
           {(column) => (
             <TableColumn key={column.uid} className="text-start ">
@@ -137,11 +138,20 @@ export const StatusAnimalsTable = ({ role }) => {
             </TableColumn>
           )}
         </TableHeader>
-        <TableBody items={animals}>
+        <TableBody
+          emptyContent={`${
+            role === 'shelter'
+              ? 'No hay peludos, crea el primero'
+              : 'No hay peludos, elige el primero'
+          }`}
+          items={animals}
+        >
           {(item) => (
             <TableRow key={item.id}>
               {(columnKey) => (
-                <TableCell>{renderCell(item, columnKey)}</TableCell>
+                <TableCell className="capitalize">
+                  {renderCell(item, columnKey)}
+                </TableCell>
               )}
             </TableRow>
           )}

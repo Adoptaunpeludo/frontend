@@ -1,18 +1,19 @@
 import { Button, Skeleton } from '@nextui-org/react';
 import { IconEdit } from '@tabler/icons-react';
-import { Hero, TitleSection } from '../../../../components';
-import { DeleteUserModal, StatusAnimalsTable } from '../../shared';
-import { toast } from 'react-toastify';
-import { useAnimalImagesContext } from '../../../../context/AnimalImagesContext';
+import { isAxiosError } from 'axios';
 import { useEffect } from 'react';
 import { Link } from 'react-router-dom';
+import { toast } from 'react-toastify';
+import { TitleSection } from '../../../../components';
+import { useAnimalImagesContext } from '../../../../context/AnimalImagesContext';
+import { buttonStyleConfig } from '../../../../utils/configFormFields';
+import { DeleteUserModal, StatusAnimalsTable } from '../../shared';
+import { updateProfile } from '../../shared/service/updateUserService';
+import { useUser } from '../../useUser';
 import { deleteAnimal } from '../AnimalForm/service';
+import { userAnimalsQuery } from '../useUserAnimals';
 import ShelterProfileInfo from './components/ShelterProfileInfo';
 import UserBioInfo from './components/UserBioInfo';
-import { userAnimalsQuery } from '../useUserAnimals';
-import { updateProfile } from '../../shared/service/updateUserService';
-import { isAxiosError } from 'axios';
-import { useUser } from '../../useUser';
 
 export const loader = (queryClient) => async () => {
   try {
@@ -76,45 +77,31 @@ const ShelterProfile = () => {
 
   return (
     <main className="bg-default-100 flex-grow">
-      <Hero />
-
       <section
         id="SheltersProfile"
-        className="max-w-screen-xl w-full flex  flex-col justify-center  gap-12 h-full  py-12  mx-auto "
+        className="max-w-screen-xl w-full flex  flex-col justify-center  h-full  py-12  mx-auto gap-5"
       >
         <TitleSection title={username} id=" shelterTitle" />
         <section id="sheltersProfile" className="flex gap-12 max-lg:flex-col ">
-          <main className="flex flex-col max-w-3xl order-1 max-lg:order-2">
+          <main className="flex flex-col max-w-3xl order-1 ">
             <ShelterProfileInfo isLoading={isFetching} data={data} />
           </main>
-          <Skeleton isLoaded={!isFetching}>
-            <UserBioInfo data={data} isLoading={isFetching} />
-          </Skeleton>
-          {/* <div id="NotificationsAside">
-            <H2Title title="Mensajes" className="pb-5" />
-            <div className="flex justify-between border-solid border-b-1 border-b-primary pb-3 items-center">
-            <User
-            name="Jane Doe"
-            avatarProps={{
-              src: 'https://i.pravatar.cc/150?u=a04258114e29026702d',
-              isBordered: true,
-              color: 'success',
-            }}
-            />
-            {1}
-            </div>
-          </div> */}
+          <aside className="order-2">
+            <Skeleton isLoaded={!isFetching}>
+              <UserBioInfo data={data} isLoading={isFetching} />
+            </Skeleton>
+          </aside>
         </section>
-        <section id="petsTable" className="px-4">
+        <section id="petsTable">
           <StatusAnimalsTable role={'shelter'} />
           <Button
             // isIconOnly={data !== undefined}
             color="primary"
             size="md"
             startContent={<IconEdit />}
-            className="my-4"
             as={Link}
             to="/private/shelter/create-animal"
+            className={buttonStyleConfig}
           >
             Crear Anuncio
           </Button>

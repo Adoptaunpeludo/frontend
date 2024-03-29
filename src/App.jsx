@@ -20,16 +20,24 @@ import {
   ShelterDetailsPage,
   ShelterProfile,
   SheltersPage,
-  VerifyEmail,
+  VerifyEmailPage,
+  ForgotPasswordPage,
+  NotificationsPage,
+  ResetPasswordPage
 } from './pages/index.js';
 
+// Actions
 import { action as loginAction } from './pages/Auth/Login/LoginPage.jsx';
 import { action as registerAction } from './pages/Auth/Register/RegisterPage.jsx';
 import { action as shelterProfileAction } from './pages/Private/Shelters/ShelterProfile/ShelterProfile.jsx';
 import { action as adopterProfileAction } from './pages/Private/Adopters/AdopterProfile/AdopterProfile.jsx';
 import { action as mutateAnimalAction } from './pages/Private/Shelters/AnimalForm/AnimalForm.jsx';
 import { action as verifyEmailAction } from './pages/Auth/VerifyEmail/VerifyEmailPage.jsx';
+import { action as forgotPasswordAction } from './pages/Auth/ForgotPassword/ForgotPasswordPage.jsx';
+import { action as resetPasswordAction } from './pages/Auth/ResetPassword/ResetPasswordPage.jsx';
 
+
+// Loaders
 import { loader as updateAnimalLoader } from './pages/Private/Shelters/AnimalForm/AnimalForm.jsx';
 import { loader as animalDetailsLoader } from './pages/Public/Animals/AnimalDetails/AnimalDetailsPage.jsx';
 import { loader as animalsLoader } from './pages/Public/Animals/AnimalsPage.jsx';
@@ -39,6 +47,7 @@ import { loader as userAnimalsLoader } from './pages/Private/Shelters/ShelterPro
 import { loader as userFavsLoader } from './pages/Private/Adopters/AdopterProfile/AdopterProfile.jsx';
 import { loader as sheltersLoader } from './pages/Public/Shelters/SheltersPage.jsx';
 import { loader as verifyEmailLoader } from './pages/Auth/VerifyEmail/VerifyEmailPage.jsx';
+//import { loader as resetPasswordLoader } from './pages/Auth/ResetPassword/ResetPasswordPage.jsx';
 import { loader as userDataLoader } from './pages/Layout/AppLayout.jsx';
 import { loader as assistantChatLoader } from './pages/Private/Assistant/AssistantPage.jsx';
 
@@ -77,9 +86,20 @@ const router = (bioModalOnClose, shelterModalOnClose, animalImages) =>
         },
         {
           path: '/verify-email/:token',
-          element: <VerifyEmail />,
+          element: <VerifyEmailPage />,
           loader: verifyEmailLoader,
           action: verifyEmailAction,
+        },
+        {
+          path: 'forgot-password',
+          element: <ForgotPasswordPage />,
+          action: forgotPasswordAction,
+        },
+        {
+          path: '/reset-password/:token',
+          element: <ResetPasswordPage />,
+          //loader: resetPasswordLoader,
+          action: resetPasswordAction,
         },
         //* End Auth Routes
         //* Public Routes
@@ -159,9 +179,21 @@ const router = (bioModalOnClose, shelterModalOnClose, animalImages) =>
               loader: updateAnimalLoader(queryClient),
             },
             {
-              path: 'shelter/create-animal',
+              path: 'shelter/update-animal/:slug',
               element: <AnimalForm />,
               action: mutateAnimalAction(animalImages, queryClient),
+              loader: updateAnimalLoader(queryClient),
+            },
+            {
+              path: 'shelter/update-animal/:slug',
+              element: <AnimalForm />,
+              action: mutateAnimalAction(animalImages, queryClient),
+            },
+            {
+              path: 'notifications',
+              element: <NotificationsPage />,
+              //action: mutateAnimalAction(animalImages, queryClient),
+              //loader: updateAnimalLoader(queryClient),
             },
           ],
         },

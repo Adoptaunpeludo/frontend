@@ -1,18 +1,19 @@
 import {
-  Modal,
-  ModalContent,
-  ModalHeader,
-  ModalBody,
-  ModalFooter,
   Button,
-  useDisclosure,
+  Modal,
+  ModalBody,
+  ModalContent,
+  ModalFooter,
+  ModalHeader,
   Spinner,
+  useDisclosure,
 } from '@nextui-org/react';
+import { IconTrashXFilled } from '@tabler/icons-react';
 import { useQueryClient } from '@tanstack/react-query';
 import { useState } from 'react';
-import { deleteUserFile } from '../service/imagesService';
 import { toast } from 'react-toastify';
 import { deleteAnimalFile } from '../../Shelters/AnimalForm/service';
+import { deleteUserFile } from '../service/imagesService';
 
 export default function DeleteImageModal({ name, page, slug, id }) {
   const { isOpen, onOpen, onOpenChange } = useDisclosure();
@@ -50,12 +51,13 @@ export default function DeleteImageModal({ name, page, slug, id }) {
     <>
       <Button
         onPress={onOpen}
-        className="absolute top-[-15px] right-[-15px] z-10 rounded-full"
+        className="absolute top-[-10px] right-[-10px] z-10 rounded-full  "
         color="danger"
         size="sm"
         isIconOnly
       >
-        <i className="fa-solid fa-xmark text-xl text-white "></i>
+        <IconTrashXFilled />
+        {/* <i className="fa-solid fa-xmark text-xl text-white " /> */}
       </Button>
       <Modal
         isOpen={isOpen}
@@ -67,15 +69,21 @@ export default function DeleteImageModal({ name, page, slug, id }) {
           {(onClose) => (
             <>
               <ModalHeader className="flex flex-col gap-1">
-                Borrar Imagen
+                <span className="border-b-1 border-primary mb-5 pb-1">
+                  Borrar Imagen
+                </span>
               </ModalHeader>
               <ModalBody>
                 {isLoading ? (
                   <Spinner />
                 ) : (
                   <>
-                    <p>¿Seguro que deseas borrar la imagen?</p>
-                    <small>Esta acción no se puede deshacer</small>
+                    <p className="text-center font-poppins font-semibold text-lg">
+                      ¿Seguro que deseas borrar la imagen?
+                    </p>
+                    <small className="text-center font-poppins font-medium ">
+                      Esta acción no se puede deshacer
+                    </small>
                   </>
                 )}
               </ModalBody>
@@ -85,14 +93,15 @@ export default function DeleteImageModal({ name, page, slug, id }) {
                   variant="light"
                   onPress={onClose}
                   disabled={isLoading}
+                  className="border-1 border-primary text-foreground font-poppins font-medium"
                 >
-                  Close
+                  Cerrar
                 </Button>
                 <Button
-                  className=" text-white"
                   color="danger"
                   onPress={() => handleDeleteImage(name, onClose)}
                   disabled={isLoading}
+                  className=" text-white font-poppins font-medium"
                 >
                   Borrar
                 </Button>
