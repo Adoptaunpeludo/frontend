@@ -10,9 +10,9 @@ import {
 } from '../../../utils/configFormFields';
 import { handleAuthError } from '../../../utils/handleError';
 import { validateField } from '../../../utils/validateField';
+import { createChat } from '../../Private/Assistant/service';
 import { userQuery } from '../../Private/useUser';
 import { login } from '../authService';
-import { createChat } from '../../Private/Assistant/service';
 
 export const action =
   (queryClient) =>
@@ -76,7 +76,7 @@ const LoginPage = () => {
           id="login"
           className="max-w-screen-xl w-full flex flex-col gap-3 justify-center py-10 mx-auto  "
         >
-          <LogoHeader />
+          <LogoHeader className={'mx-auto'} />
           <Panel className={'max-w-md mx-auto'}>
             <Form
               method="post"
@@ -111,7 +111,10 @@ const LoginPage = () => {
                 />
               </div>
               <div className="flex justify-end">
-                <Link to="/forgot-password" className="text-tertiary font-poppins">
+                <Link
+                  to="/forgot-password"
+                  className="text-tertiary font-poppins"
+                >
                   ¿Olvidaste tu password?
                 </Link>
               </div>
