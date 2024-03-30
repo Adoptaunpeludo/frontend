@@ -6,13 +6,14 @@ import { mapChatHistory } from '../../../utils/mapChatHistory';
 import GptMessage from './components/GptMessage';
 import TextMessageBox from './components/TextMessageBox';
 import UserMessage from './components/UserMessage';
-import { chatStreamGenerator } from './service';
+import { chatStreamGenerator, createChat } from './service';
 import { chatHistoryQuery, useChatHistory } from './useChatHistory';
 import { useUser, userQuery } from '../useUser';
 
 export const loader = (queryClient) => async () => {
   try {
     const user = await queryClient.ensureQueryData(userQuery);
+    await createChat(user.wsToken);
     const history = await queryClient.ensureQueryData(
       chatHistoryQuery(user.username)
     );
