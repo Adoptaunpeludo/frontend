@@ -4,7 +4,7 @@ import { isAxiosError } from 'axios';
 import { useEffect } from 'react';
 import { Link, useNavigate, useParams } from 'react-router-dom';
 import { toast } from 'react-toastify';
-import { TitleSection } from '../../../../components';
+import { H2Title, TitleSection } from '../../../../components';
 import { useAnimalImagesContext } from '../../../../context/AnimalImagesContext';
 import { buttonStyleConfig } from '../../../../utils/configFormFields';
 import { DeleteUserModal, StatusAnimalsTable } from '../../shared';
@@ -17,7 +17,6 @@ import UserBioInfo from './components/UserBioInfo';
 import { useUserChats, userChatsQuery } from '../useUserChats';
 import { BUCKET_URL } from '../../../../config/config';
 import { useWebSocketContext } from '../../../../context/WebSocketContext';
-
 
 export const loader =
   (queryClient) =>
@@ -108,13 +107,12 @@ const ShelterProfile = () => {
       >
         <TitleSection title={user?.username} id=" shelterTitle" />
         <section id="sheltersProfile" className="flex gap-12 max-lg:flex-col ">
-
           <main className="flex flex-col max-w-3xl order-1 ">
-            <ShelterProfileInfo isLoading={isFetching} data={data} />
+            <ShelterProfileInfo isLoading={isFetchingUser} data={user} />
           </main>
           <aside className="order-2">
-            <Skeleton isLoaded={!isFetching}>
-              <UserBioInfo data={data} isLoading={isFetching} />
+            <Skeleton isLoaded={!isFetchingUser}>
+              <UserBioInfo data={user} isLoading={isFetchingUser} />
             </Skeleton>
           </aside>
         </section>
@@ -147,7 +145,6 @@ const ShelterProfile = () => {
           </Skeleton>
         </div>
         <section id="petsTable">
-
           <StatusAnimalsTable role={'shelter'} />
           <Button
             // isIconOnly={data !== undefined}
