@@ -11,7 +11,6 @@ import { userQuery } from '../Private/useUser';
 import { userNotificationsQuery } from '../Private/useNotifications';
 import { useWebSocketContext } from '../../context/WebSocketContext';
 import { useEffect } from 'react';
-import { userInformation } from '../../utils/asideDataFields';
 import { useQueryClient } from '@tanstack/react-query';
 import { useNotificationsContext } from '../../context/NotificationsContext';
 
@@ -35,11 +34,12 @@ const AppLayout = () => {
   const { setNotifications } = useNotificationsContext();
 
   useEffect(() => {
-    if (isReady && userInformation && user)
+    if (isReady)
       send(
         JSON.stringify({
           type: 'user-login',
           token: user?.wsToken,
+          username: user?.username,
         })
       );
   }, [isReady, user, send]);
@@ -47,7 +47,6 @@ const AppLayout = () => {
   useEffect(() => {
     if (val && isReady) {
       const message = JSON.parse(val);
-      console.log({ message });
       const { type, ...data } = message;
       switch (type) {
         case 'chat-created':

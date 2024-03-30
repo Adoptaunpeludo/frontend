@@ -16,11 +16,11 @@ const WebSocketContextProvider = ({ children }) => {
       console.log('Connected to ws server');
       setIsReady(true);
     };
+    socket.onmessage = (event) => setVal(event.data);
     socket.onclose = () => {
       console.log('Disconnected from ws server');
       setIsReady(false);
     };
-    socket.onmessage = (event) => setVal(event.data);
 
     ws.current = socket;
 

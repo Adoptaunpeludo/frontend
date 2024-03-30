@@ -7,7 +7,6 @@ import { useLoaderData, useNavigate, useParams } from 'react-router-dom';
 import TextMessageBox from '../Assistant/components/TextMessageBox';
 
 import { useEffect, useState } from 'react';
-import { toast } from 'react-toastify';
 import { receiverDataQuery } from './useReceiverData';
 import { chatHistoryQuery, useChatHistory } from './useUserChatHistory';
 
@@ -69,9 +68,6 @@ const AdoptionChatPage = () => {
 
   useEffect(() => {
     setIsFirstLoad(true);
-  }, []);
-
-  useEffect(() => {
     if (isReady) {
       send(
         JSON.stringify({
@@ -82,8 +78,8 @@ const AdoptionChatPage = () => {
         })
       );
     }
-
     return () => {
+      console.log('Unmount');
       if (isReady) {
         send(
           JSON.stringify({
@@ -95,7 +91,7 @@ const AdoptionChatPage = () => {
         );
       }
     };
-  }, [chat, user, isReady, send]);
+  }, []);
 
   useEffect(() => {
     if (val && isReady) {
@@ -120,7 +116,6 @@ const AdoptionChatPage = () => {
     (user.role === 'adopter' && user.username !== adopter) ||
     (user.role === 'shelter' && user.username !== shelter)
   ) {
-    toast.error('No autorizado a unirte a esta sala');
     navigate(-1);
   }
 
