@@ -12,15 +12,12 @@ import { useQueryClient } from '@tanstack/react-query';
 import { useNavigate } from 'react-router-dom';
 import { BUCKET_URL } from '../config/config.js';
 import { logout } from '../pages/Auth/authService.js';
-import { useWebSocketContext } from '../context/WebSocketContext.jsx';
 import { toast } from 'react-toastify';
 import { useNotifications } from '../pages/Private/useNotifications.js';
 import { useEffect } from 'react';
 import { useNotificationsContext } from '../context/NotificationsContext.jsx';
 
 export const UserAreaMenu = ({ user }) => {
-  const { socket } = useWebSocketContext();
-
   const { data: userNotifications, isFetching } = useNotifications();
   const { notifications, setNotifications } = useNotificationsContext();
   const navigate = useNavigate();
@@ -29,7 +26,6 @@ export const UserAreaMenu = ({ user }) => {
   const handleLogout = async () => {
     try {
       await logout();
-      socket.close();
       queryClient.removeQueries({
         queryKey: ['user'],
       });
