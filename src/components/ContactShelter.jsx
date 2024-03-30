@@ -6,13 +6,17 @@ import { useNavigate } from 'react-router-dom';
 
 import { useWebSocketContext } from '../context/WebSocketContext';
 
-export const ContactShelter = ({ className, slug }) => {
+export const ContactShelter = ({ className, slug, username }) => {
   const { data: user } = useUser();
   const { send, isReady } = useWebSocketContext();
   const navigate = useNavigate();
 
   const handleCreateChat = () => {
-    const room = `${slug}-${user?.username}`;
+    const room = slug
+      ? `${slug}-${user?.username}`
+      : `${username}-chat-${user?.username}`;
+
+    console.log({ room });
 
     if (isReady) {
       send(
@@ -22,7 +26,8 @@ export const ContactShelter = ({ className, slug }) => {
         })
       );
     }
-    navigate(`/private/chat/${slug}-${user?.username}`);
+
+    navigate(`/private/chat/${room}`);
   };
 
   return (
