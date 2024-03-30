@@ -8,6 +8,7 @@ export const SelectField = ({
   className = '',
   isDisabled,
   isRequired,
+  classNames = '',
 }) => {
   return (
     <Select
@@ -16,6 +17,7 @@ export const SelectField = ({
       className={className}
       label={label}
       name={name}
+      classNames={classNames}
       placeholder={
         dataField === '' || dataField === null ? 'Seleccionar...' : ''
       }

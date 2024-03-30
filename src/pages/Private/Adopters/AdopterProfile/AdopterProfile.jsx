@@ -1,15 +1,15 @@
-import { Hero, TitleSection } from '../../../../components';
+import { TitleSection } from '../../../../components';
 import { DeleteUserModal, ImagesFrame, StatusAnimalsTable } from '../../shared';
 import { userAnimalsQuery } from '../../Shelters/useUserAnimals';
 
-import UserBioInfo from '../../Shelters/ShelterProfile/components/UserBioInfo';
-import { updateProfile } from '../../shared/service/updateUserService';
-import { toast } from 'react-toastify';
-import { Form } from 'react-router-dom';
-import { deleteFav } from '../../../Public/Animals/service';
-import { isAxiosError } from 'axios';
-import { useUser } from '../../useUser';
 import { Skeleton } from '@nextui-org/skeleton';
+import { isAxiosError } from 'axios';
+import { Form } from 'react-router-dom';
+import { toast } from 'react-toastify';
+import { deleteFav } from '../../../Public/Animals/service';
+import { updateProfile } from '../../shared/service/updateUserService';
+import UserBioInfo from '../../Shelters/ShelterProfile/components/UserBioInfo';
+import { useUser } from '../../useUser';
 
 export const loader = (queryClient) => async () => {
   try {
@@ -71,7 +71,6 @@ const AdopterProfile = () => {
 
   return (
     <main className="bg-default-100 flex-grow">
-      <Hero />
       <section
         id="adopterProfile"
         className="max-w-screen-xl w-full flex  flex-col justify-center  gap-12 h-full  py-12  mx-auto "

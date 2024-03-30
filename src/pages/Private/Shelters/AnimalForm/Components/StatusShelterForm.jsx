@@ -1,11 +1,12 @@
+import { H2Title, SelectField } from '../../../../../components';
+import { selectStyleConfig } from '../../../../../utils/configFormFields';
 import { cities, statusPetEnum } from '../../../../../utils/enumData';
-import { H3Title, SelectField } from '../../../../../components';
 
 const StatusShelterForm = ({ data = {}, isDisabled }) => {
   const { status, city } = data;
   return (
     <div className="flex flex-col gap-2">
-      <H3Title title="Estado protectora" />
+      <H2Title title="Estado protectora" />
       <div className="flex w-full flex-wrap md:flex-nowrap gap-2 border-primary border-t-1 pt-3">
         <SelectField
           isRequired
@@ -15,6 +16,7 @@ const StatusShelterForm = ({ data = {}, isDisabled }) => {
           dataField={status}
           dataEnum={statusPetEnum}
           isDisabled={isDisabled}
+          classNames={selectStyleConfig}
         />
 
         <SelectField
@@ -25,6 +27,7 @@ const StatusShelterForm = ({ data = {}, isDisabled }) => {
           dataField={city}
           dataEnum={cities}
           isDisabled={isDisabled}
+          classNames={selectStyleConfig}
         />
       </div>
     </div>

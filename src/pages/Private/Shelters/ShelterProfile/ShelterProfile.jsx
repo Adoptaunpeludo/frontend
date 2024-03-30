@@ -1,21 +1,23 @@
 import { Button, Skeleton, User } from '@nextui-org/react';
 import { IconEdit } from '@tabler/icons-react';
-import { H2Title, Hero, TitleSection } from '../../../../components';
-import { DeleteUserModal, StatusAnimalsTable } from '../../shared';
-import { toast } from 'react-toastify';
-import { useAnimalImagesContext } from '../../../../context/AnimalImagesContext';
+import { isAxiosError } from 'axios';
 import { useEffect } from 'react';
 import { Link, useNavigate, useParams } from 'react-router-dom';
+import { toast } from 'react-toastify';
+import { TitleSection } from '../../../../components';
+import { useAnimalImagesContext } from '../../../../context/AnimalImagesContext';
+import { buttonStyleConfig } from '../../../../utils/configFormFields';
+import { DeleteUserModal, StatusAnimalsTable } from '../../shared';
+import { updateProfile } from '../../shared/service/updateUserService';
+import { useUser } from '../../useUser';
 import { deleteAnimal } from '../AnimalForm/service';
+import { userAnimalsQuery } from '../useUserAnimals';
 import ShelterProfileInfo from './components/ShelterProfileInfo';
 import UserBioInfo from './components/UserBioInfo';
-import { userAnimalsQuery } from '../useUserAnimals';
-import { updateProfile } from '../../shared/service/updateUserService';
-import { isAxiosError } from 'axios';
-import { useUser } from '../../useUser';
 import { useUserChats, userChatsQuery } from '../useUserChats';
 import { BUCKET_URL } from '../../../../config/config';
 import { useWebSocketContext } from '../../../../context/WebSocketContext';
+
 
 export const loader =
   (queryClient) =>
@@ -100,24 +102,24 @@ const ShelterProfile = () => {
 
   return (
     <main className="bg-default-100 flex-grow">
-      <Hero />
-
       <section
         id="SheltersProfile"
-        className="max-w-screen-xl w-full flex  flex-col justify-center  gap-12 h-full  py-12  mx-auto "
+        className="max-w-screen-xl w-full flex  flex-col justify-center  h-full  py-12  mx-auto gap-5"
       >
         <TitleSection title={user?.username} id=" shelterTitle" />
         <section id="sheltersProfile" className="flex gap-12 max-lg:flex-col ">
-          <main className="flex flex-col max-w-3xl order-1 max-lg:order-2">
-            <ShelterProfileInfo isLoading={isFetchingUser} data={user} />
+
+          <main className="flex flex-col max-w-3xl order-1 ">
+            <ShelterProfileInfo isLoading={isFetching} data={data} />
           </main>
-          <Skeleton isLoaded={!isFetchingUser}>
-            <UserBioInfo data={user} isLoading={isFetchingUser} />
-          </Skeleton>
+          <aside className="order-2">
+            <Skeleton isLoaded={!isFetching}>
+              <UserBioInfo data={data} isLoading={isFetching} />
+            </Skeleton>
+          </aside>
         </section>
         <div id="NotificationsAside">
           <H2Title title="Chats" className="pb-5" />
-
           <Skeleton
             className="flex justify-between border-solid border-b-1 border-b-primary pb-3 items-center"
             isLoaded={!isFetchingChats}
@@ -144,16 +146,17 @@ const ShelterProfile = () => {
             </div>
           </Skeleton>
         </div>
-        <section id="petsTable" className="px-4">
+        <section id="petsTable">
+
           <StatusAnimalsTable role={'shelter'} />
           <Button
             // isIconOnly={data !== undefined}
             color="primary"
             size="md"
             startContent={<IconEdit />}
-            className="my-4"
             as={Link}
             to="/private/shelter/create-animal"
+            className={buttonStyleConfig}
           >
             Crear Anuncio
           </Button>

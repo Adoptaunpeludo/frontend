@@ -80,7 +80,7 @@ const AnimalDetailsPage = () => {
                 isLogged ? (isOnline ? 'success' : 'danger') : 'default'
               }`}
               className="absolute right-5 top-5 z-10 bg-white"
-              src={`${BUCKET_URL}/${data.user.Avatar}`}
+              src={`${BUCKET_URL}/${data.user.avatar}`}
               showFallback
               fallback={<IconHome className="w-10 h-10 stroke-gray-600" />}
             />

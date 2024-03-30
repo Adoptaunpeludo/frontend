@@ -79,7 +79,7 @@ const RegisterPage = () => {
           id="register"
           className="max-w-screen-xl w-full flex flex-col gap-3 h-full justify-center py-10 mx-auto "
         >
-          <LogoHeader />
+          <LogoHeader className="mx-auto" />
           <Panel className={'max-w-2xl mx-auto'}>
             <Form
               method="post"
@@ -116,8 +116,8 @@ const RegisterPage = () => {
                       credentials.role === undefined
                         ? ' '
                         : credentials.role === 'shelter'
-                        ? 'de protectora'
-                        : 'de adoptante'
+                          ? 'de protectora'
+                          : 'de adoptante'
                     }`}
                     placeholder="Introduce un nombre"
                     color={errors.username ? 'danger' : 'none'}

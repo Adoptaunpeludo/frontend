@@ -1,5 +1,3 @@
-//TODO: change import of the component shelterProfile and userProfile to this source
-
 import {
   animalSizeEnum,
   boolDataEnum,
