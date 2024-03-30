@@ -156,6 +156,7 @@ export const UserFormBio = ({ data }) => {
                           label="Teléfono"
                           name="phoneNumber"
                           defaultValue={phoneNumber ? phoneNumber : ''}
+                          color={errors.phoneNumber ? 'danger' : 'none'}
                           placeholder="Introduce tu número de teléfono"
                           onBlur={handleChange}
                           errorMessage={errors.phoneNumber}
