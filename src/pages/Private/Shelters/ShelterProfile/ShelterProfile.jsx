@@ -1,8 +1,8 @@
-import { Button, Skeleton } from '@nextui-org/react';
+import { Button, Skeleton, User } from '@nextui-org/react';
 import { IconEdit } from '@tabler/icons-react';
 import { isAxiosError } from 'axios';
 import { useEffect } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate, useParams } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import { TitleSection } from '../../../../components';
 import { useAnimalImagesContext } from '../../../../context/AnimalImagesContext';
@@ -14,19 +14,28 @@ import { deleteAnimal } from '../AnimalForm/service';
 import { userAnimalsQuery } from '../useUserAnimals';
 import ShelterProfileInfo from './components/ShelterProfileInfo';
 import UserBioInfo from './components/UserBioInfo';
+import { useUserChats, userChatsQuery } from '../useUserChats';
+import { BUCKET_URL } from '../../../../config/config';
+import { useWebSocketContext } from '../../../../context/WebSocketContext';
 
-export const loader = (queryClient) => async () => {
-  try {
-    const data = await queryClient.ensureQueryData(
-      userAnimalsQuery('shelter', { limit: 100 })
-    );
-    return data;
-  } catch (error) {
-    console.log(error);
-    toast.error('Error cargando perfil. ¿Estás logueado?');
-    throw error;
-  }
-};
+
+export const loader =
+  (queryClient) =>
+  async ({ params }) => {
+    try {
+      const animals = await queryClient.ensureQueryData(
+        userAnimalsQuery('shelter', { limit: 100 })
+      );
+      const chats = await queryClient.ensureQueryData(
+        userChatsQuery(params.username)
+      );
+      return { chats, animals };
+    } catch (error) {
+      console.log(error);
+      toast.error('Error cargando perfil. ¿Estás logueado?');
+      throw error;
+    }
+  };
 
 export const action =
   (closeBioModal, closeShelterModal, queryClient) =>
@@ -66,14 +75,30 @@ export const action =
   };
 
 const ShelterProfile = () => {
-  const { data, isFetching } = useUser();
+  const params = useParams();
+  const { data: user, isFetching: isFetchingUser } = useUser();
+  const { data: chats, isFetching: isFetchingChats } = useUserChats(
+    params.username
+  );
+  const { send, isReady } = useWebSocketContext();
   const { resetImages } = useAnimalImagesContext();
+  const navigate = useNavigate();
 
   useEffect(() => {
     resetImages();
   }, [resetImages]);
 
-  const { username } = data;
+  const handleCreateChat = (slug) => {
+    if (isReady) {
+      send(
+        JSON.stringify({
+          type: 'create-chat-room',
+          room: slug,
+        })
+      );
+    }
+    navigate(`/private/chat/${slug}`);
+  };
 
   return (
     <main className="bg-default-100 flex-grow">
@@ -81,8 +106,9 @@ const ShelterProfile = () => {
         id="SheltersProfile"
         className="max-w-screen-xl w-full flex  flex-col justify-center  h-full  py-12  mx-auto gap-5"
       >
-        <TitleSection title={username} id=" shelterTitle" />
+        <TitleSection title={user?.username} id=" shelterTitle" />
         <section id="sheltersProfile" className="flex gap-12 max-lg:flex-col ">
+
           <main className="flex flex-col max-w-3xl order-1 ">
             <ShelterProfileInfo isLoading={isFetching} data={data} />
           </main>
@@ -92,7 +118,36 @@ const ShelterProfile = () => {
             </Skeleton>
           </aside>
         </section>
+        <div id="NotificationsAside">
+          <H2Title title="Chats" className="pb-5" />
+          <Skeleton
+            className="flex justify-between border-solid border-b-1 border-b-primary pb-3 items-center"
+            isLoaded={!isFetchingChats}
+          >
+            <div className="flex justify-between border-solid border-b-1 border-b-primary pb-3 items-center">
+              {chats.map((chat) => (
+                <Link
+                  key={chat.slug}
+                  to={`/private/chat/${chat.slug}`}
+                  onClick={() => handleCreateChat(chat.slug)}
+                >
+                  <User
+                    name={`${chat.animal[0].name.toUpperCase()}/${
+                      chat.users[0]?.username
+                    }`}
+                    avatarProps={{
+                      src: `${BUCKET_URL}/${chat.animal[0].images[0]}`,
+                      isBordered: true,
+                      color: 'success',
+                    }}
+                  />
+                </Link>
+              ))}
+            </div>
+          </Skeleton>
+        </div>
         <section id="petsTable">
+
           <StatusAnimalsTable role={'shelter'} />
           <Button
             // isIconOnly={data !== undefined}

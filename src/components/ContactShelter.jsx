@@ -1,6 +1,30 @@
+import { Button } from '@nextui-org/react';
 import { H2Title } from '.';
 import { ChatIcon } from '../assets/svg';
-export const ContactShelter = ({ className }) => {
+import { useUser } from '../pages/Private/useUser';
+import { useNavigate } from 'react-router-dom';
+
+import { useWebSocketContext } from '../context/WebSocketContext';
+
+export const ContactShelter = ({ className, slug }) => {
+  const { data: user } = useUser();
+  const { send, isReady } = useWebSocketContext();
+  const navigate = useNavigate();
+
+  const handleCreateChat = () => {
+    const room = `${slug}-${user?.username}`;
+
+    if (isReady) {
+      send(
+        JSON.stringify({
+          type: 'create-chat-room',
+          room,
+        })
+      );
+    }
+    navigate(`/private/chat/${slug}-${user?.username}`);
+  };
+
   return (
     <section
       id="talk-to-shelters"
@@ -10,7 +34,13 @@ export const ContactShelter = ({ className }) => {
         title="habla con la protectora"
         className="text-secondary max-sm:w-48"
       />
-      <ChatIcon className="size-14" />
+      <Button
+        isDisabled={!user || user?.role === 'shelter'}
+        disableAnimation=""
+        onClick={handleCreateChat}
+      >
+        <ChatIcon className="size-14" />
+      </Button>
     </section>
   );
 };

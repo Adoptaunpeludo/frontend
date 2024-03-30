@@ -7,12 +7,13 @@ import { useUser, userQuery } from '../useUser';
 import GptMessage from './components/GptMessage';
 import TextMessageBox from './components/TextMessageBox';
 import UserMessage from './components/UserMessage';
-import { chatStreamGenerator } from './service';
+import { chatStreamGenerator, createChat } from './service';
 import { chatHistoryQuery, useChatHistory } from './useChatHistory';
 
 export const loader = (queryClient) => async () => {
   try {
     const user = await queryClient.ensureQueryData(userQuery);
+    await createChat(user.wsToken);
     const history = await queryClient.ensureQueryData(
       chatHistoryQuery(user.username)
     );
@@ -26,7 +27,7 @@ export const loader = (queryClient) => async () => {
 const AssistantPage = () => {
   const { data: user } = useUser();
   const [messages, setMessages] = useState([]);
-  const [isFirstLoad, setIsFirstLoad] = useState([]);
+  const [isFirstLoad, setIsFirstLoad] = useState(false);
   const { data: chatHistory, isFetching } = useChatHistory(user.username);
   const { messagesEndRef } = useScroll(messages, isFirstLoad, isFetching);
 
