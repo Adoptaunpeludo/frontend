@@ -180,7 +180,7 @@ const router = (bioModalOnClose, shelterModalOnClose, animalImages) =>
               loader: updateAnimalLoader(queryClient),
             },
             {
-              path: 'shelter/create-animal/:slug',
+              path: 'shelter/create-animal/',
               element: <AnimalForm />,
               action: mutateAnimalAction(animalImages, queryClient),
             },
