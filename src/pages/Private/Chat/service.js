@@ -11,3 +11,9 @@ export const getShelterData = async (username) => {
 
   return data;
 };
+
+export const getChatHistory = async (chat) => {
+  const { data } = await fetchData(`/chats/history/${chat}`);
+
+  return data;
+};

@@ -99,7 +99,7 @@ const ShelterProfile = () => {
         })
       );
     }
-    navigate(`/private/chat/${slug}-${user?.username}`);
+    navigate(`/private/chat/${slug}`);
   };
 
   return (
@@ -135,7 +135,7 @@ const ShelterProfile = () => {
                 >
                   <User
                     name={`${chat.animal[0].name.toUpperCase()}/${
-                      chat.users[0].username
+                      chat.users[0]?.username
                     }`}
                     avatarProps={{
                       src: `${BUCKET_URL}/${chat.animal[0].images[0]}`,

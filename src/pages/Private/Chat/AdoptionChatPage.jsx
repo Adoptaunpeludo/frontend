@@ -6,11 +6,14 @@ import UserMessage from './components/UserMessage';
 import { useNavigate, useParams } from 'react-router-dom';
 import TextMessageBox from '../Assistant/components/TextMessageBox';
 
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { useAdoptionChatContext } from '../../../context/AdoptionChatContext';
 import { toast } from 'react-toastify';
 // import { currentChatQuery, useCurrentChat } from './useCurrentChat';
 import { shelterDataQuery, useShelterData } from './useShelterData';
+import { chatHistoryQuery, useChatHistory } from './useUserChatHistory';
+import { useScroll } from 'framer-motion';
+import { mapUserChatHistory } from '../../../utils/mapUserChatHistory';
 
 export const loader =
   (queryClient) =>
@@ -20,7 +23,11 @@ export const loader =
         shelterDataQuery(params.chat.split('-').at(0))
       );
 
-      return { /*chat,*/ shelter };
+      const history = await queryClient.ensureQueryData(
+        chatHistoryQuery(params.chat)
+      );
+
+      return { history, shelter };
     } catch (error) {
       console.log(error);
       throw error;
@@ -38,35 +45,33 @@ const AdoptionChatPage = () => {
   const { chatMessages, setChatMessages } = useAdoptionChatContext();
   const { socket, isReady } = useWebSocketContext();
   const { data: user, isFetching: isFetchingUser } = useUser();
-  // const { data: currentChat, isFetching: isFetchingCurrentChat } =
-  //   useCurrentChat(chat);
-
   const { data: shelterData, isFetching: isFetchingShelter } =
     useShelterData(shelter);
-
-  console.log({ shelterData });
+  const { data: chatHistory, isFetching: isFetchingChatHistory } =
+    useChatHistory(chat);
 
   const navigate = useNavigate();
 
-  // const [isFirstLoad, setIsFirstLoad] = useState([]);
-  // const { data: chatHistory, isFetching } = useChatHistory(user.username);
-  // const { messagesEndRef } = useScroll(messages, isFirstLoad, isFetching);
-
-  // useEffect(() => {
-  //   if (chatHistory) {
-  //     const history = mapChatHistory(chatHistory);
-  //     setChatMessages(history);
-  //   }
-  // }, [chatHistory]);
-
-  // useEffect(() => {
-  //   setIsFirstLoad(true);
-  // }, []);
+  const [isFirstLoad, setIsFirstLoad] = useState([]);
+  const { messagesEndRef } = useScroll(
+    chatMessages,
+    isFirstLoad,
+    isFetchingChatHistory
+  );
 
   useEffect(() => {
-    console.log({ isReady });
+    if (chatHistory) {
+      const history = mapUserChatHistory(chatHistory);
+      setChatMessages(history);
+    }
+  }, [chatHistory, setChatMessages]);
+
+  useEffect(() => {
+    setIsFirstLoad(true);
+  }, []);
+
+  useEffect(() => {
     if (isReady) {
-      console.log({ chat });
       socket.send(
         JSON.stringify({
           type: 'join-chat-room',
@@ -164,7 +169,7 @@ const AdoptionChatPage = () => {
                 )
               )}
 
-              {/* <div ref={messagesEndRef} /> */}
+              <div ref={messagesEndRef} />
             </div>
           )}
         </div>
