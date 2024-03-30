@@ -128,6 +128,7 @@ export default {
             primary: '#A5C73D',
             secondary: '#C74F3E',
             tertiary: '#3E73C7',
+            focus: '#A5C73D',
             default: {
               50: '#f7f7f8',
               100: '#eeeef0',
@@ -150,6 +151,7 @@ export default {
             primary: '#A5C73D',
             secondary: '#C74F3E',
             tertiary: '#3E73C7',
+            focus: '#A5C73D',
             default: {
               50: '#fafafa',
               100: '#efefef',
@@ -174,7 +176,7 @@ export default {
               DEFAULT: '#BEF264',
               foreground: '#000000',
             },
-            focus: '#BEF264',
+            focus: '#A5C73D',
           },
         },
       },
