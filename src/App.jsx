@@ -23,7 +23,7 @@ import {
   VerifyEmailPage,
   ForgotPasswordPage,
   NotificationsPage,
-  ResetPasswordPage
+  ResetPasswordPage,
 } from './pages/index.js';
 
 // Actions
@@ -35,7 +35,6 @@ import { action as mutateAnimalAction } from './pages/Private/Shelters/AnimalFor
 import { action as verifyEmailAction } from './pages/Auth/VerifyEmail/VerifyEmailPage.jsx';
 import { action as forgotPasswordAction } from './pages/Auth/ForgotPassword/ForgotPasswordPage.jsx';
 import { action as resetPasswordAction } from './pages/Auth/ResetPassword/ResetPasswordPage.jsx';
-
 
 // Loaders
 import { loader as updateAnimalLoader } from './pages/Private/Shelters/AnimalForm/AnimalForm.jsx';
@@ -181,13 +180,7 @@ const router = (bioModalOnClose, shelterModalOnClose, animalImages) =>
               loader: updateAnimalLoader(queryClient),
             },
             {
-              path: 'shelter/update-animal/:slug',
-              element: <AnimalForm />,
-              action: mutateAnimalAction(animalImages, queryClient),
-              loader: updateAnimalLoader(queryClient),
-            },
-            {
-              path: 'shelter/update-animal/:slug',
+              path: 'shelter/create-animal/:slug',
               element: <AnimalForm />,
               action: mutateAnimalAction(animalImages, queryClient),
             },
