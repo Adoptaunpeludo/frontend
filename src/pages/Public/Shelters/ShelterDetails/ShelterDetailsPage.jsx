@@ -88,7 +88,7 @@ const ShelterDetailsPage = () => {
           <AnimalGallery animalImages={images} onSetImages={setImages} />
 
           <p className="p-2">{data.description}</p>
-          <ContactShelter className="mx-auto" />
+          <ContactShelter className="mx-auto" username={username} />
         </section>
         <section
           id="aside-column"

@@ -130,11 +130,19 @@ const ShelterProfile = () => {
                   onClick={() => handleCreateChat(chat.slug)}
                 >
                   <User
-                    name={`${chat.animal[0].name.toUpperCase()}/${
-                      chat.users[0]?.username
-                    }`}
+                    name={
+                      chat.animal[0]?.name
+                        ? `${chat.animal[0].name.toUpperCase()}/${
+                            chat.users[0]?.username
+                          }`
+                        : `${chat.users[0].username}`
+                    }
                     avatarProps={{
-                      src: `${BUCKET_URL}/${chat.animal[0].images[0]}`,
+                      src: `${BUCKET_URL}/${
+                        chat.animal[0]?.images[0]
+                          ? chat.animal[0]?.images[0]
+                          : chat.users[0].avatar[0]
+                      }`,
                       isBordered: true,
                       color: 'success',
                     }}

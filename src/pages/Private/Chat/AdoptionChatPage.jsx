@@ -148,6 +148,7 @@ const AdoptionChatPage = () => {
             <Spinner className="self-center flex-1 flex-col sm:w-3.5" />
           ) : (
             <div className="grid grid-cols-12 gap-y-2">
+              {!isReady && <div>Error conectado al servidor de mensajes</div>}
               {chatMessages.map((message, index) =>
                 !message.isSender ? (
                   <UserMessage
