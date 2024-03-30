@@ -27,7 +27,7 @@ export const loader = (queryClient) => async () => {
 const AssistantPage = () => {
   const { data: user } = useUser();
   const [messages, setMessages] = useState([]);
-  const [isFirstLoad, setIsFirstLoad] = useState([]);
+  const [isFirstLoad, setIsFirstLoad] = useState(false);
   const { data: chatHistory, isFetching } = useChatHistory(user.username);
   const { messagesEndRef } = useScroll(messages, isFirstLoad, isFetching);
 

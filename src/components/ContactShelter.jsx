@@ -8,14 +8,14 @@ import { useWebSocketContext } from '../context/WebSocketContext';
 
 export const ContactShelter = ({ className, slug }) => {
   const { data: user } = useUser();
-  const { socket, isReady } = useWebSocketContext();
+  const { send, isReady } = useWebSocketContext();
   const navigate = useNavigate();
 
   const handleCreateChat = () => {
     const room = `${slug}-${user?.username}`;
 
-    if (socket && isReady) {
-      socket.send(
+    if (isReady) {
+      send(
         JSON.stringify({
           type: 'create-chat-room',
           room,

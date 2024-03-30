@@ -78,7 +78,7 @@ const ShelterProfile = () => {
   const { data: chats, isFetching: isFetchingChats } = useUserChats(
     params.username
   );
-  const { socket, isReady } = useWebSocketContext();
+  const { send, isReady } = useWebSocketContext();
   const { resetImages } = useAnimalImagesContext();
   const navigate = useNavigate();
 
@@ -87,8 +87,8 @@ const ShelterProfile = () => {
   }, [resetImages]);
 
   const handleCreateChat = (slug) => {
-    if (socket && isReady) {
-      socket.send(
+    if (isReady) {
+      send(
         JSON.stringify({
           type: 'create-chat-room',
           room: slug,

@@ -10,8 +10,9 @@ import { useEffect, useState } from 'react';
 import { toast } from 'react-toastify';
 import { receiverDataQuery } from './useReceiverData';
 import { chatHistoryQuery, useChatHistory } from './useUserChatHistory';
-import { useScroll } from 'framer-motion';
+
 import { mapUserChatHistory } from '../../../utils/mapUserChatHistory';
+import { useScroll } from '../../../hooks/useScroll';
 
 export const loader =
   (queryClient) =>
@@ -47,14 +48,12 @@ const AdoptionChatPage = () => {
   const adopter = parts.at(-1);
   const { receiver } = useLoaderData();
   const [chatMessages, setChatMessages] = useState([]);
-  const { socket, isReady } = useWebSocketContext();
+  const { send, isReady, val } = useWebSocketContext();
   const { data: user, isFetching: isFetchingUser } = useUser();
   const { data: chatHistory, isFetching: isFetchingChatHistory } =
     useChatHistory(chat);
-
   const navigate = useNavigate();
-
-  const [isFirstLoad, setIsFirstLoad] = useState([]);
+  const [isFirstLoad, setIsFirstLoad] = useState(false);
   const { messagesEndRef } = useScroll(
     chatMessages,
     isFirstLoad,
@@ -74,7 +73,7 @@ const AdoptionChatPage = () => {
 
   useEffect(() => {
     if (isReady) {
-      socket.send(
+      send(
         JSON.stringify({
           type: 'join-chat-room',
           username: user.username,
@@ -86,7 +85,7 @@ const AdoptionChatPage = () => {
 
     return () => {
       if (isReady) {
-        socket.send(
+        send(
           JSON.stringify({
             type: 'leave-chat-room',
             username: user.username,
@@ -96,22 +95,20 @@ const AdoptionChatPage = () => {
         );
       }
     };
-  }, [chat, socket, user, isReady]);
+  }, [chat, user, isReady, send]);
 
   useEffect(() => {
-    if (socket && isReady) {
-      socket.onmessage = (event) => {
-        const message = JSON.parse(event.data);
+    if (val && isReady) {
+      const message = JSON.parse(val);
 
-        if (message.type === 'chat-message')
-          if (message.room === chat)
-            setChatMessages((prev) => [
-              ...prev,
-              { text: message.message, isSender: false },
-            ]);
-      };
+      if (message.type === 'chat-message')
+        if (message.room === chat)
+          setChatMessages((prev) => [
+            ...prev,
+            { text: message.message, isSender: false },
+          ]);
     }
-  }, [chat, setChatMessages, isReady, socket]);
+  }, [chat, setChatMessages, isReady, val]);
 
   const handleDeleteMessages = () => {
     setChatMessages([]);
@@ -126,11 +123,11 @@ const AdoptionChatPage = () => {
   }
 
   const handlePost = async (text) => {
-    // setIsFirstLoad(false);
+    setIsFirstLoad(false);
     setChatMessages((prev) => [...prev, { text, isSender: true }]);
 
-    if (socket && socket.readyState !== 0) {
-      socket.send(
+    if (isReady) {
+      send(
         JSON.stringify({
           type: 'chat-message',
           message: text,
@@ -170,10 +167,9 @@ const AdoptionChatPage = () => {
                   />
                 )
               )}
-
-              <div ref={messagesEndRef} />
             </div>
           )}
+          <div ref={messagesEndRef} />
         </div>
 
         <div className="bg-white">
@@ -182,6 +178,7 @@ const AdoptionChatPage = () => {
             onDeleteMessages={handleDeleteMessages}
             placeholder="Escribe aquí tu pregunta"
             disableCorrections
+            page={'adoption-chat'}
           />
         </div>
       </div>

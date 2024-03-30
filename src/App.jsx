@@ -139,7 +139,7 @@ const router = (bioModalOnClose, shelterModalOnClose, animalImages) =>
               loader: assistantChatLoader(queryClient),
             },
             {
-              path: 'adopter',
+              path: 'adopter/:username',
               element: <AdopterProfile />,
               loader: userFavsLoader(queryClient),
               action: adopterProfileAction(bioModalOnClose, queryClient),
