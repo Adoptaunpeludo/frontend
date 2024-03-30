@@ -5,7 +5,7 @@ import { DeleteUserModal, StatusAnimalsTable } from '../../shared';
 import { toast } from 'react-toastify';
 import { useAnimalImagesContext } from '../../../../context/AnimalImagesContext';
 import { useEffect } from 'react';
-import { Link, useParams } from 'react-router-dom';
+import { Link, useNavigate, useParams } from 'react-router-dom';
 import { deleteAnimal } from '../AnimalForm/service';
 import ShelterProfileInfo from './components/ShelterProfileInfo';
 import UserBioInfo from './components/UserBioInfo';
@@ -15,6 +15,7 @@ import { isAxiosError } from 'axios';
 import { useUser } from '../../useUser';
 import { useUserChats, userChatsQuery } from '../useUserChats';
 import { BUCKET_URL } from '../../../../config/config';
+import { useWebSocketContext } from '../../../../context/WebSocketContext';
 
 export const loader =
   (queryClient) =>
@@ -77,14 +78,29 @@ const ShelterProfile = () => {
   const { data: chats, isFetching: isFetchingChats } = useUserChats(
     params.username
   );
-
+  const { socket, isReady } = useWebSocketContext();
   const { resetImages } = useAnimalImagesContext();
+  const navigate = useNavigate();
 
   useEffect(() => {
     resetImages();
   }, [resetImages]);
 
   const { username } = user;
+
+  const handleCreateChat = (slug) => {
+    const room = `${slug}-${user?.username}`;
+
+    if (socket && isReady) {
+      socket.send(
+        JSON.stringify({
+          type: 'create-chat-room',
+          room,
+        })
+      );
+    }
+    navigate(`/private/chat/${slug}-${user?.username}`);
+  };
 
   return (
     <main className="bg-default-100 flex-grow">
@@ -112,7 +128,11 @@ const ShelterProfile = () => {
           >
             <div className="flex justify-between border-solid border-b-1 border-b-primary pb-3 items-center">
               {chats.map((chat) => (
-                <Link key={chat.slug} to={`/private/chat/${chat.slug}`}>
+                <Link
+                  key={chat.slug}
+                  to={`/private/chat/${chat.slug}`}
+                  onClick={() => handleCreateChat(chat.slug)}
+                >
                   <User
                     name={`${chat.animal[0].name.toUpperCase()}/${
                       chat.users[0].username

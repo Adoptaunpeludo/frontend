@@ -16,9 +16,6 @@ export const loader =
   (queryClient) =>
   async ({ params }) => {
     try {
-      // const chat = await queryClient.ensureQueryData(
-      //   currentChatQuery(params.chat)
-      // );
       const shelter = await queryClient.ensureQueryData(
         shelterDataQuery(params.chat.split('-').at(0))
       );

@@ -5,17 +5,16 @@ import { useUser } from '../pages/Private/useUser';
 import { useNavigate } from 'react-router-dom';
 
 import { useWebSocketContext } from '../context/WebSocketContext';
-import { useAdoptionChatContext } from '../context/AdoptionChatContext';
+
 export const ContactShelter = ({ className, slug }) => {
   const { data: user } = useUser();
-  const { setRoom } = useAdoptionChatContext();
-  const { socket } = useWebSocketContext();
+  const { socket, isReady } = useWebSocketContext();
   const navigate = useNavigate();
 
   const handleCreateChat = () => {
     const room = `${slug}-${user?.username}`;
 
-    if (socket.readyState === socket.OPEN) {
+    if (socket && isReady) {
       socket.send(
         JSON.stringify({
           type: 'create-chat-room',
@@ -23,8 +22,6 @@ export const ContactShelter = ({ className, slug }) => {
         })
       );
     }
-
-    setRoom(room);
     navigate(`/private/chat/${slug}-${user?.username}`);
   };
 
