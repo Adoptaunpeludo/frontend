@@ -35,65 +35,66 @@ const AppLayout = () => {
   const { setNotifications } = useNotificationsContext();
 
   useEffect(() => {
-    if (isReady && userInformation)
+    if (isReady && userInformation && user)
       send(
         JSON.stringify({
-          type: 'user-authentication',
+          type: 'user-login',
           token: user?.wsToken,
         })
       );
   }, [isReady, user, send]);
 
-  // useEffect(() => {
-  //   if (val && isReady) {
-  //     const message = JSON.parse(val);
-  //     const { type, ...data } = message;
-  //     switch (type) {
-  //       case 'chat-created':
-  //         queryClient.invalidateQueries({
-  //           queryKey: ['user-chats', data.shelterUsername],
-  //         });
-  //         break;
-  //       case 'animal-changed':
-  //         setNotifications((notifications) => [...notifications, data]);
-  //         queryClient.invalidateQueries({
-  //           queryKey: ['animals'],
-  //         });
-  //         queryClient.invalidateQueries({
-  //           queryKey: ['animal-details', data.animalSlug],
-  //         });
-  //         break;
-  //       case 'user-connected':
-  //         queryClient.invalidateQueries({
-  //           queryKey: ['shelters'],
-  //         });
-  //         queryClient.invalidateQueries({
-  //           queryKey: ['shelter-details', message.username],
-  //         });
-  //         queryClient.invalidateQueries({
-  //           queryKey: ['animals'],
-  //         });
-  //         queryClient.invalidateQueries({
-  //           queryKey: ['animal-details'],
-  //         });
-  //         break;
-  //       case 'user-disconnected':
-  //         queryClient.invalidateQueries({
-  //           queryKey: ['shelters'],
-  //         });
-  //         queryClient.invalidateQueries({
-  //           queryKey: ['shelter-details', message.username],
-  //         });
-  //         queryClient.invalidateQueries({
-  //           queryKey: ['animals'],
-  //         });
-  //         queryClient.invalidateQueries({
-  //           queryKey: ['animal-details'],
-  //         });
-  //         break;
-  //     }
-  //   }
-  // }, [isReady, val, queryClient, setNotifications]);
+  useEffect(() => {
+    if (val && isReady) {
+      const message = JSON.parse(val);
+      console.log({ message });
+      const { type, ...data } = message;
+      switch (type) {
+        case 'chat-created':
+          queryClient.invalidateQueries({
+            queryKey: ['user-chats', data.shelterUsername],
+          });
+          break;
+        case 'animal-changed':
+          setNotifications((notifications) => [...notifications, data]);
+          queryClient.invalidateQueries({
+            queryKey: ['animals'],
+          });
+          queryClient.invalidateQueries({
+            queryKey: ['animal-details', data.animalSlug],
+          });
+          break;
+        case 'user-connected':
+          queryClient.invalidateQueries({
+            queryKey: ['shelters'],
+          });
+          queryClient.invalidateQueries({
+            queryKey: ['shelter-details', message.username],
+          });
+          queryClient.invalidateQueries({
+            queryKey: ['animals'],
+          });
+          queryClient.invalidateQueries({
+            queryKey: ['animal-details'],
+          });
+          break;
+        case 'user-disconnected':
+          queryClient.invalidateQueries({
+            queryKey: ['shelters'],
+          });
+          queryClient.invalidateQueries({
+            queryKey: ['shelter-details', message.username],
+          });
+          queryClient.invalidateQueries({
+            queryKey: ['animals'],
+          });
+          queryClient.invalidateQueries({
+            queryKey: ['animal-details'],
+          });
+          break;
+      }
+    }
+  }, [isReady, val, queryClient, setNotifications]);
 
   return (
     <>

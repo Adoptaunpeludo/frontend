@@ -16,16 +16,27 @@ import { toast } from 'react-toastify';
 import { useNotifications } from '../pages/Private/useNotifications.js';
 import { useEffect } from 'react';
 import { useNotificationsContext } from '../context/NotificationsContext.jsx';
+import { useWebSocketContext } from '../context/WebSocketContext.jsx';
 
 export const UserAreaMenu = ({ user }) => {
   const { data: userNotifications, isFetching } = useNotifications();
   const { notifications, setNotifications } = useNotificationsContext();
+  const { isReady, send } = useWebSocketContext();
   const navigate = useNavigate();
   const queryClient = useQueryClient();
 
   const handleLogout = async () => {
     try {
       await logout();
+      if (isReady) {
+        send(
+          JSON.stringify({
+            type: 'user-logout',
+            username: user?.username,
+            userId: user?.id,
+          })
+        );
+      }
       queryClient.removeQueries({
         queryKey: ['user'],
       });
