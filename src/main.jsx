@@ -6,7 +6,6 @@ import App from './App.jsx';
 import './index.css';
 import { AnimalImagesContextProvider } from './context/AnimalImagesContext.jsx';
 import { ModalContextProvider } from './context/ModalContext.jsx';
-import { AdoptionChatContextProvider } from './context/AdoptionChatContext.jsx';
 import { WebSocketContextProvider } from './context/WebSocketContext.jsx';
 import { NotificationsContextProvider } from './context/NotificationsContext.jsx';
 
@@ -14,13 +13,11 @@ ReactDOM.createRoot(document.getElementById('root')).render(
   <>
     <WebSocketContextProvider>
       <NotificationsContextProvider>
-        <AdoptionChatContextProvider>
-          <AnimalImagesContextProvider>
-            <ModalContextProvider>
-              <App />
-            </ModalContextProvider>
-          </AnimalImagesContextProvider>
-        </AdoptionChatContextProvider>
+        <AnimalImagesContextProvider>
+          <ModalContextProvider>
+            <App />
+          </ModalContextProvider>
+        </AnimalImagesContextProvider>
       </NotificationsContextProvider>
     </WebSocketContextProvider>
     <ToastContainer position="top-center" className={'toast-message'} />

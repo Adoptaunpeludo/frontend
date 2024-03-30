@@ -45,7 +45,7 @@ const AppLayout = () => {
   }, [isReady, user, socket]);
 
   useEffect(() => {
-    console.log({ socket });
+    console.log({ socket, isReady });
     if (socket && isReady) {
       socket.onmessage = (event) => {
         const message = JSON.parse(event.data);
@@ -97,7 +97,7 @@ const AppLayout = () => {
         }
       };
     }
-  }, [isReady, setNotifications, socket, queryClient]);
+  }, [socket, isReady]);
 
   return (
     <>

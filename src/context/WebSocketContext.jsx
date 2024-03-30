@@ -1,25 +1,21 @@
 import { createContext, useContext, useEffect, useRef, useState } from 'react';
 import { WB_SERVER } from '../config/config';
-// import { useQueryClient } from '@tanstack/react-query';
-// import { useNotificationsContext } from './NotificationsContext';
-// import { useAdoptionChatContext } from './AdoptionChatContext';
 
 const WebSocketContext = createContext();
 
 const WebSocketContextProvider = ({ children }) => {
   const [isReady, setIsReady] = useState(false);
   const [message, setMessage] = useState(null);
-  // const { setNotifications } = useNotificationsContext();
-  // const { setChatMessages, room } = useAdoptionChatContext();
-  // const queryClient = useQueryClient();
 
   const ws = useRef(null);
+  const reconnectInterval = useRef(null);
 
   useEffect(() => {
     const connectToSocketServer = async () => {
       const socket = new WebSocket(WB_SERVER);
 
       socket.onopen = () => {
+        clearInterval(reconnectInterval.current);
         setIsReady(true);
         console.log('Connected to ws server');
         const pingInterval = setInterval(() => {
@@ -27,14 +23,6 @@ const WebSocketContextProvider = ({ children }) => {
             socket.send(JSON.stringify({ type: 'ping' }));
           }
         }, 58000);
-
-        // if (socket.readyState === socket.OPEN && user)
-        //   socket.send(
-        //     JSON.stringify({
-        //       type: 'user-authentication',
-        //       token: user?.wsToken,
-        //     })
-        //   );
 
         socket.onmessage = (event) => {
           const message = JSON.parse(event.data);
@@ -51,16 +39,20 @@ const WebSocketContextProvider = ({ children }) => {
           setIsReady(false);
           console.log('Disconnected from ws server');
           clearInterval(pingInterval);
-          // setTimeout(() => {
-          //   connectToSocketServer();
-          //   //* TODO: Random number
-          // }, 10000);
+          reconnectInterval.current = setInterval(() => {
+            console.log('Attempting to reconnect to ws server...');
+            connectToSocketServer();
+          }, getRandomReconnectDelay());
         };
       };
 
       socket.onmessage = (event) => setMessage(event.data);
 
       ws.current = socket;
+
+      return () => {
+        clearInterval(reconnectInterval.current);
+      };
     };
     connectToSocketServer();
   }, []);
@@ -70,6 +62,10 @@ const WebSocketContextProvider = ({ children }) => {
       {children}
     </WebSocketContext.Provider>
   );
+};
+
+const getRandomReconnectDelay = () => {
+  return Math.floor(Math.random() * 10000) + 5000;
 };
 
 const useWebSocketContext = () => {

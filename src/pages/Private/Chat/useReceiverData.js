@@ -1,17 +1,17 @@
 import { useQuery } from '@tanstack/react-query';
-import { getShelterData } from './service';
+import { getReceiverData } from './service';
 
-export const shelterDataQuery = (username) => {
+export const receiverDataQuery = (username) => {
   return {
     queryKey: ['shelter-data', username],
-    queryFn: () => getShelterData(username),
+    queryFn: () => getReceiverData(username),
     staleTime: 1000 * 60 * 15,
   };
 };
 
-export const useShelterData = (username) => {
+export const useReceiverData = (username) => {
   const { data, isLoading, isFetching, isError } = useQuery(
-    shelterDataQuery(username)
+    receiverDataQuery(username)
   );
 
   return { data, isLoading, isFetching, isError };

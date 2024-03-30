@@ -86,8 +86,6 @@ const ShelterProfile = () => {
     resetImages();
   }, [resetImages]);
 
-  const { username } = user;
-
   const handleCreateChat = (slug) => {
     if (socket && isReady) {
       socket.send(
@@ -108,7 +106,7 @@ const ShelterProfile = () => {
         id="SheltersProfile"
         className="max-w-screen-xl w-full flex  flex-col justify-center  gap-12 h-full  py-12  mx-auto "
       >
-        <TitleSection title={username} id=" shelterTitle" />
+        <TitleSection title={user?.username} id=" shelterTitle" />
         <section id="sheltersProfile" className="flex gap-12 max-lg:flex-col ">
           <main className="flex flex-col max-w-3xl order-1 max-lg:order-2">
             <ShelterProfileInfo isLoading={isFetchingUser} data={user} />

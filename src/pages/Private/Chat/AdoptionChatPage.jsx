@@ -1,16 +1,14 @@
 import { Spinner } from '@nextui-org/react';
 
-import { useUser } from '../useUser';
+import { useUser, userQuery } from '../useUser';
 import { useWebSocketContext } from '../../../context/WebSocketContext';
 import UserMessage from './components/UserMessage';
-import { useNavigate, useParams } from 'react-router-dom';
+import { useLoaderData, useNavigate, useParams } from 'react-router-dom';
 import TextMessageBox from '../Assistant/components/TextMessageBox';
 
 import { useEffect, useState } from 'react';
-import { useAdoptionChatContext } from '../../../context/AdoptionChatContext';
 import { toast } from 'react-toastify';
-// import { currentChatQuery, useCurrentChat } from './useCurrentChat';
-import { shelterDataQuery, useShelterData } from './useShelterData';
+import { receiverDataQuery } from './useReceiverData';
 import { chatHistoryQuery, useChatHistory } from './useUserChatHistory';
 import { useScroll } from 'framer-motion';
 import { mapUserChatHistory } from '../../../utils/mapUserChatHistory';
@@ -19,15 +17,22 @@ export const loader =
   (queryClient) =>
   async ({ params }) => {
     try {
-      const shelter = await queryClient.ensureQueryData(
-        shelterDataQuery(params.chat.split('-').at(0))
+      const { chat } = params;
+      const parts = chat.split('-');
+      const shelter = parts.at(0);
+      const adopter = parts.at(-1);
+      const sender = await queryClient.ensureQueryData(userQuery);
+      const username = sender.role === 'shelter' ? adopter : shelter;
+
+      const receiver = await queryClient.ensureQueryData(
+        receiverDataQuery(username)
       );
 
       const history = await queryClient.ensureQueryData(
         chatHistoryQuery(params.chat)
       );
 
-      return { history, shelter };
+      return { history, receiver };
     } catch (error) {
       console.log(error);
       throw error;
@@ -35,18 +40,15 @@ export const loader =
   };
 
 const AdoptionChatPage = () => {
-  // const { data: user } = useUser();
   const params = useParams();
   const { chat } = params;
   const parts = chat.split('-');
   const shelter = parts.at(0);
   const adopter = parts.at(-1);
-
-  const { chatMessages, setChatMessages } = useAdoptionChatContext();
+  const { receiver } = useLoaderData();
+  const [chatMessages, setChatMessages] = useState([]);
   const { socket, isReady } = useWebSocketContext();
   const { data: user, isFetching: isFetchingUser } = useUser();
-  const { data: shelterData, isFetching: isFetchingShelter } =
-    useShelterData(shelter);
   const { data: chatHistory, isFetching: isFetchingChatHistory } =
     useChatHistory(chat);
 
@@ -143,7 +145,7 @@ const AdoptionChatPage = () => {
     <main className="max-w-screen-xl  w-full flex  flex-col justify-center  gap-12    mx-auto  overflow-hidden h-[88vh]">
       <div className="flex flex-col flex-1 background-panel rounded-xl h-156 overflow-y-hidden mx-10 my-10">
         <div className="flex flex-col flex-1 overflow-x-auto mb-4">
-          {isFetchingUser || /*isFetchingCurrentChat ||*/ isFetchingShelter ? (
+          {isFetchingUser || isFetchingChatHistory ? (
             <Spinner className="self-center flex-1 flex-col sm:w-3.5" />
           ) : (
             <div className="grid grid-cols-12 gap-y-2">
@@ -154,7 +156,7 @@ const AdoptionChatPage = () => {
                     text={message.text}
                     isSender={message.isSender}
                     avatar={
-                      message.isSender ? user.avatar : shelterData?.avatar[0]
+                      message.isSender ? user.avatar : receiver?.avatar[0]
                     }
                   />
                 ) : (
@@ -163,7 +165,7 @@ const AdoptionChatPage = () => {
                     text={message.text}
                     isSender={message.isSender}
                     avatar={
-                      message.isSender ? user.avatar : shelterData?.avatar[0]
+                      message.isSender ? user.avatar : receiver?.avatar[0]
                     }
                   />
                 )

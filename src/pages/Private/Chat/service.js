@@ -6,7 +6,7 @@ export const getCurrentChat = async (slug) => {
   return data;
 };
 
-export const getShelterData = async (username) => {
+export const getReceiverData = async (username) => {
   const { data } = await fetchData(`/users/${username}`);
 
   return data;
