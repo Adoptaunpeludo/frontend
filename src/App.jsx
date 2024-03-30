@@ -49,9 +49,6 @@ import ProtectedRoute from './pages/Private/ProtectedRoute.jsx';
 import { useModalContext } from './context/ModalContext.jsx';
 import AssistantPage from './pages/Private/Assistant/AssistantPage.jsx';
 import AdoptionChatPage from './pages/Private/Chat/AdoptionChatPage.jsx';
-import { useWebSocketContext } from './context/WebSocketContext.jsx';
-import { useEffect } from 'react';
-import { useNotificationsContext } from './context/NotificationsContext.jsx';
 
 export const queryClient = new QueryClient({
   defaultOptions: {
@@ -192,71 +189,6 @@ const router = (bioModalOnClose, shelterModalOnClose, animalImages) =>
 function App() {
   const { images: animalImages } = useAnimalImagesContext();
   const { bioModal, shelterModal } = useModalContext();
-  const { socket, isReady } = useWebSocketContext();
-  const { setNotifications } = useNotificationsContext();
-
-  useEffect(() => {
-    if (socket && isReady) {
-      socket.onmessage = (event) => {
-        const message = JSON.parse(event.data);
-        const { type, ...data } = message;
-        switch (type) {
-          // case 'pong':
-          //   clearInterval(pingInterval);
-          //   break;
-          // case 'chat-message':
-          //   if (data.room === room)
-          //     setChatMessages((prev) => [
-          //       ...prev,
-          //       { text: data.message, isSender: false },
-          //     ]);
-          //   break;
-          case 'chat-created':
-            queryClient.invalidateQueries({
-              queryKey: ['user-chats', data.shelterUsername],
-            });
-            break;
-          case 'animal-changed':
-            setNotifications((notifications) => [...notifications, data]);
-            queryClient.invalidateQueries({
-              queryKey: ['animals'],
-            });
-            queryClient.invalidateQueries({
-              queryKey: ['animal-details', data.animalSlug],
-            });
-            break;
-          case 'user-connected':
-            queryClient.invalidateQueries({
-              queryKey: ['shelters'],
-            });
-            queryClient.invalidateQueries({
-              queryKey: ['shelter-details', message.username],
-            });
-            queryClient.invalidateQueries({
-              queryKey: ['animals'],
-            });
-            queryClient.invalidateQueries({
-              queryKey: ['animal-details'],
-            });
-            break;
-          case 'user-disconnected':
-            queryClient.invalidateQueries({
-              queryKey: ['shelters'],
-            });
-            queryClient.invalidateQueries({
-              queryKey: ['shelter-details', message.username],
-            });
-            queryClient.invalidateQueries({
-              queryKey: ['animals'],
-            });
-            queryClient.invalidateQueries({
-              queryKey: ['animal-details'],
-            });
-            break;
-        }
-      };
-    }
-  }, [isReady, setNotifications, socket]);
 
   return (
     <QueryClientProvider client={queryClient}>

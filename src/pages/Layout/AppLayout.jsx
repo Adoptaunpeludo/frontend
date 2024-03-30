@@ -12,6 +12,8 @@ import { userNotificationsQuery } from '../Private/useNotifications';
 import { useWebSocketContext } from '../../context/WebSocketContext';
 import { useEffect } from 'react';
 import { userInformation } from '../../utils/asideDataFields';
+import { useQueryClient } from '@tanstack/react-query';
+import { useNotificationsContext } from '../../context/NotificationsContext';
 
 export const loader = (queryClient) => async () => {
   try {
@@ -29,6 +31,8 @@ const AppLayout = () => {
   const navigate = useNavigate();
   const { user, notifications } = useLoaderData();
   const { socket, isReady } = useWebSocketContext();
+  const queryClient = useQueryClient();
+  const { setNotifications } = useNotificationsContext();
 
   useEffect(() => {
     if (isReady && userInformation)
@@ -39,6 +43,61 @@ const AppLayout = () => {
         })
       );
   }, [isReady, user, socket]);
+
+  useEffect(() => {
+    console.log({ socket });
+    if (socket && isReady) {
+      socket.onmessage = (event) => {
+        const message = JSON.parse(event.data);
+        console.log({ message });
+        const { type, ...data } = message;
+        switch (type) {
+          case 'chat-created':
+            queryClient.invalidateQueries({
+              queryKey: ['user-chats', data.shelterUsername],
+            });
+            break;
+          case 'animal-changed':
+            setNotifications((notifications) => [...notifications, data]);
+            queryClient.invalidateQueries({
+              queryKey: ['animals'],
+            });
+            queryClient.invalidateQueries({
+              queryKey: ['animal-details', data.animalSlug],
+            });
+            break;
+          case 'user-connected':
+            queryClient.invalidateQueries({
+              queryKey: ['shelters'],
+            });
+            queryClient.invalidateQueries({
+              queryKey: ['shelter-details', message.username],
+            });
+            queryClient.invalidateQueries({
+              queryKey: ['animals'],
+            });
+            queryClient.invalidateQueries({
+              queryKey: ['animal-details'],
+            });
+            break;
+          case 'user-disconnected':
+            queryClient.invalidateQueries({
+              queryKey: ['shelters'],
+            });
+            queryClient.invalidateQueries({
+              queryKey: ['shelter-details', message.username],
+            });
+            queryClient.invalidateQueries({
+              queryKey: ['animals'],
+            });
+            queryClient.invalidateQueries({
+              queryKey: ['animal-details'],
+            });
+            break;
+        }
+      };
+    }
+  }, [isReady, setNotifications, socket, queryClient]);
 
   return (
     <>
