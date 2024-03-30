@@ -4,6 +4,7 @@ export const useScroll = (messages, isFirstLoad, isFetching) => {
   const messagesEndRef = useRef(null);
 
   const scrollToBottom = (type) => {
+    console.log('scroll');
     messagesEndRef.current?.scrollIntoView({ behavior: type });
   };
 

@@ -102,11 +102,13 @@ const AdoptionChatPage = () => {
       const message = JSON.parse(val);
 
       if (message.type === 'chat-message')
-        if (message.room === chat)
+        if (message.room === chat) {
           setChatMessages((prev) => [
             ...prev,
             { text: message.message, isSender: false },
           ]);
+          setIsFirstLoad(false);
+        }
     }
   }, [chat, setChatMessages, isReady, val]);
 
