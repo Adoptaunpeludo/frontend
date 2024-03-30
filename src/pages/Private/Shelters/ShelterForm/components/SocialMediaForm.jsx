@@ -99,6 +99,19 @@ export const SocialMediaForm = ({ socialMedia = [] }) => {
     setSocialMediaUrls(updatedSocialMediaUrls);
   };
 
+  const initSocialMediaInput = (socialMedia) => {
+    switch (socialMedia) {
+      case 'facebook':
+        return 'facebook.com/';
+      case 'xtweet':
+        return 'twitter.com/';
+      case 'instagram':
+        return 'instagram.com/';
+      default:
+        return 'https://';
+    }
+  };
+
   return (
     <Form className="mt-4">
       <Button
@@ -148,12 +161,19 @@ export const SocialMediaForm = ({ socialMedia = [] }) => {
                             <TableCell>{socialIcon(social.name)}</TableCell>
                             <TableCell>
                               <Input
-                                type="text"
+                                type="url"
                                 name="url"
                                 value={social.url}
                                 onChange={(e) => handleInputChange(e, index)}
                                 classNames={inputStyleConfig}
                                 // placeholder="@userName"
+                                startContent={
+                                  <div className="pointer-events-none flex items-center">
+                                    <span className="text-default-400 text-small">
+                                      {initSocialMediaInput(social.name)}
+                                    </span>
+                                  </div>
+                                }
                               />
                             </TableCell>
                             <TableCell className=" flex justify-center">
