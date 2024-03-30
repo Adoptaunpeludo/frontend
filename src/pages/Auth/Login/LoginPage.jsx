@@ -10,7 +10,6 @@ import {
 } from '../../../utils/configFormFields';
 import { handleAuthError } from '../../../utils/handleError';
 import { validateField } from '../../../utils/validateField';
-import { createChat } from '../../Private/Assistant/service';
 import { userQuery } from '../../Private/useUser';
 import { login } from '../authService';
 
@@ -71,7 +70,7 @@ const LoginPage = () => {
         id="login"
         className="max-w-screen-xl w-full flex flex-col gap-3 justify-center py-10 mx-auto  "
       >
-        <LogoHeader className={'mx-auto'}/>
+        <LogoHeader className={'mx-auto'} />
         <Panel className={'max-w-md mx-auto'}>
           <Form
             method="post"
