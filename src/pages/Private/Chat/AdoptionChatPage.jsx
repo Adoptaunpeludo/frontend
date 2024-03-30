@@ -39,8 +39,7 @@ const AdoptionChatPage = () => {
   const adopter = parts.at(-1);
 
   const { chatMessages, setChatMessages } = useAdoptionChatContext();
-  const { socket } = useWebSocketContext();
-  const { setRoom } = useAdoptionChatContext();
+  const { socket, isReady } = useWebSocketContext();
   const { data: user, isFetching: isFetchingUser } = useUser();
   // const { data: currentChat, isFetching: isFetchingCurrentChat } =
   //   useCurrentChat(chat);
@@ -68,14 +67,47 @@ const AdoptionChatPage = () => {
   // }, []);
 
   useEffect(() => {
-    setRoom(chat);
+    console.log({ isReady });
+    if (isReady) {
+      console.log({ chat });
+      socket.send(
+        JSON.stringify({
+          type: 'join-chat-room',
+          username: user.username,
+          room: chat,
+          role: user.role,
+        })
+      );
+    }
 
-    // return () => setRoom('');
-  }, [chat, setRoom]);
+    return () => {
+      if (isReady) {
+        socket.send(
+          JSON.stringify({
+            type: 'leave-chat-room',
+            username: user.username,
+            room: chat,
+            role: user.role,
+          })
+        );
+      }
+    };
+  }, [chat, socket, user, isReady]);
 
   useEffect(() => {
-    setChatMessages([]);
-  }, [chat, setChatMessages]);
+    if (socket && isReady) {
+      socket.onmessage = (event) => {
+        const message = JSON.parse(event.data);
+
+        if (message.type === 'chat-message')
+          if (message.room === chat)
+            setChatMessages((prev) => [
+              ...prev,
+              { text: message.message, isSender: false },
+            ]);
+      };
+    }
+  }, [chat, setChatMessages, isReady, socket]);
 
   const handleDeleteMessages = () => {
     setChatMessages([]);

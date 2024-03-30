@@ -9,8 +9,9 @@ import Footer from './Footer';
 import Header from './Header';
 import { userQuery } from '../Private/useUser';
 import { userNotificationsQuery } from '../Private/useNotifications';
-import { WebSocketContextProvider } from '../../context/WebSocketContext';
-import { NotificationsContextProvider } from '../../context/NotificationsContext';
+import { useWebSocketContext } from '../../context/WebSocketContext';
+import { useEffect } from 'react';
+import { userInformation } from '../../utils/asideDataFields';
 
 export const loader = (queryClient) => async () => {
   try {
@@ -27,18 +28,25 @@ export const loader = (queryClient) => async () => {
 const AppLayout = () => {
   const navigate = useNavigate();
   const { user, notifications } = useLoaderData();
+  const { socket, isReady } = useWebSocketContext();
+
+  useEffect(() => {
+    if (isReady && userInformation)
+      socket.send(
+        JSON.stringify({
+          type: 'user-authentication',
+          token: user?.wsToken,
+        })
+      );
+  }, [isReady, user, socket]);
 
   return (
     <>
       <NextUIProvider navigate={navigate}>
         <div className="min-h-screen flex flex-col">
-          <NotificationsContextProvider>
-            <WebSocketContextProvider user={user}>
-              <Header />
-              <Outlet context={{ user, notifications }} />
-              <Footer />
-            </WebSocketContextProvider>
-          </NotificationsContextProvider>
+          <Header />
+          <Outlet context={{ user, notifications }} />
+          <Footer />
         </div>
         <ScrollRestoration />
       </NextUIProvider>
