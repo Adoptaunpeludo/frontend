@@ -89,13 +89,11 @@ const ShelterProfile = () => {
   const { username } = user;
 
   const handleCreateChat = (slug) => {
-    const room = `${slug}-${user?.username}`;
-
     if (socket && isReady) {
       socket.send(
         JSON.stringify({
           type: 'create-chat-room',
-          room,
+          room: slug,
         })
       );
     }

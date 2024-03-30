@@ -61,10 +61,10 @@ const AdoptionChatPage = () => {
 
   useEffect(() => {
     if (chatHistory) {
-      const history = mapUserChatHistory(chatHistory);
+      const history = mapUserChatHistory(chatHistory, user.username);
       setChatMessages(history);
     }
-  }, [chatHistory, setChatMessages]);
+  }, [chatHistory, setChatMessages, user.username]);
 
   useEffect(() => {
     setIsFirstLoad(true);
