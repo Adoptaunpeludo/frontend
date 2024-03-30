@@ -103,7 +103,7 @@ const ShelterForm = ({ isSubmitting, data }) => {
                           errorMessage={cifError}
                           onBlur={handleChange}
                           isRequired
-                          placeholder="X99999999"
+                          placeholder="Introduce tu CIF, X99999999"
                           classNames={inputStyleConfig}
                         />
                         <SelectField
