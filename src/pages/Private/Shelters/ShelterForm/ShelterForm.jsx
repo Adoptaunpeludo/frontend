@@ -101,7 +101,7 @@ const ShelterForm = ({ isSubmitting, data }) => {
                           isDisabled={isSubmitting}
                           color={cifError ? 'danger' : 'none'}
                           errorMessage={cifError}
-                          onChange={handleChange}
+                          onBlur={handleChange}
                           isRequired
                           placeholder="X99999999"
                           classNames={inputStyleConfig}
