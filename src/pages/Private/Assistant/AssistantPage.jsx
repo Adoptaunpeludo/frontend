@@ -40,6 +40,8 @@ const AssistantPage = () => {
 
   useEffect(() => {
     setIsFirstLoad(true);
+
+    return () => setIsFirstLoad(false);
   }, []);
 
   const handleDeleteMessages = () => {

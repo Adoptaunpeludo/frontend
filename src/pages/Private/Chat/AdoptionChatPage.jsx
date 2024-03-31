@@ -79,7 +79,7 @@ const AdoptionChatPage = () => {
       );
     }
     return () => {
-      console.log('Unmount');
+      setIsFirstLoad(false);
       if (isReady) {
         send(
           JSON.stringify({
