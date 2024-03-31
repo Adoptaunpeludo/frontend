@@ -146,7 +146,8 @@ const LoginPage = () => {
                 <Link to="/register" className="text-tertiary">
                   Regístrate
                 </Link>
-              <div>
+                <div></div>
+              </div>
             </div>
           </Form>
         </Panel>
