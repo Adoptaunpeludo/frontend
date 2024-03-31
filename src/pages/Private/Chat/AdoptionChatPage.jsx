@@ -71,6 +71,12 @@ const AdoptionChatPage = () => {
     if (isReady) {
       send(
         JSON.stringify({
+          type: 'create-chat-room',
+          room: chat,
+        })
+      );
+      send(
+        JSON.stringify({
           type: 'join-chat-room',
           username: user.username,
           room: chat,
@@ -79,7 +85,7 @@ const AdoptionChatPage = () => {
       );
     }
     return () => {
-      console.log('Unmount');
+      setIsFirstLoad(false);
       if (isReady) {
         send(
           JSON.stringify({
@@ -129,7 +135,9 @@ const AdoptionChatPage = () => {
           type: 'chat-message',
           message: text,
           room: chat,
-          username: user.username,
+          senderUsername: user.username,
+          receiverMail: receiver.email,
+          receiverUsername: receiver.username,
         })
       );
     }
