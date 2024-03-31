@@ -116,13 +116,13 @@ const RegisterPage = () => {
                       credentials.role === undefined
                         ? ' '
                         : credentials.role === 'shelter'
-                          ? 'de protectora'
-                          : 'de adoptante'
+                        ? 'de protectora'
+                        : 'de adoptante'
                     }`}
                     placeholder="Introduce un nombre"
                     color={errors.username ? 'danger' : 'none'}
                     errorMessage={errors.username}
-                    onBlur={handleChange}
+                    onChange={handleChange}
                     isRequired
                   />
 
@@ -135,7 +135,7 @@ const RegisterPage = () => {
                     placeholder="Introduce tu email"
                     color={errors.email ? 'danger' : 'none'}
                     errorMessage={errors.email}
-                    onBlur={handleChange}
+                    onChange={handleChange}
                     isRequired
                   />
                 </div>
@@ -149,7 +149,7 @@ const RegisterPage = () => {
                     placeholder="Introduce tu password"
                     color={errors.password ? 'danger' : 'none'}
                     errorMessage={errors.password}
-                    onBlur={handleChange}
+                    onChange={handleChange}
                     isRequired
                   />
 
@@ -162,7 +162,7 @@ const RegisterPage = () => {
                     placeholder="Introduce tu password"
                     color={errors.repeatPassword ? 'danger' : 'none'}
                     errorMessage={errors.repeatPassword}
-                    onBlur={handleChange}
+                    onChange={handleChange}
                     isRequired
                   />
                 </div>
