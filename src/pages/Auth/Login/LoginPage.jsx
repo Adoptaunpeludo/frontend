@@ -94,60 +94,46 @@ const LoginPage = () => {
                 classNames={inputStyleConfig}
                 isDisabled={isLoading}
               />
-              <div className="flex flex-col gap-3">
-                <Input
-                  type="email"
-                  label="Email"
-                  name="email"
-                  placeholder="Introduce tu email"
-                  color={errors.email ? 'danger' : 'none'}
-                  onBlur={handleChange}
-                  errorMessage={errors.email}
-                  isRequired
-                  classNames={inputStyleConfig}
-                  isDisabled={isLoading}
-                />
-                <Input
-                  type="password"
-                  name="password"
-                  label="Password"
-                  placeholder="Introduce tu password"
-                  color={errors.password ? 'danger' : 'none'}
-                  errorMessage={errors.password}
-                  onBlur={handleChange}
-                  isRequired
-                  classNames={inputStyleConfig}
-                  isDisabled={isLoading}
-                />
-              </div>
-              <div className="flex justify-end">
-                <Link
-                  to="/forgot-password"
-                  className="text-tertiary font-poppins"
-                >
-                  ¿Olvidaste tu password?
-                </Link>
-              </div>
-              <div className="flex justify-center">
-                <Button
-                  isDisabled={enableButton || isLoading}
-                  type="submit"
-                  color="primary"
-                  variant="solid"
-                  size="lg"
-                  endContent={<LoginIcon />}
-                  className={buttonStyleConfig}
-                >
-                  Iniciar sesión
-                </Button>
-              </div>
-              <div className="flex justify-center gap-1 font-medium font-poppins">
-                <span>¿Necesitas crear una cuenta?</span>
-                <Link to="/register" className="text-tertiary">
-                  Regístrate
-                </Link>
-                <div></div>
-              </div>
+              <Input
+                type="password"
+                name="password"
+                label="Password"
+                placeholder="Introduce tu password"
+                color={errors.password ? 'danger' : 'none'}
+                errorMessage={errors.password}
+                onBlur={handleChange}
+                isRequired
+                classNames={inputStyleConfig}
+                isDisabled={isLoading}
+              />
+            </div>
+            <div className="flex justify-end">
+              <Link
+                to="/forgot-password"
+                className="text-tertiary font-poppins"
+              >
+                ¿Olvidaste tu password?
+              </Link>
+            </div>
+            <div className="flex justify-center">
+              <Button
+                isDisabled={enableButton || isLoading}
+                type="submit"
+                color="primary"
+                variant="solid"
+                size="lg"
+                endContent={<LoginIcon />}
+                className={buttonStyleConfig}
+              >
+                Iniciar sesión
+              </Button>
+            </div>
+            <div className="flex justify-center gap-1 font-medium font-poppins">
+              <span>¿Necesitas crear una cuenta?</span>
+              <Link to="/register" className="text-tertiary">
+                Regístrate
+              </Link>
+              <div></div>
             </div>
           </Form>
         </Panel>
