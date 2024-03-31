@@ -36,7 +36,7 @@ const AnimalBioForm = ({ data = {}, isDisabled, setIsFormValid }) => {
           color={errors.name ? 'danger' : 'none'}
           errorMessage={errors.name}
           defaultValue={name ? name : ''}
-          onChange={handleChange}
+          onBlur={handleChange}
           classNames={inputStyleConfig}
         />
         <Input
