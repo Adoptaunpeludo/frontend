@@ -1,15 +1,15 @@
 import {
-  Modal,
-  ModalContent,
-  ModalHeader,
-  ModalBody,
-  ModalFooter,
   Button,
-  useDisclosure,
+  Modal,
+  ModalBody,
+  ModalContent,
+  ModalFooter,
+  ModalHeader,
   Spinner,
   Tooltip,
+  useDisclosure,
 } from '@nextui-org/react';
-import { IconTrashXFilled } from '@tabler/icons-react';
+import { IconAlertTriangle, IconTrashXFilled } from '@tabler/icons-react';
 import { Form, useNavigation } from 'react-router-dom';
 
 export default function DeleteAnimalModal({ slug }) {
@@ -33,15 +33,22 @@ export default function DeleteAnimalModal({ slug }) {
               {(onClose) => (
                 <>
                   <ModalHeader className="flex flex-col gap-1">
-                    Borrar Anuncio de Adopción
+                    <span className="border-b-1 border-primary mb-5 pb-1">
+                      Borrar Anuncio de Adopción
+                    </span>
                   </ModalHeader>
                   <ModalBody>
                     {isSubmitting ? (
                       <Spinner />
                     ) : (
                       <>
-                        <p>¿Seguro que deseas borrar el anuncio de adopción?</p>
-                        <small>Esta acción no se puede deshacer</small>
+                        <IconAlertTriangle className="size-20 mx-auto stroke-danger" />
+                        <p className="text-center font-poppins font-semibold text-lg text-pretty">
+                          ¿Seguro que deseas borrar el anuncio de adopción?
+                        </p>
+                        <small className="text-center font-poppins font-medium ">
+                          Esta acción no se puede deshacer
+                        </small>
                       </>
                     )}
                   </ModalBody>
@@ -51,11 +58,12 @@ export default function DeleteAnimalModal({ slug }) {
                       variant="light"
                       onPress={onClose}
                       disabled={isSubmitting}
+                      className="border-1 border-primary text-foreground font-poppins font-medium"
                     >
-                      Close
+                      Cerrar
                     </Button>
                     <Button
-                      className=" text-white"
+                      className=" text-white font-poppins font-medium"
                       color="danger"
                       name="intent"
                       value={'delete-animal'}

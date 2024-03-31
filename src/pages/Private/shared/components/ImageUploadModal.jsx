@@ -106,7 +106,7 @@ const ImageUploadModal = ({ page, id, slug }) => {
     try {
       setIsLoading(true);
       await service();
-      toast.success('Imagen subida con exito');
+      toast.success('Imagen subida con éxito');
       queryClient.invalidateQueries({
         queryKey,
       });
