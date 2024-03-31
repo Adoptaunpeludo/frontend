@@ -11,7 +11,7 @@ export const validateField = (name, value, password) => {
             (name === 'name' && 'El nombre debe') ||
             (name === 'firstName' && 'El nombre debe') ||
             (name === 'lastName' && 'Los apellidos deben') ||
-            (name === 'username' && 'nombre de usuario debe')
+            (name === 'username' && 'El nombre de usuario debe')
           } tener al menos 3 caracteres válidos.`
         : '';
     case 'email':

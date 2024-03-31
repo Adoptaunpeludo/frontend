@@ -27,6 +27,8 @@ import {
   selectStyleConfig,
 } from '../../../../utils/configFormFields';
 import { validateField } from '../../../../utils/validateField';
+import { updateData } from '../../../../api/client';
+import { toast } from 'react-toastify';
 
 export const UserFormBio = ({ data }) => {
   const updateBioModal = useDisclosure();
@@ -42,18 +44,32 @@ export const UserFormBio = ({ data }) => {
     setErrors({ ...errors, [name]: validateField(name, value) });
   };
 
+  const handleSubmit = () => {
+    const modifiedInputs = Object.keys(credentials).filter(
+      (key) => credentials[key] !== data[key]
+    );
+
+    if (modifiedInputs.length === 0) {
+      toast.error('No se ha modificado nada.');
+      return;
+    } else {
+      updateData('auth/me', {
+        modifiedInputs,
+      })
+        .then(() => {
+          console.log('Modificado con éxito');
+        })
+        .catch(() => {
+          console.error('Error al enviar los datos');
+        });
+    }
+  };
+
   useEffect(() => {
     setErrors({});
   }, [isOpen]);
 
-  // const handleClose = () => {
-  //   setErrors({});
-  //   onClose();
-  // };
-
   const isFormValid = Object.values(errors).every((error) => error === '');
-
-  const disableButton = !isFormValid;
 
   const navigation = useNavigation();
 
@@ -84,7 +100,7 @@ export const UserFormBio = ({ data }) => {
         size="3xl"
         portalContainer={document.body}
       >
-        <Form method="post" preventScrollReset={true}>
+        <Form onSubmit={handleSubmit} preventScrollReset={true}>
           <ModalContent>
             <>
               <ModalHeader className="flex flex-col gap-1">
@@ -108,6 +124,7 @@ export const UserFormBio = ({ data }) => {
                     <div className="flex flex-col w-full gap-4">
                       <div className="flex w-full flex-wrap md:flex-nowrap gap-4">
                         <Input
+                          isRequired
                           isDisabled={isSubmitting}
                           className="min-w-72 "
                           type="text"
@@ -120,12 +137,12 @@ export const UserFormBio = ({ data }) => {
                           placeholder={
                             dni === null ? 'Introduce tu DNI, 99999999X' : dni
                           }
-                          isRequired
                           classNames={inputStyleConfig}
                         />
                       </div>
                       <div className="flex w-full flex-wrap md:flex-nowrap gap-4">
                         <Input
+                          isRequired
                           isDisabled={isSubmitting}
                           className="min-w-72 "
                           type="text"
@@ -136,10 +153,10 @@ export const UserFormBio = ({ data }) => {
                           color={errors.firstName ? 'danger' : 'none'}
                           errorMessage={errors.firstName}
                           onChange={handleChange}
-                          isRequired
                           classNames={inputStyleConfig}
                         />
                         <Input
+                          isRequired
                           isDisabled={isSubmitting}
                           className="min-w-72 "
                           type="text"
@@ -150,12 +167,12 @@ export const UserFormBio = ({ data }) => {
                           color={errors.lastName ? 'danger' : 'none'}
                           errorMessage={errors.lastName}
                           onChange={handleChange}
-                          isRequired
                           classNames={inputStyleConfig}
                         />
                       </div>
                       <div className="flex w-full flex-wrap md:flex-nowrap gap-4">
                         <Input
+                          isRequired
                           isDisabled={isSubmitting}
                           className="min-w-72 "
                           type="tel"
@@ -163,19 +180,22 @@ export const UserFormBio = ({ data }) => {
                           name="phoneNumber"
                           defaultValue={phoneNumber ? phoneNumber : ''}
                           placeholder="Introduce tu número de teléfono"
-                          onChange={handleChange}
+                          color={errors.phoneNumber ? 'danger' : 'none'}
                           errorMessage={errors.phoneNumber}
-                          isRequired
+                          onChange={handleChange}
                           classNames={inputStyleConfig}
                         />
                         <SelectField
+                          isRequired
                           label="Ciudad"
                           className="min-w-72"
                           name="city"
                           dataField={city}
                           dataEnum={cities}
+                          color={errors.city ? 'danger' : 'none'}
+                          errorMessage={errors.city}
                           isDisabled={isSubmitting}
-                          isRequired
+                          onChange={handleChange}
                           classNames={selectStyleConfig}
                         />
                       </div>
@@ -190,13 +210,12 @@ export const UserFormBio = ({ data }) => {
                   size="sm"
                   startContent={<IconCircleX />}
                   className="px-10 font-poppins font-semibold text-sm"
-                  // onPress={() => handleClose()}
                   onPress={onClose}
                 >
                   Cancelar
                 </Button>
                 <Button
-                  isDisabled={disableButton}
+                  isDisabled={!isFormValid}
                   color="primary"
                   variant="solid"
                   size="sm"
