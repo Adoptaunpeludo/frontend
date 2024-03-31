@@ -101,7 +101,7 @@ const LoginPage = () => {
                 placeholder="Introduce tu password"
                 color={errors.password ? 'danger' : 'none'}
                 errorMessage={errors.password}
-                onBlur={handleChange}
+                onChange={handleChange}
                 isRequired
                 classNames={inputStyleConfig}
                 isDisabled={isLoading}
