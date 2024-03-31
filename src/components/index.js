@@ -16,6 +16,7 @@ export { HeartIcon } from './HeartIcon';
 export { Hero } from './Hero';
 export { LogoHeader } from './LogoHeader';
 export { LogoPortrait } from './LogoPortrait';
+export { NoData } from './NoData';
 export { PagePagination } from './Pagination';
 export { Panel } from './Panel';
 export { RescuesIcons } from './RescuesIcons';
