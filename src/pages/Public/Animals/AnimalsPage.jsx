@@ -2,7 +2,12 @@ import { useLoaderData } from 'react-router';
 import { useNavigation, useOutletContext } from 'react-router-dom';
 
 import { Skeleton } from '@nextui-org/react';
-import { FilterBar, PagePagination, TitleSection } from '../../../components';
+import {
+  FilterBar,
+  NoData,
+  PagePagination,
+  TitleSection,
+} from '../../../components';
 import { animalsQuery, useAnimals } from '../Landing/useAnimals';
 import { PetCard } from './components/PetCard';
 
@@ -48,11 +53,19 @@ const AnimalsPage = ({ page }) => {
         </header>
         <section className="flex flex-col flex-auto">
           <ul className="flex justify-center gap-4 flex-wrap p-6">
-            {animals?.animals.map((animal) => (
-              <Skeleton isLoaded={!isLoading} key={animal.id}>
-                <PetCard key={animal.id} animal={animal} isLogged={isLogged} />
-              </Skeleton>
-            ))}
+            {animals?.animals.length > 0 ? (
+              animals?.animals.map((animal) => (
+                <Skeleton isLoaded={!isLoading} key={animal.id}>
+                  <PetCard
+                    key={animal.id}
+                    animal={animal}
+                    isLogged={isLogged}
+                  />
+                </Skeleton>
+              ))
+            ) : (
+              <NoData />
+            )}
           </ul>
         </section>
 
