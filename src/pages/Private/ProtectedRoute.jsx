@@ -1,7 +1,9 @@
 import { Navigate, Outlet, useOutletContext } from 'react-router-dom';
+import { useUser } from './useUser';
 
 const ProtectedRoute = () => {
-  const { user, notifications } = useOutletContext();
+  const { notifications } = useOutletContext();
+  const { data: user } = useUser();
 
   return user ? (
     <Outlet context={{ user, notifications }} />
