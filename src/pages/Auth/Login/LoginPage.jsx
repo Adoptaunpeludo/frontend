@@ -1,4 +1,4 @@
-import { Button, Input, Skeleton } from '@nextui-org/react';
+import { Button, Input, Spinner } from '@nextui-org/react';
 import { IconLogin2 as LoginIcon } from '@tabler/icons-react';
 import { useState } from 'react';
 import { Form, Link, redirect, useNavigation } from 'react-router-dom';
@@ -10,7 +10,6 @@ import {
 } from '../../../utils/configFormFields';
 import { handleAuthError } from '../../../utils/handleError';
 import { validateField } from '../../../utils/validateField';
-import { createChat } from '../../Private/Assistant/service';
 import { userQuery } from '../../Private/useUser';
 import { login } from '../authService';
 
@@ -26,8 +25,7 @@ export const action =
       queryClient.invalidateQueries({
         queryKey: ['user'],
       });
-      const user = await queryClient.ensureQueryData(userQuery);
-      await createChat(user.wsToken);
+      await queryClient.ensureQueryData(userQuery);
       return redirect('/');
     } catch (error) {
       const message = handleAuthError(error);
@@ -68,23 +66,33 @@ const LoginPage = () => {
 
   return (
     <main className="bg-default-100 flex-grow">
-      <Skeleton
-        isLoaded={!isLoading}
-        className="max-w-screen-xl w-full flex flex-col gap-3 justify-center py-10 mx-auto"
+      <section
+        id="login"
+        className="max-w-screen-xl w-full flex flex-col gap-3 justify-center py-10 mx-auto  "
       >
-        <section
-          id="login"
-          className="max-w-screen-xl w-full flex flex-col gap-3 justify-center py-10 mx-auto  "
-        >
-          <LogoHeader className={'mx-auto'} />
-          <Panel className={'max-w-md mx-auto'}>
-            <Form
-              method="post"
-              className="flex flex-col gap-6  mx-auto px-10 py-8"
-            >
-              <H3Title
-                title="Inicia sesión en tu cuenta para continuar"
-                className={'normal-case text-pretty'}
+        <LogoHeader className={'mx-auto'} />
+        <Panel className={'max-w-md mx-auto'}>
+          <Form
+            method="post"
+            className="flex flex-col gap-6  mx-auto px-10 py-8"
+          >
+            <H3Title
+              title="Inicia sesión en tu cuenta para continuar"
+              className={'normal-case text-pretty'}
+            />
+            {isLoading && <Spinner />}
+            <div className="flex flex-col gap-3">
+              <Input
+                type="email"
+                label="Email"
+                name="email"
+                placeholder="Introduce tu email"
+                color={errors.email ? 'danger' : 'none'}
+                onBlur={handleChange}
+                errorMessage={errors.email}
+                isRequired
+                classNames={inputStyleConfig}
+                isDisabled={isLoading}
               />
               <div className="flex flex-col gap-3">
                 <Input
@@ -97,6 +105,7 @@ const LoginPage = () => {
                   errorMessage={errors.email}
                   isRequired
                   classNames={inputStyleConfig}
+                  isDisabled={isLoading}
                 />
                 <Input
                   type="password"
@@ -108,6 +117,7 @@ const LoginPage = () => {
                   onBlur={handleChange}
                   isRequired
                   classNames={inputStyleConfig}
+                  isDisabled={isLoading}
                 />
               </div>
               <div className="flex justify-end">
@@ -120,7 +130,7 @@ const LoginPage = () => {
               </div>
               <div className="flex justify-center">
                 <Button
-                  isDisabled={enableButton}
+                  isDisabled={enableButton || isLoading}
                   type="submit"
                   color="primary"
                   variant="solid"
@@ -136,11 +146,11 @@ const LoginPage = () => {
                 <Link to="/register" className="text-tertiary">
                   Regístrate
                 </Link>
-              </div>
-            </Form>
-          </Panel>
-        </section>
-      </Skeleton>
+              <div>
+            </div>
+          </Form>
+        </Panel>
+      </section>
     </main>
   );
 };
