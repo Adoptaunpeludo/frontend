@@ -25,7 +25,10 @@ export const UserAreaMenu = ({ user }) => {
   const navigate = useNavigate();
   const queryClient = useQueryClient();
 
+  console.log({ userNotifications });
+
   const handleLogout = async () => {
+    localStorage.setItem('isLoggedIn', false);
     try {
       await logout();
       if (isReady) {
@@ -52,7 +55,6 @@ export const UserAreaMenu = ({ user }) => {
       queryClient.removeQueries({
         queryKey: ['user-chats'],
       });
-
       navigate('/');
     } catch (error) {
       toast.error('Error haciendo logout');

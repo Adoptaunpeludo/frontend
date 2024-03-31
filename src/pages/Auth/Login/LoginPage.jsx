@@ -21,6 +21,7 @@ export const action =
     credentials.email = credentials.email.toLowerCase();
 
     try {
+      localStorage.setItem('isLoggedIn', true);
       await login(credentials);
       queryClient.invalidateQueries({
         queryKey: ['user'],
