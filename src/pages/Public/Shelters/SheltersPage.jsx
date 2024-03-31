@@ -1,7 +1,12 @@
 import { Skeleton } from '@nextui-org/react';
 import { useLoaderData } from 'react-router';
 import { useNavigation, useOutletContext } from 'react-router-dom';
-import { FilterBar, PagePagination, TitleSection } from '../../../components';
+import {
+  FilterBar,
+  NoData,
+  PagePagination,
+  TitleSection,
+} from '../../../components';
 import { ShelterCard } from './components';
 import { sheltersQuery, useShelters } from './useShelters';
 
@@ -37,15 +42,19 @@ const SheltersPage = ({ page }) => {
       </header>
       <section className="flex flex-col flex-auto">
         <ul className="flex justify-center gap-4 flex-wrap p-6">
-          {data?.users.map((shelter) => (
-            <Skeleton isLoaded={!isLoading} key={shelter.id}>
-              <ShelterCard
-                key={shelter.id}
-                shelter={shelter}
-                isLogged={isLogged}
-              />
-            </Skeleton>
-          ))}
+          {data?.users.length > 0 ? (
+            data?.users.map((shelter) => (
+              <Skeleton isLoaded={!isLoading} key={shelter.id}>
+                <ShelterCard
+                  key={shelter.id}
+                  shelter={shelter}
+                  isLogged={isLogged}
+                />
+              </Skeleton>
+            ))
+          ) : (
+            <NoData />
+          )}
         </ul>
       </section>
 
