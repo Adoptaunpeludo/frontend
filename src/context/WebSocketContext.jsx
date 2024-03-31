@@ -10,24 +10,44 @@ const WebSocketContextProvider = ({ children }) => {
   const ws = useRef(null);
 
   useEffect(() => {
-    const socket = new WebSocket(WB_SERVER);
+    const connectToServer = () => {
+      const socket = new WebSocket(WB_SERVER);
+      let interval;
+      socket.onopen = () => {
+        console.log('Connected to ws server');
+        setIsReady(true);
 
-    socket.onopen = () => {
-      console.log('Connected to ws server');
-      setIsReady(true);
-    };
-    socket.onmessage = (event) => setVal(event.data);
-    socket.onclose = () => {
-      console.log('Disconnected from ws server');
-      setIsReady(false);
-    };
+        interval = setInterval(() => {
+          if (socket.readyState === WebSocket.OPEN)
+            socket.send(JSON.stringify({ type: 'ping' }));
+        }, 58000);
+      };
+      socket.onmessage = (event) => setVal(event.data);
+      socket.onclose = () => {
+        console.log('Disconnected from ws server');
+        clearInterval(interval);
+        setIsReady(false);
+        const minReconnectDelay = 10000;
+        const maxReconnectDelay = 30000;
+        const reconnectDelay =
+          Math.floor(
+            Math.random() * (maxReconnectDelay - minReconnectDelay + 1)
+          ) + minReconnectDelay;
+        setTimeout(() => {
+          console.log('Attempting to reconnect to ws server...');
+          connectToServer();
+        }, reconnectDelay);
+      };
 
-    ws.current = socket;
+      ws.current = socket;
 
-    return () => {
-      console.log('Disconnected from ws server');
-      socket.close();
+      return () => {
+        console.log('Disconnected from ws server');
+        clearInterval(interval);
+        socket.close();
+      };
     };
+    connectToServer();
   }, []);
 
   return (
