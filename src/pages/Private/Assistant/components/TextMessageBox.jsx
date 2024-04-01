@@ -48,6 +48,7 @@ const TextMessageBox = ({
           />
           <div className="">
             <Button
+              isDisabled={!message}
               className="bg-primary font-poppins "
               type="submit"
               endContent={<IconSend2 className="stroke-foreground" />}
