@@ -65,7 +65,7 @@ const ShelterDetailsPage = () => {
         >
           <div className="relative container lg:w-164 rounded-lg bg-detail bg-cover bg-center">
             <Image
-              src={`${BUCKET_URL}/${data?.images[0]}`}
+              src={`${BUCKET_URL}/${images[0]}`}
               className=" xl:w-200 xl:max-h-[36rem] object-cover object-center aspect-4/3 flex-1  "
               loading="lazy"
               alt={data.description}
