@@ -1,7 +1,8 @@
 import { TitleSection } from '../../../components';
 import { Button, Input } from '@nextui-org/react';
-import { Form } from 'react-router-dom';
+import { Form, redirect, useNavigation } from 'react-router-dom';
 import { ForgotPassword } from '../authService';
+import { toast } from 'react-toastify';
 
 export const action = async ({ request }) => {
   const formData = await request.formData();
@@ -18,14 +19,20 @@ export const action = async ({ request }) => {
     if (res.status === 500) {
       throw new Error(res.response.data.message);
     }
-    return null;
+    toast.success('Email para resetear el password enviado');
+    return redirect('/login');
   } catch (error) {
     console.log({ error });
-    return null;
+    toast.error(error.message);
+    throw error;
   }
 };
 
 const ForgotPasswordPage = () => {
+  const navigation = useNavigation();
+
+  const isSubmitting = navigation.state === 'submitting';
+
   return (
     <main className="flex-1 flex flex-col items-center justify-center">
       <TitleSection className="w-full" title="Recuperación de Contraseña" />
@@ -42,8 +49,15 @@ const ForgotPasswordPage = () => {
               label="Email"
               name="email"
               isRequired
+              isDisabled={isSubmitting}
             />
-            <Button type="submit" color="primary" variant="solid" size="lg">
+            <Button
+              type="submit"
+              color="primary"
+              variant="solid"
+              size="lg"
+              isLoading={isSubmitting}
+            >
               Enviar
             </Button>
           </Form>

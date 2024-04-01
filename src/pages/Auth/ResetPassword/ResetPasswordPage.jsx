@@ -1,8 +1,7 @@
 import { TitleSection } from '../../../components';
 import { resetPassword } from '../../Auth/authService.js';
 import { Button, Input } from '@nextui-org/react';
-import { Form } from 'react-router-dom';
-import { resendValidationEmail } from '../authService';
+import { Form, useNavigation } from 'react-router-dom';
 
 // TODO: Refactorizar codico de comprovación de contraseña, se repite logica como en Regist
 export const action = async ({ request, params }) => {
@@ -30,6 +29,10 @@ export const action = async ({ request, params }) => {
 };
 
 const ResetPasswordPage = () => {
+  const navigation = useNavigation();
+
+  const isSubmitting = navigation.state === 'submitting';
+
   return (
     <main className="flex-1 flex flex-col items-center justify-center">
       <TitleSection className="w-full" title="Reseteo de la contraseña" />
@@ -47,6 +50,7 @@ const ResetPasswordPage = () => {
               type="password"
               label="Password"
               placeholder="Introduce tu password"
+              isDisabled={isSubmitting}
               // value="P@ssw0rda"
               //  color={errors.password ? 'danger' : 'none'}
               //  errorMessage={errors.password}
@@ -60,13 +64,20 @@ const ResetPasswordPage = () => {
               type="password"
               label="confirmar password"
               placeholder="Introduce tu password"
+              isDisabled={isSubmitting}
               // value="P@ssw0rda"
               //  color={errors.repeatPassword ? 'danger' : 'none'}
               //  errorMessage={errors.repeatPassword}
               //  onChange={handleChange}
               isRequired
             />
-            <Button type="submit" color="primary" variant="solid" size="lg">
+            <Button
+              type="submit"
+              color="primary"
+              variant="solid"
+              size="lg"
+              isLoading={isSubmitting}
+            >
               Cambiar contraseña
             </Button>
           </Form>
