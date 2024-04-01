@@ -98,6 +98,10 @@ const AppLayout = () => {
     }
   }, [isReady, val, queryClient, setNotifications]);
 
+  useEffect(() => {
+    localStorage.setItem('isLoggedIn', user ? true : false);
+  }, [user]);
+
   return (
     <>
       <NextUIProvider navigate={navigate}>
