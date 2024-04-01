@@ -25,8 +25,6 @@ export const UserAreaMenu = ({ user }) => {
   const navigate = useNavigate();
   const queryClient = useQueryClient();
 
-  console.log({ userNotifications });
-
   const handleLogout = async () => {
     localStorage.setItem('isLoggedIn', false);
     try {

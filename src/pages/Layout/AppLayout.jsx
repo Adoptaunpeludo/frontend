@@ -1,14 +1,12 @@
 import { NextUIProvider } from '@nextui-org/react';
-import {
-  Outlet,
-  ScrollRestoration,
-  useLoaderData,
-  useNavigate,
-} from 'react-router-dom';
+import { Outlet, ScrollRestoration, useNavigate } from 'react-router-dom';
 import Footer from './Footer';
 import Header from './Header';
-import { userQuery } from '../Private/useUser';
-import { userNotificationsQuery } from '../Private/useNotifications';
+import { useUser, userQuery } from '../Private/useUser';
+import {
+  useNotifications,
+  userNotificationsQuery,
+} from '../Private/useNotifications';
 import { useWebSocketContext } from '../../context/WebSocketContext';
 import { useEffect } from 'react';
 import { useQueryClient } from '@tanstack/react-query';
@@ -31,10 +29,14 @@ export const loader = (queryClient) => async () => {
 
 const AppLayout = () => {
   const navigate = useNavigate();
-  const { user, notifications } = useLoaderData();
+  // const { user, notifications } = useLoaderData();
+  const { data: user } = useUser();
+  const { data: notifications } = useNotifications();
   const { send, isReady, val } = useWebSocketContext();
   const queryClient = useQueryClient();
   const { setNotifications } = useNotificationsContext();
+
+  console.log({ user });
 
   useEffect(() => {
     if (isReady)
