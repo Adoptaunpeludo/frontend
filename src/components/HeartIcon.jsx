@@ -3,7 +3,7 @@ import { useEffect, useState } from 'react';
 import { addFav } from '../pages/Public/Animals/service';
 import { useQueryClient } from '@tanstack/react-query';
 
-import { Spinner } from '@nextui-org/react';
+import { Button, Spinner } from '@nextui-org/react';
 import { handleFavError } from '../utils/handleFavsError';
 import { toast } from 'react-toastify';
 import { isAxiosError } from 'axios';
@@ -48,7 +48,12 @@ export const HeartIcon = ({
   };
 
   return (
-    <div onClick={toggleLike} className="flex items-center gap-1">
+    <Button
+      onClick={toggleLike}
+      className="flex items-center gap-1 bg-opacity-0"
+      disabled={isLoading}
+      isIconOnly
+    >
       <svg
         className={liked ? '[&>path]:stroke-transparent' : ''}
         aria-hidden="true"
@@ -68,7 +73,11 @@ export const HeartIcon = ({
           strokeWidth={strokeWidth}
         />
       </svg>
-      {isLoading ? <Spinner size="sm" /> : <span>{numFavs}</span>}
-    </div>
+      {isLoading ? (
+        <Spinner size="sm" />
+      ) : (
+        <span className="ml-2">{numFavs}</span>
+      )}
+    </Button>
   );
 };
