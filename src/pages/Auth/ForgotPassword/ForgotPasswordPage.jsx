@@ -1,8 +1,8 @@
-import { TitleSection } from '../../../components';
 import { Button, Input } from '@nextui-org/react';
 import { Form, redirect, useNavigation } from 'react-router-dom';
-import { ForgotPassword } from '../authService';
 import { toast } from 'react-toastify';
+import { H3Title, LogoHeader, Panel } from '../../../components';
+import { ForgotPassword } from '../authService';
 
 export const action = async ({ request }) => {
   const formData = await request.formData();
@@ -34,35 +34,44 @@ const ForgotPasswordPage = () => {
   const isSubmitting = navigation.state === 'submitting';
 
   return (
-    <main className="flex-1 flex flex-col items-center justify-center">
-      <TitleSection className="w-full" title="Recuperación de Contraseña" />
-      <div className="flex-1 w-full flex justify-center items-center">
-        <div className="bg-white shadow-lg rounded-lg p-8 mx-auto my-8 max-w-lg w-full">
-          <p className="flex justify-center text-center text-balance">
-            Por favor, introduce tu correo electrónico para restablecer tu
-            contraseña
-          </p>
-          <Form method="post" className="flex flex-col gap-6 max-w-lg pt-8">
-            <Input
-              placeholder="Introduce tu email"
-              type="email"
-              label="Email"
-              name="email"
-              isRequired
-              isDisabled={isSubmitting}
+    <main className="bg-default-100 flex-grow">
+      <section
+        id="ResetPassword"
+        className="max-w-screen-xl w-full flex flex-col gap-3 justify-center py-10 mx-auto  "
+      >
+        <LogoHeader className={'mx-auto'} />
+        <Panel className={'max-w-md mx-auto'}>
+          <Form
+            method="post"
+            className="flex flex-col gap-6  mx-auto px-10 py-8"
+          >
+            <H3Title
+              title="Por favor, introduce tu correo electrónico para restablecer tu
+                contraseña"
+              className={'normal-case text-pretty'}
             />
-            <Button
-              type="submit"
-              color="primary"
-              variant="solid"
-              size="lg"
-              isLoading={isSubmitting}
-            >
-              Enviar
-            </Button>
+            <div className="flex flex-col gap-3">
+              <Input
+                placeholder="Introduce tu email"
+                type="email"
+                label="Email"
+                name="email"
+                isRequired
+                isDisabled={isSubmitting}
+              />
+              <Button
+                type="submit"
+                color="primary"
+                variant="solid"
+                size="lg"
+                isLoading={isSubmitting}
+              >
+                Enviar
+              </Button>
+            </div>
           </Form>
-        </div>
-      </div>
+        </Panel>
+      </section>
     </main>
   );
 };
