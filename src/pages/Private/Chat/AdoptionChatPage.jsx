@@ -1,17 +1,17 @@
 import { Spinner } from '@nextui-org/react';
 
-import { useUser, userQuery } from '../useUser';
-import { useWebSocketContext } from '../../../context/WebSocketContext';
-import UserMessage from './components/UserMessage';
 import { useLoaderData, useNavigate, useParams } from 'react-router-dom';
+import { useWebSocketContext } from '../../../context/WebSocketContext';
 import TextMessageBox from '../Assistant/components/TextMessageBox';
+import { useUser, userQuery } from '../useUser';
+import UserMessage from './components/UserMessage';
 
 import { useEffect, useState } from 'react';
 import { receiverDataQuery } from './useReceiverData';
 import { chatHistoryQuery, useChatHistory } from './useUserChatHistory';
 
-import { mapUserChatHistory } from '../../../utils/mapUserChatHistory';
 import { useScroll } from '../../../hooks/useScroll';
+import { mapUserChatHistory } from '../../../utils/mapUserChatHistory';
 
 export const loader =
   (queryClient) =>
@@ -22,7 +22,7 @@ export const loader =
       const shelter = parts.at(0);
       const adopter = parts.at(-1);
       const sender = await queryClient.ensureQueryData(userQuery);
-      const username = sender.role === 'shelter' ? adopter : shelter;
+      const username = sender?.role === 'shelter' ? adopter : shelter;
 
       const receiver = await queryClient.ensureQueryData(
         receiverDataQuery(username)
@@ -119,6 +119,7 @@ const AdoptionChatPage = () => {
   };
 
   if (
+    !user ||
     (user.role === 'adopter' && user.username !== adopter) ||
     (user.role === 'shelter' && user.username !== shelter)
   ) {
@@ -144,7 +145,7 @@ const AdoptionChatPage = () => {
   };
 
   return (
-    <main className="max-w-screen-xl  w-full flex  flex-col justify-center  gap-12    mx-auto  overflow-hidden h-[88vh]">
+    <main className="max-w-screen-xl  w-full flex  flex-col justify-center  mx-auto  overflow-hidden h-[86.4vh] md:flex-auto ">
       <div className="flex flex-col flex-1 background-panel rounded-xl h-156 overflow-y-hidden mx-10 my-10">
         <div className="flex flex-col flex-1 overflow-x-auto mb-4">
           {isFetchingUser || isFetchingChatHistory ? (
@@ -158,6 +159,7 @@ const AdoptionChatPage = () => {
                     key={index}
                     text={message.text}
                     isSender={message.isSender}
+                    user={receiver.username}
                     avatar={
                       message.isSender ? user.avatar : receiver?.avatar[0]
                     }

@@ -23,8 +23,6 @@ const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const { data: user, isLoading } = useUser();
 
-  console.log({ user });
-
   const handleMenuOpenChange = (open) => {
     setIsMenuOpen(open);
   };

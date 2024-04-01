@@ -89,7 +89,7 @@ const LoginPage = () => {
                 name="email"
                 placeholder="Introduce tu email"
                 color={errors.email ? 'danger' : 'none'}
-                onBlur={handleChange}
+                onChange={handleChange}
                 errorMessage={errors.email}
                 isRequired
                 classNames={inputStyleConfig}

@@ -1,6 +1,11 @@
-import { TitleSection } from '../../../components';
 import { Button, Input } from '@nextui-org/react';
-import { Form } from 'react-router-dom';
+import { Form, redirect, useNavigation } from 'react-router-dom';
+import { toast } from 'react-toastify';
+import { H3Title, LogoHeader, Panel } from '../../../components';
+import {
+  buttonStyleConfig,
+  inputStyleConfig,
+} from '../../../utils/configFormFields';
 import { ForgotPassword } from '../authService';
 
 export const action = async ({ request }) => {
@@ -18,37 +23,61 @@ export const action = async ({ request }) => {
     if (res.status === 500) {
       throw new Error(res.response.data.message);
     }
-    return null;
+    toast.success('Email para resetear el password enviado');
+    return redirect('/login');
   } catch (error) {
     console.log({ error });
+    toast.error(error.response.data.message);
     return null;
   }
 };
 
 const ForgotPasswordPage = () => {
+  const navigation = useNavigation();
+
+  const isSubmitting = navigation.state === 'submitting';
+
   return (
-    <main className="flex-1 flex flex-col items-center justify-center">
-      <TitleSection className="w-full" title="Recuperación de Contraseña" />
-      <div className="flex-1 w-full flex justify-center items-center">
-        <div className="bg-white shadow-lg rounded-lg p-8 mx-auto my-8 max-w-lg w-full">
-          <p className="flex justify-center text-center text-balance">
-            Por favor, introduce tu correo electrónico para restablecer tu
-            contraseña
-          </p>
-          <Form method="post" className="flex flex-col gap-6 max-w-lg pt-8">
-            <Input
-              placeholder="Introduce tu email"
-              type="email"
-              label="Email"
-              name="email"
-              isRequired
+    <main className="bg-default-100 flex-grow">
+      <section
+        id="ResetPassword"
+        className="max-w-screen-xl w-full flex flex-col gap-3 justify-center py-10 mx-auto  "
+      >
+        <LogoHeader className={'mx-auto'} />
+        <Panel className={'max-w-md mx-auto'}>
+          <Form
+            method="post"
+            className="flex flex-col gap-6  mx-auto px-10 py-8"
+          >
+            <H3Title
+              title="Por favor, introduce tu correo electrónico para restablecer tu
+                contraseña"
+              className={'normal-case text-pretty'}
             />
-            <Button type="submit" color="primary" variant="solid" size="lg">
-              Enviar
-            </Button>
+            <div className="flex flex-col gap-3">
+              <Input
+                placeholder="Introduce tu email"
+                type="email"
+                label="Email"
+                name="email"
+                isRequired
+                isDisabled={isSubmitting}
+                classNames={inputStyleConfig}
+              />
+              <Button
+                type="submit"
+                color="primary"
+                variant="solid"
+                size="lg"
+                isLoading={isSubmitting}
+                className={buttonStyleConfig}
+              >
+                Enviar
+              </Button>
+            </div>
           </Form>
-        </div>
-      </div>
+        </Panel>
+      </section>
     </main>
   );
 };

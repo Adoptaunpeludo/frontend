@@ -1,5 +1,4 @@
 import { useLoaderData } from 'react-router';
-import { useNavigation, useOutletContext } from 'react-router-dom';
 
 import { Skeleton } from '@nextui-org/react';
 import {
@@ -10,6 +9,7 @@ import {
 } from '../../../components';
 import { animalsQuery, useAnimals } from '../Landing/useAnimals';
 import { PetCard } from './components/PetCard';
+import { useUser } from '../../Private/useUser';
 
 export const loader =
   (queryClient, page) =>
@@ -28,15 +28,12 @@ export const loader =
   };
 
 const AnimalsPage = ({ page }) => {
-  const { user } = useOutletContext();
+  const { data: user, isFetching: isLoading } = useUser();
   const { params, filters } = useLoaderData();
-  const navigation = useNavigation();
 
   const { shelterName } = params;
 
   const { data: animals } = useAnimals(page, filters, params);
-
-  const isLoading = navigation.state === 'loading';
   const isLogged = user !== null;
 
   return (

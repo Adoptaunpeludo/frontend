@@ -19,7 +19,6 @@ import {
 } from '@iconscout/react-unicons';
 
 import { IconHome } from '@tabler/icons-react';
-import { useOutletContext } from 'react-router-dom';
 import { HeartIcon, PetSize, UnderlineVector } from '../../../../assets/svg';
 import { BUCKET_URL, FALLBACK_IMAGE_CARD } from '../../../../config/config';
 import {
@@ -28,8 +27,9 @@ import {
 } from '../../../../utils/asideDataFields';
 import { buttonStyleConfig } from '../../../../utils/configFormFields';
 import { animalSizeEnum, genderEnum } from '../../../../utils/enumData';
+import { useUser } from '../../../Private/useUser';
 export const PetCard = ({ animal, isLogged }) => {
-  const { user } = useOutletContext();
+  const { data: user } = useUser();
 
   const isOnline =
     user?.username === animal.shelter.username ? true : animal.shelter.isOnline;

@@ -30,19 +30,25 @@ const ShelterForm = ({ isSubmitting, data }) => {
   const updateShelterModal = useDisclosure();
   const { isOpen, onOpen, onOpenChange, onClose } = updateShelterModal;
   const { saveShelterModal } = useModalContext();
-  const [cifError, setCifError] = useState('');
+
+  const [formData, setFormData] = useState({});
+  const [errors, setErrors] = useState('');
 
   const navigation = useNavigation();
 
   isSubmitting = navigation.state === 'submitting';
 
   const handleChange = (event) => {
-    const value = event.target.value;
-    const validateCif = validateField('cif', value);
-    setCifError(validateCif);
+    const { name, value } = event.target;
+    setFormData({ ...formData, [name]: value });
+    setErrors({ ...errors, [name]: validateField(name, value) });
   };
 
-  const isFormValid = !!cifError;
+  useEffect(() => {
+    setErrors('');
+  }, [isOpen]);
+
+  const isFormValid = Object.values(errors).every((error) => error === '');
 
   const {
     cif,
@@ -93,49 +99,60 @@ const ShelterForm = ({ isSubmitting, data }) => {
                     <div className="flex flex-col w-full gap-4">
                       <div className="flex w-full flex-wrap md:flex-nowrap gap-4">
                         <Input
+                          isRequired
                           className="min-w-72 "
                           type="text"
                           label="CIF"
                           name="cif"
                           defaultValue={cif === '' ? '' : cif}
                           isDisabled={isSubmitting}
-                          color={cifError ? 'danger' : 'none'}
-                          errorMessage={cifError}
-                          onBlur={handleChange}
-                          isRequired
-                          placeholder="Introduce tu CIF, X99999999"
+                          color={errors.cif ? 'danger' : 'none'}
+                          errorMessage={errors.cif}
+                          onChange={handleChange}
+                          placeholder="X99999999"
                           classNames={inputStyleConfig}
                         />
                         <SelectField
+                          isRequired
                           isDisabled={isSubmitting}
                           className="min-w-72 "
                           label="Forma legal"
                           name="legalForms"
+                          color={errors.legalForms ? 'danger' : 'none'}
+                          errorMessage={errors.legalForms}
+                          onChange={handleChange}
                           dataField={legalForms}
                           dataEnum={legalFormEnum}
-                          isRequired
                           classNames={selectStyleConfig}
                         />
                       </div>
                       <div className="flex w-full justify-around gap-4 flex-wrap md:flex-nowrap py-2">
                         <SelectField
+                          isRequired
                           isDisabled={isSubmitting}
                           className="min-w-72 "
                           label="Instalaciones veterinarias"
                           name="veterinaryFacilities"
+                          color={
+                            errors.veterinaryFacilities ? 'danger' : 'none'
+                          }
+                          errorMessage={errors.veterinaryFacilities}
+                          onChange={handleChange}
                           dataField={veterinaryFacilities}
                           dataEnum={boolDataEnum}
-                          isRequired
                           classNames={selectStyleConfig}
                         />
                         <SelectField
+                          isRequired
                           isDisabled={isSubmitting}
                           className="min-w-72 "
                           label="Veterinario propio"
                           name="ownVet"
+                          color={errors.ownVet ? 'danger' : 'none'}
+                          errorMessage={errors.ownVet}
+                          onChange={handleChange}
                           dataField={ownVet}
                           dataEnum={boolDataEnum}
-                          isRequired
                           classNames={selectStyleConfig}
                         />
                       </div>
@@ -146,11 +163,14 @@ const ShelterForm = ({ isSubmitting, data }) => {
                       <div className="flex w-full flex-col  gap-4">
                         <H3Title title="Descripción:" className="mx-2" />
                         <Textarea
+                          isRequired
                           isDisabled={isSubmitting}
                           className="w-full "
                           label="Descripción"
                           name="description"
-                          isRequired
+                          color={errors.description ? 'danger' : 'none'}
+                          errorMessage={errors.description}
+                          onChange={handleChange}
                           defaultValue={description}
                           placeholder="Describe tu protectora"
                           classNames={inputStyleConfig}
@@ -172,7 +192,7 @@ const ShelterForm = ({ isSubmitting, data }) => {
                   Cancelar
                 </Button>
                 <Button
-                  isDisabled={isFormValid}
+                  isDisabled={!isFormValid}
                   color="primary"
                   variant="solid"
                   size="sm"
