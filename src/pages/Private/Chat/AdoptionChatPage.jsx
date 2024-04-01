@@ -22,7 +22,7 @@ export const loader =
       const shelter = parts.at(0);
       const adopter = parts.at(-1);
       const sender = await queryClient.ensureQueryData(userQuery);
-      const username = sender.role === 'shelter' ? adopter : shelter;
+      const username = sender?.role === 'shelter' ? adopter : shelter;
 
       const receiver = await queryClient.ensureQueryData(
         receiverDataQuery(username)
@@ -119,6 +119,7 @@ const AdoptionChatPage = () => {
   };
 
   if (
+    !user ||
     (user.role === 'adopter' && user.username !== adopter) ||
     (user.role === 'shelter' && user.username !== shelter)
   ) {
