@@ -46,7 +46,7 @@ const AnimalsPage = ({ page }) => {
             <TitleSection title={shelterName} />
           )}
 
-          <FilterBar page={shelterName} />
+          <FilterBar page={shelterName ? shelterName : page} />
         </header>
         <section className="flex flex-col flex-auto">
           <ul className="flex justify-center gap-4 flex-wrap p-6">
