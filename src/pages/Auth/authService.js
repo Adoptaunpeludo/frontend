@@ -1,3 +1,4 @@
+0;
 import { postData, deleteData } from '../../api/client';
 
 export const login = async (credentials) => {
@@ -55,12 +56,13 @@ export const ForgotPassword = async (email) => {
   }
 };
 
-export const resetPassword = async ({password , token}) => {
+export const resetPassword = async ({ password, token }) => {
   try {
-    const response = await postData(`/auth/reset-password/${token}`, { password });
+    const response = await postData(`/auth/reset-password/${token}`, {
+      password,
+    });
     return response;
   } catch (error) {
     return error;
   }
-
-}
+};

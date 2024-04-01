@@ -5,10 +5,13 @@ export const SelectField = ({
   dataField,
   dataEnum,
   name,
+  color,
+  errorMessage,
   className = '',
   isDisabled,
   isRequired,
   classNames = '',
+  onChange,
 }) => {
   return (
     <Select
@@ -17,6 +20,8 @@ export const SelectField = ({
       className={className}
       label={label}
       name={name}
+      color={color}
+      errorMessage={errorMessage}
       classNames={classNames}
       placeholder={
         dataField === '' || dataField === null ? 'Seleccionar...' : ''
@@ -24,6 +29,7 @@ export const SelectField = ({
       defaultSelectedKeys={
         dataField !== '' && dataField !== null && [dataField?.toString()]
       }
+      onChange={onChange}
     >
       {dataEnum.map(({ label, value }) => (
         <SelectItem key={value} value={value}>
