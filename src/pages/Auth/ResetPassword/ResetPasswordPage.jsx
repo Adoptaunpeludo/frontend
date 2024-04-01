@@ -18,9 +18,6 @@ export const action = async ({ request, params }) => {
       const res = await resetPassword({ password, token });
       console.log({ password, repeatPassword, isEqualPass, res });
 
-      if (res.status === 400) throw new Error(res.response.data.message);
-      if (res.status === 500) throw new Error(res.response.data.message);
-
       toast.success('Contraseña cambiada');
       return redirect('/login');
     }
