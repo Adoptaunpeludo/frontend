@@ -47,7 +47,7 @@ const ResetPasswordPage = () => {
               type="password"
               label="Password"
               placeholder="Introduce tu password"
-              value="P@ssw0rda"
+              // value="P@ssw0rda"
               //  color={errors.password ? 'danger' : 'none'}
               //  errorMessage={errors.password}
               //  onChange={handleChange}
@@ -60,7 +60,7 @@ const ResetPasswordPage = () => {
               type="password"
               label="confirmar password"
               placeholder="Introduce tu password"
-              value="P@ssw0rda"
+              // value="P@ssw0rda"
               //  color={errors.repeatPassword ? 'danger' : 'none'}
               //  errorMessage={errors.repeatPassword}
               //  onChange={handleChange}
