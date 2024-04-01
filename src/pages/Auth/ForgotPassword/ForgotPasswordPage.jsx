@@ -2,6 +2,10 @@ import { Button, Input } from '@nextui-org/react';
 import { Form, redirect, useNavigation } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import { H3Title, LogoHeader, Panel } from '../../../components';
+import {
+  buttonStyleConfig,
+  inputStyleConfig,
+} from '../../../utils/configFormFields';
 import { ForgotPassword } from '../authService';
 
 export const action = async ({ request }) => {
@@ -58,6 +62,7 @@ const ForgotPasswordPage = () => {
                 name="email"
                 isRequired
                 isDisabled={isSubmitting}
+                classNames={inputStyleConfig}
               />
               <Button
                 type="submit"
@@ -65,6 +70,7 @@ const ForgotPasswordPage = () => {
                 variant="solid"
                 size="lg"
                 isLoading={isSubmitting}
+                className={buttonStyleConfig}
               >
                 Enviar
               </Button>
