@@ -30,14 +30,14 @@ export const HeartIcon = ({
     try {
       setIsLoading(true);
       await addFav(id);
-      queryClient.invalidateQueries([
+      queryClient.invalidateQueries(
         {
           queryKey: ['animals'],
         },
         {
           queryKey: ['user-favs', null],
-        },
-      ]);
+        }
+      );
     } catch (error) {
       if (isAxiosError(error) && error.response.status === 400)
         await handleFavError(error, id, queryClient);

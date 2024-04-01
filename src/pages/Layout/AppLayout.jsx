@@ -36,8 +36,6 @@ const AppLayout = () => {
   const queryClient = useQueryClient();
   const { setNotifications } = useNotificationsContext();
 
-  console.log({ user });
-
   useEffect(() => {
     if (isReady)
       send(
