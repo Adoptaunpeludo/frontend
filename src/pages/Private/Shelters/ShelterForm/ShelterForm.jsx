@@ -33,39 +33,22 @@ const ShelterForm = ({ isSubmitting, data }) => {
 
   const [formData, setFormData] = useState({});
   const [errors, setErrors] = useState('');
-  const [submitEnabled, setSubmitEnabled] = useState(false);
 
   const navigation = useNavigation();
 
   isSubmitting = navigation.state === 'submitting';
 
   const handleChange = (event) => {
-    setSubmitEnabled(true);
     const { name, value } = event.target;
-    if (typeof data[name] !== 'boolean') {
-      if (data[name].toLowerCase() === value.toLowerCase()) {
-        setErrors({ ...errors, [name]: 'Sin cambios' });
-      } else {
-        setFormData({ ...formData, [name]: value });
-        setErrors({ ...errors, [name]: validateField(name, value) });
-      }
-    } else {
-      if (data[name].toString() == value) {
-        setErrors({ ...errors, [name]: 'Sin cambios' });
-      } else {
-        setFormData({ ...formData, [name]: value });
-        setErrors({ ...errors, [name]: '' });
-      }
-    }
+    setFormData({ ...formData, [name]: value });
+    setErrors({ ...errors, [name]: validateField(name, value) });
   };
 
   useEffect(() => {
     setErrors('');
-    setSubmitEnabled(false);
   }, [isOpen]);
 
-  const isFormValid =
-    Object.values(errors).every((error) => error === '') && submitEnabled;
+  const isFormValid = Object.values(errors).every((error) => error === '');
 
   const {
     cif,

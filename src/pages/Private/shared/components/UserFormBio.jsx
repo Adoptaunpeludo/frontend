@@ -44,26 +44,15 @@ export const UserFormBio = ({ data }) => {
     setErrors({ ...errors, [name]: validateField(name, value) });
   };
 
-  const handleSubmit = () => {
-    const modifiedInputs = Object.keys(credentials).filter(
-      (key) => credentials[key] !== data[key]
-    );
-
-    if (modifiedInputs.length === 0) {
-      toast.error('No se ha modificado nada.');
-      return;
-    } else {
-      updateData('auth/me', {
-        modifiedInputs,
-      })
-        .then(() => {
-          console.log('Modificado con éxito');
-        })
-        .catch(() => {
-          console.error('Error al enviar los datos');
-        });
-    }
-  };
+  // const handleSubmit = () => {
+  //   const modifiedInputs = Object.keys(credentials).filter(
+  //     (key) => credentials[key] !== data[key]
+  //   );
+  //   if (modifiedInputs.length === 0) {
+  //     toast.error('No se ha modificado nada.');
+  //     return;
+  //   }
+  // };
 
   useEffect(() => {
     setErrors({});
@@ -100,7 +89,7 @@ export const UserFormBio = ({ data }) => {
         size="3xl"
         portalContainer={document.body}
       >
-        <Form onSubmit={handleSubmit} preventScrollReset={true}>
+        <Form method="post" preventScrollReset={true}>
           <ModalContent>
             <>
               <ModalHeader className="flex flex-col gap-1">
