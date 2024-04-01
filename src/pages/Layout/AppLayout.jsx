@@ -59,12 +59,17 @@ const AppLayout = () => {
         //   break;
         case 'animal-changed-push-notification':
           setNotifications((notifications) => [...notifications, data]);
+          console.log({ data });
           queryClient.invalidateQueries({
             queryKey: ['animals'],
           });
           queryClient.invalidateQueries({
             queryKey: ['animal-details', data.animalSlug],
           });
+          queryClient.invalidateQueries({
+            queryKey: ['shelters-animals', data.createdBy],
+          });
+
           break;
         case 'new-chat-push-notification':
           setNotifications((notifications) => [...notifications, data]);
