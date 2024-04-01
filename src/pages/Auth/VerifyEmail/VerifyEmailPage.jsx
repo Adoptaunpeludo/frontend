@@ -1,9 +1,10 @@
 import { TitleSection } from '../../../components';
 import { verifyEmail } from '../../Auth/authService';
 import { Button, Input, Link, Spinner } from '@nextui-org/react';
-import { Form, useLoaderData } from 'react-router-dom';
+import { Form, redirect, useLoaderData } from 'react-router-dom';
 import { resendValidationEmail } from '../authService';
 import { useState } from 'react';
+import { toast } from 'react-toastify';
 
 export const action = async ({ request }) => {
   const formData = await request.formData();
@@ -23,10 +24,13 @@ export const action = async ({ request }) => {
       throw new Error(res.response.data.message);
     }
 
-    return null;
+    toast.success('Email de validacion enviado');
+
+    return redirect('/login');
   } catch (error) {
     console.log({ error });
-    return null;
+    toast.error(error.message);
+    throw error;
   }
 };
 

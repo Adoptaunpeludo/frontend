@@ -4,7 +4,6 @@ import { resetPassword } from '../../Auth/authService.js';
 import { Button, Input } from '@nextui-org/react';
 import { Form, redirect, useNavigation } from 'react-router-dom';
 
-// TODO: Refactorizar codico de comprovación de contraseña, se repite logica como en Regist
 export const action = async ({ request, params }) => {
   const formData = await request.formData();
   const credentials = Object.fromEntries(formData);
@@ -20,6 +19,9 @@ export const action = async ({ request, params }) => {
 
       toast.success('Contraseña cambiada');
       return redirect('/login');
+    } else {
+      toast.error('Las contraseñas no coindicen');
+      return null;
     }
   } catch (error) {
     console.log({ error });

@@ -39,30 +39,18 @@ export const logout = async () => {
 };
 
 export const resendValidationEmail = async (email) => {
-  try {
-    const response = await postData(`/auth/resend-validation-email/${email}`);
-    return response;
-  } catch (error) {
-    return error;
-  }
+  const response = await postData(`/auth/resend-validation-email/${email}`);
+  return response;
 };
 
 export const ForgotPassword = async (email) => {
-  try {
-    const response = await postData('/auth/forgot-password/', { email });
-    return response;
-  } catch (error) {
-    return error;
-  }
+  const response = await postData('/auth/forgot-password/', { email });
+  return response;
 };
 
 export const resetPassword = async ({ password, token }) => {
-  try {
-    const response = await postData(`/auth/reset-password/${token}`, {
-      password,
-    });
-    return response;
-  } catch (error) {
-    return error;
-  }
+  const response = await postData(`/auth/reset-password/${token}`, {
+    password,
+  });
+  return response;
 };
