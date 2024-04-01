@@ -26,7 +26,7 @@ export const action = async ({ request, params }) => {
   } catch (error) {
     console.log({ error });
     toast.error(error.message);
-    throw error;
+    return null;
   }
 };
 
