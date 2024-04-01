@@ -29,7 +29,6 @@ export const loader = (queryClient) => async () => {
 
 const AppLayout = () => {
   const navigate = useNavigate();
-  // const { user, notifications } = useLoaderData();
   const { data: user } = useUser();
   const { data: notifications } = useNotifications();
   const { send, isReady, val } = useWebSocketContext();
@@ -90,6 +89,9 @@ const AppLayout = () => {
           queryClient.invalidateQueries({
             queryKey: ['animal-details'],
           });
+          queryClient.invalidateQueries({
+            queryKey: ['shelters-animals', message.username],
+          });
           break;
         case 'user-disconnected':
           queryClient.invalidateQueries({
@@ -103,6 +105,9 @@ const AppLayout = () => {
           });
           queryClient.invalidateQueries({
             queryKey: ['animal-details'],
+          });
+          queryClient.invalidateQueries({
+            queryKey: ['shelters-animals', message.username],
           });
           break;
       }
