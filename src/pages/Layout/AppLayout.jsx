@@ -54,18 +54,24 @@ const AppLayout = () => {
       const message = JSON.parse(val);
       const { type, ...data } = message;
       switch (type) {
-        case 'chat-created':
-          queryClient.invalidateQueries({
-            queryKey: ['user-chats', data.shelterUsername],
-          });
-          break;
-        case 'animal-changed':
+        // case 'chat-created':
+        //   queryClient.invalidateQueries({
+        //     queryKey: ['user-chats', data.shelterUsername],
+        //   });
+        //   break;
+        case 'animal-changed-push-notification':
           setNotifications((notifications) => [...notifications, data]);
           queryClient.invalidateQueries({
             queryKey: ['animals'],
           });
           queryClient.invalidateQueries({
             queryKey: ['animal-details', data.animalSlug],
+          });
+          break;
+        case 'new-chat-push-notification':
+          setNotifications((notifications) => [...notifications, data]);
+          queryClient.invalidateQueries({
+            queryKey: ['user-chats', data.username],
           });
           break;
         case 'user-connected':
