@@ -5,7 +5,7 @@ import { userAnimalsQuery } from '../../Shelters/useUserAnimals';
 import { User } from '@nextui-org/react';
 import { Skeleton } from '@nextui-org/skeleton';
 import { isAxiosError } from 'axios';
-import { Form, Link, useParams } from 'react-router-dom';
+import { Form, Link, useNavigate, useParams } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import { BUCKET_URL } from '../../../../config/config';
 import { deleteFav } from '../../../Public/Animals/service';
@@ -13,6 +13,7 @@ import { updateProfile } from '../../shared/service/updateUserService';
 import UserBioInfo from '../../Shelters/ShelterProfile/components/UserBioInfo';
 import { userChatsQuery, useUserChats } from '../../Shelters/useUserChats';
 import { useUser } from '../../useUser';
+import { useWebSocketContext } from '../../../../context/WebSocketContext';
 
 export const loader =
   (queryClient) =>
@@ -79,10 +80,24 @@ export const action =
 const AdopterProfile = () => {
   const params = useParams();
   const { data, isFetching } = useUser();
+  const { isReady, send } = useWebSocketContext();
+  const navigate = useNavigate();
   const { data: chats, isFetching: isFetchingChats } = useUserChats(
     params.username
   );
   const { username } = data;
+
+  const handleCreateChat = (slug) => {
+    if (isReady) {
+      send(
+        JSON.stringify({
+          type: 'create-chat-room',
+          room: slug,
+        })
+      );
+    }
+    navigate(`/private/chat/${slug}`);
+  };
 
   return (
     <main className="bg-default-100 flex-grow">
