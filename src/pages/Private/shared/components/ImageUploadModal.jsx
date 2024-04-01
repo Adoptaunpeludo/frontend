@@ -33,7 +33,12 @@ const ImageUploadModal = ({ page, id, slug }) => {
 
   const imageFileValidation = (event, maxSize) => {
     const file = event.target.files.item(0);
-    const allowedMimeTypes = ['image/jpeg', 'image/png', 'image/gif'];
+    const allowedMimeTypes = [
+      'image/jpeg',
+      'image/png',
+      'image/gif',
+      'image/webp',
+    ];
     const fileType = file.type;
 
     if (!allowedMimeTypes.includes(fileType)) {
