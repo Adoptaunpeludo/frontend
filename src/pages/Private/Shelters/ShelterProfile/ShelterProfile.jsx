@@ -5,18 +5,20 @@ import { useEffect } from 'react';
 import { Link, useNavigate, useParams } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import { H2Title, TitleSection } from '../../../../components';
+import { BUCKET_URL } from '../../../../config/config';
 import { useAnimalImagesContext } from '../../../../context/AnimalImagesContext';
+import { useWebSocketContext } from '../../../../context/WebSocketContext';
 import { buttonStyleConfig } from '../../../../utils/configFormFields';
 import { DeleteUserModal, StatusAnimalsTable } from '../../shared';
+import { UserChangePassword } from '../../shared/components/UserChangePassword';
+import { updatePassword } from '../../shared/service/ChangePasswordService';
 import { updateProfile } from '../../shared/service/updateUserService';
 import { useUser } from '../../useUser';
 import { deleteAnimal } from '../AnimalForm/service';
 import { userAnimalsQuery } from '../useUserAnimals';
+import { useUserChats, userChatsQuery } from '../useUserChats';
 import ShelterProfileInfo from './components/ShelterProfileInfo';
 import UserBioInfo from './components/UserBioInfo';
-import { useUserChats, userChatsQuery } from '../useUserChats';
-import { BUCKET_URL } from '../../../../config/config';
-import { useWebSocketContext } from '../../../../context/WebSocketContext';
 
 export const loader =
   (queryClient) =>
@@ -71,6 +73,20 @@ export const action =
         throw error;
       }
     }
+    if (intent === 'change-password') {
+      try {
+        await updatePassword(formData);
+        await queryClient.invalidateQueries((queryKey) =>
+          queryKey.includes('animals')
+        );
+        toast.success(`Password cambiada con éxito`);
+        return null;
+      } catch (error) {
+        if (isAxiosError(error) && error.response.status === 400)
+          return toast.error('Error cambiando password');
+        throw error;
+      }
+    }
   };
 
 const ShelterProfile = () => {
@@ -114,44 +130,50 @@ const ShelterProfile = () => {
             <Skeleton isLoaded={!isFetchingUser}>
               <UserBioInfo data={user} isLoading={isFetchingUser} />
             </Skeleton>
+            <H2Title title="Seguridad" className="" />
+            <UserChangePassword />
+            <div id="NotificationsAside">
+              <H2Title
+                title="Chats"
+                className="border-b-1 border-primary mt-5"
+              />
+              <Skeleton
+                className="flex justify-between border-solid pb-3 items-center"
+                isLoaded={!isFetchingChats}
+              >
+                <div className="flex flex-col justify-start gap-3 pb-3 pl-3 pt-3">
+                  {chats.map((chat) => (
+                    <Link
+                      key={chat.slug}
+                      to={`/private/chat/${chat.slug}`}
+                      onClick={() => handleCreateChat(chat.slug)}
+                    >
+                      <User
+                        name={
+                          chat.animal[0]?.name
+                            ? `${chat.animal[0].name.toUpperCase()}/${
+                                chat.users[0]?.username
+                              }`
+                            : `${chat.users[0].username}`
+                        }
+                        avatarProps={{
+                          src: `${BUCKET_URL}/${
+                            chat.animal[0]?.images[0]
+                              ? chat.animal[0]?.images[0]
+                              : chat.users[0].avatar[0]
+                          }`,
+                          isBordered: true,
+                          color: 'success',
+                        }}
+                      />
+                    </Link>
+                  ))}
+                </div>
+              </Skeleton>
+            </div>
           </aside>
         </section>
-        <div id="NotificationsAside">
-          <H2Title title="Chats" className="pb-5" />
-          <Skeleton
-            className="flex justify-between border-solid border-b-1 border-b-primary pb-3 items-center"
-            isLoaded={!isFetchingChats}
-          >
-            <div className="flex justify-between border-solid border-b-1 border-b-primary pb-3 items-center">
-              {chats.map((chat) => (
-                <Link
-                  key={chat.slug}
-                  to={`/private/chat/${chat.slug}`}
-                  onClick={() => handleCreateChat(chat.slug)}
-                >
-                  <User
-                    name={
-                      chat.animal[0]?.name
-                        ? `${chat.animal[0].name.toUpperCase()}/${
-                            chat.users[0]?.username
-                          }`
-                        : `${chat.users[0].username}`
-                    }
-                    avatarProps={{
-                      src: `${BUCKET_URL}/${
-                        chat.animal[0]?.images[0]
-                          ? chat.animal[0]?.images[0]
-                          : chat.users[0].avatar[0]
-                      }`,
-                      isBordered: true,
-                      color: 'success',
-                    }}
-                  />
-                </Link>
-              ))}
-            </div>
-          </Skeleton>
-        </div>
+
         <section id="petsTable">
           <StatusAnimalsTable role={'shelter'} />
           <Button
