@@ -8,6 +8,9 @@ export const handleFavError = async (error, id, queryClient) => {
       queryClient.invalidateQueries({
         queryKey: ['animals'],
       });
+      queryClient.invalidateQueries({
+        queryKey: ['shelters-animals'],
+      });
     } else toast.warn('No puedes añadir un animal propio a favoritos');
   }
   if (error.response.status === 401) toast.warn('Primero haz Login');
