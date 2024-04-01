@@ -1,6 +1,9 @@
 import { fetchData } from '../../api/client';
 
 export const getCurrentUser = async () => {
+  const isLoggedIn = localStorage.getItem('isLoggedIn') === 'true';
+  if (!isLoggedIn) return null;
+
   const { data } = await fetchData('/users/me');
 
   return data;

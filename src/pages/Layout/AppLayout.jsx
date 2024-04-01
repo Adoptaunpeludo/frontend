@@ -15,6 +15,9 @@ import { useQueryClient } from '@tanstack/react-query';
 import { useNotificationsContext } from '../../context/NotificationsContext';
 
 export const loader = (queryClient) => async () => {
+  const isLoggedIn = localStorage.getItem('isLoggedIn') === 'true';
+  if (!isLoggedIn) return { user: null, notifications: null };
+
   try {
     const [user, notifications] = await Promise.all([
       await queryClient.ensureQueryData(userQuery),

@@ -21,6 +21,7 @@ export const action =
     credentials.email = credentials.email.toLowerCase();
 
     try {
+      localStorage.setItem('isLoggedIn', true);
       await login(credentials);
       queryClient.invalidateQueries({
         queryKey: ['user'],
@@ -88,7 +89,7 @@ const LoginPage = () => {
                 name="email"
                 placeholder="Introduce tu email"
                 color={errors.email ? 'danger' : 'none'}
-                onBlur={handleChange}
+                onChange={handleChange}
                 errorMessage={errors.email}
                 isRequired
                 classNames={inputStyleConfig}
@@ -108,7 +109,10 @@ const LoginPage = () => {
               />
             </div>
             <div className="flex justify-end">
-              <Link to="#" className="text-tertiary font-poppins">
+              <Link
+                to="/forgot-password"
+                className="text-tertiary font-poppins"
+              >
                 ¿Olvidaste tu password?
               </Link>
             </div>
@@ -130,6 +134,7 @@ const LoginPage = () => {
               <Link to="/register" className="text-tertiary">
                 Regístrate
               </Link>
+              <div></div>
             </div>
           </Form>
         </Panel>
