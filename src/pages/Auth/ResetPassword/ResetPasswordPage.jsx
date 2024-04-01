@@ -1,7 +1,8 @@
+import { toast } from 'react-toastify';
 import { TitleSection } from '../../../components';
 import { resetPassword } from '../../Auth/authService.js';
 import { Button, Input } from '@nextui-org/react';
-import { Form, useNavigation } from 'react-router-dom';
+import { Form, redirect, useNavigation } from 'react-router-dom';
 
 // TODO: Refactorizar codico de comprovación de contraseña, se repite logica como en Regist
 export const action = async ({ request, params }) => {
@@ -20,11 +21,13 @@ export const action = async ({ request, params }) => {
       if (res.status === 400) throw new Error(res.response.data.message);
       if (res.status === 500) throw new Error(res.response.data.message);
 
-      return null;
+      toast.success('Contraseña cambiada');
+      return redirect('/login');
     }
   } catch (error) {
     console.log({ error });
-    return null;
+    toast.error(error.message);
+    throw error;
   }
 };
 
