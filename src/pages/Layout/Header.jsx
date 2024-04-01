@@ -13,14 +13,17 @@ import {
 
 import { IconLogin2 as LoginIcon } from '@tabler/icons-react';
 import { useState } from 'react';
-import BrandNavLogo from '../../assets/logos/BrandNavLogo.jsx';
 import { UserAreaMenu } from '../../components/UserAreaMenu.jsx';
 
 import { useUser } from '../Private/useUser.js';
+import BrandNavLogo from './components/BrandNavLogo.jsx';
+import { LogoMobile } from './components/LogoMobile.jsx';
 
 const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const { data: user, isLoading } = useUser();
+
+  console.log({ user });
 
   const handleMenuOpenChange = (open) => {
     setIsMenuOpen(open);
@@ -59,21 +62,22 @@ const Header = () => {
       isMenuOpen={isMenuOpen}
       onMenuOpenChange={handleMenuOpenChange}
       maxWidth="xl"
-      className="h-[7vh]"
+      className="max-h-20"
     >
       <NavbarContent>
         <NavbarMenuToggle
           aria-label={isMenuOpen ? 'Close menu' : 'Open menu'}
-          className="sm:hidden"
+          className="lg:hidden"
         />
-        <NavbarBrand>
+        <NavbarBrand className="flex justify-center">
           <Link href="/">
-            <BrandNavLogo />
+            <BrandNavLogo className="hidden sm:flex" />
+            <LogoMobile className="sm:hidden" />
           </Link>
         </NavbarBrand>
       </NavbarContent>
 
-      <NavbarContent className="hidden sm:flex " justify="center">
+      <NavbarContent className="hidden lg:flex " justify="center">
         {menuItems.map((item, index) => {
           if (item.name === 'Asistente') {
             return null;

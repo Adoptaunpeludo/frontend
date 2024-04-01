@@ -79,7 +79,7 @@ const RegisterPage = () => {
           id="register"
           className="max-w-screen-xl w-full flex flex-col gap-3 h-full justify-center py-10 mx-auto "
         >
-          <LogoHeader />
+          <LogoHeader className="mx-auto" />
           <Panel className={'max-w-2xl mx-auto'}>
             <Form
               method="post"
@@ -122,7 +122,7 @@ const RegisterPage = () => {
                     placeholder="Introduce un nombre"
                     color={errors.username ? 'danger' : 'none'}
                     errorMessage={errors.username}
-                    onBlur={handleChange}
+                    onChange={handleChange}
                     isRequired
                   />
 
@@ -135,7 +135,7 @@ const RegisterPage = () => {
                     placeholder="Introduce tu email"
                     color={errors.email ? 'danger' : 'none'}
                     errorMessage={errors.email}
-                    onBlur={handleChange}
+                    onChange={handleChange}
                     isRequired
                   />
                 </div>

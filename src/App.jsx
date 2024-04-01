@@ -23,7 +23,7 @@ import {
   VerifyEmailPage,
   ForgotPasswordPage,
   NotificationsPage,
-  ResetPasswordPage
+  ResetPasswordPage,
 } from './pages/index.js';
 
 // Actions
@@ -35,7 +35,6 @@ import { action as mutateAnimalAction } from './pages/Private/Shelters/AnimalFor
 import { action as verifyEmailAction } from './pages/Auth/VerifyEmail/VerifyEmailPage.jsx';
 import { action as forgotPasswordAction } from './pages/Auth/ForgotPassword/ForgotPasswordPage.jsx';
 import { action as resetPasswordAction } from './pages/Auth/ResetPassword/ResetPasswordPage.jsx';
-
 
 // Loaders
 import { loader as updateAnimalLoader } from './pages/Private/Shelters/AnimalForm/AnimalForm.jsx';
@@ -50,12 +49,14 @@ import { loader as verifyEmailLoader } from './pages/Auth/VerifyEmail/VerifyEmai
 //import { loader as resetPasswordLoader } from './pages/Auth/ResetPassword/ResetPasswordPage.jsx';
 import { loader as userDataLoader } from './pages/Layout/AppLayout.jsx';
 import { loader as assistantChatLoader } from './pages/Private/Assistant/AssistantPage.jsx';
+import { loader as currentChatLoader } from './pages/Private/Chat/AdoptionChatPage.jsx';
 
 import { useAnimalImagesContext } from './context/AnimalImagesContext.jsx';
 import NotFoundPage from './pages/Error/NotFound/NotFoundPage.jsx';
 import ProtectedRoute from './pages/Private/ProtectedRoute.jsx';
 import { useModalContext } from './context/ModalContext.jsx';
 import AssistantPage from './pages/Private/Assistant/AssistantPage.jsx';
+import AdoptionChatPage from './pages/Private/Chat/AdoptionChatPage.jsx';
 
 export const queryClient = new QueryClient({
   defaultOptions: {
@@ -157,13 +158,13 @@ const router = (bioModalOnClose, shelterModalOnClose, animalImages) =>
               loader: assistantChatLoader(queryClient),
             },
             {
-              path: 'adopter',
+              path: 'adopter/:username',
               element: <AdopterProfile />,
               loader: userFavsLoader(queryClient),
               action: adopterProfileAction(bioModalOnClose, queryClient),
             },
             {
-              path: 'shelter',
+              path: 'shelter/:username',
               element: <ShelterProfile />,
               loader: userAnimalsLoader(queryClient),
               action: shelterProfileAction(
@@ -179,13 +180,7 @@ const router = (bioModalOnClose, shelterModalOnClose, animalImages) =>
               loader: updateAnimalLoader(queryClient),
             },
             {
-              path: 'shelter/update-animal/:slug',
-              element: <AnimalForm />,
-              action: mutateAnimalAction(animalImages, queryClient),
-              loader: updateAnimalLoader(queryClient),
-            },
-            {
-              path: 'shelter/update-animal/:slug',
+              path: 'shelter/create-animal/',
               element: <AnimalForm />,
               action: mutateAnimalAction(animalImages, queryClient),
             },
@@ -194,6 +189,11 @@ const router = (bioModalOnClose, shelterModalOnClose, animalImages) =>
               element: <NotificationsPage />,
               //action: mutateAnimalAction(animalImages, queryClient),
               //loader: updateAnimalLoader(queryClient),
+            },
+            {
+              path: 'chat/:chat',
+              element: <AdoptionChatPage />,
+              loader: currentChatLoader(queryClient),
             },
           ],
         },

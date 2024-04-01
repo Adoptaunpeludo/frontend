@@ -3,16 +3,17 @@ import { useEffect, useState } from 'react';
 import { toast } from 'react-toastify';
 import { useScroll } from '../../../hooks/useScroll';
 import { mapChatHistory } from '../../../utils/mapChatHistory';
+import { useUser, userQuery } from '../useUser';
 import GptMessage from './components/GptMessage';
 import TextMessageBox from './components/TextMessageBox';
 import UserMessage from './components/UserMessage';
-import { chatStreamGenerator } from './service';
+import { chatStreamGenerator, createChat } from './service';
 import { chatHistoryQuery, useChatHistory } from './useChatHistory';
-import { useUser, userQuery } from '../useUser';
 
 export const loader = (queryClient) => async () => {
   try {
     const user = await queryClient.ensureQueryData(userQuery);
+    await createChat(user.wsToken);
     const history = await queryClient.ensureQueryData(
       chatHistoryQuery(user.username)
     );
@@ -26,7 +27,7 @@ export const loader = (queryClient) => async () => {
 const AssistantPage = () => {
   const { data: user } = useUser();
   const [messages, setMessages] = useState([]);
-  const [isFirstLoad, setIsFirstLoad] = useState([]);
+  const [isFirstLoad, setIsFirstLoad] = useState(false);
   const { data: chatHistory, isFetching } = useChatHistory(user.username);
   const { messagesEndRef } = useScroll(messages, isFirstLoad, isFetching);
 
@@ -39,6 +40,8 @@ const AssistantPage = () => {
 
   useEffect(() => {
     setIsFirstLoad(true);
+
+    return () => setIsFirstLoad(false);
   }, []);
 
   const handleDeleteMessages = () => {
@@ -71,7 +74,7 @@ const AssistantPage = () => {
   };
 
   return (
-    <main className="max-w-screen-xl  w-full flex  flex-col justify-center  gap-12    mx-auto  overflow-hidden h-[88vh]">
+    <main className="max-w-screen-xl  w-full flex  flex-col justify-center  mx-auto  overflow-hidden h-[86.4vh] md:flex-auto ">
       <div className="flex flex-col flex-1 background-panel rounded-xl h-156 overflow-y-hidden mx-10 my-10">
         <div className="flex flex-col flex-1 overflow-x-auto mb-4 ">
           {isFetching ? (

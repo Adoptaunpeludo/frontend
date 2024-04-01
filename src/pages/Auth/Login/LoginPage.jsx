@@ -1,4 +1,4 @@
-import { Button, Input, Skeleton } from '@nextui-org/react';
+import { Button, Input, Spinner } from '@nextui-org/react';
 import { IconLogin2 as LoginIcon } from '@tabler/icons-react';
 import { useState } from 'react';
 import { Form, Link, redirect, useNavigation } from 'react-router-dom';
@@ -12,7 +12,6 @@ import { handleAuthError } from '../../../utils/handleError';
 import { validateField } from '../../../utils/validateField';
 import { userQuery } from '../../Private/useUser';
 import { login } from '../authService';
-import { createChat } from '../../Private/Assistant/service';
 
 export const action =
   (queryClient) =>
@@ -22,12 +21,12 @@ export const action =
     credentials.email = credentials.email.toLowerCase();
 
     try {
+      localStorage.setItem('isLoggedIn', true);
       await login(credentials);
       queryClient.invalidateQueries({
         queryKey: ['user'],
       });
-      const user = await queryClient.ensureQueryData(userQuery);
-      await createChat(user.wsToken);
+      await queryClient.ensureQueryData(userQuery);
       return redirect('/');
     } catch (error) {
       const message = handleAuthError(error);
@@ -68,76 +67,78 @@ const LoginPage = () => {
 
   return (
     <main className="bg-default-100 flex-grow">
-      <Skeleton
-        isLoaded={!isLoading}
-        className="max-w-screen-xl w-full flex flex-col gap-3 justify-center py-10 mx-auto"
+      <section
+        id="login"
+        className="max-w-screen-xl w-full flex flex-col gap-3 justify-center py-10 mx-auto  "
       >
-        <section
-          id="login"
-          className="max-w-screen-xl w-full flex flex-col gap-3 justify-center py-10 mx-auto  "
-        >
-          <LogoHeader />
-          <Panel className={'max-w-md mx-auto'}>
-            <Form
-              method="post"
-              className="flex flex-col gap-6  mx-auto px-10 py-8"
-            >
-              <H3Title
-                title="Inicia sesión en tu cuenta para continuar"
-                className={'normal-case text-pretty'}
+        <LogoHeader className={'mx-auto'} />
+        <Panel className={'max-w-md mx-auto'}>
+          <Form
+            method="post"
+            className="flex flex-col gap-6  mx-auto px-10 py-8"
+          >
+            <H3Title
+              title="Inicia sesión en tu cuenta para continuar"
+              className={'normal-case text-pretty'}
+            />
+            {isLoading && <Spinner />}
+            <div className="flex flex-col gap-3">
+              <Input
+                type="email"
+                label="Email"
+                name="email"
+                placeholder="Introduce tu email"
+                color={errors.email ? 'danger' : 'none'}
+                onChange={handleChange}
+                errorMessage={errors.email}
+                isRequired
+                classNames={inputStyleConfig}
+                isDisabled={isLoading}
               />
-              <div className="flex flex-col gap-3">
-                <Input
-                  type="email"
-                  label="Email"
-                  name="email"
-                  placeholder="Introduce tu email"
-                  color={errors.email ? 'danger' : 'none'}
-                  onBlur={handleChange}
-                  errorMessage={errors.email}
-                  isRequired
-                  classNames={inputStyleConfig}
-                />
-                <Input
-                  type="password"
-                  name="password"
-                  label="Password"
-                  placeholder="Introduce tu password"
-                  color={errors.password ? 'danger' : 'none'}
-                  errorMessage={errors.password}
-                  onChange={handleChange}
-                  isRequired
-                  classNames={inputStyleConfig}
-                />
-              </div>
-              <div className="flex justify-end">
-                <Link to="/forgot-password" className="text-tertiary font-poppins">
-                  ¿Olvidaste tu password?
-                </Link>
-              </div>
-              <div className="flex justify-center">
-                <Button
-                  isDisabled={enableButton}
-                  type="submit"
-                  color="primary"
-                  variant="solid"
-                  size="lg"
-                  endContent={<LoginIcon />}
-                  className={buttonStyleConfig}
-                >
-                  Iniciar sesión
-                </Button>
-              </div>
-              <div className="flex justify-center gap-1 font-medium font-poppins">
-                <span>¿Necesitas crear una cuenta?</span>
-                <Link to="/register" className="text-tertiary">
-                  Regístrate
-                </Link>
-              </div>
-            </Form>
-          </Panel>
-        </section>
-      </Skeleton>
+              <Input
+                type="password"
+                name="password"
+                label="Password"
+                placeholder="Introduce tu password"
+                color={errors.password ? 'danger' : 'none'}
+                errorMessage={errors.password}
+                onChange={handleChange}
+                isRequired
+                classNames={inputStyleConfig}
+                isDisabled={isLoading}
+              />
+            </div>
+            <div className="flex justify-end">
+              <Link
+                to="/forgot-password"
+                className="text-tertiary font-poppins"
+              >
+                ¿Olvidaste tu password?
+              </Link>
+            </div>
+            <div className="flex justify-center">
+              <Button
+                isDisabled={enableButton || isLoading}
+                type="submit"
+                color="primary"
+                variant="solid"
+                size="lg"
+                endContent={<LoginIcon />}
+                className={buttonStyleConfig}
+              >
+                Iniciar sesión
+              </Button>
+            </div>
+            <div className="flex justify-center gap-1 font-medium font-poppins">
+              <span>¿Necesitas crear una cuenta?</span>
+              <Link to="/register" className="text-tertiary">
+                Regístrate
+              </Link>
+              <div></div>
+            </div>
+          </Form>
+        </Panel>
+      </section>
     </main>
   );
 };

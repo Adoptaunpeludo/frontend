@@ -1,92 +1,67 @@
 import { createContext, useContext, useEffect, useRef, useState } from 'react';
 import { WB_SERVER } from '../config/config';
-import { useQueryClient } from '@tanstack/react-query';
-import { useNotificationsContext } from './NotificationsContext';
 
 const WebSocketContext = createContext();
 
-const WebSocketContextProvider = ({ children, user }) => {
+const WebSocketContextProvider = ({ children }) => {
   const [isReady, setIsReady] = useState(false);
-  const [message, setMessage] = useState(null);
-  const { setNotifications } = useNotificationsContext();
-  const queryClient = useQueryClient();
+  const [val, setVal] = useState(null);
 
   const ws = useRef(null);
 
   useEffect(() => {
-    const connectToSocketServer = async () => {
+    const connectToServer = () => {
       const socket = new WebSocket(WB_SERVER);
-
+      let interval;
       socket.onopen = () => {
-        setIsReady(true);
         console.log('Connected to ws server');
-        const pingInterval = setInterval(() => {
-          if (socket.readyState === socket.OPEN) {
+        setIsReady(true);
+
+        interval = setInterval(() => {
+          if (socket.readyState === WebSocket.OPEN)
             socket.send(JSON.stringify({ type: 'ping' }));
-          }
         }, 58000);
-
-        if (socket.readyState !== 0)
-          socket.send(JSON.stringify({ token: user?.wsToken }));
-
-        socket.onmessage = (event) => {
-          const message = JSON.parse(event.data);
-          const { type, ...data } = message;
-          if (type === 'pong') {
-            clearInterval(pingInterval);
-          }
-
-          if (type === 'animal-changed') {
-            setNotifications((notifications) => [...notifications, data]);
-            queryClient.invalidateQueries({
-              queryKey: ['animals'],
-            });
-            queryClient.invalidateQueries({
-              queryKey: ['animal-details', data.animalSlug],
-            });
-          }
-
-          if (type.startsWith('user')) {
-            const { username } = message;
-            queryClient.invalidateQueries({
-              queryKey: ['shelters'],
-            });
-            queryClient.invalidateQueries({
-              queryKey: ['shelter-details', username],
-            });
-            queryClient.invalidateQueries({
-              queryKey: ['animals'],
-            });
-            queryClient.invalidateQueries({
-              queryKey: ['animal-details'],
-            });
-          }
-        };
-
-        socket.onclose = () => {
-          setIsReady(false);
-          console.log('Disconnected from ws server');
-          clearInterval(pingInterval);
-          // setTimeout(() => {
-          //   connectToSocketServer();
-          //   //* TODO: Random number
-          // }, 10000);
-        };
+      };
+      socket.onmessage = (event) => setVal(event.data);
+      socket.onclose = () => {
+        console.log('Disconnected from ws server');
+        clearInterval(interval);
+        setIsReady(false);
+        const minReconnectDelay = 10000;
+        const maxReconnectDelay = 30000;
+        const reconnectDelay =
+          Math.floor(
+            Math.random() * (maxReconnectDelay - minReconnectDelay + 1)
+          ) + minReconnectDelay;
+        setTimeout(() => {
+          console.log('Attempting to reconnect to ws server...');
+          connectToServer();
+        }, reconnectDelay);
       };
 
-      socket.onmessage = (event) => setMessage(event.data);
-
       ws.current = socket;
+
+      return () => {
+        console.log('Disconnected from ws server');
+        clearInterval(interval);
+        socket.close();
+      };
     };
-    connectToSocketServer();
-  }, [queryClient, user]);
+    connectToServer();
+  }, []);
 
   return (
-    <WebSocketContext.Provider value={{ isReady, message, socket: ws.current }}>
+    <WebSocketContext.Provider
+      value={{ isReady, val, send: ws.current?.send.bind(ws.current) }}
+    >
       {children}
     </WebSocketContext.Provider>
   );
 };
+
+// const getRandomReconnectDelay = () => {
+//   return Math.floor(Math.random() * 10000) + 5000;
+// };
 
 const useWebSocketContext = () => {
   const context = useContext(WebSocketContext);

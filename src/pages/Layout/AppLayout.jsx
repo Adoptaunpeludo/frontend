@@ -9,10 +9,15 @@ import Footer from './Footer';
 import Header from './Header';
 import { userQuery } from '../Private/useUser';
 import { userNotificationsQuery } from '../Private/useNotifications';
-import { WebSocketContextProvider } from '../../context/WebSocketContext';
-import { NotificationsContextProvider } from '../../context/NotificationsContext';
+import { useWebSocketContext } from '../../context/WebSocketContext';
+import { useEffect } from 'react';
+import { useQueryClient } from '@tanstack/react-query';
+import { useNotificationsContext } from '../../context/NotificationsContext';
 
 export const loader = (queryClient) => async () => {
+  const isLoggedIn = localStorage.getItem('isLoggedIn') === 'true';
+  if (!isLoggedIn) return { user: null, notifications: null };
+
   try {
     const [user, notifications] = await Promise.all([
       await queryClient.ensureQueryData(userQuery),
@@ -27,18 +32,79 @@ export const loader = (queryClient) => async () => {
 const AppLayout = () => {
   const navigate = useNavigate();
   const { user, notifications } = useLoaderData();
+  const { send, isReady, val } = useWebSocketContext();
+  const queryClient = useQueryClient();
+  const { setNotifications } = useNotificationsContext();
+
+  useEffect(() => {
+    if (isReady)
+      send(
+        JSON.stringify({
+          type: 'user-login',
+          token: user?.wsToken,
+          username: user?.username,
+        })
+      );
+  }, [isReady, user, send]);
+
+  useEffect(() => {
+    if (val && isReady) {
+      const message = JSON.parse(val);
+      const { type, ...data } = message;
+      switch (type) {
+        case 'chat-created':
+          queryClient.invalidateQueries({
+            queryKey: ['user-chats', data.shelterUsername],
+          });
+          break;
+        case 'animal-changed':
+          setNotifications((notifications) => [...notifications, data]);
+          queryClient.invalidateQueries({
+            queryKey: ['animals'],
+          });
+          queryClient.invalidateQueries({
+            queryKey: ['animal-details', data.animalSlug],
+          });
+          break;
+        case 'user-connected':
+          queryClient.invalidateQueries({
+            queryKey: ['shelters'],
+          });
+          queryClient.invalidateQueries({
+            queryKey: ['shelter-details', message.username],
+          });
+          queryClient.invalidateQueries({
+            queryKey: ['animals'],
+          });
+          queryClient.invalidateQueries({
+            queryKey: ['animal-details'],
+          });
+          break;
+        case 'user-disconnected':
+          queryClient.invalidateQueries({
+            queryKey: ['shelters'],
+          });
+          queryClient.invalidateQueries({
+            queryKey: ['shelter-details', message.username],
+          });
+          queryClient.invalidateQueries({
+            queryKey: ['animals'],
+          });
+          queryClient.invalidateQueries({
+            queryKey: ['animal-details'],
+          });
+          break;
+      }
+    }
+  }, [isReady, val, queryClient, setNotifications]);
 
   return (
     <>
       <NextUIProvider navigate={navigate}>
         <div className="min-h-screen flex flex-col">
-          <NotificationsContextProvider>
-            <WebSocketContextProvider user={user}>
-              <Header />
-              <Outlet context={{ user, notifications }} />
-              <Footer />
-            </WebSocketContextProvider>
-          </NotificationsContextProvider>
+          <Header />
+          <Outlet context={{ user, notifications }} />
+          <Footer />
         </div>
         <ScrollRestoration />
       </NextUIProvider>

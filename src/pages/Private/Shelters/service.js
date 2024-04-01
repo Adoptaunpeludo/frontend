@@ -13,3 +13,9 @@ export const getUserFavs = async () => {
 
   return data;
 };
+
+export const getUserChats = async () => {
+  const { data } = await fetchData('/chats');
+
+  return data;
+};

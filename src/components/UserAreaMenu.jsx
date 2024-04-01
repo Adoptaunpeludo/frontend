@@ -12,24 +12,34 @@ import { useQueryClient } from '@tanstack/react-query';
 import { useNavigate } from 'react-router-dom';
 import { BUCKET_URL } from '../config/config.js';
 import { logout } from '../pages/Auth/authService.js';
-import { useWebSocketContext } from '../context/WebSocketContext.jsx';
 import { toast } from 'react-toastify';
 import { useNotifications } from '../pages/Private/useNotifications.js';
 import { useEffect } from 'react';
 import { useNotificationsContext } from '../context/NotificationsContext.jsx';
+import { useWebSocketContext } from '../context/WebSocketContext.jsx';
 
 export const UserAreaMenu = ({ user }) => {
-  const { socket } = useWebSocketContext();
-
   const { data: userNotifications, isFetching } = useNotifications();
   const { notifications, setNotifications } = useNotificationsContext();
+  const { isReady, send } = useWebSocketContext();
   const navigate = useNavigate();
   const queryClient = useQueryClient();
 
+  console.log({ userNotifications });
+
   const handleLogout = async () => {
+    localStorage.setItem('isLoggedIn', false);
     try {
       await logout();
-      socket.close();
+      if (isReady) {
+        send(
+          JSON.stringify({
+            type: 'user-logout',
+            username: user?.username,
+            userId: user?.id,
+          })
+        );
+      }
       queryClient.removeQueries({
         queryKey: ['user'],
       });
@@ -42,7 +52,9 @@ export const UserAreaMenu = ({ user }) => {
       queryClient.removeQueries({
         queryKey: ['user-animals'],
       });
-
+      queryClient.removeQueries({
+        queryKey: ['user-chats'],
+      });
       navigate('/');
     } catch (error) {
       toast.error('Error haciendo logout');
@@ -95,7 +107,7 @@ export const UserAreaMenu = ({ user }) => {
         </DropdownItem>
         <DropdownItem key="profile" textValue="user profile">
           <Link
-            href={`/private/${user?.role}`}
+            href={`/private/${user?.role}/${user?.username}`}
             color="foreground"
             className="capitalize w-full"
           >

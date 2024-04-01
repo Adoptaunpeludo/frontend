@@ -9,6 +9,7 @@ const TextMessageBox = ({
   placeholder = '',
   disableCorrections = false,
   onDeleteMessages,
+  page = '',
 }) => {
   const [message, setMessage] = useState('');
   const inputRef = useRef(null);
@@ -30,7 +31,7 @@ const TextMessageBox = ({
     >
       <div className="flex-grow">
         <div className="relative w-full  rounded-md flex gap-1 ">
-          <DeleteModal deleteMessages={onDeleteMessages} />
+          {!page && <DeleteModal deleteMessages={onDeleteMessages} />}
           <Input
             ref={inputRef}
             type="text"

@@ -59,6 +59,7 @@ export default function DeleteModal({ deleteMessages }) {
         isOpen={isOpen}
         onOpenChange={onOpenChange}
         className={`text-foreground bg-background border border-white`}
+        placement="center"
       >
         <ModalContent>
           {(onClose) => (

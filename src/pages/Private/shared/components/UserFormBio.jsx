@@ -130,19 +130,16 @@ export const UserFormBio = ({ data }) => {
                           type="text"
                           label="DNI"
                           name="dni"
-                          defaultValue={dni}
+                          defaultValue={dni ? dni : ''}
                           color={errors.dni ? 'danger' : 'none'}
                           errorMessage={errors.dni}
-                          onChange={handleChange}
-                          placeholder={
-                            dni === null ? 'Introduce tu DNI, 99999999X' : dni
-                          }
+                          onBlur={handleChange}
+                          placeholder={'Introduce tu DNI, 99999999X'}
                           classNames={inputStyleConfig}
                         />
                       </div>
                       <div className="flex w-full flex-wrap md:flex-nowrap gap-4">
                         <Input
-                          isRequired
                           isDisabled={isSubmitting}
                           className="min-w-72 "
                           type="text"
@@ -152,11 +149,11 @@ export const UserFormBio = ({ data }) => {
                           placeholder="Introduce tu Nombre"
                           color={errors.firstName ? 'danger' : 'none'}
                           errorMessage={errors.firstName}
-                          onChange={handleChange}
+                          onBlur={handleChange}
+                          isRequired
                           classNames={inputStyleConfig}
                         />
                         <Input
-                          isRequired
                           isDisabled={isSubmitting}
                           className="min-w-72 "
                           type="text"
@@ -166,21 +163,22 @@ export const UserFormBio = ({ data }) => {
                           placeholder="Introduce tus apellidos"
                           color={errors.lastName ? 'danger' : 'none'}
                           errorMessage={errors.lastName}
-                          onChange={handleChange}
+                          onBlur={handleChange}
+                          isRequired
                           classNames={inputStyleConfig}
                         />
                       </div>
                       <div className="flex w-full flex-wrap md:flex-nowrap gap-4">
                         <Input
-                          isRequired
                           isDisabled={isSubmitting}
                           className="min-w-72 "
                           type="tel"
                           label="Teléfono"
                           name="phoneNumber"
                           defaultValue={phoneNumber ? phoneNumber : ''}
-                          placeholder="Introduce tu número de teléfono"
                           color={errors.phoneNumber ? 'danger' : 'none'}
+                          placeholder="Introduce tu número de teléfono"
+                          onBlur={handleChange}
                           errorMessage={errors.phoneNumber}
                           onChange={handleChange}
                           classNames={inputStyleConfig}
