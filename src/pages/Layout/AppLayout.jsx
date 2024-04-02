@@ -57,8 +57,6 @@ const AppLayout = () => {
         //   });
         //   break;
         case 'animal-changed-push-notification':
-          setNotifications((notifications) => [...notifications, data]);
-          console.log({ data });
           queryClient.invalidateQueries({
             queryKey: ['animals'],
           });
@@ -68,12 +66,17 @@ const AppLayout = () => {
           queryClient.invalidateQueries({
             queryKey: ['shelters-animals', data.createdBy],
           });
+          queryClient.invalidateQueries({
+            queryKey: ['user-notifications'],
+          });
 
           break;
         case 'new-chat-push-notification':
-          setNotifications((notifications) => [...notifications, data]);
           queryClient.invalidateQueries({
             queryKey: ['user-chats', data.username],
+          });
+          queryClient.invalidateQueries({
+            queryKey: ['user-notifications'],
           });
           break;
         case 'user-connected':
