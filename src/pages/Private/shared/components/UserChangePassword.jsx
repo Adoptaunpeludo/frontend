@@ -21,9 +21,10 @@ import {
   inputStyleConfig,
 } from '../../../../utils/configFormFields';
 import { validateField } from '../../../../utils/validateField';
+import { updatePassword } from '../service/ChangePasswordService';
 
 export const UserChangePassword = () => {
-  const { isOpen, onOpen, onOpenChange } = useDisclosure();
+  const { isOpen, onOpen, onOpenChange, onClose } = useDisclosure();
   const [isLoading, setIsLoading] = useState(false);
   const [credentials, setCredentials] = useState({});
   const [errors, setErrors] = useState({});
@@ -46,6 +47,7 @@ export const UserChangePassword = () => {
   const queryClient = useQueryClient();
 
   const handleSubmit = async (onClose) => {
+    console.log({ onClose }, 'esto llega al cerrar');
     try {
       setIsLoading(true);
       await updatePassword(passwordPair);
@@ -150,8 +152,7 @@ export const UserChangePassword = () => {
                     // isDisabled={enableButton}
                     type="submit"
                     name="intent"
-                    value="change-password"
-                    onPress={() => handleSubmit(onClose)}
+                    value={'change-password'}
                   >
                     Enviar
                   </Button>
