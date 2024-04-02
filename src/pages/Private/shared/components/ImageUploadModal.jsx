@@ -33,16 +33,10 @@ const ImageUploadModal = ({ page, id, slug }) => {
 
   const imageFileValidation = (event, maxSize) => {
     const file = event.target.files.item(0);
-    const allowedMimeTypes = [
-      'image/jpeg',
-      'image/png',
-      'image/gif',
-      'image/webp',
-    ];
     const fileType = file.type;
 
-    if (!allowedMimeTypes.includes(fileType)) {
-      setFileError('Solo se admiten archivos tipo jpeg/jpg, png o gif');
+    if (!fileType.startsWith('image/')) {
+      setFileError('Solo se admiten archivos de imagen');
       return;
     }
 
