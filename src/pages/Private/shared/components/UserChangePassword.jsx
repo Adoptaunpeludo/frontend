@@ -10,74 +10,77 @@ import {
   useDisclosure,
 } from '@nextui-org/react';
 import { IconCircleX, IconKey, IconSend2 } from '@tabler/icons-react';
-import { useQueryClient } from '@tanstack/react-query';
-import { useState } from 'react';
-import { Form } from 'react-router-dom';
-import { toast } from 'react-toastify';
+// import { useQueryClient } from '@tanstack/react-query';
+// import { useState } from 'react';
+import { Form, useNavigation } from 'react-router-dom';
+// import { toast } from 'react-toastify';
 
 import { H3Title } from '../../../../components';
 import {
   buttonStyleConfig,
   inputStyleConfig,
 } from '../../../../utils/configFormFields';
-import { validateField } from '../../../../utils/validateField';
-import { updatePassword } from '../service/ChangePasswordService';
+// import { validateField } from '../../../../utils/validateField';
+// import { updatePassword } from '../service/ChangePasswordService';
 
 export const UserChangePassword = () => {
-  const { isOpen, onOpen, onOpenChange, onClose } = useDisclosure();
-  const [isLoading, setIsLoading] = useState(false);
-  const [credentials, setCredentials] = useState({});
-  const [errors, setErrors] = useState({});
-  const handleChange = (event) => {
-    const { name, value } = event.target;
-    setCredentials({ ...credentials, [name]: value });
-    setErrors({
-      ...errors,
-      [name]: validateField(name, value, credentials.password),
-    });
-    console.log({ errors }, ' mis credentials');
-  };
-  const isFormValid = Object.values(errors).every((error) => error === '');
-  const enableButton = !(
-    credentials.password &&
-    credentials.password === credentials.repeatPassword &&
-    isFormValid
-  );
+  const { isOpen, onOpen, onOpenChange } = useDisclosure();
+  const navigation = useNavigation();
 
-  const queryClient = useQueryClient();
+  const isLoading = navigation.state === 'submitting';
+  // const [isLoading, setIsLoading] = useState(false);
+  // const [credentials, setCredentials] = useState({});
+  // const [errors, setErrors] = useState({});
+  // const handleChange = (event) => {
+  //   const { name, value } = event.target;
+  //   setCredentials({ ...credentials, [name]: value });
+  //   setErrors({
+  //     ...errors,
+  //     [name]: validateField(name, value, credentials.password),
+  //   });
+  //   console.log({ errors }, ' mis credentials');
+  // };
+  // const isFormValid = Object.values(errors).every((error) => error === '');
+  // const enableButton = !(
+  //   credentials.password &&
+  //   credentials.password === credentials.repeatPassword &&
+  //   isFormValid
+  // );
 
-  const handleSubmit = async (onClose) => {
-    console.log({ onClose }, 'esto llega al cerrar');
-    try {
-      setIsLoading(true);
-      await updatePassword(passwordPair);
-      toast.success('Password cambiada con éxito');
-      onClose();
-    } catch (error) {
-      toast.error('Error al cambiar password');
-      console.log(error);
-    } finally {
-      setIsLoading(false);
-    }
-  };
+  // const queryClient = useQueryClient();
+
+  // const handleSubmit = async (onClose) => {
+  //   console.log({ onClose }, 'esto llega al cerrar');
+  //   try {
+  //     setIsLoading(true);
+  //     await updatePassword(passwordPair);
+  //     toast.success('Password cambiada con éxito');
+  //     onClose();
+  //   } catch (error) {
+  //     toast.error('Error al cambiar password');
+  //     console.log(error);
+  //   } finally {
+  //     setIsLoading(false);
+  //   }
+  // };
 
   return (
-    <Form className="mt-4" method="post">
-      <Button
-        color="primary"
-        size="md"
-        startContent={<IconKey />}
-        onPress={onOpen}
-        className={buttonStyleConfig}
+    <Button
+      color="primary"
+      size="md"
+      startContent={<IconKey />}
+      onPress={onOpen}
+      className={buttonStyleConfig}
+    >
+      Cambiar password
+      <Modal
+        isOpen={isOpen}
+        onOpenChange={onOpenChange}
+        placement="center"
+        className={`text-foreground bg-background border border-white`}
+        size="lg"
       >
-        Cambiar password
-        <Modal
-          isOpen={isOpen}
-          onOpenChange={onOpenChange}
-          placement="center"
-          className={`text-foreground bg-background border border-white`}
-          size="lg"
-        >
+        <Form className="mt-4" method="post">
           <ModalContent>
             {(onClose) => (
               <>
@@ -99,9 +102,9 @@ export const UserChangePassword = () => {
                         type="password"
                         label="Password actual"
                         placeholder="Introduce tu password actual"
-                        color={errors.password ? 'danger' : 'none'}
-                        errorMessage={errors.password}
-                        onBlur={handleChange}
+                        // color={errors.password ? 'danger' : 'none'}
+                        // errorMessage={errors.password}
+                        // onBlur={handleChange}
                         isRequired
                       />
                       <Input
@@ -111,9 +114,9 @@ export const UserChangePassword = () => {
                         type="password"
                         label="Nueva password"
                         placeholder="Introduce tu nueva password"
-                        color={errors.password ? 'danger' : 'none'}
-                        errorMessage={errors.password}
-                        onBlur={handleChange}
+                        // color={errors.password ? 'danger' : 'none'}
+                        // errorMessage={errors.password}
+                        // onBlur={handleChange}
                         isRequired
                       />
 
@@ -124,9 +127,9 @@ export const UserChangePassword = () => {
                         type="password"
                         label="Confirmar password"
                         placeholder="Introduce tu password"
-                        color={errors.repeatPassword ? 'danger' : 'none'}
-                        errorMessage={errors.repeatPassword}
-                        onBlur={handleChange}
+                        // color={errors.repeatPassword ? 'danger' : 'none'}
+                        // errorMessage={errors.repeatPassword}
+                        // onBlur={handleChange}
                         isRequired
                       />
                     </>
@@ -160,8 +163,8 @@ export const UserChangePassword = () => {
               </>
             )}
           </ModalContent>
-        </Modal>
-      </Button>
-    </Form>
+        </Form>
+      </Modal>
+    </Button>
   );
 };

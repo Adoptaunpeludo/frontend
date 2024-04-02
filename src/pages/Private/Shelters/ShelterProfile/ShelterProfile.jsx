@@ -73,6 +73,7 @@ export const action =
         throw error;
       }
     }
+
     if (intent === 'change-password') {
       console.log('quiero cambiar');
       try {
