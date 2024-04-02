@@ -20,11 +20,15 @@ import {
   buttonStyleConfig,
   inputStyleConfig,
 } from '../../../../utils/configFormFields';
+import { useModalContext } from '../../../../context/ModalContext';
+import { useEffect } from 'react';
 // import { validateField } from '../../../../utils/validateField';
 // import { updatePassword } from '../service/ChangePasswordService';
 
 export const UserChangePassword = () => {
-  const { isOpen, onOpen, onOpenChange } = useDisclosure();
+  const updatePasswordModal = useDisclosure();
+  const { isOpen, onOpen, onOpenChange } = updatePasswordModal;
+  const { saveUpdatePasswordModal } = useModalContext();
   const navigation = useNavigation();
 
   const isLoading = navigation.state === 'submitting';
@@ -63,6 +67,10 @@ export const UserChangePassword = () => {
   //     setIsLoading(false);
   //   }
   // };
+
+  useEffect(() => {
+    saveUpdatePasswordModal(updatePasswordModal);
+  }, []);
 
   return (
     <Button

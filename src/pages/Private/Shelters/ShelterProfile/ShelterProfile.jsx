@@ -39,7 +39,7 @@ export const loader =
   };
 
 export const action =
-  (closeBioModal, closeShelterModal, queryClient) =>
+  (closeBioModal, closeShelterModal, closeUpdatePasswordModal, queryClient) =>
   async ({ request }) => {
     let formData = await request.formData();
     let intent = formData.get('intent');
@@ -82,6 +82,7 @@ export const action =
           queryKey.includes('animals')
         );
         toast.success(`Password cambiada con éxito`);
+        closeUpdatePasswordModal();
         return null;
       } catch (error) {
         if (isAxiosError(error) && error.response.status === 400)
