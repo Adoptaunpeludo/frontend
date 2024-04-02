@@ -29,7 +29,6 @@ export const loader = (queryClient) => async () => {
 
 const AppLayout = () => {
   const navigate = useNavigate();
-  // const { user, notifications } = useLoaderData();
   const { data: user } = useUser();
   const { data: notifications } = useNotifications();
   const { send, isReady, val } = useWebSocketContext();
@@ -58,18 +57,26 @@ const AppLayout = () => {
         //   });
         //   break;
         case 'animal-changed-push-notification':
-          setNotifications((notifications) => [...notifications, data]);
           queryClient.invalidateQueries({
             queryKey: ['animals'],
           });
           queryClient.invalidateQueries({
             queryKey: ['animal-details', data.animalSlug],
           });
+          queryClient.invalidateQueries({
+            queryKey: ['shelters-animals', data.createdBy],
+          });
+          queryClient.invalidateQueries({
+            queryKey: ['user-notifications'],
+          });
+
           break;
         case 'new-chat-push-notification':
-          setNotifications((notifications) => [...notifications, data]);
           queryClient.invalidateQueries({
             queryKey: ['user-chats', data.username],
+          });
+          queryClient.invalidateQueries({
+            queryKey: ['user-notifications'],
           });
           break;
         case 'user-connected':
@@ -85,6 +92,9 @@ const AppLayout = () => {
           queryClient.invalidateQueries({
             queryKey: ['animal-details'],
           });
+          queryClient.invalidateQueries({
+            queryKey: ['shelters-animals', message.username],
+          });
           break;
         case 'user-disconnected':
           queryClient.invalidateQueries({
@@ -98,6 +108,9 @@ const AppLayout = () => {
           });
           queryClient.invalidateQueries({
             queryKey: ['animal-details'],
+          });
+          queryClient.invalidateQueries({
+            queryKey: ['shelters-animals', message.username],
           });
           break;
       }

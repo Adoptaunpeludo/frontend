@@ -135,7 +135,7 @@ const router = (
           loader: animalsLoader(queryClient, 'cats'),
         },
         {
-          path: '/animals/cats/:slug',
+          path: 'animals/cats/:slug',
           element: <AnimalDetailsPage />,
           loader: animalDetailsLoader(queryClient),
         },
@@ -145,7 +145,7 @@ const router = (
           loader: animalsLoader(queryClient, 'dogs'),
         },
         {
-          path: '/animals/dogs/:slug',
+          path: 'animals/dogs/:slug',
           element: <AnimalDetailsPage />,
           loader: animalDetailsLoader(queryClient),
         },
