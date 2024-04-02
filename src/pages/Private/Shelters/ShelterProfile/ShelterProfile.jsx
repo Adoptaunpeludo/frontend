@@ -43,7 +43,7 @@ export const action =
   async ({ request }) => {
     let formData = await request.formData();
     let intent = formData.get('intent');
-    console.log('el intent ', intent);
+
     if (intent === 'shelter-profile' || intent === 'user-profile') {
       try {
         await updateProfile(formData, intent);
@@ -75,12 +75,8 @@ export const action =
     }
 
     if (intent === 'change-password') {
-      console.log('quiero cambiar');
       try {
         await updatePassword(formData);
-        await queryClient.invalidateQueries((queryKey) =>
-          queryKey.includes('animals')
-        );
         toast.success(`Password cambiada con éxito`);
         closeUpdatePasswordModal();
         return null;
