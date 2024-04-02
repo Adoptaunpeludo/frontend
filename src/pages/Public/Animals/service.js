@@ -19,3 +19,9 @@ export const deleteFav = async (id) => {
 
   return data;
 };
+
+export const createChat = async (room) => {
+  const { data } = await postData(`/chats`, { room });
+
+  return data;
+};

@@ -25,8 +25,6 @@ export const UserAreaMenu = ({ user }) => {
   const navigate = useNavigate();
   const queryClient = useQueryClient();
 
-  console.log({ userNotifications });
-
   const handleLogout = async () => {
     localStorage.setItem('isLoggedIn', false);
     try {
@@ -64,13 +62,13 @@ export const UserAreaMenu = ({ user }) => {
   };
 
   useEffect(() => {
-    setNotifications(userNotifications?.notifications);
+    setNotifications(userNotifications);
   }, [userNotifications, setNotifications]);
 
   return (
     <Dropdown placement="bottom-end">
       <Badge
-        content={notifications?.length}
+        content={notifications?.unread}
         size="lg"
         color="primary"
         placement="top-left"

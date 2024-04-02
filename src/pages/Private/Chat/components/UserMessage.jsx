@@ -1,8 +1,8 @@
 import { Avatar } from '@nextui-org/react';
-import { BUCKET_URL } from '../../../../config/config';
 import { IconUserFilled } from '@tabler/icons-react';
+import { BUCKET_URL } from '../../../../config/config';
 
-const UserMessage = ({ text, isSender, avatar }) => {
+const UserMessage = ({ text, isSender, avatar, user = '' }) => {
   return (
     <div
       className={
@@ -30,6 +30,10 @@ const UserMessage = ({ text, isSender, avatar }) => {
               : 'relative ml-3 text-medium bg-primary bg-opacity-25 pt-3 pb-2 px-4 shadow-xl rounded-xl'
           }
         >
+          <p className="font-poppins text-xs font-semibold">
+            {!isSender ? user : ''}
+          </p>
+
           {text}
         </div>
       </div>

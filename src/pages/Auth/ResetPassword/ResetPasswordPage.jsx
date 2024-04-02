@@ -1,10 +1,15 @@
-import { TitleSection } from '../../../components';
-import { resetPassword } from '../../Auth/authService.js';
 import { Button, Input } from '@nextui-org/react';
-import { Form } from 'react-router-dom';
-import { resendValidationEmail } from '../authService';
+import { Form, redirect, useNavigation } from 'react-router-dom';
+import { toast } from 'react-toastify';
+import { H3Title } from '../../../components/H3Title.jsx';
+import { LogoHeader } from '../../../components/LogoHeader.jsx';
+import { Panel } from '../../../components/Panel.jsx';
+import {
+  buttonStyleConfig,
+  inputStyleConfig,
+} from '../../../utils/configFormFields.js';
+import { resetPassword } from '../../Auth/authService.js';
 
-// TODO: Refactorizar codico de comprovación de contraseña, se repite logica como en Regist
 export const action = async ({ request, params }) => {
   const formData = await request.formData();
   const credentials = Object.fromEntries(formData);
@@ -16,38 +21,47 @@ export const action = async ({ request, params }) => {
   try {
     if (isEqualPass) {
       const res = await resetPassword({ password, token });
-      console.log({ password, repeatPassword, isEqualPass, res });
 
-      if (res.status === 400) throw new Error(res.response.data.message);
-      if (res.status === 500) throw new Error(res.response.data.message);
-
+      toast.success('Contraseña cambiada');
+      return redirect('/login');
+    } else {
+      toast.error('Las contraseñas no coinciden');
       return null;
     }
   } catch (error) {
-    console.log({ error });
+    toast.error(error.response.data.message);
     return null;
   }
 };
 
 const ResetPasswordPage = () => {
+  const navigation = useNavigation();
+  const isSubmitting = navigation.state === 'submitting';
   return (
-    <main className="flex-1 flex flex-col items-center justify-center">
-      <TitleSection className="w-full" title="Reseteo de la contraseña" />
-      <div className="flex-1 w-full flex justify-center items-center">
-        <div className="bg-white shadow-lg rounded-lg p-8 mx-auto my-8 max-w-lg w-full">
-          <h3 className="flex justify-center text-center text-balance">
-            Introduce tu nueva contraseña
-            {/*{success ? <RenderSuccessMessage /> : <RenderErrorMessage />}*/}
-          </h3>
-          <Form method="post" className="flex flex-col gap-6 max-w-lg pt-8">
+    <main className="bg-default-100 flex-grow">
+      <section
+        id="ResetPasswordPage"
+        className="max-w-screen-xl w-full flex flex-col gap-3 justify-center py-10 mx-auto  "
+      >
+        <LogoHeader className={'mx-auto'} />
+        <Panel className={'max-w-md mx-auto'}>
+          <Form
+            method="post"
+            className="flex flex-col gap-6  mx-auto px-10 py-8"
+          >
+            <H3Title
+              title="Introduce tu nueva contraseña"
+              className={'normal-case text-pretty'}
+            />
             <Input
               name="password"
               className="min-w-72 "
-              classNames={{ inputWrapper: 'border-1 border-primary' }}
+              classNames={inputStyleConfig}
               type="password"
               label="Password"
               placeholder="Introduce tu password"
-              value="P@ssw0rda"
+              isDisabled={isSubmitting}
+              // value="P@ssw0rda"
               //  color={errors.password ? 'danger' : 'none'}
               //  errorMessage={errors.password}
               //  onChange={handleChange}
@@ -56,22 +70,30 @@ const ResetPasswordPage = () => {
             <Input
               name="repeatPassword"
               className="min-w-72 "
-              classNames={{ inputWrapper: 'border-1 border-primary' }}
+              classNames={inputStyleConfig}
               type="password"
               label="confirmar password"
               placeholder="Introduce tu password"
-              value="P@ssw0rda"
+              isDisabled={isSubmitting}
+              // value="P@ssw0rda"
               //  color={errors.repeatPassword ? 'danger' : 'none'}
               //  errorMessage={errors.repeatPassword}
               //  onChange={handleChange}
               isRequired
             />
-            <Button type="submit" color="primary" variant="solid" size="lg">
+            <Button
+              type="submit"
+              color="primary"
+              variant="solid"
+              size="lg"
+              isLoading={isSubmitting}
+              className={buttonStyleConfig}
+            >
               Cambiar contraseña
             </Button>
           </Form>
-        </div>
-      </div>
+        </Panel>
+      </section>
     </main>
   );
 };

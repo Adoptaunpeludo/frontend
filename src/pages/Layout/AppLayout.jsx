@@ -1,14 +1,12 @@
 import { NextUIProvider } from '@nextui-org/react';
-import {
-  Outlet,
-  ScrollRestoration,
-  useLoaderData,
-  useNavigate,
-} from 'react-router-dom';
+import { Outlet, ScrollRestoration, useNavigate } from 'react-router-dom';
 import Footer from './Footer';
 import Header from './Header';
-import { userQuery } from '../Private/useUser';
-import { userNotificationsQuery } from '../Private/useNotifications';
+import { useUser, userQuery } from '../Private/useUser';
+import {
+  useNotifications,
+  userNotificationsQuery,
+} from '../Private/useNotifications';
 import { useWebSocketContext } from '../../context/WebSocketContext';
 import { useEffect } from 'react';
 import { useQueryClient } from '@tanstack/react-query';
@@ -31,7 +29,8 @@ export const loader = (queryClient) => async () => {
 
 const AppLayout = () => {
   const navigate = useNavigate();
-  const { user, notifications } = useLoaderData();
+  const { data: user } = useUser();
+  const { data: notifications } = useNotifications();
   const { send, isReady, val } = useWebSocketContext();
   const queryClient = useQueryClient();
   const { setNotifications } = useNotificationsContext();
@@ -52,18 +51,32 @@ const AppLayout = () => {
       const message = JSON.parse(val);
       const { type, ...data } = message;
       switch (type) {
-        case 'chat-created':
-          queryClient.invalidateQueries({
-            queryKey: ['user-chats', data.shelterUsername],
-          });
-          break;
-        case 'animal-changed':
-          setNotifications((notifications) => [...notifications, data]);
+        // case 'chat-created':
+        //   queryClient.invalidateQueries({
+        //     queryKey: ['user-chats', data.shelterUsername],
+        //   });
+        //   break;
+        case 'animal-changed-push-notification':
           queryClient.invalidateQueries({
             queryKey: ['animals'],
           });
           queryClient.invalidateQueries({
             queryKey: ['animal-details', data.animalSlug],
+          });
+          queryClient.invalidateQueries({
+            queryKey: ['shelters-animals', data.createdBy],
+          });
+          queryClient.invalidateQueries({
+            queryKey: ['user-notifications'],
+          });
+
+          break;
+        case 'new-chat-push-notification':
+          queryClient.invalidateQueries({
+            queryKey: ['user-chats', data.username],
+          });
+          queryClient.invalidateQueries({
+            queryKey: ['user-notifications'],
           });
           break;
         case 'user-connected':
@@ -79,6 +92,9 @@ const AppLayout = () => {
           queryClient.invalidateQueries({
             queryKey: ['animal-details'],
           });
+          queryClient.invalidateQueries({
+            queryKey: ['shelters-animals', message.username],
+          });
           break;
         case 'user-disconnected':
           queryClient.invalidateQueries({
@@ -93,10 +109,17 @@ const AppLayout = () => {
           queryClient.invalidateQueries({
             queryKey: ['animal-details'],
           });
+          queryClient.invalidateQueries({
+            queryKey: ['shelters-animals', message.username],
+          });
           break;
       }
     }
   }, [isReady, val, queryClient, setNotifications]);
+
+  useEffect(() => {
+    localStorage.setItem('isLoggedIn', user ? true : false);
+  }, [user]);
 
   return (
     <>

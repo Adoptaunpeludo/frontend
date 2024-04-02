@@ -1,5 +1,4 @@
 import { useLoaderData } from 'react-router';
-import { useNavigation, useOutletContext } from 'react-router-dom';
 
 import { Skeleton } from '@nextui-org/react';
 import {
@@ -10,6 +9,7 @@ import {
 } from '../../../components';
 import { animalsQuery, useAnimals } from '../Landing/useAnimals';
 import { PetCard } from './components/PetCard';
+import { useUser } from '../../Private/useUser';
 
 export const loader =
   (queryClient, page) =>
@@ -28,15 +28,12 @@ export const loader =
   };
 
 const AnimalsPage = ({ page }) => {
-  const { user } = useOutletContext();
+  const { data: user, isFetching: isLoading } = useUser();
   const { params, filters } = useLoaderData();
-  const navigation = useNavigation();
 
   const { shelterName } = params;
 
   const { data: animals } = useAnimals(page, filters, params);
-
-  const isLoading = navigation.state === 'loading';
   const isLogged = user !== null;
 
   return (
@@ -49,20 +46,26 @@ const AnimalsPage = ({ page }) => {
             <TitleSection title={shelterName} />
           )}
 
-          <FilterBar page={page} />
+          <FilterBar page={shelterName ? shelterName : page} />
         </header>
         <section className="flex flex-col flex-auto">
           <ul className="flex justify-center gap-4 flex-wrap p-6">
             {animals?.animals.length > 0 ? (
-              animals?.animals.map((animal) => (
-                <Skeleton isLoaded={!isLoading} key={animal.id}>
-                  <PetCard
-                    key={animal.id}
-                    animal={animal}
-                    isLogged={isLogged}
-                  />
-                </Skeleton>
-              ))
+              animals?.animals.map((animal) => {
+                if (animal.status !== 'adopted') {
+                  return (
+                    <Skeleton isLoaded={!isLoading} key={animal.id}>
+                      <PetCard
+                        key={animal.id}
+                        animal={animal}
+                        isLogged={isLogged}
+                      />
+                    </Skeleton>
+                  );
+                } else {
+                  return null;
+                }
+              })
             ) : (
               <NoData />
             )}

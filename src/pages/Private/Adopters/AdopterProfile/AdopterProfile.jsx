@@ -1,27 +1,39 @@
-import { TitleSection } from '../../../../components';
+import { H2Title, TitleSection } from '../../../../components';
 import { DeleteUserModal, ImagesFrame, StatusAnimalsTable } from '../../shared';
 import { userAnimalsQuery } from '../../Shelters/useUserAnimals';
 
+import { User } from '@nextui-org/react';
 import { Skeleton } from '@nextui-org/skeleton';
 import { isAxiosError } from 'axios';
-import { Form } from 'react-router-dom';
+import { Form, Link, useNavigate, useParams } from 'react-router-dom';
 import { toast } from 'react-toastify';
+import { BUCKET_URL } from '../../../../config/config';
 import { deleteFav } from '../../../Public/Animals/service';
 import { updateProfile } from '../../shared/service/updateUserService';
 import UserBioInfo from '../../Shelters/ShelterProfile/components/UserBioInfo';
+import { userChatsQuery, useUserChats } from '../../Shelters/useUserChats';
 import { useUser } from '../../useUser';
+import { useWebSocketContext } from '../../../../context/WebSocketContext';
 
-export const loader = (queryClient) => async () => {
-  try {
-    const data = await queryClient.ensureQueryData(userAnimalsQuery('adopter'));
+export const loader =
+  (queryClient) =>
+  async ({ params }) => {
+    try {
+      const data = await queryClient.ensureQueryData(
+        userAnimalsQuery('adopter')
+      );
 
-    return data;
-  } catch (error) {
-    console.log({ error });
-    toast.error('Error cargando perfil, ¿Estás logueado?');
-    return error;
-  }
-};
+      const chats = await queryClient.ensureQueryData(
+        userChatsQuery(params.username)
+      );
+
+      return { data, chats };
+    } catch (error) {
+      console.log({ error });
+      toast.error('Error cargando perfil, ¿Estás logueado?');
+      return error;
+    }
+  };
 
 export const action =
   (closeBioModal, queryClient) =>
@@ -66,8 +78,26 @@ export const action =
   };
 
 const AdopterProfile = () => {
+  const params = useParams();
   const { data, isFetching } = useUser();
+  const { isReady, send } = useWebSocketContext();
+  const navigate = useNavigate();
+  const { data: chats, isFetching: isFetchingChats } = useUserChats(
+    params.username
+  );
   const { username } = data;
+
+  const handleCreateChat = (slug) => {
+    if (isReady) {
+      send(
+        JSON.stringify({
+          type: 'create-chat-room',
+          room: slug,
+        })
+      );
+    }
+    navigate(`/private/chat/${slug}`);
+  };
 
   return (
     <main className="bg-default-100 flex-grow">
@@ -90,21 +120,44 @@ const AdopterProfile = () => {
           <Skeleton isLoaded={!isFetching}>
             <UserBioInfo data={data} isLoading={isFetching} />
           </Skeleton>
-          {/* <div id="NotificationsAside">
-              <H2Title title="Mensajes" className="pb-5" />
-              <div className="flex justify-between border-solid border-b-1 border-b-primary pb-3 items-center">
-                <User
-                  name="Galgos unidos"
-                  avatarProps={{
-                    src: `/avatar/${avatar}`,
-                    isBordered: true,
-                    color: 'success',
-                  }}
-                />
-                {1}
-              </div>
-            </div> */}
         </section>
+
+        <div id="NotificationsAside">
+          <H2Title title="Chats" className="border-b-1 border-primary mt-5" />
+          <Skeleton
+            className="flex justify-between border-solid pb-3 items-center"
+            isLoaded={!isFetchingChats}
+          >
+            <div className="flex flex-col justify-start gap-3 pb-3 pl-3 pt-3">
+              {chats.map((chat) => (
+                <Link
+                  key={chat.slug}
+                  to={`/private/chat/${chat.slug}`}
+                  onClick={() => handleCreateChat(chat.slug)}
+                >
+                  <User
+                    name={
+                      chat.animal[0]?.name
+                        ? `${chat.animal[0].name.toUpperCase()}/${
+                            chat.users[0]?.username
+                          }`
+                        : `${chat.users[0].username}`
+                    }
+                    avatarProps={{
+                      src: `${BUCKET_URL}/${
+                        chat.animal[0]?.images[0]
+                          ? chat.animal[0]?.images[0]
+                          : chat.users[0].avatar[0]
+                      }`,
+                      isBordered: true,
+                      color: 'success',
+                    }}
+                  />
+                </Link>
+              ))}
+            </div>
+          </Skeleton>
+        </div>
 
         <footer className="border-solid border-t-1 border-t-danger py-8 h-100 flex justify-center">
           <DeleteUserModal />
