@@ -66,7 +66,12 @@ export const queryClient = new QueryClient({
   },
 });
 
-const router = (bioModalOnClose, shelterModalOnClose, animalImages) =>
+const router = (
+  bioModalOnClose,
+  shelterModalOnClose,
+  updatePasswordModalOnClose,
+  animalImages
+) =>
   createBrowserRouter([
     {
       path: '/',
@@ -170,6 +175,7 @@ const router = (bioModalOnClose, shelterModalOnClose, animalImages) =>
               action: shelterProfileAction(
                 bioModalOnClose,
                 shelterModalOnClose,
+                updatePasswordModalOnClose,
                 queryClient
               ),
             },
@@ -213,14 +219,19 @@ const router = (bioModalOnClose, shelterModalOnClose, animalImages) =>
 
 function App() {
   const { images: animalImages } = useAnimalImagesContext();
-  const { bioModal, shelterModal } = useModalContext();
+  const { bioModal, shelterModal, updatePasswordModal } = useModalContext();
 
   return (
     <QueryClientProvider client={queryClient}>
       <ReactQueryDevtools initialIsOpen={false} />
 
       <RouterProvider
-        router={router(bioModal.onClose, shelterModal.onClose, animalImages)}
+        router={router(
+          bioModal.onClose,
+          shelterModal.onClose,
+          updatePasswordModal.onClose,
+          animalImages
+        )}
       />
     </QueryClientProvider>
   );

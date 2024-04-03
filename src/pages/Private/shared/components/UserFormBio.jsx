@@ -27,8 +27,8 @@ import {
   selectStyleConfig,
 } from '../../../../utils/configFormFields';
 import { validateField } from '../../../../utils/validateField';
-import { updateData } from '../../../../api/client';
-import { toast } from 'react-toastify';
+// import { updateData } from '../../../../api/client';
+// import { toast } from 'react-toastify';
 
 export const UserFormBio = ({ data }) => {
   const updateBioModal = useDisclosure();
