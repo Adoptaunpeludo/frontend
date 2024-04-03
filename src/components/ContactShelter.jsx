@@ -8,12 +8,14 @@ import { useWebSocketContext } from '../context/WebSocketContext';
 import { useState } from 'react';
 import { createChat } from '../pages/Public/Animals/service';
 import { toast } from 'react-toastify';
+import { useQueryClient } from '@tanstack/react-query';
 
 export const ContactShelter = ({ className, slug, username }) => {
   const { data: user } = useUser();
   const [isSubmitting, setIsSubmitting] = useState(false);
   const { send, isReady } = useWebSocketContext();
   const navigate = useNavigate();
+  const queryClient = useQueryClient();
 
   const handleCreateChat = async () => {
     const room = slug
@@ -23,6 +25,9 @@ export const ContactShelter = ({ className, slug, username }) => {
     try {
       setIsSubmitting(true);
       await createChat(room);
+      queryClient.invalidateQueries({
+        queryKey: ['user-chats', user.username],
+      });
       if (isReady) {
         send(
           JSON.stringify({

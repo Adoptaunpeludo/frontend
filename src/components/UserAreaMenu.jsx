@@ -18,7 +18,7 @@ import { useEffect } from 'react';
 import { useNotificationsContext } from '../context/NotificationsContext.jsx';
 import { useWebSocketContext } from '../context/WebSocketContext.jsx';
 
-export const UserAreaMenu = ({ user }) => {
+export const UserAreaMenu = ({ user, chats }) => {
   const { data: userNotifications, isFetching } = useNotifications();
   const { notifications, setNotifications } = useNotificationsContext();
   const { isReady, send } = useWebSocketContext();
@@ -114,7 +114,6 @@ export const UserAreaMenu = ({ user }) => {
         </DropdownItem>
         <DropdownItem key="notifications" textValue="user notifications">
           <Link
-            //href={`/private/${user?.role}`}
             href={`/private/notifications`}
             color="foreground"
             className="capitalize w-full"
@@ -124,7 +123,7 @@ export const UserAreaMenu = ({ user }) => {
         </DropdownItem>
         <DropdownItem key="chats" textValue="user chats">
           <Link
-            href={`/private/${user?.role}`}
+            href={`/private/chat/${chats.at(-1).slug}`}
             color="foreground"
             className="capitalize w-full"
           >

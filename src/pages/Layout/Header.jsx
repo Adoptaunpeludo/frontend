@@ -18,10 +18,14 @@ import { UserAreaMenu } from '../../components/UserAreaMenu.jsx';
 import { useUser } from '../Private/useUser.js';
 import BrandNavLogo from './components/BrandNavLogo.jsx';
 import { LogoMobile } from './components/LogoMobile.jsx';
+import { useUserChats } from '../Private/Shelters/useUserChats.js';
 
 const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const { data: user, isLoading } = useUser();
+  const { data: chats, isLoading: isLoadingChats } = useUserChats(
+    user.username
+  );
 
   const handleMenuOpenChange = (open) => {
     setIsMenuOpen(open);
@@ -103,7 +107,7 @@ const Header = () => {
       </NavbarContent>
       <NavbarContent justify="end">
         <NavbarItem>
-          {isLoading ? (
+          {isLoading || isLoadingChats ? (
             <Spinner />
           ) : !user ? (
             <Button
@@ -118,7 +122,7 @@ const Header = () => {
             </Button>
           ) : (
             <div className="flex gap-2">
-              <UserAreaMenu user={user} />
+              <UserAreaMenu user={user} chats={chats} />
             </div>
           )}
         </NavbarItem>

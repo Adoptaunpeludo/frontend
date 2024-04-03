@@ -1,6 +1,11 @@
-import { Spinner } from '@nextui-org/react';
+import { Spinner, User } from '@nextui-org/react';
 
-import { useLoaderData, useNavigate, useParams } from 'react-router-dom';
+import {
+  NavLink,
+  useLoaderData,
+  useNavigate,
+  useParams,
+} from 'react-router-dom';
 import { useWebSocketContext } from '../../../context/WebSocketContext';
 import TextMessageBox from '../Assistant/components/TextMessageBox';
 import { useUser, userQuery } from '../useUser';
@@ -12,6 +17,9 @@ import { chatHistoryQuery, useChatHistory } from './useUserChatHistory';
 
 import { useScroll } from '../../../hooks/useScroll';
 import { mapUserChatHistory } from '../../../utils/mapUserChatHistory';
+import { useUserChats, userChatsQuery } from '../Shelters/useUserChats';
+import { BUCKET_URL } from '../../../config/config';
+import { useQueryClient } from '@tanstack/react-query';
 
 export const loader =
   (queryClient) =>
@@ -32,7 +40,11 @@ export const loader =
         chatHistoryQuery(params.chat)
       );
 
-      return { history, receiver };
+      const chats = await queryClient.ensureQueryData(
+        userChatsQuery(sender.username)
+      );
+
+      return { history, receiver, chats, sender };
     } catch (error) {
       console.log(error);
       throw error;
@@ -40,12 +52,13 @@ export const loader =
   };
 
 const AdoptionChatPage = () => {
+  const queryClient = useQueryClient();
   const params = useParams();
   const { chat } = params;
   const parts = chat.split('-');
   const shelter = parts.at(0);
   const adopter = parts.at(-1);
-  const { receiver } = useLoaderData();
+  const { receiver, sender } = useLoaderData();
   const [chatMessages, setChatMessages] = useState([]);
   const { send, isReady, val } = useWebSocketContext();
   const { data: user, isFetching: isFetchingUser } = useUser();
@@ -58,6 +71,7 @@ const AdoptionChatPage = () => {
     isFirstLoad,
     isFetchingChatHistory
   );
+  const { data: chats } = useUserChats(sender.username);
 
   useEffect(() => {
     if (chatHistory) {
@@ -144,8 +158,52 @@ const AdoptionChatPage = () => {
     }
   };
 
+  const handleCreateChat = (slug) => {
+    if (isReady) {
+      queryClient.invalidateQueries({
+        queryKey: ['user-chats', sender.username],
+      });
+      send(
+        JSON.stringify({
+          type: 'create-chat-room',
+          room: slug,
+        })
+      );
+    }
+    navigate(`/private/chat/${slug}`);
+  };
+
   return (
-    <main className="max-w-screen-xl  w-full flex  flex-col justify-center  mx-auto  overflow-hidden h-[86.4vh] md:flex-auto ">
+    <main className="max-w-screen-xl  w-full flex justify-center  mx-auto  overflow-hidden h-[86.4vh] md:flex-auto gap-3">
+      <section className="flex flex-col items-center content-center flex-1 background-panel rounded-xl h-156 overflow-y-hidden my-10 max-w-52 p-4 gap-3">
+        {chats.map((chat) => (
+          <NavLink
+            key={chat.slug}
+            to={`/private/chat/${chat.slug}`}
+            onClick={() => handleCreateChat(chat.slug)}
+            className="self-start w-full"
+          >
+            <User
+              name={
+                chat.animal[0]?.name
+                  ? `${chat.animal[0].name.toUpperCase()}/${
+                      chat.users[0]?.username
+                    }`
+                  : `${chat.users[0].username}`
+              }
+              avatarProps={{
+                src: `${BUCKET_URL}/${
+                  chat.animal[0]?.images[0]
+                    ? chat.animal[0]?.images[0]
+                    : chat.users[0].avatar[0]
+                }`,
+                isBordered: true,
+                color: 'success',
+              }}
+            />
+          </NavLink>
+        ))}
+      </section>
       <div className="flex flex-col flex-1 background-panel rounded-xl h-156 overflow-y-hidden mx-10 my-10">
         <div className="flex flex-col flex-1 overflow-x-auto mb-4">
           {isFetchingUser || isFetchingChatHistory ? (
