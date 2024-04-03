@@ -3,8 +3,6 @@ import { IconUserFilled } from '@tabler/icons-react';
 import { BUCKET_URL } from '../../../../config/config';
 
 const UserMessage = ({ text, isSender, avatar, user = '', isRead }) => {
-  console.log({ isRead });
-
   return (
     <div
       className={
@@ -36,8 +34,8 @@ const UserMessage = ({ text, isSender, avatar, user = '', isRead }) => {
             {!isSender ? user : ''}
           </p>
           {text}
-          {/* {isSender &&
-            (isRead ? <span> &#x2713;&#x2713;</span> : <span> &#x2713;</span>)} */}
+          {isSender &&
+            (isRead ? <span> &#x2713;&#x2713;</span> : <span> &#x2713;</span>)}
         </div>
       </div>
     </div>
