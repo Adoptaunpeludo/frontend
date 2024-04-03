@@ -14,49 +14,49 @@ import {
   AnimalsPage,
   AppLayout,
   ErrorPage,
+  ForgotPasswordPage,
   LandingPage,
   LoginPage,
+  NotificationsPage,
   RegisterPage,
+  ResetPasswordPage,
   ShelterDetailsPage,
   ShelterProfile,
   SheltersPage,
   VerifyEmailPage,
-  ForgotPasswordPage,
-  NotificationsPage,
-  ResetPasswordPage,
 } from './pages/index.js';
 
 // Actions
+import { action as forgotPasswordAction } from './pages/Auth/ForgotPassword/ForgotPasswordPage.jsx';
 import { action as loginAction } from './pages/Auth/Login/LoginPage.jsx';
 import { action as registerAction } from './pages/Auth/Register/RegisterPage.jsx';
-import { action as shelterProfileAction } from './pages/Private/Shelters/ShelterProfile/ShelterProfile.jsx';
+import { action as resetPasswordAction } from './pages/Auth/ResetPassword/ResetPasswordPage.jsx';
+import { action as verifyEmailAction } from './pages/Auth/VerifyEmail/VerifyEmailPage.jsx';
 import { action as adopterProfileAction } from './pages/Private/Adopters/AdopterProfile/AdopterProfile.jsx';
 import { action as mutateAnimalAction } from './pages/Private/Shelters/AnimalForm/AnimalForm.jsx';
-import { action as verifyEmailAction } from './pages/Auth/VerifyEmail/VerifyEmailPage.jsx';
-import { action as forgotPasswordAction } from './pages/Auth/ForgotPassword/ForgotPasswordPage.jsx';
-import { action as resetPasswordAction } from './pages/Auth/ResetPassword/ResetPasswordPage.jsx';
+import { action as shelterProfileAction } from './pages/Private/Shelters/ShelterProfile/ShelterProfile.jsx';
 
 // Loaders
+import { loader as verifyEmailLoader } from './pages/Auth/VerifyEmail/VerifyEmailPage.jsx';
+import { loader as userFavsLoader } from './pages/Private/Adopters/AdopterProfile/AdopterProfile.jsx';
 import { loader as updateAnimalLoader } from './pages/Private/Shelters/AnimalForm/AnimalForm.jsx';
+import { loader as userAnimalsLoader } from './pages/Private/Shelters/ShelterProfile/ShelterProfile.jsx';
 import { loader as animalDetailsLoader } from './pages/Public/Animals/AnimalDetails/AnimalDetailsPage.jsx';
 import { loader as animalsLoader } from './pages/Public/Animals/AnimalsPage.jsx';
 import { loader as landingAnimalsLoader } from './pages/Public/Landing/LandingPage.jsx';
 import { loader as shelterDetailsLoader } from './pages/Public/Shelters/ShelterDetails/ShelterDetailsPage.jsx';
-import { loader as userAnimalsLoader } from './pages/Private/Shelters/ShelterProfile/ShelterProfile.jsx';
-import { loader as userFavsLoader } from './pages/Private/Adopters/AdopterProfile/AdopterProfile.jsx';
 import { loader as sheltersLoader } from './pages/Public/Shelters/SheltersPage.jsx';
-import { loader as verifyEmailLoader } from './pages/Auth/VerifyEmail/VerifyEmailPage.jsx';
 //import { loader as resetPasswordLoader } from './pages/Auth/ResetPassword/ResetPasswordPage.jsx';
 import { loader as userDataLoader } from './pages/Layout/AppLayout.jsx';
 import { loader as assistantChatLoader } from './pages/Private/Assistant/AssistantPage.jsx';
 import { loader as currentChatLoader } from './pages/Private/Chat/AdoptionChatPage.jsx';
 
 import { useAnimalImagesContext } from './context/AnimalImagesContext.jsx';
-import NotFoundPage from './pages/Error/NotFound/NotFoundPage.jsx';
-import ProtectedRoute from './pages/Private/ProtectedRoute.jsx';
 import { useModalContext } from './context/ModalContext.jsx';
+import NotFoundPage from './pages/Error/NotFound/NotFoundPage.jsx';
 import AssistantPage from './pages/Private/Assistant/AssistantPage.jsx';
 import AdoptionChatPage from './pages/Private/Chat/AdoptionChatPage.jsx';
+import ProtectedRoute from './pages/Private/ProtectedRoute.jsx';
 
 export const queryClient = new QueryClient({
   defaultOptions: {
@@ -166,7 +166,11 @@ const router = (
               path: 'adopter/:username',
               element: <AdopterProfile />,
               loader: userFavsLoader(queryClient),
-              action: adopterProfileAction(bioModalOnClose, queryClient),
+              action: adopterProfileAction(
+                bioModalOnClose,
+                updatePasswordModalOnClose,
+                queryClient
+              ),
             },
             {
               path: 'shelter/:username',
