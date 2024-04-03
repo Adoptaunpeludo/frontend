@@ -2,7 +2,9 @@ import { Avatar } from '@nextui-org/react';
 import { IconUserFilled } from '@tabler/icons-react';
 import { BUCKET_URL } from '../../../../config/config';
 
-const UserMessage = ({ text, isSender, avatar, user = '' }) => {
+const UserMessage = ({ text, isSender, avatar, user = '', isRead }) => {
+  console.log({ isRead });
+
   return (
     <div
       className={
@@ -33,8 +35,9 @@ const UserMessage = ({ text, isSender, avatar, user = '' }) => {
           <p className="font-poppins text-xs font-semibold">
             {!isSender ? user : ''}
           </p>
-
           {text}
+          {/* {isSender &&
+            (isRead ? <span> &#x2713;&#x2713;</span> : <span> &#x2713;</span>)} */}
         </div>
       </div>
     </div>

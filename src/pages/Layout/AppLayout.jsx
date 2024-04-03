@@ -69,7 +69,11 @@ const AppLayout = () => {
           queryClient.invalidateQueries({
             queryKey: ['user-notifications'],
           });
-
+          break;
+        case 'chat-message-notification':
+          queryClient.invalidateQueries({
+            queryKey: ['user-notifications'],
+          });
           break;
         case 'new-chat-push-notification':
           queryClient.invalidateQueries({

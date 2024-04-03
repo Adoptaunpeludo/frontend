@@ -102,12 +102,12 @@ const AdoptionChatPage = () => {
   useEffect(() => {
     if (val && isReady) {
       const message = JSON.parse(val);
-
+      console.log({ message });
       if (message.type === 'chat-message')
         if (message.room === chat) {
           setChatMessages((prev) => [
             ...prev,
-            { text: message.message, isSender: false },
+            { text: message.message, isSender: false, isRead: message.isRead },
           ]);
           setIsFirstLoad(false);
         }
@@ -129,7 +129,6 @@ const AdoptionChatPage = () => {
   const handlePost = async (text) => {
     setIsFirstLoad(false);
     setChatMessages((prev) => [...prev, { text, isSender: true }]);
-
     if (isReady) {
       send(
         JSON.stringify({
@@ -139,6 +138,7 @@ const AdoptionChatPage = () => {
           senderUsername: user.username,
           receiverMail: receiver.email,
           receiverUsername: receiver.username,
+          receiverUserId: receiver.id,
         })
       );
     }
@@ -160,6 +160,7 @@ const AdoptionChatPage = () => {
                     text={message.text}
                     isSender={message.isSender}
                     user={receiver.username}
+                    isRead={message.isRead}
                     avatar={
                       message.isSender ? user.avatar : receiver?.avatar[0]
                     }
@@ -169,6 +170,7 @@ const AdoptionChatPage = () => {
                     key={index}
                     text={message.text}
                     isSender={message.isSender}
+                    isRead={message.isRead}
                     avatar={
                       message.isSender ? user.avatar : receiver?.avatar[0]
                     }
