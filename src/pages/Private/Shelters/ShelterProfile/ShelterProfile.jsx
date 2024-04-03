@@ -10,6 +10,8 @@ import { useAnimalImagesContext } from '../../../../context/AnimalImagesContext'
 import { useWebSocketContext } from '../../../../context/WebSocketContext';
 import { buttonStyleConfig } from '../../../../utils/configFormFields';
 import { DeleteUserModal, StatusAnimalsTable } from '../../shared';
+import { UserChangePassword } from '../../shared/components/UserChangePassword';
+import { updatePassword } from '../../shared/service/ChangePasswordService';
 import { updateProfile } from '../../shared/service/updateUserService';
 import { useUser } from '../../useUser';
 import { deleteAnimal } from '../AnimalForm/service';
@@ -37,7 +39,7 @@ export const loader =
   };
 
 export const action =
-  (closeBioModal, closeShelterModal, queryClient) =>
+  (closeBioModal, closeShelterModal, closeUpdatePasswordModal, queryClient) =>
   async ({ request }) => {
     let formData = await request.formData();
     let intent = formData.get('intent');
@@ -68,6 +70,19 @@ export const action =
       } catch (error) {
         if (isAxiosError(error) && error.response.status === 400)
           return toast.error('Error borrando el anuncio de adopción');
+        throw error;
+      }
+    }
+
+    if (intent === 'change-password') {
+      try {
+        await updatePassword(formData);
+        toast.success(`Password cambiada con éxito`);
+        closeUpdatePasswordModal();
+        return null;
+      } catch (error) {
+        if (isAxiosError(error) && error.response.status === 400)
+          return toast.error('Error cambiando password');
         throw error;
       }
     }
@@ -114,6 +129,8 @@ const ShelterProfile = () => {
             <Skeleton isLoaded={!isFetchingUser}>
               <UserBioInfo data={user} isLoading={isFetchingUser} />
             </Skeleton>
+            <H2Title title="Seguridad" className="" />
+            <UserChangePassword />
             <div id="NotificationsAside">
               <H2Title
                 title="Chats"
