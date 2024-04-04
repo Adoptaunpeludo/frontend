@@ -15,16 +15,16 @@ import { IconLogin2 as LoginIcon } from '@tabler/icons-react';
 import { useState } from 'react';
 import { UserAreaMenu } from '../../components/UserAreaMenu.jsx';
 
+import { useUserChats } from '../Private/Shelters/useUserChats.js';
 import { useUser } from '../Private/useUser.js';
 import BrandNavLogo from './components/BrandNavLogo.jsx';
 import { LogoMobile } from './components/LogoMobile.jsx';
-import { useUserChats } from '../Private/Shelters/useUserChats.js';
 
 const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const { data: user, isLoading } = useUser();
   const { data: chats, isLoading: isLoadingChats } = useUserChats(
-    user.username
+    user?.username
   );
 
   const handleMenuOpenChange = (open) => {
