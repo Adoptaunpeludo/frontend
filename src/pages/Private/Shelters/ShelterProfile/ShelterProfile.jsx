@@ -1,13 +1,11 @@
-import { Button, Skeleton, User } from '@nextui-org/react';
+import { Button, Skeleton } from '@nextui-org/react';
 import { IconEdit } from '@tabler/icons-react';
 import { isAxiosError } from 'axios';
 import { useEffect } from 'react';
-import { Link, useNavigate, useParams } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import { H2Title, TitleSection } from '../../../../components';
-import { BUCKET_URL } from '../../../../config/config';
 import { useAnimalImagesContext } from '../../../../context/AnimalImagesContext';
-import { useWebSocketContext } from '../../../../context/WebSocketContext';
 import { buttonStyleConfig } from '../../../../utils/configFormFields';
 import { DeleteUserModal, StatusAnimalsTable } from '../../shared';
 import { UserChangePassword } from '../../shared/components/UserChangePassword';
@@ -16,7 +14,7 @@ import { updateProfile } from '../../shared/service/updateUserService';
 import { useUser } from '../../useUser';
 import { deleteAnimal } from '../AnimalForm/service';
 import { userAnimalsQuery } from '../useUserAnimals';
-import { useUserChats, userChatsQuery } from '../useUserChats';
+import { userChatsQuery } from '../useUserChats';
 import ShelterProfileInfo from './components/ShelterProfileInfo';
 import UserBioInfo from './components/UserBioInfo';
 
@@ -89,30 +87,15 @@ export const action =
   };
 
 const ShelterProfile = () => {
-  const params = useParams();
+  //const params = useParams();
   const { data: user, isFetching: isFetchingUser } = useUser();
-  const { data: chats, isFetching: isFetchingChats } = useUserChats(
-    params.username
-  );
-  const { send, isReady } = useWebSocketContext();
+
   const { resetImages } = useAnimalImagesContext();
-  const navigate = useNavigate();
+  //const navigate = useNavigate();
 
   useEffect(() => {
     resetImages();
   }, [resetImages]);
-
-  const handleCreateChat = (slug) => {
-    if (isReady) {
-      send(
-        JSON.stringify({
-          type: 'create-chat-room',
-          room: slug,
-        })
-      );
-    }
-    navigate(`/private/chat/${slug}`);
-  };
 
   return (
     <main className="bg-default-100 flex-grow">
@@ -131,45 +114,6 @@ const ShelterProfile = () => {
             </Skeleton>
             <H2Title title="Seguridad" className="" />
             <UserChangePassword />
-            <div id="NotificationsAside">
-              <H2Title
-                title="Chats"
-                className="border-b-1 border-primary mt-5"
-              />
-              <Skeleton
-                className="flex justify-between border-solid pb-3 items-center"
-                isLoaded={!isFetchingChats}
-              >
-                <div className="flex flex-col justify-start gap-3 pb-3 pl-3 pt-3">
-                  {chats.map((chat) => (
-                    <Link
-                      key={chat.slug}
-                      to={`/private/chat/${chat.slug}`}
-                      onClick={() => handleCreateChat(chat.slug)}
-                    >
-                      <User
-                        name={
-                          chat.animal[0]?.name
-                            ? `${chat.animal[0].name.toUpperCase()}/${
-                                chat.users[0]?.username
-                              }`
-                            : `${chat.users[0].username}`
-                        }
-                        avatarProps={{
-                          src: `${BUCKET_URL}/${
-                            chat.animal[0]?.images[0]
-                              ? chat.animal[0]?.images[0]
-                              : chat.users[0].avatar[0]
-                          }`,
-                          isBordered: true,
-                          color: 'success',
-                        }}
-                      />
-                    </Link>
-                  ))}
-                </div>
-              </Skeleton>
-            </div>
           </aside>
         </section>
 
