@@ -5,14 +5,14 @@ export const validateField = (name, value, password) => {
     case 'username':
     case 'firstName':
     case 'lastName':
-      return !/^[0-9a-zñáéíóúü\s]{3,30}$/i.test(value.trim())
+      return !/^[0-9a-zñáéíóúü\s]{3,25}$/i.test(value.trim())
         ? `${
             (name === 'breed' && 'El nombre de la raza debe') ||
             (name === 'name' && 'El nombre debe') ||
             (name === 'firstName' && 'El nombre debe') ||
             (name === 'lastName' && 'Los apellidos deben') ||
             (name === 'username' && 'El nombre de usuario debe')
-          } tener al menos 3 caracteres válidos.`
+          } tener al menos 3 caracteres válidos, y no más de 25.`
         : '';
     case 'email':
       return !/^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/i.test(value.trim())
