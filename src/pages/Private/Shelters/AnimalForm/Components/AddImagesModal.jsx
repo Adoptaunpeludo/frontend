@@ -7,91 +7,33 @@ import {
   ModalHeader,
   useDisclosure,
 } from '@nextui-org/react';
-import { useState } from 'react';
+import { useEffect } from 'react';
+import { useImageValidation } from '../../../../../hooks/useImageValidation';
 
 const AddImagesModal = ({ onSetImages }) => {
   const { isOpen, onOpen, onOpenChange } = useDisclosure();
-  const [selectedFile, setSelectedFile] = useState();
+  const {
+    fileError,
+    setFileError,
+    selectedFile,
+    setSelectedFile,
+    validateImage,
+  } = useImageValidation();
 
-  const [fileError, setFileError] = useState();
-
-  const maxSizeInBytes = 2 * 1024 * 1024; // 1 MB
-  // const maxWidth = 1920;
-  // const maxHeight = 1080;
-
-  const handleClose = (onClose) => {
-    setSelectedFile();
+  useEffect(() => {
+    setSelectedFile(null);
     setFileError('');
-    onClose();
-  };
+  }, [onOpenChange]);
 
-  const imageFileValidation = (event, maxSize) => {
+  const maxSizeInBytes = 2 * 1024 * 1024; // 2 MB
+  const handleFileChange = (event) => {
     const file = event.target.files.item(0);
-    const allowedMimeTypes = ['image/jpeg', 'image/png', 'image/gif'];
-    const fileType = file.type;
-
-    if (!allowedMimeTypes.includes(fileType)) {
-      setFileError('Solo se admiten archivos tipo jpeg/jpg, png o gif');
-      return;
-    }
-
-    const image = new Image();
-    image.src = URL.createObjectURL(file);
-
-    image.onload = () => {
-      if (file.size > maxSize) {
-        setFileError(
-          `La imagen excede el tamaño de archivo permitido (${
-            maxSize / 1024
-          } Kbytes)`
-        );
-      } else {
-        setFileError('');
-        return setSelectedFile(event.target.files.item(0));
-      }
-    };
+    validateImage(file, maxSizeInBytes);
   };
-
-  /* with image dimensions validation
-  const imageFileValidation = (event, maxSize, maxW, maxH) => {
-    const file = event.target.files.item(0);
-    const allowedMimeTypes = ['image/jpeg', 'image/png', 'image/gif'];
-    const fileType = file.type;
-
-    if (!allowedMimeTypes.includes(fileType)) {
-      setFileError('Solo se admiten archivos tipo jpeg/jpg, png o gif');
-      return;
-    }
-
-    const image = new Image();
-    image.src = URL.createObjectURL(file);
-
-    image.onload = () => {
-      if (image.width > maxW || image.height > maxH) {
-        setFileError(
-          `La imagen excede las dimensiones admitidas (${maxW}x${maxH} px)`
-        );
-      } else {
-        if (file.size > maxSize) {
-          setFileError(
-            `La imagen excede el tamaño de archivo permitido (${
-              maxSize / 1024
-            } Kbytes)`
-          );
-        } else {
-          setFileError('');
-          return setSelectedFile(event.target.files.item(0));
-        }
-      }
-    };
-  };
-  */
 
   const handleAddImage = (onClose) => {
     if (!selectedFile || fileError) return;
     onSetImages((images) => [...images, selectedFile]);
-    setFileError('');
-    setSelectedFile();
     onClose();
   };
 
@@ -123,16 +65,7 @@ const AddImagesModal = ({ onSetImages }) => {
                       id="file_input"
                       type="file"
                       style={fileError ? { color: 'red' } : { color: 'black' }}
-                      onChange={(e) => {
-                        setFileError('');
-                        imageFileValidation(
-                          e,
-                          maxSizeInBytes
-                          // maxWidth,
-                          // maxHeight
-                        );
-                        // return setSelectedFile(e.target.files.item(0));
-                      }}
+                      onChange={handleFileChange}
                     />
                     <p style={{ color: 'red', fontSize: '16px' }}>
                       {fileError}
@@ -143,7 +76,7 @@ const AddImagesModal = ({ onSetImages }) => {
                   <Button
                     color="default"
                     variant="light"
-                    onPress={() => handleClose(onClose)}
+                    onPress={onClose}
                     className="border-1 border-primary text-foreground font-poppins font-medium"
                   >
                     Cerrar
