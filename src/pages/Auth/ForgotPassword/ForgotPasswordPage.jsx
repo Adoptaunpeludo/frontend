@@ -7,6 +7,8 @@ import {
   inputStyleConfig,
 } from '../../../utils/configFormFields';
 import { ForgotPassword } from '../authService';
+import { useState } from 'react';
+import { validateField } from '../../../utils/validateField';
 
 export const action = async ({ request }) => {
   const formData = await request.formData();
@@ -34,6 +36,12 @@ export const action = async ({ request }) => {
 
 const ForgotPasswordPage = () => {
   const navigation = useNavigation();
+  const [error, setError] = useState('');
+
+  const handleChange = (event) => {
+    const { value } = event.target;
+    setError(validateField('email', value));
+  };
 
   const isSubmitting = navigation.state === 'submitting';
 
@@ -63,6 +71,9 @@ const ForgotPasswordPage = () => {
                 isRequired
                 isDisabled={isSubmitting}
                 classNames={inputStyleConfig}
+                color={error ? 'danger' : 'none'}
+                errorMessage={error}
+                onChange={handleChange}
               />
               <Button
                 type="submit"
