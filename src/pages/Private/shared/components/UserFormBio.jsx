@@ -35,8 +35,20 @@ export const UserFormBio = ({ data }) => {
   const { isOpen, onOpen, onOpenChange, onClose } = updateBioModal;
   const { saveBioModal } = useModalContext();
 
-  const [credentials, setCredentials] = useState({});
+  const { username, avatar, dni, firstName, lastName, phoneNumber, city } =
+    data;
+
+  const [credentials, setCredentials] = useState({
+    username,
+    dni,
+    firstName,
+    lastName,
+    phoneNumber,
+    city,
+  });
+
   const [errors, setErrors] = useState({});
+  const [noChanges, setNoChanges] = useState(true);
 
   const handleChange = (event) => {
     const { name, value } = event.target;
@@ -44,28 +56,31 @@ export const UserFormBio = ({ data }) => {
     setErrors({ ...errors, [name]: validateField(name, value) });
   };
 
-  // const handleSubmit = () => {
-  //   const modifiedInputs = Object.keys(credentials).filter(
-  //     (key) => credentials[key] !== data[key]
-  //   );
-  //   if (modifiedInputs.length === 0) {
-  //     toast.error('No se ha modificado nada.');
-  //     return;
-  //   }
-  // };
+  useEffect(() => {
+    if (
+      credentials.username === data.username &&
+      credentials.dni === data.dni &&
+      credentials.firstName === data.firstName &&
+      credentials.lastName === data.lastName &&
+      credentials.phoneNumber === data.phoneNumber &&
+      credentials.city === data.city
+    ) {
+      setNoChanges(true);
+    } else {
+      setNoChanges(false);
+    }
+  }, [credentials]);
 
   useEffect(() => {
     setErrors({});
   }, [isOpen]);
 
-  const isFormValid = Object.values(errors).every((error) => error === '');
+  const isFormValid =
+    Object.values(errors).every((error) => error === '') && !noChanges;
 
   const navigation = useNavigation();
 
   const isSubmitting = navigation.state === 'submitting';
-
-  const { username, avatar, dni, firstName, lastName, phoneNumber, city } =
-    data;
 
   useEffect(() => {
     saveBioModal(updateBioModal);
@@ -186,6 +201,9 @@ export const UserFormBio = ({ data }) => {
                           classNames={selectStyleConfig}
                         />
                       </div>
+                      <p style={{ color: 'red', textAlign: 'right' }}>
+                        {noChanges && 'No hay cambios en el formulario'}
+                      </p>
                     </div>
                   </div>
                 </Panel>

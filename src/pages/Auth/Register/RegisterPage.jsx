@@ -61,12 +61,7 @@ const RegisterPage = () => {
 
   const isFormValid = Object.values(errors).every((error) => error === '');
   const enableButton = !(
-    credentials.role &&
-    credentials.username &&
-    credentials.email &&
-    credentials.password &&
-    credentials.password === credentials.repeatPassword &&
-    isFormValid
+    credentials.password === credentials.repeatPassword && isFormValid
   );
 
   return (
