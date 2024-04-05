@@ -2,18 +2,18 @@ import { H2Title, TitleSection } from '../../../../components';
 import { DeleteUserModal, ImagesFrame, StatusAnimalsTable } from '../../shared';
 import { userAnimalsQuery } from '../../Shelters/useUserAnimals';
 
-import { User } from '@nextui-org/react';
 import { Skeleton } from '@nextui-org/skeleton';
 import { isAxiosError } from 'axios';
-import { Form, Link, useNavigate, useParams } from 'react-router-dom';
+import { Form, useNavigate, useParams } from 'react-router-dom';
 import { toast } from 'react-toastify';
-import { BUCKET_URL } from '../../../../config/config';
+import { useWebSocketContext } from '../../../../context/WebSocketContext';
 import { deleteFav } from '../../../Public/Animals/service';
+import { UserChangePassword } from '../../shared/components/UserChangePassword';
+import { updatePassword } from '../../shared/service/ChangePasswordService';
 import { updateProfile } from '../../shared/service/updateUserService';
 import UserBioInfo from '../../Shelters/ShelterProfile/components/UserBioInfo';
 import { userChatsQuery, useUserChats } from '../../Shelters/useUserChats';
 import { useUser } from '../../useUser';
-import { useWebSocketContext } from '../../../../context/WebSocketContext';
 
 export const loader =
   (queryClient) =>
@@ -36,7 +36,7 @@ export const loader =
   };
 
 export const action =
-  (closeBioModal, queryClient) =>
+  (closeBioModal, closeUpdatePasswordModal, queryClient) =>
   async ({ request }) => {
     let formData = await request.formData();
     let intent = formData.get('intent');
@@ -72,6 +72,18 @@ export const action =
       } catch (error) {
         if (isAxiosError(error) && error.response.status === 400)
           return toast.error('Error al borrar de favoritos');
+        throw error;
+      }
+    }
+    if (intent === 'change-password') {
+      try {
+        await updatePassword(formData);
+        toast.success(`Password cambiada con éxito`);
+        closeUpdatePasswordModal();
+        return null;
+      } catch (error) {
+        if (isAxiosError(error) && error.response.status === 400)
+          return toast.error('Error cambiando password');
         throw error;
       }
     }
@@ -117,47 +129,14 @@ const AdopterProfile = () => {
               </Form>
             </section>
           </main>
-          <Skeleton isLoaded={!isFetching}>
-            <UserBioInfo data={data} isLoading={isFetching} />
-          </Skeleton>
+          <aside>
+            <Skeleton isLoaded={!isFetching}>
+              <UserBioInfo data={data} isLoading={isFetching} />
+            </Skeleton>
+            <H2Title title="Seguridad" className="" />
+            <UserChangePassword />
+          </aside>
         </section>
-
-        <div id="NotificationsAside">
-          <H2Title title="Chats" className="border-b-1 border-primary mt-5" />
-          <Skeleton
-            className="flex justify-between border-solid pb-3 items-center"
-            isLoaded={!isFetchingChats}
-          >
-            <div className="flex flex-col justify-start gap-3 pb-3 pl-3 pt-3">
-              {chats.map((chat) => (
-                <Link
-                  key={chat.slug}
-                  to={`/private/chat/${chat.slug}`}
-                  onClick={() => handleCreateChat(chat.slug)}
-                >
-                  <User
-                    name={
-                      chat.animal[0]?.name
-                        ? `${chat.animal[0].name.toUpperCase()}/${
-                            chat.users[0]?.username
-                          }`
-                        : `${chat.users[0].username}`
-                    }
-                    avatarProps={{
-                      src: `${BUCKET_URL}/${
-                        chat.animal[0]?.images[0]
-                          ? chat.animal[0]?.images[0]
-                          : chat.users[0].avatar[0]
-                      }`,
-                      isBordered: true,
-                      color: 'success',
-                    }}
-                  />
-                </Link>
-              ))}
-            </div>
-          </Skeleton>
-        </div>
 
         <footer className="border-solid border-t-1 border-t-danger py-8 h-100 flex justify-center">
           <DeleteUserModal />
