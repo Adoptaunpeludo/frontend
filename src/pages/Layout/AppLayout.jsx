@@ -11,6 +11,7 @@ import { useWebSocketContext } from '../../context/WebSocketContext';
 import { useEffect } from 'react';
 import { useQueryClient } from '@tanstack/react-query';
 import { useNotificationsContext } from '../../context/NotificationsContext';
+import { toast } from 'react-toastify';
 
 export const loader = (queryClient) => async () => {
   const isLoggedIn = localStorage.getItem('isLoggedIn') === 'true';
@@ -47,6 +48,29 @@ const AppLayout = () => {
         })
       );
   }, [isReady, user, send]);
+
+  useEffect(() => {
+    let timer = setTimeout(() => {
+      if (isReady) {
+        toast.dismiss();
+        return;
+      }
+      if (!isReady) {
+        toast.info(
+          'No ha sido posible conectar al servidor de chat/notificaciones.',
+          {
+            draggable: false,
+            closeOnClick: false,
+            autoClose: false,
+            hideProgressBar: true,
+            style: { marginTop: '50px' },
+          }
+        );
+      }
+    }, 3000);
+
+    return () => clearTimeout(timer); // Limpiar el temporizador en caso de que el componente se desmonte antes de que se cumplan los 5 segundos
+  }, [isReady]);
 
   useEffect(() => {
     if (val && isReady) {
