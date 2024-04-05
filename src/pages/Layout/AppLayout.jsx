@@ -72,7 +72,7 @@ const AppLayout = () => {
             queryKey: ['animals'],
           });
           queryClient.invalidateQueries({
-            queryKey: ['animal-details', data.animalSlug],
+            queryKey: ['animal-details', data.data.animalSlug],
           });
           queryClient.invalidateQueries({
             queryKey: ['shelters-animals', data.createdBy],
