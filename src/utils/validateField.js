@@ -18,6 +18,7 @@ export const validateField = (name, value, password) => {
       return !/^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/i.test(value.trim())
         ? 'El correo electrónico ingresado no es válido.'
         : '';
+    case 'oldPassword':
     case 'newPassword':
     case 'password':
       return value.trim().length < 8
