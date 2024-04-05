@@ -76,7 +76,11 @@ export const UserAreaMenu = ({ user, chats }) => {
       >
         <DropdownTrigger>
           <User
-            name={user?.username}
+            name={
+              <span className="block text-ellipsis overflow-hidden max-w-12 sm:max-w-full">
+                {user?.username === null ? '' : user?.username}
+              </span>
+            }
             description={
               <span className="block text-ellipsis overflow-hidden max-w-12 sm:max-w-full">
                 {user?.firstName === null ? '' : user?.firstName}{' '}
