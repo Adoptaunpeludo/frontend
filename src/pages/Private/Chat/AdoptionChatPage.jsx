@@ -111,7 +111,7 @@ const AdoptionChatPage = () => {
         );
       }
     };
-  }, []);
+  }, [chat]);
 
   useEffect(() => {
     if (val && isReady) {

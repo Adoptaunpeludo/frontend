@@ -14,7 +14,6 @@ import Footer from './Footer';
 import Header from './Header';
 import { toast } from 'react-toastify';
 
-
 export const loader = (queryClient) => async () => {
   const isLoggedIn = localStorage.getItem('isLoggedIn') === 'true';
 
@@ -30,7 +29,6 @@ export const loader = (queryClient) => async () => {
       userChatsQuery(user.username)
     );
     return { notifications, user, chats };
-
   } catch (error) {
     return { user: null, notifications: null };
   }
@@ -83,7 +81,7 @@ const AppLayout = () => {
     if (val && isReady) {
       const message = JSON.parse(val);
       const { type, ...data } = message;
-      console.log({ type });
+
       switch (type) {
         // case 'chat-created':
         //   queryClient.invalidateQueries({
