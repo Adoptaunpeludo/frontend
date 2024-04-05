@@ -33,6 +33,7 @@ export const UserChangePassword = () => {
 
   const [credentials, setCredentials] = useState({});
   const [errors, setErrors] = useState({});
+
   const handleChange = (event) => {
     const { name, value } = event.target;
     setCredentials({ ...credentials, [name]: value });
@@ -47,6 +48,10 @@ export const UserChangePassword = () => {
     credentials.newPassword === credentials.repeatPassword &&
     isFormValid
   );
+
+  useEffect(() => {
+    setCredentials({});
+  }, [onOpenChange]);
 
   useEffect(() => {
     saveUpdatePasswordModal(updatePasswordModal);

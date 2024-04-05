@@ -9,88 +9,36 @@ import {
   useDisclosure,
 } from '@nextui-org/react';
 import { useQueryClient } from '@tanstack/react-query';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Form } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import { uploadAnimalFile } from '../../Shelters/AnimalForm/service';
 import { uploadUserFile } from '../service/imagesService';
+import { useImageValidation } from '../../../../hooks/useImageValidation';
 
 const ImageUploadModal = ({ page, id, slug }) => {
   const { isOpen, onOpen, onOpenChange } = useDisclosure();
   const queryClient = useQueryClient();
-  const [selectedFile, setSelectedFile] = useState();
+
   const [isLoading, setIsLoading] = useState(false);
-  const [fileError, setFileError] = useState();
+  const {
+    fileError,
+    setFileError,
+    selectedFile,
+    setSelectedFile,
+    validateImage,
+  } = useImageValidation();
+
+  useEffect(() => {
+    setSelectedFile(null);
+    setFileError('');
+  }, [onOpenChange]);
 
   const maxSizeInBytes = 2 * 1024 * 1024; // 2 MB
-  // const maxWidth = 1920;
-  // const maxHeight = 1080;
-
-  const handleClose = (onClose) => {
-    setFileError('');
-    onClose();
-  };
-
-  const imageFileValidation = (event, maxSize) => {
+  const handleFileChange = (event) => {
     const file = event.target.files.item(0);
-    const allowedMimeTypes = ['image/jpeg', 'image/png', 'image/gif'];
-    const fileType = file.type;
-
-    if (!allowedMimeTypes.includes(fileType)) {
-      setFileError('Solo se admiten archivos tipo jpeg/jpg, png o gif');
-      return;
-    }
-
-    const image = new Image();
-    image.src = URL.createObjectURL(file);
-
-    image.onload = () => {
-      if (file.size > maxSize) {
-        setFileError(
-          `La imagen excede el tamaño de archivo permitido (${
-            maxSize / 1024
-          } Kbytes)`
-        );
-      } else {
-        setFileError('');
-        setSelectedFile(event.target.files.item(0));
-      }
-    };
+    validateImage(file, maxSizeInBytes);
   };
-
-  // with image dimensions validation:
-  // const imageFileValidation = (event, maxSize, maxW, maxH) => {
-  //   const file = event.target.files.item(0);
-  //   const allowedMimeTypes = ['image/jpeg', 'image/png', 'image/gif'];
-  //   const fileType = file.type;
-
-  //   if (!allowedMimeTypes.includes(fileType)) {
-  //     setFileError('Solo se admiten archivos tipo jpeg/jpg, png o gif');
-  //     return;
-  //   }
-
-  //   const image = new Image();
-  //   image.src = URL.createObjectURL(file);
-
-  //   image.onload = () => {
-  //     if (image.width > maxW || image.height > maxH) {
-  //       setFileError(
-  //         `La imagen excede las dimensiones admitidas (${maxW}x${maxH} px)`
-  //       );
-  //     } else {
-  //       if (file.size > maxSize) {
-  //         setFileError(
-  //           `La imagen excede el tamaño de archivo permitido (${
-  //             maxSize / 1024
-  //           } Kbytes)`
-  //         );
-  //       } else {
-  //         setFileError('');
-  //         setSelectedFile(event.target.files.item(0));
-  //       }
-  //     }
-  //   };
-  // };
 
   const handleUploadFile = async (onClose) => {
     if (!selectedFile || fileError) return;
@@ -114,8 +62,6 @@ const ImageUploadModal = ({ page, id, slug }) => {
     } catch (error) {
       toast.error('Error al subir el archivo');
     } finally {
-      setSelectedFile();
-      setFileError('');
       setIsLoading(false);
     }
   };
@@ -153,15 +99,7 @@ const ImageUploadModal = ({ page, id, slug }) => {
                         style={
                           fileError ? { color: 'red' } : { color: 'black' }
                         }
-                        onChange={(e) => {
-                          setFileError('');
-                          imageFileValidation(
-                            e,
-                            maxSizeInBytes
-                            // maxWidth,
-                            // maxHeight
-                          );
-                        }}
+                        onChange={handleFileChange}
                       />
                       <p style={{ color: 'red', fontSize: '16px' }}>
                         {fileError}
@@ -173,7 +111,7 @@ const ImageUploadModal = ({ page, id, slug }) => {
                   <Button
                     color="default"
                     variant="light"
-                    onPress={() => handleClose(onClose)}
+                    onPress={onClose}
                     disabled={isLoading}
                     className="border-1 border-primary text-foreground font-poppins font-medium"
                   >

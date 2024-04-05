@@ -31,8 +31,28 @@ const ShelterForm = ({ isSubmitting, data }) => {
   const { isOpen, onOpen, onOpenChange, onClose } = updateShelterModal;
   const { saveShelterModal } = useModalContext();
 
-  const [formData, setFormData] = useState({});
+  const {
+    cif,
+    legalForms,
+    ownVet,
+    description,
+    veterinaryFacilities,
+    facilities,
+    // socialMedia,
+    username,
+  } = data;
+
+  const [formData, setFormData] = useState({
+    cif,
+    legalForms,
+    ownVet,
+    description,
+    veterinaryFacilities,
+    facilities,
+  });
+
   const [errors, setErrors] = useState('');
+  const [noChanges, setNoChanges] = useState(true);
 
   const navigation = useNavigation();
 
@@ -45,21 +65,26 @@ const ShelterForm = ({ isSubmitting, data }) => {
   };
 
   useEffect(() => {
+    if (
+      formData.cif === data.cif &&
+      formData.legalForms === data.legalForms &&
+      formData.ownVet === data.ownVet &&
+      formData.description === data.description &&
+      formData.veterinaryFacilities === data.veterinaryFacilities
+    ) {
+      setNoChanges(true);
+    } else {
+      setNoChanges(false);
+    }
+    console.log(formData.facilities);
+  }, [formData]);
+
+  useEffect(() => {
     setErrors('');
   }, [isOpen]);
 
-  const isFormValid = Object.values(errors).every((error) => error === '');
-
-  const {
-    cif,
-    legalForms,
-    ownVet,
-    description,
-    veterinaryFacilities,
-    facilities,
-    // socialMedia,
-    username,
-  } = data;
+  const isFormValid =
+    Object.values(errors).every((error) => error === '') && !noChanges;
 
   useEffect(() => {
     saveShelterModal(updateShelterModal);
@@ -176,6 +201,9 @@ const ShelterForm = ({ isSubmitting, data }) => {
                           classNames={inputStyleConfig}
                         />
                       </div>
+                      <p style={{ color: 'red', textAlign: 'right' }}>
+                        {noChanges && 'No hay cambios en el formulario'}
+                      </p>
                     </div>
                   </div>
                 </Panel>
