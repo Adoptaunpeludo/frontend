@@ -8,8 +8,8 @@ export default defineConfig({
   server: {
     proxy: {
       '/api': {
-        // target: 'https://backend.adoptaunpeludo.com/api',
-        target: 'http://localhost:5000/api',
+        target: 'https://backend.adoptaunpeludo.com/api',
+        // target: 'http://localhost:5000/api',
         changeOrigin: true,
         rewrite: (path) => path.replace(/^\/api/, ''),
         secure: false,
