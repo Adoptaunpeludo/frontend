@@ -121,10 +121,12 @@ export const UserAreaMenu = ({ user, chats }) => {
             notificaciones
           </Link>
         </DropdownItem>
+
         <DropdownItem key="chats" textValue="user chats">
           <Link
-            href={`/private/chat/${chats.at(-1).slug}`}
+            href={`/private/chat/${chats.at(-1)?.slug}`}
             color="foreground"
+            isDisabled={chats.length === 0}
             className="capitalize w-full"
           >
             chats
