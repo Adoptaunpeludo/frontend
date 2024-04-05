@@ -126,6 +126,21 @@ export default {
             background: '#FFFFFF', // or DEFAULT
             foreground: '#11181C', // or 50 to 900 DEFAULT
             primary: '#A5C73D',
+
+            primaryScale: {
+              50: '#f8fbea',
+              100: '#eff5d2',
+              200: '#deecaa',
+              300: '#c5dd79',
+              400: '#a5c73d',
+              500: '#8fb131',
+              600: '#6f8d23',
+              700: '#556c1f',
+              800: '#45561e',
+              900: '#3b4a1d',
+              950: '#1e280b',
+            },
+
             secondary: '#C74F3E',
             tertiary: '#3E73C7',
             focus: '#A5C73D',

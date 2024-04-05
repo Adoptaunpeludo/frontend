@@ -1,17 +1,19 @@
 import { NextUIProvider } from '@nextui-org/react';
+import { useQueryClient } from '@tanstack/react-query';
+import { useEffect } from 'react';
 import { Outlet, ScrollRestoration, useNavigate } from 'react-router-dom';
-import Footer from './Footer';
-import Header from './Header';
-import { useUser, userQuery } from '../Private/useUser';
+import { useNotificationsContext } from '../../context/NotificationsContext';
+import { useWebSocketContext } from '../../context/WebSocketContext';
+import { useUserChats, userChatsQuery } from '../Private/Shelters/useUserChats';
 import {
   useNotifications,
   userNotificationsQuery,
 } from '../Private/useNotifications';
-import { useWebSocketContext } from '../../context/WebSocketContext';
-import { useEffect } from 'react';
-import { useQueryClient } from '@tanstack/react-query';
-import { useNotificationsContext } from '../../context/NotificationsContext';
+import { useUser, userQuery } from '../Private/useUser';
+import Footer from './Footer';
+import Header from './Header';
 import { toast } from 'react-toastify';
+
 
 export const loader = (queryClient) => async () => {
   const isLoggedIn = localStorage.getItem('isLoggedIn') === 'true';
@@ -24,7 +26,11 @@ export const loader = (queryClient) => async () => {
       queryClient.ensureQueryData(userNotificationsQuery),
     ]);
 
-    return { notifications, user };
+    const chats = await queryClient.ensureQueryData(
+      userChatsQuery(user.username)
+    );
+    return { notifications, user, chats };
+
   } catch (error) {
     return { user: null, notifications: null };
   }
@@ -34,6 +40,7 @@ const AppLayout = () => {
   const navigate = useNavigate();
   const { data: user } = useUser();
   const { data: notifications } = useNotifications();
+  const { data: chats } = useUserChats(user?.username);
   const { send, isReady, val } = useWebSocketContext();
   const queryClient = useQueryClient();
   const { setNotifications } = useNotificationsContext();
@@ -165,7 +172,7 @@ const AppLayout = () => {
       <NextUIProvider navigate={navigate}>
         <div className="min-h-screen flex flex-col">
           <Header />
-          <Outlet context={{ user, notifications }} />
+          <Outlet context={{ user, notifications, chats }} />
           <Footer />
         </div>
         <ScrollRestoration />
