@@ -9,12 +9,13 @@ export const getUserAnimals = async (params = {}) => {
 export const getUserFavs = async () => {
   const { data } = await fetchData('/users/me/favorites');
 
-  console.log({ data });
-
   return data;
 };
 
 export const getUserChats = async () => {
+  const isLoggedIn = localStorage.getItem('isLoggedIn') === 'true';
+  if (!isLoggedIn) return null;
+
   const { data } = await fetchData('/chats');
 
   return data;

@@ -5,8 +5,6 @@ const ProtectedRoute = () => {
   const { notifications } = useOutletContext();
   const { data: user } = useUser();
 
-  console.log({ user });
-
   return user ? (
     <Outlet context={{ user, notifications }} />
   ) : (

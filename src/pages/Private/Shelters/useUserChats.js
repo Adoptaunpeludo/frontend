@@ -4,7 +4,7 @@ import { getUserChats } from './service';
 export const userChatsQuery = (username) => {
   return {
     queryKey: ['user-chats', username],
-    queryFn: () => getUserChats(),
+    queryFn: getUserChats,
     staleTime: 1000 * 60 * 15,
   };
 };

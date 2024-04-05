@@ -7,7 +7,6 @@ import {
 } from './enumData';
 
 export const translateStatusAnimals = (animals) => {
-  console.log({ animals });
   return animals.map((animal) => {
     return {
       ...animal,
