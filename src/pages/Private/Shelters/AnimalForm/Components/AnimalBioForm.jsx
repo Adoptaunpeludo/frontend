@@ -8,7 +8,7 @@ import {
 import { animalSizeEnum, genderEnum } from '../../../../../utils/enumData';
 import { validateField } from '../../../../../utils/validateField';
 
-const AnimalBioForm = ({ data = {}, isDisabled, setIsFormValid }) => {
+const AnimalBioForm = ({ data = {}, isDisabled, validateForm }) => {
   const { name, age, breed, size, gender } = data;
 
   const [petData, setPetData] = useState({});
@@ -18,9 +18,8 @@ const AnimalBioForm = ({ data = {}, isDisabled, setIsFormValid }) => {
     const { name, value } = event.target;
     setPetData({ ...petData, [name]: value });
     setErrors({ ...errors, [name]: validateField(name, value) });
+    validateForm(Object.values(errors).every((error) => error === ''));
   };
-
-  setIsFormValid(Object.values(errors).every((error) => error === ''));
 
   return (
     <div className="flex flex-col gap-3">

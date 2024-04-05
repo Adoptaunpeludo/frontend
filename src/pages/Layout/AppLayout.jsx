@@ -14,13 +14,15 @@ import { useNotificationsContext } from '../../context/NotificationsContext';
 
 export const loader = (queryClient) => async () => {
   const isLoggedIn = localStorage.getItem('isLoggedIn') === 'true';
+
   if (!isLoggedIn) return { user: null, notifications: null };
 
   try {
     const [user, notifications] = await Promise.all([
-      await queryClient.ensureQueryData(userQuery),
-      await queryClient.ensureQueryData(userNotificationsQuery),
+      queryClient.ensureQueryData(userQuery),
+      queryClient.ensureQueryData(userNotificationsQuery),
     ]);
+
     return { notifications, user };
   } catch (error) {
     return { user: null, notifications: null };
@@ -50,12 +52,21 @@ const AppLayout = () => {
     if (val && isReady) {
       const message = JSON.parse(val);
       const { type, ...data } = message;
+      console.log({ type });
       switch (type) {
         // case 'chat-created':
         //   queryClient.invalidateQueries({
         //     queryKey: ['user-chats', data.shelterUsername],
         //   });
         //   break;
+        case 'animal-created-deleted':
+          queryClient.invalidateQueries({
+            queryKey: ['animals'],
+          });
+          queryClient.invalidateQueries({
+            queryKey: ['shelter-animals', data.createdBy],
+          });
+          break;
         case 'animal-changed-push-notification':
           queryClient.invalidateQueries({
             queryKey: ['animals'],
