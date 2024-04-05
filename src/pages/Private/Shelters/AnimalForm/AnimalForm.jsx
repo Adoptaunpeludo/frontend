@@ -129,6 +129,10 @@ const AnimalForm = () => {
 
   const [isFormValid, setIsFormValid] = useState(true);
 
+  const validateForm = (isValid) => {
+    setIsFormValid(isValid);
+  };
+
   return (
     <main className="bg-default-100 flex-grow">
       <section
@@ -175,7 +179,7 @@ const AnimalForm = () => {
                   <AnimalBioForm
                     data={data ? data : {}}
                     isDisabled={isSubmitting}
-                    setIsFormValid={setIsFormValid}
+                    validateForm={validateForm}
                   />
                 </Skeleton>
                 <Skeleton isLoaded={!isLoading}>

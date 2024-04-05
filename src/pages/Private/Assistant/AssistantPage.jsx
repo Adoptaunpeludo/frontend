@@ -9,6 +9,7 @@ import TextMessageBox from './components/TextMessageBox';
 import UserMessage from './components/UserMessage';
 import { chatStreamGenerator, createChat } from './service';
 import { chatHistoryQuery, useChatHistory } from './useChatHistory';
+import { redirect } from 'react-router-dom';
 
 export const loader = (queryClient) => async () => {
   try {
@@ -20,7 +21,8 @@ export const loader = (queryClient) => async () => {
     return history;
   } catch (error) {
     console.log(error);
-    throw error;
+    toast.error('El servicio de asistente no está disponible actualmente');
+    return redirect(-1);
   }
 };
 

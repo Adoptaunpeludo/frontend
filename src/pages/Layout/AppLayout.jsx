@@ -12,20 +12,25 @@ import {
 import { useUser, userQuery } from '../Private/useUser';
 import Footer from './Footer';
 import Header from './Header';
+import { toast } from 'react-toastify';
+
 
 export const loader = (queryClient) => async () => {
   const isLoggedIn = localStorage.getItem('isLoggedIn') === 'true';
+
   if (!isLoggedIn) return { user: null, notifications: null };
 
   try {
     const [user, notifications] = await Promise.all([
-      await queryClient.ensureQueryData(userQuery),
-      await queryClient.ensureQueryData(userNotificationsQuery),
+      queryClient.ensureQueryData(userQuery),
+      queryClient.ensureQueryData(userNotificationsQuery),
     ]);
+
     const chats = await queryClient.ensureQueryData(
       userChatsQuery(user.username)
     );
     return { notifications, user, chats };
+
   } catch (error) {
     return { user: null, notifications: null };
   }
@@ -52,21 +57,53 @@ const AppLayout = () => {
   }, [isReady, user, send]);
 
   useEffect(() => {
+    let timer = setTimeout(() => {
+      if (isReady) {
+        toast.dismiss();
+        return;
+      }
+      if (!isReady) {
+        toast.info(
+          'No ha sido posible conectar al servidor de chat/notificaciones.',
+          {
+            draggable: false,
+            closeOnClick: false,
+            autoClose: false,
+            hideProgressBar: true,
+            style: { marginTop: '50px' },
+          }
+        );
+      }
+    }, 3000);
+
+    return () => clearTimeout(timer); // Limpiar el temporizador en caso de que el componente se desmonte antes de que se cumplan los 5 segundos
+  }, [isReady]);
+
+  useEffect(() => {
     if (val && isReady) {
       const message = JSON.parse(val);
       const { type, ...data } = message;
+      console.log({ type });
       switch (type) {
         // case 'chat-created':
         //   queryClient.invalidateQueries({
         //     queryKey: ['user-chats', data.shelterUsername],
         //   });
         //   break;
+        case 'animal-created-deleted':
+          queryClient.invalidateQueries({
+            queryKey: ['animals'],
+          });
+          queryClient.invalidateQueries({
+            queryKey: ['shelter-animals', data.createdBy],
+          });
+          break;
         case 'animal-changed-push-notification':
           queryClient.invalidateQueries({
             queryKey: ['animals'],
           });
           queryClient.invalidateQueries({
-            queryKey: ['animal-details', data.animalSlug],
+            queryKey: ['animal-details', data.data.animalSlug],
           });
           queryClient.invalidateQueries({
             queryKey: ['shelters-animals', data.createdBy],

@@ -5,6 +5,7 @@ import { Form, redirect, useLoaderData } from 'react-router-dom';
 import { resendValidationEmail } from '../authService';
 import { useState } from 'react';
 import { toast } from 'react-toastify';
+import { validateField } from '../../../utils/validateField';
 
 export const action = async ({ request }) => {
   const formData = await request.formData();
@@ -76,6 +77,12 @@ const RenderSuccessMessage = () => (
 
 const RenderErrorMessage = () => {
   const [isResendingEmail, setIsResendingEmail] = useState(false);
+  const [error, setError] = useState('');
+
+  const handleChange = (event) => {
+    const { value } = event.target;
+    setError(validateField('email', value));
+  };
 
   return (
     <Form method="post" className="flex flex-col gap-6 max-w-lg  pt-8">
@@ -88,6 +95,10 @@ const RenderErrorMessage = () => {
         type="email"
         label="Email"
         name="email"
+        onChange={handleChange}
+        color={error ? 'danger' : 'none'}
+        errorMessage={error}
+        isRequired
       />
 
       <Button
