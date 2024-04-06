@@ -11,7 +11,7 @@ const NotFoundPage = () => {
         backgroundOpacity: 0.7,
       }}
     >
-      <div className="text-white bg-slate-400 p-4 rounded-md bg-opacity-80">
+      <div className="text-white bg-primary p-4 rounded-md bg-opacity-80">
         <h3 className="mb-2 text-4xl">¡Ohh! ¡Página no encontrada!</h3>
         <p className="leading-7 mt-2 mb-6 text-xl text-foreground text-white">
           No podemos encontrar la página que estás buscando
