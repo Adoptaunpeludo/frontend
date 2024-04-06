@@ -55,16 +55,21 @@ export const ShelterCard = ({ shelter, isLogged }) => {
       {/* Body */}
 
       <CardBody className="flex flex-column overflow-visible py-2 content-between h-44">
-        {/* username */}
-        <h3 className="flex w-full font-lobster justify-center items-center text-3xl capitalize">
-          {shelter.username}
-        </h3>
-        {/* description */}
-        <p className="my-3 flex-1 text-ellipsis overflow-hidden max-h-16">
-          {shelter.description !== ''
-            ? shelter.description
-            : `Protectora ${shelter.username}`}
-        </p>
+        <section id="name" className=" break-all line-clamp-1 h-10">
+          {/* username */}
+          <h3 className="flex w-full font-lobster justify-center items-center text-3xl capitalize">
+            {shelter.username}
+          </h3>
+        </section>
+        <section id="description " className="h-20">
+          {/* description */}
+          <p className="line-clamp-4 ">
+            {shelter.description !== ''
+              ? shelter.description
+              : `Protectora ${shelter.username}`}
+          </p>
+        </section>
+
         {/* Icons */}
         <div className="flex justify-start items-baseline gap-1">
           <UilMapMarker className="fill-tertiary" />
