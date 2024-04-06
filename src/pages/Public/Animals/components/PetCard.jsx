@@ -66,12 +66,12 @@ export const PetCard = ({ animal, isLogged }) => {
       {/* Body */}
 
       <CardBody className="flex flex-column overflow-visible py-2 gap-y-2  h-48">
-        <section id="name" className=" break-all line-clamp-1 h-10">
+        <section className=" break-all line-clamp-1 h-10">
           <h3 className="flex w-full font-lobster justify-center items-center text-4xl capitalize">
             {animal.name}
           </h3>
         </section>
-        <section id="description " className="h-16">
+        <section className="h-16">
           {/* description */}
           <p className="line-clamp-3 ">
             {animal.description !== '' && animal.description !== undefined
@@ -80,7 +80,7 @@ export const PetCard = ({ animal, isLogged }) => {
           </p>
         </section>
 
-        <section id="icons-line1" className="flex justify-between   ">
+        <section className="flex justify-between   ">
           <article className="flex justify-start gap-1 items-center">
             {/* Size */}
             <PetSize />
@@ -111,7 +111,7 @@ export const PetCard = ({ animal, isLogged }) => {
             </span>
           </article>
         </section>
-        <section id="icons-line2" className="flex justify-start ">
+        <section className="flex justify-start ">
           <article className="flex justify-start gap-1 items-center">
             <UilMapMarker className="fill-tertiary" />
             <span>{animal.city}</span>
