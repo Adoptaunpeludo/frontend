@@ -234,7 +234,7 @@ const AdoptionChatPage = () => {
           ))}
         </aside>
         <main className="order-1 sm:order-2 w-full px-5 pb-5">
-          <div className="flex flex-col flex-1 background-panel rounded-xl h-156 overflow-y-hidden">
+          <div className="flex flex-col flex-1 background-panel rounded-xl h-132 overflow-y-hidden">
             <div className="flex flex-col flex-1 overflow-x-auto mb-4">
               {isFetchingUser || isFetchingChatHistory ? (
                 <Spinner className="self-center flex-1 flex-col sm:w-3.5" />
