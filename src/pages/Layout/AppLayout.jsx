@@ -56,11 +56,11 @@ const AppLayout = () => {
 
   useEffect(() => {
     let timer = setTimeout(() => {
-      if (isReady) {
+      if (isReady && user) {
         toast.dismiss();
         return;
       }
-      if (!isReady) {
+      if (!isReady && user) {
         toast.info(
           'No ha sido posible conectar al servidor de chat/notificaciones.',
           {
@@ -75,7 +75,7 @@ const AppLayout = () => {
     }, 3000);
 
     return () => clearTimeout(timer); // Limpiar el temporizador en caso de que el componente se desmonte antes de que se cumplan los 5 segundos
-  }, [isReady]);
+  }, [isReady, user]);
 
   useEffect(() => {
     if (val && isReady) {

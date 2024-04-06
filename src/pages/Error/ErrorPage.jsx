@@ -21,10 +21,7 @@ const Error = () => {
     return <Navigate to="/404" />;
   } else
     return (
-      <section
-        id="login"
-        className="max-w-screen-xl w-full flex flex-col gap-3 justify-center py-10 mx-auto  "
-      >
+      <section className="text-center flex items-center justify-center flex-grow">
         <h3 className="mb-2">Algo no ha ido bien...</h3>
         <p className="leading-6 mt-2 mb-4 text-foreground">{error.message}</p>
         <Link className="text-tertiary capitalize" to="/">

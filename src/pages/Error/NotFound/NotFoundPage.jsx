@@ -3,21 +3,24 @@ import { useNavigate } from 'react-router-dom';
 const NotFoundPage = () => {
   const navigate = useNavigate();
 
-  console.log(window.history);
-
   return (
-    <main className="text-center flex items-center justify-center flex-grow">
-      <div>
-        {/* <img src={img} alt="not found" /> */}
-        <h3 className="mb-2">Ohh! Página no encontrada!</h3>
-        <p className="leading-6 mt-2 mb-4 text-foreground">
+    <main
+      className="text-center flex items-center justify-center flex-grow bg-cover"
+      style={{
+        backgroundImage: "url('/error/not-found-page.jpg')",
+        backgroundOpacity: 0.7,
+      }}
+    >
+      <div className="text-white bg-slate-400 p-4 rounded-md bg-opacity-80">
+        <h3 className="mb-2 text-4xl">¡Ohh! ¡Página no encontrada!</h3>
+        <p className="leading-7 mt-2 mb-6 text-xl text-foreground text-white">
           No podemos encontrar la página que estás buscando
         </p>
         <button
-          className="text-tertiary capitalize"
-          onClick={() => navigate(-1)}
+          className="text-tertiary capitalize bg-white px-4 py-2 rounded-lg"
+          onClick={() => navigate('/')}
         >
-          Ir Atras
+          Sácame de aquí
         </button>
       </div>
     </main>
