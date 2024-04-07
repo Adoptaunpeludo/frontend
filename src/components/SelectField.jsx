@@ -32,7 +32,7 @@ export const SelectField = ({
       onChange={onChange}
     >
       {dataEnum.map(({ label, value }) => (
-        <SelectItem key={value} value={value}>
+        <SelectItem key={value} value={value} className="capitalize">
           {label}
         </SelectItem>
       ))}
