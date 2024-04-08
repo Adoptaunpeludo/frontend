@@ -63,7 +63,8 @@ export const UserFormBio = ({ data }) => {
       credentials.firstName === data.firstName &&
       credentials.lastName === data.lastName &&
       credentials.phoneNumber === data.phoneNumber &&
-      credentials.city === data.city
+      credentials.city === data.city &&
+      credentials.username === data.username
     ) {
       setNoChanges(true);
     } else {
@@ -141,7 +142,22 @@ export const UserFormBio = ({ data }) => {
                           placeholder={'Introduce tu DNI, 99999999X'}
                           classNames={inputStyleConfig}
                         />
+                        <Input
+                          isRequired
+                          isDisabled={isSubmitting}
+                          className="min-w-72 "
+                          type="text"
+                          label="Nombre de usuario"
+                          name="username"
+                          defaultValue={username ? username : ''}
+                          color={errors.username ? 'danger' : 'none'}
+                          errorMessage={errors.username}
+                          onBlur={handleChange}
+                          placeholder={'Introduce tu nombre de usuario'}
+                          classNames={inputStyleConfig}
+                        />
                       </div>
+
                       <div className="flex w-full flex-wrap md:flex-nowrap gap-4">
                         <Input
                           isDisabled={isSubmitting}
