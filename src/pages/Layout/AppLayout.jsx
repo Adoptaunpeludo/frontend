@@ -14,6 +14,10 @@ import Header from './Header';
 import { toast } from 'react-toastify';
 
 export const loader = (queryClient) => async () => {
+  const isLoggedIn = localStorage.getItem('isLoggedIn') === 'true';
+
+  if (!isLoggedIn) return { notifications: null, user: null, chats: null };
+
   try {
     const user = await queryClient.ensureQueryData(userQuery);
     const notifications = await queryClient.ensureQueryData(

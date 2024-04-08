@@ -60,14 +60,12 @@ export const action =
       const id = formData.get('id');
       try {
         await deleteFav(id);
-        queryClient.invalidateQueries([
-          {
-            queryKey: ['animals'],
-          },
-          {
-            queryKey: ['user-favs', null],
-          },
-        ]);
+        queryClient.invalidateQueries({
+          queryKey: ['animals'],
+        });
+        queryClient.invalidateQueries({
+          queryKey: ['user-favs'],
+        });
         return null;
       } catch (error) {
         if (isAxiosError(error) && error.response.status === 400)
