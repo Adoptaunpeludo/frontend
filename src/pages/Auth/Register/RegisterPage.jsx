@@ -1,7 +1,13 @@
 import { Button, Input, Radio, RadioGroup, Skeleton } from '@nextui-org/react';
 import { IconLogin2 as LoginIcon } from '@tabler/icons-react';
 import { useState } from 'react';
-import { Form, Link, redirect, useNavigation } from 'react-router-dom';
+import {
+  Form,
+  Link,
+  redirect,
+  useNavigate,
+  useNavigation,
+} from 'react-router-dom';
 import { toast } from 'react-toastify';
 import { H2Title, LogoHeader, Panel } from '../../../components';
 import {
@@ -11,7 +17,10 @@ import {
 } from '../../../utils/configFormFields';
 import { handleAuthError } from '../../../utils/handleError';
 import { validateField } from '../../../utils/validateField';
-import { register } from '../authService';
+import { googleAuthRegister, register } from '../authService';
+import { GoogleLogin } from '@react-oauth/google';
+import { useQueryClient } from '@tanstack/react-query';
+import { userQuery } from '../../Private/useUser';
 
 export const action = async (data) => {
   const { request } = data;
@@ -47,6 +56,8 @@ const RegisterPage = () => {
     role: '',
   });
   const navigation = useNavigation();
+  const navigate = useNavigate();
+  const queryClient = useQueryClient();
 
   const isLoading = navigation.state === 'submitting';
 
@@ -63,6 +74,29 @@ const RegisterPage = () => {
   const enableButton = !(
     credentials.password === credentials.repeatPassword && isFormValid
   );
+
+  const responseMessage = async (response) => {
+    if (!credentials?.role)
+      return toast.error('Selecciona un tipo de perfil por favor');
+    try {
+      const { credential, clientId } = response;
+      await googleAuthRegister(credential, clientId, credentials.role);
+      localStorage.setItem('isLoggedIn', true);
+      queryClient.invalidateQueries({
+        queryKey: ['user'],
+      });
+      await queryClient.ensureQueryData(userQuery);
+      navigate('/');
+    } catch (error) {
+      console.log(error);
+
+      if (error.response.status === 400)
+        toast.error(error.response.data.message);
+    }
+  };
+  const errorMessage = (error) => {
+    console.log(error);
+  };
 
   return (
     <main className="bg-default-100 flex-grow ">
@@ -162,6 +196,14 @@ const RegisterPage = () => {
                   />
                 </div>
               </div>
+              <GoogleLogin
+                onSuccess={responseMessage}
+                onError={errorMessage}
+                theme="outline"
+                size="large"
+                text="continue_with"
+                width={'100%'}
+              />
 
               <div className="flex justify-center">
                 <Button
