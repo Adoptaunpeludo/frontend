@@ -19,6 +19,7 @@ import { useUserChats } from '../Private/Shelters/useUserChats.js';
 import { useUser } from '../Private/useUser.js';
 import BrandNavLogo from './components/BrandNavLogo.jsx';
 import { LogoMobile } from './components/LogoMobile.jsx';
+import { useNotifications } from '../Private/useNotifications.js';
 
 const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -26,6 +27,7 @@ const Header = () => {
   const { data: chats, isLoading: isLoadingChats } = useUserChats(
     user?.username
   );
+  const { data: notifications, isFetching } = useNotifications();
 
   const handleMenuOpenChange = (open) => {
     setIsMenuOpen(open);
@@ -122,7 +124,12 @@ const Header = () => {
             </Button>
           ) : (
             <div className="flex gap-2">
-              <UserAreaMenu user={user} chats={chats} />
+              <UserAreaMenu
+                user={user}
+                chats={chats}
+                notifications={notifications}
+                isFetching={isFetching}
+              />
             </div>
           )}
         </NavbarItem>

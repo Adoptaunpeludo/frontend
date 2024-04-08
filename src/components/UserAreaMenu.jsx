@@ -13,14 +13,9 @@ import { useNavigate } from 'react-router-dom';
 import { BUCKET_URL } from '../config/config.js';
 import { logout } from '../pages/Auth/authService.js';
 import { toast } from 'react-toastify';
-import { useNotifications } from '../pages/Private/useNotifications.js';
-import { useEffect } from 'react';
-import { useNotificationsContext } from '../context/NotificationsContext.jsx';
 import { useWebSocketContext } from '../context/WebSocketContext.jsx';
 
-export const UserAreaMenu = ({ user, chats }) => {
-  const { data: userNotifications, isFetching } = useNotifications();
-  const { notifications, setNotifications } = useNotificationsContext();
+export const UserAreaMenu = ({ user, chats, notifications, isFetching }) => {
   const { isReady, send } = useWebSocketContext();
   const navigate = useNavigate();
   const queryClient = useQueryClient();
@@ -60,10 +55,6 @@ export const UserAreaMenu = ({ user, chats }) => {
       throw error;
     }
   };
-
-  useEffect(() => {
-    setNotifications(userNotifications);
-  }, [userNotifications, setNotifications]);
 
   return (
     <Dropdown placement="bottom-end">

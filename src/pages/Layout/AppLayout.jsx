@@ -2,7 +2,6 @@ import { NextUIProvider } from '@nextui-org/react';
 import { useQueryClient } from '@tanstack/react-query';
 import { useEffect } from 'react';
 import { Outlet, ScrollRestoration, useNavigate } from 'react-router-dom';
-import { useNotificationsContext } from '../../context/NotificationsContext';
 import { useWebSocketContext } from '../../context/WebSocketContext';
 import { useUserChats, userChatsQuery } from '../Private/Shelters/useUserChats';
 import {
@@ -15,16 +14,11 @@ import Header from './Header';
 import { toast } from 'react-toastify';
 
 export const loader = (queryClient) => async () => {
-  const isLoggedIn = localStorage.getItem('isLoggedIn') === 'true';
-
-  if (!isLoggedIn) return { user: null, notifications: null };
-
   try {
-    const [user, notifications] = await Promise.all([
-      queryClient.ensureQueryData(userQuery),
-      queryClient.ensureQueryData(userNotificationsQuery),
-    ]);
-
+    const user = await queryClient.ensureQueryData(userQuery);
+    const notifications = await queryClient.ensureQueryData(
+      userNotificationsQuery
+    );
     const chats = await queryClient.ensureQueryData(
       userChatsQuery(user.username)
     );
@@ -41,7 +35,6 @@ const AppLayout = () => {
   const { data: chats } = useUserChats(user?.username);
   const { send, isReady, val } = useWebSocketContext();
   const queryClient = useQueryClient();
-  const { setNotifications } = useNotificationsContext();
 
   useEffect(() => {
     if (isReady)
@@ -83,11 +76,6 @@ const AppLayout = () => {
       const { type, ...data } = message;
 
       switch (type) {
-        // case 'chat-created':
-        //   queryClient.invalidateQueries({
-        //     queryKey: ['user-chats', data.shelterUsername],
-        //   });
-        //   break;
         case 'animal-created-deleted':
           queryClient.invalidateQueries({
             queryKey: ['animals'],
@@ -159,7 +147,7 @@ const AppLayout = () => {
           break;
       }
     }
-  }, [isReady, val, queryClient, setNotifications]);
+  }, [isReady, val, queryClient]);
 
   useEffect(() => {
     localStorage.setItem('isLoggedIn', user ? true : false);
