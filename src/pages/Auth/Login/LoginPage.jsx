@@ -49,6 +49,7 @@ const LoginPage = () => {
     email: '',
     password: '',
   });
+  const [isLoadingOauth, setIsLoadingOauth] = useState(false);
   const [errors, setErrors] = useState({});
   const navigation = useNavigation();
   const queryClient = useQueryClient();
@@ -70,6 +71,7 @@ const LoginPage = () => {
 
   const responseMessage = async (response) => {
     try {
+      setIsLoadingOauth(true);
       const { credential, clientId } = response;
       await googleAuthLogin(credential, clientId);
       localStorage.setItem('isLoggedIn', true);
@@ -79,15 +81,16 @@ const LoginPage = () => {
       queryClient.invalidateQueries({
         queryKey: ['user-notifications'],
       });
+      setIsLoadingOauth(false);
       navigate('/');
     } catch (error) {
       console.log(error);
-
-      if (error.response.status === 400)
-        toast.error(error.response.data.message);
+      setIsLoadingOauth(false);
+      toast.error(error.response.data.message);
     }
   };
   const errorMessage = (error) => {
+    setIsLoadingOauth(false);
     console.log(error);
   };
 
@@ -114,7 +117,7 @@ const LoginPage = () => {
               title="Inicia sesión en tu cuenta para continuar"
               className={'normal-case text-pretty'}
             />
-            {isLoading && <Spinner />}
+            {(isLoading || isLoadingOauth) && <Spinner />}
             <div className="flex flex-col gap-3">
               <Input
                 type="email"

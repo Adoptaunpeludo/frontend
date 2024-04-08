@@ -1,4 +1,11 @@
-import { Button, Input, Radio, RadioGroup, Skeleton } from '@nextui-org/react';
+import {
+  Button,
+  Input,
+  Radio,
+  RadioGroup,
+  Skeleton,
+  Spinner,
+} from '@nextui-org/react';
 import { IconLogin2 as LoginIcon } from '@tabler/icons-react';
 import { useState } from 'react';
 import {
@@ -52,6 +59,7 @@ export const action = async (data) => {
 
 const RegisterPage = () => {
   const [credentials, setCredentials] = useState({});
+  const [isLoadingOauth, setIsLoadingOauth] = useState(false);
   const [errors, setErrors] = useState({
     role: '',
   });
@@ -79,6 +87,7 @@ const RegisterPage = () => {
     if (!credentials?.role)
       return toast.error('Selecciona un tipo de perfil por favor');
     try {
+      setIsLoadingOauth(true);
       const { credential, clientId } = response;
       await googleAuthRegister(credential, clientId, credentials.role);
       localStorage.setItem('isLoggedIn', true);
@@ -86,15 +95,16 @@ const RegisterPage = () => {
         queryKey: ['user'],
       });
       await queryClient.ensureQueryData(userQuery);
+      setIsLoadingOauth(false);
       navigate('/');
     } catch (error) {
       console.log(error);
-
-      if (error.response.status === 400)
-        toast.error(error.response.data.message);
+      setIsLoadingOauth(false);
+      toast.error(error.response.data.message);
     }
   };
   const errorMessage = (error) => {
+    setIsLoadingOauth(false);
     console.log(error);
   };
 
@@ -115,7 +125,7 @@ const RegisterPage = () => {
               className="flex flex-col gap-6  mx-auto px-10 py-8 justify-center"
             >
               <H2Title title={'Regístrate'} className={'mx-auto'} />
-
+              {(isLoading || isLoadingOauth) && <Spinner />}
               <RadioGroup
                 name="role"
                 label="Perfil"
