@@ -7,18 +7,21 @@ import { AnimalImagesContextProvider } from './context/AnimalImagesContext.jsx';
 import { ModalContextProvider } from './context/ModalContext.jsx';
 import { WebSocketContextProvider } from './context/WebSocketContext.jsx';
 import { NotificationsContextProvider } from './context/NotificationsContext.jsx';
+import { GoogleOAuthProvider } from '@react-oauth/google';
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   <>
-    <WebSocketContextProvider>
-      <NotificationsContextProvider>
-        <AnimalImagesContextProvider>
-          <ModalContextProvider>
-            <App />
-          </ModalContextProvider>
-        </AnimalImagesContextProvider>
-      </NotificationsContextProvider>
-    </WebSocketContextProvider>
+    <GoogleOAuthProvider clientId="158620306115-psjd1a4oei4ustp9mach8b74m7i8pdfh.apps.googleusercontent.com">
+      <WebSocketContextProvider>
+        <NotificationsContextProvider>
+          <AnimalImagesContextProvider>
+            <ModalContextProvider>
+              <App />
+            </ModalContextProvider>
+          </AnimalImagesContextProvider>
+        </NotificationsContextProvider>
+      </WebSocketContextProvider>
+    </GoogleOAuthProvider>
     <ToastContainer position="top-center" className={'toast-message'} />
   </>
 );
