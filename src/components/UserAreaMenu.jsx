@@ -14,6 +14,7 @@ import { BUCKET_URL } from '../config/config.js';
 import { logout } from '../pages/Auth/authService.js';
 import { toast } from 'react-toastify';
 import { useWebSocketContext } from '../context/WebSocketContext.jsx';
+import { googleLogout } from '@react-oauth/google';
 
 export const UserAreaMenu = ({ user, chats, notifications, isFetching }) => {
   const { isReady, send } = useWebSocketContext();
@@ -24,6 +25,7 @@ export const UserAreaMenu = ({ user, chats, notifications, isFetching }) => {
     localStorage.setItem('isLoggedIn', false);
     try {
       await logout();
+      googleLogout();
       if (isReady) {
         send(
           JSON.stringify({
