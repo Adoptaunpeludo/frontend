@@ -1,7 +1,13 @@
 import { Button, Input, Spinner } from '@nextui-org/react';
 import { IconLogin2 as LoginIcon } from '@tabler/icons-react';
 import { useState } from 'react';
-import { Form, Link, redirect, useNavigation } from 'react-router-dom';
+import {
+  Form,
+  Link,
+  redirect,
+  useNavigate,
+  useNavigation,
+} from 'react-router-dom';
 import { toast } from 'react-toastify';
 import { H3Title, LogoHeader, Panel } from '../../../components';
 import {
@@ -11,7 +17,9 @@ import {
 import { handleAuthError } from '../../../utils/handleError';
 import { validateField } from '../../../utils/validateField';
 import { userQuery } from '../../Private/useUser';
-import { login } from '../authService';
+import { googleAuthLogin, login } from '../authService';
+import { GoogleLogin } from '@react-oauth/google';
+import { useQueryClient } from '@tanstack/react-query';
 
 export const action =
   (queryClient) =>
@@ -21,8 +29,8 @@ export const action =
     credentials.email = credentials.email.toLowerCase();
 
     try {
-      localStorage.setItem('isLoggedIn', true);
       await login(credentials);
+      localStorage.setItem('isLoggedIn', true);
       queryClient.invalidateQueries({
         queryKey: ['user'],
       });
@@ -43,6 +51,8 @@ const LoginPage = () => {
   });
   const [errors, setErrors] = useState({});
   const navigation = useNavigation();
+  const queryClient = useQueryClient();
+  const navigate = useNavigate();
 
   const isLoading = navigation.state === 'submitting';
 
@@ -56,6 +66,29 @@ const LoginPage = () => {
       ...errors,
       [name]: validateField(name, value),
     });
+  };
+
+  const responseMessage = async (response) => {
+    try {
+      const { credential, clientId } = response;
+      await googleAuthLogin(credential, clientId);
+      localStorage.setItem('isLoggedIn', true);
+      queryClient.invalidateQueries({
+        queryKey: ['user'],
+      });
+      queryClient.invalidateQueries({
+        queryKey: ['user-notifications'],
+      });
+      navigate('/');
+    } catch (error) {
+      console.log(error);
+
+      if (error.response.status === 400)
+        toast.error(error.response.data.message);
+    }
+  };
+  const errorMessage = (error) => {
+    console.log(error);
   };
 
   const isFormValid = Object.values(errors).every((error) => error === '');
@@ -108,6 +141,15 @@ const LoginPage = () => {
                 isDisabled={isLoading}
               />
             </div>
+
+            <GoogleLogin
+              onSuccess={responseMessage}
+              onError={errorMessage}
+              theme="outline"
+              size="large"
+              text="continue_with"
+            />
+
             <div className="flex justify-end">
               <Link
                 to="/forgot-password"
