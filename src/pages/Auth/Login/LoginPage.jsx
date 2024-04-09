@@ -1,5 +1,7 @@
 import { Button, Input, Spinner } from '@nextui-org/react';
+import { GoogleLogin } from '@react-oauth/google';
 import { IconLogin2 as LoginIcon } from '@tabler/icons-react';
+import { useQueryClient } from '@tanstack/react-query';
 import { useState } from 'react';
 import {
   Form,
@@ -9,7 +11,7 @@ import {
   useNavigation,
 } from 'react-router-dom';
 import { toast } from 'react-toastify';
-import { H3Title, LogoHeader, Panel } from '../../../components';
+import { H2Title, LogoHeader, Panel } from '../../../components';
 import {
   buttonStyleConfig,
   inputStyleConfig,
@@ -17,8 +19,6 @@ import {
 import { handleAuthError } from '../../../utils/handleError';
 import { validateField } from '../../../utils/validateField';
 import { googleAuthLogin, login } from '../authService';
-import { GoogleLogin } from '@react-oauth/google';
-import { useQueryClient } from '@tanstack/react-query';
 
 export const action =
   (queryClient) =>
@@ -114,12 +114,26 @@ const LoginPage = () => {
             method="post"
             className="flex flex-col gap-6  mx-auto px-10 py-8"
           >
-            <H3Title
-              title="Inicia sesión en tu cuenta para continuar"
-              className={'normal-case text-pretty'}
+            <H2Title
+              title="Inicia sesión "
+              className={'normal-case text-center'}
             />
             {(isLoading || isLoadingOauth) && <Spinner />}
-            <div className="flex flex-col gap-3">
+            <div className="flex justify-center">
+              <GoogleLogin
+                onSuccess={responseMessage}
+                onError={errorMessage}
+                theme="outline"
+                size="large"
+                text="signin_with"
+                type="standard"
+                shape="pill"
+              />
+            </div>
+            <div className="flex justify-center pb-5 border-b-1 border-primary">
+              O con tu email
+            </div>
+            <div className="flex flex-col gap-3 ">
               <Input
                 type="email"
                 label="Email"
@@ -146,22 +160,6 @@ const LoginPage = () => {
               />
             </div>
 
-            <GoogleLogin
-              onSuccess={responseMessage}
-              onError={errorMessage}
-              theme="outline"
-              size="large"
-              text="continue_with"
-            />
-
-            <div className="flex justify-end">
-              <Link
-                to="/forgot-password"
-                className="text-tertiary font-poppins"
-              >
-                ¿Olvidaste tu password?
-              </Link>
-            </div>
             <div className="flex justify-center">
               <Button
                 isDisabled={enableButton || isLoading}
@@ -174,6 +172,14 @@ const LoginPage = () => {
               >
                 Iniciar sesión
               </Button>
+            </div>
+            <div className="flex justify-end">
+              <Link
+                to="/forgot-password"
+                className="text-tertiary font-poppins"
+              >
+                ¿Olvidaste tu password?
+              </Link>
             </div>
             <div className="flex justify-center gap-1 font-medium font-poppins">
               <span>¿Necesitas crear una cuenta?</span>
