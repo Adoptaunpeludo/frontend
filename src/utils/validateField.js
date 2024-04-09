@@ -15,7 +15,7 @@ export const validateField = (name, value, password) => {
           } tener al menos 3 caracteres válidos, y no más de 25.`
         : '';
     case 'email':
-      return !/^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/i.test(value.trim())
+      return !/^[\w-.]+@([\w-]+\.)+[\w-]{2,4}$/i.test(value.trim())
         ? 'El correo electrónico ingresado no es válido.'
         : '';
     case 'oldPassword':

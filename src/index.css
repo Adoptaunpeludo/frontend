@@ -16,10 +16,9 @@
   background-color: rgba(212, 212, 216, 0.8);
 }
 
-
-.active {
-  @apply bg-white bg-opacity-25;
-}
+ .active {
+  @apply bg-primary ;
+} 
 
 
 

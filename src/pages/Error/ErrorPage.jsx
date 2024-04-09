@@ -21,16 +21,26 @@ const Error = () => {
     return <Navigate to="/404" />;
   } else
     return (
-      <section
-        id="login"
-        className="max-w-screen-xl w-full flex flex-col gap-3 justify-center py-10 mx-auto  "
+      <main
+        className="text-center flex items-center justify-center flex-grow bg-cover h-dvh w-dvw"
+        style={{
+          backgroundImage: "url('/error/error-page.jpg')",
+          backgroundOpacity: 0.7,
+        }}
       >
-        <h3 className="mb-2">Algo no ha ido bien...</h3>
-        <p className="leading-6 mt-2 mb-4 text-foreground">{error.message}</p>
-        <Link className="text-tertiary capitalize" to="/">
-          De vuelta a casa
-        </Link>
-      </section>
+        <div className="text-white bg-primary p-4 rounded-md bg-opacity-80">
+          <h3 className="mb-2 text-4xl">Algo no ha ido bien...</h3>
+          <p className="leading-7 mt-2 mb-6 text-xl text-foreground text-white">
+            Ha ocurrido un error inesperado: {error.message}
+          </p>
+          <Link
+            className="text-tertiary capitalize bg-white px-4 py-2 rounded-lg"
+            to="/"
+          >
+            Sácame de aquí
+          </Link>
+        </div>
+      </main>
     );
 };
 export default Error;

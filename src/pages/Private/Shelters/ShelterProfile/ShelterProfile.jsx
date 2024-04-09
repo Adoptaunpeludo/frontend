@@ -113,7 +113,7 @@ const ShelterProfile = () => {
               <UserBioInfo data={user} isLoading={isFetchingUser} />
             </Skeleton>
             <H2Title title="Seguridad" className="" />
-            <UserChangePassword />
+            <UserChangePassword isDisabled={user.accountType === 'google'} />
           </aside>
         </section>
 

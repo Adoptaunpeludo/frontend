@@ -12,12 +12,12 @@ import {
 import { UilMapMarker, UilPlay } from '@iconscout/react-unicons';
 
 import { IconHome } from '@tabler/icons-react';
-import { useOutletContext } from 'react-router-dom';
 import { UnderlineVector } from '../../../../assets/svg';
 import { BUCKET_URL, FALLBACK_IMAGE_CARD } from '../../../../config/config';
+import { useUser } from '../../../Private/useUser';
 
 export const ShelterCard = ({ shelter, isLogged }) => {
-  const { user } = useOutletContext();
+  const { data: user } = useUser();
 
   const isOnline =
     user?.username === shelter.username ? true : shelter.isOnline;
@@ -28,7 +28,7 @@ export const ShelterCard = ({ shelter, isLogged }) => {
       <CardHeader className="relative p-0 overflow-hidden">
         {/* principal image*/}
         <Image
-          src={`${BUCKET_URL}/${shelter.images[1]}`}
+          src={`${BUCKET_URL}/${shelter?.images?.at(1)}`}
           alt={shelter.username}
           className="w-80 object-cover h-52 aspect-square"
           fallbackSrc={`${FALLBACK_IMAGE_CARD}`}
@@ -45,7 +45,7 @@ export const ShelterCard = ({ shelter, isLogged }) => {
               isLogged ? (isOnline ? 'success' : 'danger') : 'default'
             }`}
             className="w-10 h-10 bg-white"
-            src={`${BUCKET_URL}/${shelter.images[0]}`}
+            src={`${BUCKET_URL}/${shelter?.images?.at(0)}`}
             showFallback
             fallback={<IconHome className="w-10 h-10 stroke-gray-600" />}
           />
@@ -55,16 +55,21 @@ export const ShelterCard = ({ shelter, isLogged }) => {
       {/* Body */}
 
       <CardBody className="flex flex-column overflow-visible py-2 content-between h-44">
-        {/* username */}
-        <h3 className="flex w-full font-lobster justify-center items-center text-3xl capitalize">
-          {shelter.username}
-        </h3>
-        {/* description */}
-        <p className="my-3 flex-1 text-ellipsis overflow-hidden max-h-16">
-          {shelter.description !== ''
-            ? shelter.description
-            : `Protectora ${shelter.username}`}
-        </p>
+        <section className=" break-all line-clamp-1 h-10">
+          {/* username */}
+          <h3 className="flex w-full font-lobster justify-center items-center text-3xl capitalize">
+            {shelter.username}
+          </h3>
+        </section>
+        <section className="h-20">
+          {/* description */}
+          <p className="line-clamp-4 ">
+            {shelter.description !== ''
+              ? shelter.description
+              : `Protectora ${shelter.username}`}
+          </p>
+        </section>
+
         {/* Icons */}
         <div className="flex justify-start items-baseline gap-1">
           <UilMapMarker className="fill-tertiary" />

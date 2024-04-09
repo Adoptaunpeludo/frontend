@@ -66,28 +66,36 @@ export const PetCard = ({ animal, isLogged }) => {
       {/* Body */}
 
       <CardBody className="flex flex-column overflow-visible py-2 gap-y-2  h-48">
-        <h3 className="flex w-full font-lobster justify-center items-center text-4xl capitalize">
-          {animal.name}
-        </h3>
-        {/* description */}
-        <p className="my-3 flex-1 text-ellipsis overflow-hidden max-h-16">
-          {animal.description !== '' && animal.description !== undefined
-            ? animal.description
-            : `Peludo ${animal.name}`}
-        </p>
+        <section className=" break-all line-clamp-1 h-10">
+          <h3 className="flex w-full font-lobster justify-center items-center text-4xl capitalize">
+            {animal.name}
+          </h3>
+        </section>
+        <section className="h-16">
+          {/* description */}
+          <p className="line-clamp-3 ">
+            {animal.description !== '' && animal.description !== undefined
+              ? animal.description
+              : `Peludo ${animal.name}`}
+          </p>
+        </section>
 
-        <section id="icons-line1" className="flex justify-between   ">
+        <section className="flex justify-between   ">
           <article className="flex justify-start gap-1 items-center">
             {/* Size */}
             <PetSize />
-            <span>{isNullDataField(animal.size, animalSizeEnum)}</span>
+            <span className="truncate max-w-16">
+              {isNullDataField(animal.size, animalSizeEnum)}
+            </span>
           </article>
           <article className="flex justify-start gap-0 items-center">
             {/* Gender */}
             {animal.gender === 'male' ? (
               <>
                 <UilMars className="fill-tertiary" />
-                <span>{isNullDataField(animal.gender, genderEnum)}</span>
+                <span className="truncate max-w-16">
+                  {isNullDataField(animal.gender, genderEnum)}
+                </span>
               </>
             ) : (
               <>
@@ -98,10 +106,12 @@ export const PetCard = ({ animal, isLogged }) => {
           </article>
           <article className="flex justify-start items-center gap-1">
             <UilSchedule className="fill-tertiary" />
-            <span>{ageDataField(animal.age)}</span>
+            <span className="truncate max-w-14">
+              {ageDataField(animal.age)}
+            </span>
           </article>
         </section>
-        <section id="icons-line2" className="flex justify-start ">
+        <section className="flex justify-start ">
           <article className="flex justify-start gap-1 items-center">
             <UilMapMarker className="fill-tertiary" />
             <span>{animal.city}</span>

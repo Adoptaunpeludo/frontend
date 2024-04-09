@@ -54,7 +54,7 @@ const NotificationsPage = () => {
   const { data: userNotifications, isFetching } = useNotifications();
   const queryClient = useQueryClient();
   const navigate = useNavigate();
-  const { data: user, isFetching: isFetchingUser } = useUser();
+  const { data: user } = useUser();
   // if (isFetching) return;
 
   let tabs = [
@@ -115,7 +115,7 @@ const NotificationsPage = () => {
         id="notifications"
         className="max-w-screen-xl w-full flex  flex-col justify-center  h-full  py-12  mx-auto gap-5"
       >
-        <TitleSection title={user.username} id="notifications" />
+        <TitleSection title={user.username} />
         <div className="flex w-full flex-col ">
           <Skeleton isLoaded={!isFetching}>
             <Tabs

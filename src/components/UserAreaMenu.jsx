@@ -13,22 +13,22 @@ import { useNavigate } from 'react-router-dom';
 import { BUCKET_URL } from '../config/config.js';
 import { logout } from '../pages/Auth/authService.js';
 import { toast } from 'react-toastify';
-import { useNotifications } from '../pages/Private/useNotifications.js';
-import { useEffect } from 'react';
-import { useNotificationsContext } from '../context/NotificationsContext.jsx';
 import { useWebSocketContext } from '../context/WebSocketContext.jsx';
+import { googleLogout } from '@react-oauth/google';
+import { useNotifications } from '../pages/Private/useNotifications.js';
 
 export const UserAreaMenu = ({ user, chats }) => {
-  const { data: userNotifications, isFetching } = useNotifications();
-  const { notifications, setNotifications } = useNotificationsContext();
   const { isReady, send } = useWebSocketContext();
   const navigate = useNavigate();
   const queryClient = useQueryClient();
+  const { data: notifications, isFetching: isFetchingNotifications } =
+    useNotifications();
 
   const handleLogout = async () => {
     localStorage.setItem('isLoggedIn', false);
     try {
       await logout();
+      googleLogout();
       if (isReady) {
         send(
           JSON.stringify({
@@ -61,10 +61,6 @@ export const UserAreaMenu = ({ user, chats }) => {
     }
   };
 
-  useEffect(() => {
-    setNotifications(userNotifications);
-  }, [userNotifications, setNotifications]);
-
   return (
     <Dropdown placement="bottom-end">
       <Badge
@@ -72,7 +68,7 @@ export const UserAreaMenu = ({ user, chats }) => {
         size="lg"
         color="primary"
         placement="top-left"
-        isInvisible={isFetching}
+        isInvisible={isFetchingNotifications}
       >
         <DropdownTrigger>
           <User

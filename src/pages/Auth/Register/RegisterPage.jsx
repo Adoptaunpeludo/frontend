@@ -1,7 +1,26 @@
-import { Button, Input, Radio, RadioGroup, Skeleton } from '@nextui-org/react';
-import { IconLogin2 as LoginIcon } from '@tabler/icons-react';
-import { useEffect, useState } from 'react';
-import { Form, Link, redirect, useNavigation } from 'react-router-dom';
+import {
+  Button,
+  Input,
+  Radio,
+  RadioGroup,
+  Skeleton,
+  Spinner,
+} from '@nextui-org/react';
+import { GoogleLogin } from '@react-oauth/google';
+import {
+  IconBrandGoogle,
+  IconMail,
+  IconLogin2 as LoginIcon,
+} from '@tabler/icons-react';
+import { useQueryClient } from '@tanstack/react-query';
+import { useState } from 'react';
+import {
+  Form,
+  Link,
+  redirect,
+  useNavigate,
+  useNavigation,
+} from 'react-router-dom';
 import { toast } from 'react-toastify';
 import { H2Title, LogoHeader, Panel } from '../../../components';
 import {
@@ -11,7 +30,7 @@ import {
 } from '../../../utils/configFormFields';
 import { handleAuthError } from '../../../utils/handleError';
 import { validateField } from '../../../utils/validateField';
-import { register } from '../authService';
+import { googleAuthRegister, register } from '../authService';
 
 export const action = async (data) => {
   const { request } = data;
@@ -43,15 +62,14 @@ export const action = async (data) => {
 
 const RegisterPage = () => {
   const [credentials, setCredentials] = useState({});
-  const [radioChecked, setRadioChecked] = useState(false);
   const [errors, setErrors] = useState({});
+  const [isLoadingOauth, setIsLoadingOauth] = useState(false);
+
   const navigation = useNavigation();
+  const navigate = useNavigate();
+  const queryClient = useQueryClient();
 
   const isLoading = navigation.state === 'submitting';
-
-  useEffect(() => {
-    if (credentials.role) setRadioChecked(true);
-  }, [credentials.role]);
 
   const handleChange = (event) => {
     const { name, value } = event.target;
@@ -64,15 +82,47 @@ const RegisterPage = () => {
       [name]: validateField(name, value, credentials.password),
     });
   };
-  const isFormValid = Object.values(errors).every((error) => error === '');
-  const enableButton =
+  const emptyForm = !(
     credentials.username &&
     credentials.email &&
     credentials.password &&
-    credentials.repeatPassword &&
-    isFormValid &&
-    radioChecked &&
-    Object.values(credentials).every((credential) => credential);
+    credentials.repeatPassword
+  );
+  const isFormValid =
+    Object.values(errors).every((error) => error === '') && !emptyForm;
+  const enableButton = isFormValid;
+
+  const responseMessage = async (response) => {
+    if (!credentials?.role)
+      return toast.error('Selecciona un tipo de perfil por favor');
+    try {
+      setIsLoadingOauth(true);
+      const { credential, clientId } = response;
+      await googleAuthRegister(credential, clientId, credentials.role);
+      localStorage.setItem('isLoggedIn', true);
+      queryClient.invalidateQueries({
+        queryKey: ['user'],
+      });
+      queryClient.invalidateQueries({
+        queryKey: ['user-notifications'],
+      });
+      setIsLoadingOauth(false);
+      navigate('/');
+    } catch (error) {
+      console.log(error);
+      setIsLoadingOauth(false);
+      toast.error(error.response.data.message);
+    }
+  };
+  const errorMessage = (error) => {
+    setIsLoadingOauth(false);
+    console.log(error);
+  };
+  const [loginOrigin, setLoginOrigin] = useState('');
+  const onPressLoginOrigin = (origin) => {
+    setLoginOrigin(origin);
+  };
+
   return (
     <main className="bg-default-100 flex-grow ">
       <Skeleton
@@ -89,11 +139,11 @@ const RegisterPage = () => {
               method="post"
               className="flex flex-col gap-6  mx-auto px-10 py-8 justify-center"
             >
-              <H2Title title={'Regístrate'} className={'mx-auto'} />
-
+              <H2Title title={'Registro'} className={'mx-auto'} />
+              {(isLoading || isLoadingOauth) && <Spinner />}
               <RadioGroup
                 name="role"
-                label="Perfil"
+                label="Selecciona tu perfil"
                 orientation="horizontal"
                 errorMessage={errors.role}
                 onChange={handleChange}
@@ -108,8 +158,53 @@ const RegisterPage = () => {
                   Adoptante
                 </Radio>
               </RadioGroup>
-
-              <div className="flex flex-col w-full gap-4">
+              <div>Regístrate con:</div>
+              <div className="flex gap-4 justify-center">
+                <Button
+                  isIconOnly
+                  radius="full"
+                  color="primary"
+                  variant="ghost"
+                  className="border-primary border-1 w-16 h-16"
+                  onPress={() => {
+                    onPressLoginOrigin('google');
+                  }}
+                >
+                  <IconBrandGoogle stroke={1} className="stroke-foreground" />
+                </Button>
+                <Button
+                  isIconOnly
+                  radius="full"
+                  color="primary"
+                  variant="ghost"
+                  className="border-primary border-1 w-16 h-16"
+                  onPress={() => {
+                    onPressLoginOrigin('mail');
+                  }}
+                >
+                  <IconMail stroke={1} className="stroke-foreground" />
+                </Button>
+              </div>
+              <div
+                className={`${
+                  loginOrigin === 'google' ? 'flex' : 'hidden'
+                } justify-center`}
+              >
+                <GoogleLogin
+                  onSuccess={responseMessage}
+                  onError={errorMessage}
+                  theme="outline"
+                  size="large"
+                  text="signin_with"
+                  type="standard"
+                  shape="pill"
+                  width={'100%'}
+                />
+              </div>
+              <div
+                className={` ${loginOrigin === 'mail' ? 'flex' : 'hidden'}
+               flex-col w-full gap-4 `}
+              >
                 <div className="flex w-full flex-wrap md:flex-nowrap gap-4">
                   <Input
                     name="username"
@@ -174,20 +269,19 @@ const RegisterPage = () => {
                     isRequired
                   />
                 </div>
-              </div>
-
-              <div className="flex justify-center">
-                <Button
-                  isDisabled={!enableButton}
-                  type="submit"
-                  color="primary"
-                  variant="solid"
-                  size="lg"
-                  endContent={<LoginIcon />}
-                  className="px-10 font-poppins"
-                >
-                  Regístrate
-                </Button>
+                <div className="flex justify-center">
+                  <Button
+                    isDisabled={!enableButton}
+                    type="submit"
+                    color="primary"
+                    variant="solid"
+                    size="lg"
+                    endContent={<LoginIcon />}
+                    className="px-10 font-poppins"
+                  >
+                    Regístrate
+                  </Button>
+                </div>
               </div>
               <div className="flex justify-center gap-1 font-medium font-poppins">
                 <span>¿Ya tienes una cuenta?</span>

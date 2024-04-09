@@ -13,13 +13,13 @@ export const FacilitiesAsideColumn = ({ facilities }) => {
         {facilitiesEnum.map((facility, index) => (
           <li className="py-2" key={index}>
             <Checkbox
-              isSelected={facilities.includes(facility.value)}
+              isSelected={facilities?.includes(facility.value)}
               isReadOnly
               radius="none"
               size="sm"
-              className="font-poppins"
+              className="font-poppins cursor-default"
             >
-              {facility.label}
+              {facility?.label}
             </Checkbox>
           </li>
         ))}

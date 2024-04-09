@@ -22,7 +22,7 @@ import { LogoMobile } from './components/LogoMobile.jsx';
 
 const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const { data: user, isLoading } = useUser();
+  const { data: user, isLoading: isLoadingUser } = useUser();
   const { data: chats, isLoading: isLoadingChats } = useUserChats(
     user?.username
   );
@@ -107,7 +107,7 @@ const Header = () => {
       </NavbarContent>
       <NavbarContent justify="end">
         <NavbarItem>
-          {isLoading || isLoadingChats ? (
+          {isLoadingUser || isLoadingChats ? (
             <Spinner />
           ) : !user ? (
             <Button

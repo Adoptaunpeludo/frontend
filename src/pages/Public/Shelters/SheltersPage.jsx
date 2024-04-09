@@ -1,6 +1,6 @@
-import { Skeleton } from '@nextui-org/react';
+import { Skeleton, Spinner } from '@nextui-org/react';
 import { useLoaderData } from 'react-router';
-import { useNavigation, useOutletContext } from 'react-router-dom';
+import { useNavigation } from 'react-router-dom';
 import {
   FilterBar,
   NoData,
@@ -9,6 +9,7 @@ import {
 } from '../../../components';
 import { ShelterCard } from './components';
 import { sheltersQuery, useShelters } from './useShelters';
+import { useUser } from '../../Private/useUser';
 
 export const loader =
   (queryClient) =>
@@ -27,8 +28,8 @@ export const loader =
 
 const SheltersPage = ({ page }) => {
   const { params } = useLoaderData();
-  const { user } = useOutletContext();
-  const { data } = useShelters(params);
+  const { data: user } = useUser();
+  const { data, isFetching } = useShelters(params);
 
   const navigation = useNavigation();
   const isLoading = navigation.state === 'loading';
@@ -40,6 +41,7 @@ const SheltersPage = ({ page }) => {
         <TitleSection title={'asociaciones'} />
         <FilterBar page={page} className="" />
       </header>
+      {isFetching && <Spinner />}
       <section className="flex flex-col flex-auto">
         <ul className="flex justify-center gap-4 flex-wrap p-6">
           {data?.users.length > 0 ? (

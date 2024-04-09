@@ -7,7 +7,6 @@ import { Button, Spinner } from '@nextui-org/react';
 import { handleFavError } from '../utils/handleFavsError';
 import { toast } from 'react-toastify';
 import { isAxiosError } from 'axios';
-import { useParams } from 'react-router-dom';
 
 export const HeartIcon = ({
   size = 24,
@@ -20,7 +19,6 @@ export const HeartIcon = ({
 }) => {
   const [liked, setLiked] = useState(userFavs.includes(data?.id));
   const [isLoading, setIsLoading] = useState(false);
-  const params = useParams();
   const queryClient = useQueryClient();
 
   useEffect(() => {
@@ -35,11 +33,11 @@ export const HeartIcon = ({
       queryClient.invalidateQueries({
         queryKey: ['animals'],
       });
-      queryClient.invalidateQueries({
-        queryKey: ['user-favs', null],
+      queryClient.removeQueries({
+        queryKey: ['user-favs'],
       });
       queryClient.invalidateQueries({
-        queryKey: ['shelters-animals', params.shelterName],
+        queryKey: ['shelters-animals'],
       });
     } catch (error) {
       if (isAxiosError(error) && error.response.status === 400)

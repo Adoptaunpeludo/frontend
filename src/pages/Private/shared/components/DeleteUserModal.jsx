@@ -14,6 +14,8 @@ import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import { deleteUser } from '../service/userService';
+import { logout } from '../../../Auth/authService';
+import { deleteChatHistory } from '../../Assistant/service';
 
 export default function DeleteUserModal() {
   const { isOpen, onOpen, onOpenChange } = useDisclosure();
@@ -22,12 +24,26 @@ export default function DeleteUserModal() {
   const navigate = useNavigate();
 
   const handleDeleteUser = async () => {
+    localStorage.setItem('isLoggedIn', false);
     try {
       setIsLoading(true);
-      await deleteUser();
-      toast.success('Usuario Borrada con exito');
+      await Promise.all([logout(), deleteChatHistory(), deleteUser()]);
+
+      toast.success('Usuario Borrado con exito');
       queryClient.removeQueries({
         queryKey: ['user'],
+      });
+      queryClient.removeQueries({
+        queryKey: ['user-notifications'],
+      });
+      queryClient.removeQueries({
+        queryKey: ['user-favs'],
+      });
+      queryClient.removeQueries({
+        queryKey: ['user-animals'],
+      });
+      queryClient.removeQueries({
+        queryKey: ['user-chats'],
       });
       navigate('/');
     } catch (error) {

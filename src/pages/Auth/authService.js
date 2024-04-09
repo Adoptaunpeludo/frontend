@@ -54,3 +54,21 @@ export const resetPassword = async ({ password, token }) => {
   });
   return response;
 };
+
+export const googleAuthLogin = async (credential, clientId) => {
+  const response = await postData('/auth/google-auth-login', {
+    credential,
+    clientId,
+  });
+
+  return response;
+};
+export const googleAuthRegister = async (credential, clientId, role) => {
+  const response = await postData('/auth/google-auth-register', {
+    credential,
+    clientId,
+    role,
+  });
+
+  return response;
+};

@@ -16,7 +16,7 @@ export const AnimalGallery = ({ animalImages, onSetImages }) => {
 
   return (
     <div id="gallery" className="flex py-4 justify-start gap-4">
-      {animalImages.map(
+      {animalImages?.map(
         (image, index) =>
           index !== 0 && (
             <picture key={index} className="">

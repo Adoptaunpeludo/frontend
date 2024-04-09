@@ -22,6 +22,9 @@ const UserMessage = ({ text, isSender, avatar, user = '', isRead }) => {
           showFallback
           src={`${BUCKET_URL}/${avatar}`}
           fallback={<IconUserFilled />}
+          isBordered
+          color="primary"
+          className={`${isSender ? 'hidden' : ''}`}
         />
         <div
           className={
@@ -35,7 +38,14 @@ const UserMessage = ({ text, isSender, avatar, user = '', isRead }) => {
           </p>
           {text}
           {isSender &&
-            (isRead ? <span> &#x2713;&#x2713;</span> : <span> &#x2713;</span>)}
+            (isRead ? (
+              <span className="text-[10px] text-primary">
+                {' '}
+                &#x2713;&#x2713;
+              </span>
+            ) : (
+              <span className="text-[10px] text-primary"> &#x2713;</span>
+            ))}
         </div>
       </div>
     </div>
