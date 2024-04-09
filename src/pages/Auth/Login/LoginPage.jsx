@@ -1,6 +1,10 @@
 import { Button, Input, Spinner } from '@nextui-org/react';
 import { GoogleLogin } from '@react-oauth/google';
-import { IconLogin2 as LoginIcon } from '@tabler/icons-react';
+import {
+  IconBrandGoogle,
+  IconMail,
+  IconLogin2 as LoginIcon,
+} from '@tabler/icons-react';
 import { useQueryClient } from '@tanstack/react-query';
 import { useState } from 'react';
 import {
@@ -101,6 +105,10 @@ const LoginPage = () => {
     credentials.password &&
     isFormValid
   );
+  const [loginOrigin, setLoginOrigin] = useState('');
+  const onPressLoginOrigin = (origin) => {
+    setLoginOrigin(origin);
+  };
 
   return (
     <main className="bg-default-100 flex-grow">
@@ -119,7 +127,39 @@ const LoginPage = () => {
               className={'normal-case text-center'}
             />
             {(isLoading || isLoadingOauth) && <Spinner />}
-            <div className="flex justify-center">
+
+            <div className="flex gap-4 justify-center">
+              <Button
+                isIconOnly
+                radius="full"
+                color="primary"
+                variant="ghost"
+                className="border-primary border-1 w-16 h-16"
+                onPress={() => {
+                  onPressLoginOrigin('google');
+                }}
+              >
+                <IconBrandGoogle stroke={1} className="stroke-foreground" />
+              </Button>
+              <Button
+                isIconOnly
+                radius="full"
+                color="primary"
+                variant="ghost"
+                className="border-primary border-1 w-16 h-16"
+                onPress={() => {
+                  onPressLoginOrigin('mail');
+                }}
+              >
+                <IconMail stroke={1} className="stroke-foreground" />
+              </Button>
+            </div>
+
+            <div
+              className={`${
+                loginOrigin === 'google' ? 'flex' : 'hidden'
+              } justify-center`}
+            >
               <GoogleLogin
                 onSuccess={responseMessage}
                 onError={errorMessage}
@@ -130,10 +170,13 @@ const LoginPage = () => {
                 shape="pill"
               />
             </div>
-            <div className="flex justify-center pb-5 border-b-1 border-primary">
+            {/* <div className="flex justify-center pb-5 border-b-1 border-primary">
               O con tu email
-            </div>
-            <div className="flex flex-col gap-3 ">
+            </div> */}
+            <div
+              className={` ${loginOrigin === 'mail' ? 'flex' : 'hidden'}
+               flex-col gap-3 `}
+            >
               <Input
                 type="email"
                 label="Email"
@@ -158,35 +201,34 @@ const LoginPage = () => {
                 classNames={inputStyleConfig}
                 isDisabled={isLoading}
               />
+              <div className="flex justify-center">
+                <Button
+                  isDisabled={enableButton || isLoading}
+                  type="submit"
+                  color="primary"
+                  variant="solid"
+                  size="lg"
+                  endContent={<LoginIcon />}
+                  className={buttonStyleConfig}
+                >
+                  Iniciar sesión
+                </Button>
+              </div>
+              <div className="flex justify-end">
+                <Link
+                  to="/forgot-password"
+                  className="text-tertiary font-poppins"
+                >
+                  ¿Olvidaste tu password?
+                </Link>
+              </div>
             </div>
 
-            <div className="flex justify-center">
-              <Button
-                isDisabled={enableButton || isLoading}
-                type="submit"
-                color="primary"
-                variant="solid"
-                size="lg"
-                endContent={<LoginIcon />}
-                className={buttonStyleConfig}
-              >
-                Iniciar sesión
-              </Button>
-            </div>
-            <div className="flex justify-end">
-              <Link
-                to="/forgot-password"
-                className="text-tertiary font-poppins"
-              >
-                ¿Olvidaste tu password?
-              </Link>
-            </div>
             <div className="flex justify-center gap-1 font-medium font-poppins">
               <span>¿Necesitas crear una cuenta?</span>
               <Link to="/register" className="text-tertiary">
                 Regístrate
               </Link>
-              <div></div>
             </div>
           </Form>
         </Panel>
