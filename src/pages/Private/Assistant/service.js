@@ -1,5 +1,15 @@
-import { fetchData, postData } from '../../../api/client';
+import { deleteData, fetchData, postData } from '../../../api/client';
 import { ASSISTANT_SERVER } from '../../../config/config';
+
+export const deleteChatHistory = async () => {
+  try {
+    const { data } = await deleteData(`${ASSISTANT_SERVER}/chat-history`);
+    return data;
+  } catch (error) {
+    console.log(error);
+    throw error;
+  }
+};
 
 export const getChatHistory = async () => {
   try {
