@@ -4,17 +4,13 @@ import { useEffect } from 'react';
 import { Outlet, ScrollRestoration, useNavigate } from 'react-router-dom';
 import { useWebSocketContext } from '../../context/WebSocketContext';
 import { userChatsQuery } from '../Private/Shelters/useUserChats';
-import { userNotificationsQuery } from '../Private/useNotifications';
 import { useUser, userQuery } from '../Private/useUser';
 import Footer from './Footer';
 import Header from './Header';
 import { toast } from 'react-toastify';
+import { userNotificationsQuery } from '../Private/useNotifications';
 
 export const loader = (queryClient) => async () => {
-  const isLoggedIn = localStorage.getItem('isLoggedIn') === 'true';
-
-  if (!isLoggedIn) return { notifications: null, user: null, chats: null };
-
   try {
     const user = await queryClient.ensureQueryData(userQuery);
     const notifications = await queryClient.ensureQueryData(
@@ -23,7 +19,7 @@ export const loader = (queryClient) => async () => {
     const chats = await queryClient.ensureQueryData(
       userChatsQuery(user.username)
     );
-    return { notifications, user, chats };
+    return { user, chats, notifications };
   } catch (error) {
     return { user: null, notifications: null };
   }

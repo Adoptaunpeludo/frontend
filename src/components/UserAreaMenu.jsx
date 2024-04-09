@@ -15,11 +15,14 @@ import { logout } from '../pages/Auth/authService.js';
 import { toast } from 'react-toastify';
 import { useWebSocketContext } from '../context/WebSocketContext.jsx';
 import { googleLogout } from '@react-oauth/google';
+import { useNotifications } from '../pages/Private/useNotifications.js';
 
-export const UserAreaMenu = ({ user, chats, notifications, isFetching }) => {
+export const UserAreaMenu = ({ user, chats }) => {
   const { isReady, send } = useWebSocketContext();
   const navigate = useNavigate();
   const queryClient = useQueryClient();
+  const { data: notifications, isFetching: isFetchingNotifications } =
+    useNotifications();
 
   const handleLogout = async () => {
     localStorage.setItem('isLoggedIn', false);
@@ -65,7 +68,7 @@ export const UserAreaMenu = ({ user, chats, notifications, isFetching }) => {
         size="lg"
         color="primary"
         placement="top-left"
-        isInvisible={isFetching}
+        isInvisible={isFetchingNotifications}
       >
         <DropdownTrigger>
           <User

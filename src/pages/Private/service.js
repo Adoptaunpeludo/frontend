@@ -10,8 +10,9 @@ export const getCurrentUser = async () => {
 };
 
 export const getUserNotifications = async () => {
-  const isLoggedIn = localStorage.getItem('isLoggedIn') === 'true';
-  if (!isLoggedIn) return null;
+  // const isLoggedIn = localStorage.getItem('isLoggedIn') === 'true';
+  // console.log({ isLoggedIn });
+  // if (!isLoggedIn) return null;
 
   const { data } = await fetchData('/users/me/notifications?limit=100');
 
