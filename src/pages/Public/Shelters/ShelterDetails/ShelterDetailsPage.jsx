@@ -46,8 +46,8 @@ const ShelterDetailsPage = () => {
   const { data: user } = useUser();
   const { username } = params;
   const { data, isLoading } = useShelterDetails(username);
-  const imagesGallery = data.images.slice();
-  imagesGallery.shift();
+  const imagesGallery = data?.images?.slice();
+  imagesGallery?.shift();
   const [images, setImages] = useState(imagesGallery);
   const isOnline = user?.username === username ? true : data.isOnline;
   const isLogged = user !== null;
@@ -66,7 +66,7 @@ const ShelterDetailsPage = () => {
         >
           <div className="relative container lg:w-164 rounded-lg bg-detail bg-cover bg-center">
             <Image
-              src={`${BUCKET_URL}/${images[0]}`}
+              src={`${BUCKET_URL}/${images?.at(0)}`}
               className=" xl:w-200 xl:max-h-[36rem] object-cover object-center aspect-4/3 flex-1  "
               loading="lazy"
               alt={data.description}
@@ -80,7 +80,7 @@ const ShelterDetailsPage = () => {
                 isLogged ? (isOnline ? 'success' : 'danger') : 'default'
               }`}
               className="absolute right-5 top-5 z-10 bg-white"
-              src={`${BUCKET_URL}/${data?.images[0]}`}
+              src={`${BUCKET_URL}/${data?.images?.at(0)}`}
               showFallback
               fallback={<IconHome className="w-5 h-5 stroke-gray-600" />}
             />
