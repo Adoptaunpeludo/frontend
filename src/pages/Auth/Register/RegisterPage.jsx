@@ -6,7 +6,13 @@ import {
   Skeleton,
   Spinner,
 } from '@nextui-org/react';
-import { IconLogin2 as LoginIcon } from '@tabler/icons-react';
+import { GoogleLogin } from '@react-oauth/google';
+import {
+  IconBrandGoogle,
+  IconMail,
+  IconLogin2 as LoginIcon,
+} from '@tabler/icons-react';
+import { useQueryClient } from '@tanstack/react-query';
 import { useState } from 'react';
 import {
   Form,
@@ -25,8 +31,6 @@ import {
 import { handleAuthError } from '../../../utils/handleError';
 import { validateField } from '../../../utils/validateField';
 import { googleAuthRegister, register } from '../authService';
-import { GoogleLogin } from '@react-oauth/google';
-import { useQueryClient } from '@tanstack/react-query';
 
 export const action = async (data) => {
   const { request } = data;
@@ -108,6 +112,10 @@ const RegisterPage = () => {
     setIsLoadingOauth(false);
     console.log(error);
   };
+  const [loginOrigin, setLoginOrigin] = useState('');
+  const onPressLoginOrigin = (origin) => {
+    setLoginOrigin(origin);
+  };
 
   return (
     <main className="bg-default-100 flex-grow ">
@@ -125,11 +133,11 @@ const RegisterPage = () => {
               method="post"
               className="flex flex-col gap-6  mx-auto px-10 py-8 justify-center"
             >
-              <H2Title title={'Regístrate'} className={'mx-auto'} />
+              <H2Title title={'Registro'} className={'mx-auto'} />
               {(isLoading || isLoadingOauth) && <Spinner />}
               <RadioGroup
                 name="role"
-                label="Perfil"
+                label="Selecciona tu perfil"
                 orientation="horizontal"
                 errorMessage={errors.role}
                 onChange={handleChange}
@@ -144,8 +152,53 @@ const RegisterPage = () => {
                   Adoptante
                 </Radio>
               </RadioGroup>
-
-              <div className="flex flex-col w-full gap-4">
+              <div>Regístrate con:</div>
+              <div className="flex gap-4 justify-center">
+                <Button
+                  isIconOnly
+                  radius="full"
+                  color="primary"
+                  variant="ghost"
+                  className="border-primary border-1 w-16 h-16"
+                  onPress={() => {
+                    onPressLoginOrigin('google');
+                  }}
+                >
+                  <IconBrandGoogle stroke={1} className="stroke-foreground" />
+                </Button>
+                <Button
+                  isIconOnly
+                  radius="full"
+                  color="primary"
+                  variant="ghost"
+                  className="border-primary border-1 w-16 h-16"
+                  onPress={() => {
+                    onPressLoginOrigin('mail');
+                  }}
+                >
+                  <IconMail stroke={1} className="stroke-foreground" />
+                </Button>
+              </div>
+              <div
+                className={`${
+                  loginOrigin === 'google' ? 'flex' : 'hidden'
+                } justify-center`}
+              >
+                <GoogleLogin
+                  onSuccess={responseMessage}
+                  onError={errorMessage}
+                  theme="outline"
+                  size="large"
+                  text="signin_with"
+                  type="standard"
+                  shape="pill"
+                  width={'100%'}
+                />
+              </div>
+              <div
+                className={` ${loginOrigin === 'mail' ? 'flex' : 'hidden'}
+               flex-col w-full gap-4 `}
+              >
                 <div className="flex w-full flex-wrap md:flex-nowrap gap-4">
                   <Input
                     name="username"
@@ -156,8 +209,8 @@ const RegisterPage = () => {
                       credentials.role === undefined
                         ? ' '
                         : credentials.role === 'shelter'
-                        ? 'de protectora'
-                        : 'de adoptante'
+                          ? 'de protectora'
+                          : 'de adoptante'
                     }`}
                     placeholder="Introduce un nombre"
                     color={errors.username ? 'danger' : 'none'}
@@ -206,29 +259,21 @@ const RegisterPage = () => {
                     isRequired
                   />
                 </div>
+                <div className="flex justify-center">
+                  <Button
+                    isDisabled={enableButton}
+                    type="submit"
+                    color="primary"
+                    variant="solid"
+                    size="lg"
+                    endContent={<LoginIcon />}
+                    className="px-10 font-poppins"
+                  >
+                    Regístrate
+                  </Button>
+                </div>
               </div>
-              <GoogleLogin
-                onSuccess={responseMessage}
-                onError={errorMessage}
-                theme="outline"
-                size="large"
-                text="continue_with"
-                width={'100%'}
-              />
 
-              <div className="flex justify-center">
-                <Button
-                  isDisabled={enableButton}
-                  type="submit"
-                  color="primary"
-                  variant="solid"
-                  size="lg"
-                  endContent={<LoginIcon />}
-                  className="px-10 font-poppins"
-                >
-                  Regístrate
-                </Button>
-              </div>
               <div className="flex justify-center gap-1 font-medium font-poppins">
                 <span>¿Ya tienes una cuenta?</span>
                 <Link to="/login" className="text-tertiary">
