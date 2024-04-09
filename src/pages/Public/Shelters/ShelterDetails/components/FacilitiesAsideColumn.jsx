@@ -17,7 +17,7 @@ export const FacilitiesAsideColumn = ({ facilities }) => {
               isReadOnly
               radius="none"
               size="sm"
-              className="font-poppins"
+              className="font-poppins cursor-default"
             >
               {facility?.label}
             </Checkbox>
