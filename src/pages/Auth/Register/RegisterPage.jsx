@@ -1,6 +1,6 @@
 import { Button, Input, Radio, RadioGroup, Skeleton } from '@nextui-org/react';
 import { IconLogin2 as LoginIcon } from '@tabler/icons-react';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Form, Link, redirect, useNavigation } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import { H2Title, LogoHeader, Panel } from '../../../components';
@@ -43,27 +43,36 @@ export const action = async (data) => {
 
 const RegisterPage = () => {
   const [credentials, setCredentials] = useState({});
-  const [errors, setErrors] = useState({
-    role: '',
-  });
+  const [radioChecked, setRadioChecked] = useState(false);
+  const [errors, setErrors] = useState({});
   const navigation = useNavigation();
 
   const isLoading = navigation.state === 'submitting';
 
+  useEffect(() => {
+    if (credentials.role) setRadioChecked(true);
+  }, [credentials.role]);
+
   const handleChange = (event) => {
     const { name, value } = event.target;
-    setCredentials({ ...credentials, [name]: value });
+    setCredentials((prevCredentials) => ({
+      ...prevCredentials,
+      [name]: value,
+    }));
     setErrors({
       ...errors,
       [name]: validateField(name, value, credentials.password),
     });
   };
-
   const isFormValid = Object.values(errors).every((error) => error === '');
-  const enableButton = !(
-    credentials.password === credentials.repeatPassword && isFormValid
-  );
-
+  const enableButton =
+    credentials.username &&
+    credentials.email &&
+    credentials.password &&
+    credentials.repeatPassword &&
+    isFormValid &&
+    radioChecked &&
+    Object.values(credentials).every((credential) => credential);
   return (
     <main className="bg-default-100 flex-grow ">
       <Skeleton
@@ -104,6 +113,7 @@ const RegisterPage = () => {
                 <div className="flex w-full flex-wrap md:flex-nowrap gap-4">
                   <Input
                     name="username"
+                    isDisabled={!credentials.role}
                     className="min-w-72 "
                     classNames={inputStyleConfig}
                     type="text"
@@ -123,6 +133,7 @@ const RegisterPage = () => {
 
                   <Input
                     name="email"
+                    isDisabled={!credentials.role}
                     className="min-w-72 "
                     classNames={inputStyleConfig}
                     type="email"
@@ -137,6 +148,7 @@ const RegisterPage = () => {
                 <div className="flex w-full flex-wrap md:flex-nowrap gap-4">
                   <Input
                     name="password"
+                    isDisabled={!credentials.role}
                     className="min-w-72 "
                     classNames={inputStyleConfig}
                     type="password"
@@ -150,6 +162,7 @@ const RegisterPage = () => {
 
                   <Input
                     name="repeatPassword"
+                    isDisabled={!credentials.role}
                     className="min-w-72 "
                     classNames={inputStyleConfig}
                     type="password"
@@ -165,7 +178,7 @@ const RegisterPage = () => {
 
               <div className="flex justify-center">
                 <Button
-                  isDisabled={enableButton}
+                  isDisabled={!enableButton}
                   type="submit"
                   color="primary"
                   variant="solid"

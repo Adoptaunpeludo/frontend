@@ -6,7 +6,7 @@ import {
   Textarea,
 } from '@nextui-org/react';
 import { IconCircleX, IconSend2 } from '@tabler/icons-react';
-import { useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import {
   Form,
   redirect,
@@ -44,6 +44,7 @@ import {
   updatePetAdoption,
   uploadAnimalImages,
 } from './service';
+import { useGetErrors } from '../../../../context/FormErrorsContext';
 
 export const action =
   (animalImages, queryClient) =>
@@ -127,11 +128,18 @@ const AnimalForm = () => {
 
   const [pet, usePet] = useState(data?.type || '');
 
-  const [isFormValid, setIsFormValid] = useState(true);
+  const [isRadioChecked, setIsRadioChecked] = useState(!!pet);
+  const { errors } = useGetErrors();
 
-  const validateForm = (isValid) => {
-    setIsFormValid(isValid);
-  };
+  const isFormValid = Object.values(errors).every((error) => error === '');
+  const isFirstRender = useRef(true);
+
+  useEffect(() => {
+    if (!isFirstRender.current) {
+      setIsRadioChecked(true);
+    }
+    isFirstRender.current = false;
+  }, [pet]);
 
   return (
     <main className="bg-default-100 flex-grow">
@@ -166,6 +174,7 @@ const AnimalForm = () => {
                     isReadOnly={data?.type}
                     label="Peludo"
                     classNames={radioGroupStyleConfig}
+                    isRequired
                   >
                     <Radio value={'cat'} classNames={radioStyleConfig}>
                       Gato
@@ -178,8 +187,7 @@ const AnimalForm = () => {
                 <Skeleton isLoaded={!isLoading}>
                   <AnimalBioForm
                     data={data ? data : {}}
-                    isDisabled={isSubmitting}
-                    validateForm={validateForm}
+                    isDisabled={isSubmitting || !isRadioChecked}
                   />
                 </Skeleton>
                 <Skeleton isLoaded={!isLoading}>
@@ -203,7 +211,7 @@ const AnimalForm = () => {
                   <section id="shelterStatus">
                     <StatusShelterForm
                       data={data ? data : {}}
-                      isDisabled={isSubmitting}
+                      isDisabled={isSubmitting || !isRadioChecked}
                     />
                   </section>
                 </Skeleton>
@@ -216,7 +224,7 @@ const AnimalForm = () => {
                     className="w-full border-primary border-t-1 pt-3"
                     name="description"
                     label="Descripción"
-                    isDisabled={isSubmitting}
+                    isDisabled={isSubmitting || !isRadioChecked}
                     defaultValue={data?.description ? data?.description : ''}
                     classNames={inputStyleConfig}
                     isRequired
@@ -244,7 +252,7 @@ const AnimalForm = () => {
                     Cancelar
                   </Button>
                   <Button
-                    isDisabled={!isFormValid}
+                    isDisabled={!isFormValid || !isRadioChecked}
                     color="primary"
                     variant="solid"
                     size="sm"
