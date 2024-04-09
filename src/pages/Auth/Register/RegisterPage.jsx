@@ -27,7 +27,6 @@ import { validateField } from '../../../utils/validateField';
 import { googleAuthRegister, register } from '../authService';
 import { GoogleLogin } from '@react-oauth/google';
 import { useQueryClient } from '@tanstack/react-query';
-import { userQuery } from '../../Private/useUser';
 
 export const action = async (data) => {
   const { request } = data;
@@ -94,7 +93,9 @@ const RegisterPage = () => {
       queryClient.invalidateQueries({
         queryKey: ['user'],
       });
-      await queryClient.ensureQueryData(userQuery);
+      queryClient.invalidateQueries({
+        queryKey: ['user-notifications'],
+      });
       setIsLoadingOauth(false);
       navigate('/');
     } catch (error) {
