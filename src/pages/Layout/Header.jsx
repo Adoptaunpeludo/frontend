@@ -23,11 +23,12 @@ import { useNotifications } from '../Private/useNotifications.js';
 
 const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const { data: user, isLoading } = useUser();
+  const { data: user, isLoading: isLoadingUser } = useUser();
   const { data: chats, isLoading: isLoadingChats } = useUserChats(
     user?.username
   );
-  const { data: notifications, isFetching } = useNotifications();
+  const { data: notifications, isLoading: isLoadingNotifications } =
+    useNotifications();
 
   const handleMenuOpenChange = (open) => {
     setIsMenuOpen(open);
@@ -109,7 +110,7 @@ const Header = () => {
       </NavbarContent>
       <NavbarContent justify="end">
         <NavbarItem>
-          {isLoading || isLoadingChats ? (
+          {isLoadingUser || isLoadingChats || isLoadingNotifications ? (
             <Spinner />
           ) : !user ? (
             <Button
@@ -128,7 +129,7 @@ const Header = () => {
                 user={user}
                 chats={chats}
                 notifications={notifications}
-                isFetching={isFetching}
+                isFetching={isLoadingNotifications}
               />
             </div>
           )}
