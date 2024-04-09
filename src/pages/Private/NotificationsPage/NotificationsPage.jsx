@@ -54,7 +54,7 @@ const NotificationsPage = () => {
   const { data: userNotifications, isFetching } = useNotifications();
   const queryClient = useQueryClient();
   const navigate = useNavigate();
-  const { data: user, isFetching: isFetchingUser } = useUser();
+  const { data: user } = useUser();
   // if (isFetching) return;
 
   let tabs = [

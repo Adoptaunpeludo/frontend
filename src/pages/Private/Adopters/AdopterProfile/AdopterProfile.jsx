@@ -132,7 +132,7 @@ const AdopterProfile = () => {
               <UserBioInfo data={data} isLoading={isFetching} />
             </Skeleton>
             <H2Title title="Seguridad" className="" />
-            <UserChangePassword />
+            <UserChangePassword isDisabled={data.accountType === 'google'} />
           </aside>
         </section>
 

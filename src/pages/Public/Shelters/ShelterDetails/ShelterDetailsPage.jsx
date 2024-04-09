@@ -1,7 +1,7 @@
 import { Avatar, Button, Image, Link, Spinner } from '@nextui-org/react';
 import { IconHome } from '@tabler/icons-react';
 import { useState } from 'react';
-import { useLoaderData, useOutletContext } from 'react-router-dom';
+import { useLoaderData } from 'react-router-dom';
 import {
   AnimalGallery,
   AsideDataColumn,
@@ -22,6 +22,7 @@ import {
   SocialMediaAsideColumn,
 } from './components/';
 import { shelterDetailsQuery, useShelterDetails } from './useShelterDetails';
+import { useUser } from '../../../Private/useUser';
 
 export const loader =
   (queryClient) =>
@@ -42,7 +43,7 @@ export const loader =
 
 const ShelterDetailsPage = () => {
   const params = useLoaderData();
-  const { user } = useOutletContext();
+  const { data: user } = useUser();
   const { username } = params;
   const { data, isLoading } = useShelterDetails(username);
   const imagesGallery = data.images.slice();

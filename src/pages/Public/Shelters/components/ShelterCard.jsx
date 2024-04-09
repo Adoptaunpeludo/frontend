@@ -12,12 +12,12 @@ import {
 import { UilMapMarker, UilPlay } from '@iconscout/react-unicons';
 
 import { IconHome } from '@tabler/icons-react';
-import { useOutletContext } from 'react-router-dom';
 import { UnderlineVector } from '../../../../assets/svg';
 import { BUCKET_URL, FALLBACK_IMAGE_CARD } from '../../../../config/config';
+import { useUser } from '../../../Private/useUser';
 
 export const ShelterCard = ({ shelter, isLogged }) => {
-  const { user } = useOutletContext();
+  const { data: user } = useUser();
 
   const isOnline =
     user?.username === shelter.username ? true : shelter.isOnline;

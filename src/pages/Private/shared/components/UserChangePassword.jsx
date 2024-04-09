@@ -23,7 +23,7 @@ import {
 } from '../../../../utils/configFormFields';
 import { validateField } from '../../../../utils/validateField';
 
-export const UserChangePassword = () => {
+export const UserChangePassword = ({ isDisabled }) => {
   const updatePasswordModal = useDisclosure();
   const { isOpen, onOpen, onOpenChange } = updatePasswordModal;
   const { saveUpdatePasswordModal } = useModalContext();
@@ -64,6 +64,7 @@ export const UserChangePassword = () => {
       startContent={<IconKey />}
       onPress={onOpen}
       className={buttonStyleConfig}
+      isDisabled={isDisabled}
     >
       Cambiar password
       <Modal

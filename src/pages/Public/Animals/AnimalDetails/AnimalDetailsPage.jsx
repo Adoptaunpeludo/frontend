@@ -1,7 +1,7 @@
 import { Avatar, Image } from '@nextui-org/react';
 import { IconHeart, IconHome } from '@tabler/icons-react';
 import { useState } from 'react';
-import { useLoaderData, useOutletContext } from 'react-router-dom';
+import { useLoaderData } from 'react-router-dom';
 import {
   AdoptButton,
   AnimalGallery,
@@ -21,6 +21,7 @@ import {
 import { handleNotFoundError } from '../../../../utils/handleError';
 import { animalDetailsQuery, useAnimalDetails } from '../useAnimalDetails';
 import { AnimalFavs, ShareSocialMedia } from './components';
+import { useUser } from '../../../Private/useUser';
 export const loader =
   (queryClient) =>
   async ({ params }) => {
@@ -40,7 +41,7 @@ export const loader =
 
 const AnimalDetailsPage = () => {
   const params = useLoaderData();
-  const { user } = useOutletContext();
+  const { data: user } = useUser();
   const { slug } = params;
 
   const { data } = useAnimalDetails(slug);

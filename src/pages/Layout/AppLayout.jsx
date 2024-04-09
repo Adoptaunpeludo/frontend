@@ -3,11 +3,8 @@ import { useQueryClient } from '@tanstack/react-query';
 import { useEffect } from 'react';
 import { Outlet, ScrollRestoration, useNavigate } from 'react-router-dom';
 import { useWebSocketContext } from '../../context/WebSocketContext';
-import { useUserChats, userChatsQuery } from '../Private/Shelters/useUserChats';
-import {
-  useNotifications,
-  userNotificationsQuery,
-} from '../Private/useNotifications';
+import { userChatsQuery } from '../Private/Shelters/useUserChats';
+import { userNotificationsQuery } from '../Private/useNotifications';
 import { useUser, userQuery } from '../Private/useUser';
 import Footer from './Footer';
 import Header from './Header';
@@ -35,8 +32,6 @@ export const loader = (queryClient) => async () => {
 const AppLayout = () => {
   const navigate = useNavigate();
   const { data: user } = useUser();
-  const { data: notifications } = useNotifications();
-  const { data: chats } = useUserChats(user?.username);
   const { send, isReady, val } = useWebSocketContext();
   const queryClient = useQueryClient();
 
@@ -162,7 +157,7 @@ const AppLayout = () => {
       <NextUIProvider navigate={navigate}>
         <div className="min-h-screen flex flex-col">
           <Header />
-          <Outlet context={{ user, notifications, chats }} />
+          <Outlet />
           <Footer />
         </div>
         <ScrollRestoration />
