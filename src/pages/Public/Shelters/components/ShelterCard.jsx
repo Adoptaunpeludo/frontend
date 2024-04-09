@@ -28,7 +28,7 @@ export const ShelterCard = ({ shelter, isLogged }) => {
       <CardHeader className="relative p-0 overflow-hidden">
         {/* principal image*/}
         <Image
-          src={`${BUCKET_URL}/${shelter.images[1]}`}
+          src={`${BUCKET_URL}/${shelter?.images?.at(1)}`}
           alt={shelter.username}
           className="w-80 object-cover h-52 aspect-square"
           fallbackSrc={`${FALLBACK_IMAGE_CARD}`}
@@ -45,7 +45,7 @@ export const ShelterCard = ({ shelter, isLogged }) => {
               isLogged ? (isOnline ? 'success' : 'danger') : 'default'
             }`}
             className="w-10 h-10 bg-white"
-            src={`${BUCKET_URL}/${shelter.images[0]}`}
+            src={`${BUCKET_URL}/${shelter?.images?.at(0)}`}
             showFallback
             fallback={<IconHome className="w-10 h-10 stroke-gray-600" />}
           />
