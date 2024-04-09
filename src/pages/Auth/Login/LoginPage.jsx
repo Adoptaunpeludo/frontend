@@ -16,7 +16,6 @@ import {
 } from '../../../utils/configFormFields';
 import { handleAuthError } from '../../../utils/handleError';
 import { validateField } from '../../../utils/validateField';
-import { userQuery } from '../../Private/useUser';
 import { googleAuthLogin, login } from '../authService';
 import { GoogleLogin } from '@react-oauth/google';
 import { useQueryClient } from '@tanstack/react-query';
@@ -34,7 +33,9 @@ export const action =
       queryClient.invalidateQueries({
         queryKey: ['user'],
       });
-      await queryClient.ensureQueryData(userQuery);
+      queryClient.invalidateQueries({
+        queryKey: ['user-notifications'],
+      });
       return redirect('/');
     } catch (error) {
       const message = handleAuthError(error);
