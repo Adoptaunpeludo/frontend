@@ -45,15 +45,19 @@ import {
   uploadAnimalImages,
 } from './service';
 import { useGetErrors } from '../../../../context/FormErrorsContext';
+import { isMatchFormData } from '../../../../utils/isMatchFormData';
+import { getAnimalDetails } from '../../../Public/Animals/service';
 
 export const action =
   (animalImages, queryClient) =>
   async ({ request, params }) => {
     let formData = await request.formData();
     let intent = formData.get('intent');
+    const compareData = Object.fromEntries(formData);
+    const { slug } = params;
+    const fetchData = await getAnimalDetails(slug);
 
     console.log({ intent });
-
     if (intent === 'create-animal') {
       const imagesData = new FormData();
 
@@ -77,9 +81,10 @@ export const action =
     }
 
     if (intent === 'update-animal') {
-      const { slug } = params;
-
+      // const { slug } = params;
       try {
+        if (isMatchFormData(compareData, fetchData))
+          return toast.error('Ningun dato modificado');
         const animal = await updatePetAdoption(formData, slug);
         queryClient.invalidateQueries((queryKey) =>
           queryKey.includes('animal')
@@ -172,7 +177,7 @@ const AnimalForm = () => {
                     value={pet}
                     onValueChange={usePet}
                     isReadOnly={data?.type}
-                    label="Peludo"
+                    label={slug ? 'Peludo' : 'Seleccione peludo'}
                     classNames={radioGroupStyleConfig}
                     isRequired
                   >
