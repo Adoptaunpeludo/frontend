@@ -1,5 +1,9 @@
 0;
-import { postData, deleteData } from '../../api/client';
+import {
+  postData,
+  deleteData,
+  removeAuthorizationHeader,
+} from '../../api/client';
 
 export const login = async (credentials) => {
   try {
@@ -32,6 +36,7 @@ export const verifyEmail = async (token) => {
 
 export const logout = async () => {
   try {
+    removeAuthorizationHeader();
     await deleteData('/auth/logout');
   } catch (error) {
     console.log(error.response.data.message);
