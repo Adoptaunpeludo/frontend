@@ -30,21 +30,7 @@ export default function DeleteUserModal() {
       await Promise.all([logout(), deleteChatHistory(), deleteUser()]);
 
       toast.success('Usuario Borrado con exito');
-      queryClient.removeQueries({
-        queryKey: ['user'],
-      });
-      queryClient.removeQueries({
-        queryKey: ['user-notifications'],
-      });
-      queryClient.removeQueries({
-        queryKey: ['user-favs'],
-      });
-      queryClient.removeQueries({
-        queryKey: ['user-animals'],
-      });
-      queryClient.removeQueries({
-        queryKey: ['user-chats'],
-      });
+      queryClient.removeQueries();
       navigate('/');
     } catch (error) {
       toast.error('Error al borrar el usuario');

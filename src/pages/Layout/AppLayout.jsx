@@ -73,7 +73,17 @@ const AppLayout = () => {
       const message = JSON.parse(val);
       const { type, ...data } = message;
 
+      console.log({ message });
       switch (type) {
+        case 'user-deleted':
+          queryClient.invalidateQueries({
+            queryKey: ['animals'],
+          });
+          if (data.role && data.role === 'shelter')
+            queryClient.invalidateQueries({
+              queryKey: ['shelters'],
+            });
+          break;
         case 'animal-created-deleted':
           queryClient.invalidateQueries({
             queryKey: ['animals'],
