@@ -6,8 +6,9 @@ import {
 } from '../../../api/client';
 import { ASSISTANT_SERVER } from '../../../config/config';
 
-export const deleteChatHistory = async () => {
+export const deleteChatHistory = async (token) => {
   try {
+    setAuthorizationHeader(token);
     const { data } = await deleteData(`${ASSISTANT_SERVER}/chat-history`);
     return data;
   } catch (error) {
