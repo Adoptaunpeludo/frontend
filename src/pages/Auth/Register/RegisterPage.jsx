@@ -62,10 +62,9 @@ export const action = async (data) => {
 
 const RegisterPage = () => {
   const [credentials, setCredentials] = useState({});
+  const [errors, setErrors] = useState({});
   const [isLoadingOauth, setIsLoadingOauth] = useState(false);
-  const [errors, setErrors] = useState({
-    role: '',
-  });
+
   const navigation = useNavigation();
   const navigate = useNavigate();
   const queryClient = useQueryClient();
@@ -74,17 +73,24 @@ const RegisterPage = () => {
 
   const handleChange = (event) => {
     const { name, value } = event.target;
-    setCredentials({ ...credentials, [name]: value });
+    setCredentials((prevCredentials) => ({
+      ...prevCredentials,
+      [name]: value,
+    }));
     setErrors({
       ...errors,
       [name]: validateField(name, value, credentials.password),
     });
   };
-
-  const isFormValid = Object.values(errors).every((error) => error === '');
-  const enableButton = !(
-    credentials.password === credentials.repeatPassword && isFormValid
+  const emptyForm = !(
+    credentials.username &&
+    credentials.email &&
+    credentials.password &&
+    credentials.repeatPassword
   );
+  const isFormValid =
+    Object.values(errors).every((error) => error === '') && !emptyForm;
+  const enableButton = isFormValid;
 
   const responseMessage = async (response) => {
     if (!credentials?.role)
@@ -202,6 +208,7 @@ const RegisterPage = () => {
                 <div className="flex w-full flex-wrap md:flex-nowrap gap-4">
                   <Input
                     name="username"
+                    isDisabled={!credentials.role}
                     className="min-w-72 "
                     classNames={inputStyleConfig}
                     type="text"
@@ -209,8 +216,8 @@ const RegisterPage = () => {
                       credentials.role === undefined
                         ? ' '
                         : credentials.role === 'shelter'
-                          ? 'de protectora'
-                          : 'de adoptante'
+                        ? 'de protectora'
+                        : 'de adoptante'
                     }`}
                     placeholder="Introduce un nombre"
                     color={errors.username ? 'danger' : 'none'}
@@ -221,6 +228,7 @@ const RegisterPage = () => {
 
                   <Input
                     name="email"
+                    isDisabled={!credentials.role}
                     className="min-w-72 "
                     classNames={inputStyleConfig}
                     type="email"
@@ -235,6 +243,7 @@ const RegisterPage = () => {
                 <div className="flex w-full flex-wrap md:flex-nowrap gap-4">
                   <Input
                     name="password"
+                    isDisabled={!credentials.role}
                     className="min-w-72 "
                     classNames={inputStyleConfig}
                     type="password"
@@ -248,6 +257,7 @@ const RegisterPage = () => {
 
                   <Input
                     name="repeatPassword"
+                    isDisabled={!credentials.role}
                     className="min-w-72 "
                     classNames={inputStyleConfig}
                     type="password"
@@ -261,7 +271,7 @@ const RegisterPage = () => {
                 </div>
                 <div className="flex justify-center">
                   <Button
-                    isDisabled={enableButton}
+                    isDisabled={!enableButton}
                     type="submit"
                     color="primary"
                     variant="solid"
@@ -273,7 +283,6 @@ const RegisterPage = () => {
                   </Button>
                 </div>
               </div>
-
               <div className="flex justify-center gap-1 font-medium font-poppins">
                 <span>¿Ya tienes una cuenta?</span>
                 <Link to="/login" className="text-tertiary">
