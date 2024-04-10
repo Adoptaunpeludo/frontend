@@ -6,19 +6,18 @@ import {
   selectStyleConfig,
 } from '../../../../../utils/configFormFields';
 import { animalSizeEnum, genderEnum } from '../../../../../utils/enumData';
-import { validateField } from '../../../../../utils/validateField';
+import { useGetErrors } from '../../../../../context/FormErrorsContext';
 
-const AnimalBioForm = ({ data = {}, isDisabled, validateForm }) => {
+const AnimalBioForm = ({ data = {}, isDisabled }) => {
   const { name, age, breed, size, gender } = data;
 
   const [petData, setPetData] = useState({});
-  const [errors, setErrors] = useState({});
+  const { validate, errors } = useGetErrors();
 
   const handleChange = (event) => {
     const { name, value } = event.target;
     setPetData({ ...petData, [name]: value });
-    setErrors({ ...errors, [name]: validateField(name, value) });
-    validateForm(Object.values(errors).every((error) => error === ''));
+    validate({ name, value });
   };
 
   return (
@@ -35,7 +34,7 @@ const AnimalBioForm = ({ data = {}, isDisabled, validateForm }) => {
           color={errors.name ? 'danger' : 'none'}
           errorMessage={errors.name}
           defaultValue={name ? name : ''}
-          onBlur={handleChange}
+          onChange={handleChange}
           classNames={inputStyleConfig}
         />
         <Input
