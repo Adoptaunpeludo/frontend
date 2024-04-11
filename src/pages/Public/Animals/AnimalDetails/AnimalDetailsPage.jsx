@@ -19,9 +19,9 @@ import {
   dogDescription,
 } from '../../../../utils/asideDataFields';
 import { handleNotFoundError } from '../../../../utils/handleError';
+import { useUser } from '../../../Private/useUser';
 import { animalDetailsQuery, useAnimalDetails } from '../useAnimalDetails';
 import { AnimalFavs, ShareSocialMedia } from './components';
-import { useUser } from '../../../Private/useUser';
 export const loader =
   (queryClient) =>
   async ({ params }) => {
@@ -119,7 +119,7 @@ const AnimalDetailsPage = () => {
       </section>
       <footer className="flex px-4 justify-around items-center max-sm:flex-col max-sm:justify-start">
         <AnimalFavs numFavs={data.numFavs} />
-        <ContactShelter slug={slug} />
+        {user?.role === 'adopter' && <ContactShelter slug={slug} />}
         <ShareSocialMedia
           url={`https://www.adoptaunpeludo.com/animals/${data.type}s/${slug}`}
         />
