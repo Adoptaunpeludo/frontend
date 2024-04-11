@@ -1,4 +1,4 @@
-import { Avatar, Card, CardBody, Spinner } from '@nextui-org/react';
+import { Avatar, Card, CardBody, Spinner, Badge } from '@nextui-org/react';
 
 import {
   NavLink,
@@ -127,7 +127,7 @@ const AdoptionChatPage = () => {
           setIsFirstLoad(false);
         }
     }
-  }, [chat, setChatMessages, isReady, val]);
+  }, [chat, setChatMessages, isReady, val, queryClient]);
 
   const handleDeleteMessages = () => {
     setChatMessages([]);
@@ -161,9 +161,6 @@ const AdoptionChatPage = () => {
 
   const handleCreateChat = (slug) => {
     if (isReady) {
-      queryClient.invalidateQueries({
-        queryKey: ['user-chats', sender.username],
-      });
       send(
         JSON.stringify({
           type: 'create-chat-room',
@@ -194,42 +191,50 @@ const AdoptionChatPage = () => {
               onClick={() => handleCreateChat(chat.slug)}
               className="bg-primary bg-opacity-50 rounded-xl"
             >
-              <Card className="flex justify-between gap-1 bg-transparent flex-row">
-                <CardBody className=" flex flex-start flex-row gap-2 items-center">
-                  <Avatar
-                    src={`${BUCKET_URL}/${
-                      chat.animal[0]?.images[0]
-                        ? chat.animal[0]?.images[0]
-                        : chat.users[0]?.avatar[0]
-                    }`}
-                    className="min-w-10"
-                    fallback={<IconUserFilled />}
-                    showFallback
-                  />
-                  <div className="flex flex-col  w-full sm:w-36">
-                    <span className="font-poppins font-semibold text-sm line-clamp-1">{`${
-                      chat.animal[0] !== undefined
-                        ? chat.animal[0]?.name.toUpperCase()
-                        : ''
-                    }`}</span>
-                    <span
-                      className={`${
-                        chat.animal[0] === undefined
-                          ? 'font-poppins font-semibold text-sm line-clamp-1'
-                          : 'font-poppins text-sm line-clamp-1'
+              <Badge
+                content={chat._count.messages}
+                size="lg"
+                color="primary"
+                placement="top-right"
+                // isInvisible={isFetchingNotifications}
+              >
+                <Card className="flex justify-between gap-1 bg-transparent flex-row">
+                  <CardBody className=" flex flex-start flex-row gap-2 items-center">
+                    <Avatar
+                      src={`${BUCKET_URL}/${
+                        chat.animal[0]?.images[0]
+                          ? chat.animal[0]?.images[0]
+                          : chat.users[0]?.avatar[0]
                       }`}
-                    >{`${chat.users[0]?.username}`}</span>
-                  </div>
-
-                  <span className="flex items-center  h-full w-1/6">
-                    <IconArrowBadgeRight
-                      size={50}
-                      stroke={1}
-                      className="stroke-tertiary"
+                      className="min-w-10"
+                      fallback={<IconUserFilled />}
+                      showFallback
                     />
-                  </span>
-                </CardBody>
-              </Card>
+                    <div className="flex flex-col  w-full sm:w-36">
+                      <span className="font-poppins font-semibold text-sm line-clamp-1">{`${
+                        chat.animal[0] !== undefined
+                          ? chat.animal[0]?.name.toUpperCase()
+                          : ''
+                      }`}</span>
+                      <span
+                        className={`${
+                          chat.animal[0] === undefined
+                            ? 'font-poppins font-semibold text-sm line-clamp-1'
+                            : 'font-poppins text-sm line-clamp-1'
+                        }`}
+                      >{`${chat.users[0]?.username}`}</span>
+                    </div>
+
+                    <span className="flex items-center  h-full w-1/6">
+                      <IconArrowBadgeRight
+                        size={50}
+                        stroke={1}
+                        className="stroke-tertiary"
+                      />
+                    </span>
+                  </CardBody>
+                </Card>
+              </Badge>
             </NavLink>
           ))}
         </aside>

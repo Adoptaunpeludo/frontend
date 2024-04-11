@@ -75,6 +75,11 @@ const AppLayout = () => {
 
       console.log({ message });
       switch (type) {
+        case 'user-joined-room':
+          queryClient.invalidateQueries({
+            queryKey: ['user-chats', data.username],
+          });
+          break;
         case 'user-changed':
           if (data.action === 'user-deleted')
             queryClient.invalidateQueries({
@@ -112,6 +117,11 @@ const AppLayout = () => {
         case 'chat-message-notification':
           queryClient.invalidateQueries({
             queryKey: ['user-notifications'],
+          });
+          break;
+        case 'unread-chat-message':
+          queryClient.invalidateQueries({
+            queryKey: ['user-chats', data.receiver],
           });
           break;
         case 'new-chat-push-notification':
