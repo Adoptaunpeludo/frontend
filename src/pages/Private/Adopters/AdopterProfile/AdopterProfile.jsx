@@ -123,7 +123,7 @@ const AdopterProfile = () => {
             <section className="mt-5">
               <ImagesFrame images={data.avatar} page="update-user" limit={1} />
             </section>
-            <section id="petsTable" className="lg:pt-16">
+            <section id="petsTable" className="lg:pt-16 max-sm:w-96">
               <Form method="POST" preventScrollReset={true}>
                 <StatusAnimalsTable role={'adopter'} />
               </Form>
