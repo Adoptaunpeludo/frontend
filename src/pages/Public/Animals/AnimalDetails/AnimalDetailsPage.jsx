@@ -59,8 +59,8 @@ const AnimalDetailsPage = () => {
         <TitleSection title={data.name} />
       </header>
 
-      <section className="flex gap-12 max-xl:flex-col mx-auto">
-        <section id="central-column" className="flex flex-col flex-1">
+      <section className="flex gap-12 max-xl:flex-col  mx-auto ">
+        <section id="central-column" className="flex flex-col flex-1 ">
           <div className="relative container lg:w-164 rounded-lg bg-detail bg-cover bg-center">
             <Image
               src={`${BUCKET_URL}/${images[0]}`}
@@ -95,7 +95,7 @@ const AnimalDetailsPage = () => {
 
           <AnimalGallery animalImages={images} onSetImages={setImages} />
 
-          <p className="p-2">{data.description}</p>
+          <p className="p-2 lg:w-172">{data.description}</p>
         </section>
         <section
           id="aside-column"
