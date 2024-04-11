@@ -1,4 +1,4 @@
-import { Avatar, Card, CardBody, Spinner, Badge } from '@nextui-org/react';
+import { Avatar, Card, CardBody, Badge } from '@nextui-org/react';
 
 import {
   NavLink,
@@ -63,7 +63,7 @@ const AdoptionChatPage = () => {
   const { receiver, sender } = useLoaderData();
   const [chatMessages, setChatMessages] = useState([]);
   const { send, isReady, val } = useWebSocketContext();
-  const { data: user, isFetching: isFetchingUser } = useUser();
+  const { data: user } = useUser();
   const { data: chatHistory, isFetching: isFetchingChatHistory } =
     useChatHistory(chat);
   const navigate = useNavigate();
@@ -127,6 +127,10 @@ const AdoptionChatPage = () => {
           ]);
           setIsFirstLoad(false);
         }
+      if (message.type === 'message-readd')
+        queryClient.invalidateQueries({
+          queryKey: ['chat-history', message.room],
+        });
     }
   }, [chat, setChatMessages, isReady, val, queryClient]);
 
@@ -242,36 +246,33 @@ const AdoptionChatPage = () => {
         <main className="order-1 sm:order-2 w-full px-5 pb-5">
           <div className="flex flex-col flex-1 background-panel rounded-xl h-132 overflow-y-hidden">
             <div className="flex flex-col flex-1 overflow-x-auto mb-4">
-              {isFetchingUser || isFetchingChatHistory ? (
-                <Spinner className="self-center flex-1 flex-col sm:w-3.5" />
-              ) : (
-                <div className="grid grid-cols-12 gap-y-2">
-                  {chatMessages.map((message, index) =>
-                    !message.isSender ? (
-                      <UserMessage
-                        key={index}
-                        text={message.text}
-                        isSender={message.isSender}
-                        user={receiver.username}
-                        isRead={message.isRead}
-                        avatar={
-                          message.isSender ? user.avatar : receiver?.avatar[0]
-                        }
-                      />
-                    ) : (
-                      <UserMessage
-                        key={index}
-                        text={message.text}
-                        isSender={message.isSender}
-                        isRead={message.isRead}
-                        avatar={
-                          message.isSender ? user.avatar : receiver?.avatar[0]
-                        }
-                      />
-                    )
-                  )}
-                </div>
-              )}
+              <div className="grid grid-cols-12 gap-y-2">
+                {chatMessages.map((message, index) =>
+                  !message.isSender ? (
+                    <UserMessage
+                      key={index}
+                      text={message.text}
+                      isSender={message.isSender}
+                      user={receiver.username}
+                      isRead={message.isRead}
+                      avatar={
+                        message.isSender ? user.avatar : receiver?.avatar[0]
+                      }
+                    />
+                  ) : (
+                    <UserMessage
+                      key={index}
+                      text={message.text}
+                      isSender={message.isSender}
+                      isRead={message.isRead}
+                      avatar={
+                        message.isSender ? user.avatar : receiver?.avatar[0]
+                      }
+                    />
+                  )
+                )}
+              </div>
+
               <div ref={messagesEndRef} />
             </div>
 

@@ -76,10 +76,15 @@ const AppLayout = () => {
       console.log({ message });
       switch (type) {
         case 'user-joined-room':
-          queryClient.invalidateQueries({
-            queryKey: ['user-chats', data.username],
-          });
+          data.action === 'read-messages' &&
+            queryClient.invalidateQueries({
+              queryKey: ['user-chats', data.username],
+            });
 
+          data.action === 'double-check' &&
+            queryClient.invalidateQueries({
+              queryKey: ['chat-history', data.room],
+            });
           break;
         case 'user-changed':
           if (data.action === 'user-deleted')
