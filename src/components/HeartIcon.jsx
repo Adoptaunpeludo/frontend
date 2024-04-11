@@ -1,13 +1,13 @@
 import { useEffect, useState } from 'react';
 
-import { addFav } from '../pages/Public/Animals/service';
 import { useQueryClient } from '@tanstack/react-query';
+import { addFav } from '../pages/Public/Animals/service';
 
 //import { Button, Spinner } from '@nextui-org/react';
-import { handleFavError } from '../utils/handleFavsError';
-import { toast } from 'react-toastify';
 import { isAxiosError } from 'axios';
 import Heart from 'react-animated-heart';
+import { toast } from 'react-toastify';
+import { handleFavError } from '../utils/handleFavsError';
 
 export const HeartIcon = ({ numFavs, userFavs, id, data }) => {
   const [liked, setLiked] = useState(userFavs.includes(data?.id));
@@ -42,12 +42,12 @@ export const HeartIcon = ({ numFavs, userFavs, id, data }) => {
   };
 
   return (
-    <div className="flex items-center content-center">
+    <div className="flex items-center justify-start ml-[-40px]">
       <Heart
         {...{ isClick: liked }}
         onClick={isLoading ? () => {} : toggleLike}
       />
-      <span className="ml-[-20px]">{numFavs}</span>
+      <span className="ml-[-25px] font-poppins text-xl">{numFavs}</span>
     </div>
   );
 };
