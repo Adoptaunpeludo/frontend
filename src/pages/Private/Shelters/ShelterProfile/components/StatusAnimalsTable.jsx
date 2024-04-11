@@ -18,9 +18,9 @@ import React from 'react';
 import {
   ColumnsAdopter,
   ColumnsShelter,
-  statusColorMap,
 } from '../../../shared/components/configAnimalsTable';
 
+import { statusColorMap } from '../../../../../utils/enumData';
 import { translateStatusAnimals } from '../../../../../utils/translateDataTable';
 import { useUserAnimals } from '../../useUserAnimals';
 import DeleteAnimalModal from './DeleteAnimalModal';
