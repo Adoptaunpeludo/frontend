@@ -38,6 +38,12 @@ const Header = () => {
       color: 'foreground',
     },
     {
+      name: 'Conócenos',
+      href: '/about',
+      color: 'foreground',
+    },
+
+    {
       name: 'Perros',
       href: '/animals/dogs',
       color: 'foreground',
@@ -52,6 +58,7 @@ const Header = () => {
       href: '/shelters',
       color: 'foreground',
     },
+
     {
       name: 'Asistente',
       href: `/private/assistant`,
