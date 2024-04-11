@@ -3,4 +3,5 @@ export const mapUserChatHistory = (history, username) =>
     text: message.text,
     isSender: username === message.username,
     isRead: message.isRead,
+    date: message.createdAt,
   }));

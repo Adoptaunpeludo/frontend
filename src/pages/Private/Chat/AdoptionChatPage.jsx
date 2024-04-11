@@ -123,7 +123,12 @@ const AdoptionChatPage = () => {
         if (message.room === chat) {
           setChatMessages((prev) => [
             ...prev,
-            { text: message.message, isSender: false, isRead: message.isRead },
+            {
+              text: message.message,
+              isSender: false,
+              isRead: message.isRead,
+              date: message.createdAt,
+            },
           ]);
           setIsFirstLoad(false);
         }
@@ -148,7 +153,10 @@ const AdoptionChatPage = () => {
 
   const handlePost = async (text) => {
     setIsFirstLoad(false);
-    setChatMessages((prev) => [...prev, { text, isSender: true }]);
+    setChatMessages((prev) => [
+      ...prev,
+      { text, isSender: true, date: new Date() },
+    ]);
     if (isReady) {
       send(
         JSON.stringify({
@@ -255,6 +263,7 @@ const AdoptionChatPage = () => {
                       isSender={message.isSender}
                       user={receiver.username}
                       isRead={message.isRead}
+                      date={message.date}
                       avatar={
                         message.isSender ? user.avatar : receiver?.avatar[0]
                       }
@@ -265,6 +274,7 @@ const AdoptionChatPage = () => {
                       text={message.text}
                       isSender={message.isSender}
                       isRead={message.isRead}
+                      date={message.date}
                       avatar={
                         message.isSender ? user.avatar : receiver?.avatar[0]
                       }
