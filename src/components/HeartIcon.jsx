@@ -9,13 +9,7 @@ import { toast } from 'react-toastify';
 import { isAxiosError } from 'axios';
 import Heart from 'react-animated-heart';
 
-export const HeartIcon = ({
-  top,
-  userFavs,
-  id,
-  data,
-  
-}) => {
+export const HeartIcon = ({ numFavs, userFavs, id, data }) => {
   const [liked, setLiked] = useState(userFavs.includes(data?.id));
   const [isLoading, setIsLoading] = useState(false);
   const queryClient = useQueryClient();
@@ -48,10 +42,12 @@ export const HeartIcon = ({
   };
 
   return (
-    <div className="relative">
-      <div className={`absolute top-[${top}]`}>
-        <Heart isClick={liked} onClick={isLoading ? () => {} : toggleLike} />
-      </div>
+    <div className="flex items-center content-center">
+      <Heart
+        {...{ isClick: liked }}
+        onClick={isLoading ? () => {} : toggleLike}
+      />
+      <span className="ml-[-20px]">{numFavs}</span>
     </div>
   );
 };

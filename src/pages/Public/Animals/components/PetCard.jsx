@@ -122,9 +122,8 @@ export const PetCard = ({ animal, isLogged }) => {
       <Divider />
 
       {/* Footer */}
-      <CardFooter className=" px-5 flex w-full flex-row justify-between items-center border-t-1 border-primary">
+      <CardFooter className=" px-5 flex w-full flex-row justify-between items-center border-t-1 border-primary h-16">
         <HeartIcon
-          top={"-50px"}
           numFavs={animal.numFavs}
           id={animal.id}
           userFavs={animal.userFavs}
