@@ -41,6 +41,8 @@ export const action =
     let formData = await request.formData();
     let intent = formData.get('intent');
 
+    console.log({ intent });
+
     if (intent === 'user-profile') {
       try {
         await updateProfile(formData, intent);

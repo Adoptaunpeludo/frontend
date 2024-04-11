@@ -75,16 +75,16 @@ const AppLayout = () => {
 
       console.log({ message });
       switch (type) {
-        case 'user-deleted':
-          queryClient.invalidateQueries({
-            queryKey: ['animals'],
-          });
-          if (data.role && data.role === 'shelter')
+        case 'user-changed':
+          if (data.action === 'user-deleted')
             queryClient.invalidateQueries({
-              queryKey: ['shelters'],
+              queryKey: ['animals'],
             });
+          queryClient.invalidateQueries({
+            queryKey: ['shelters'],
+          });
           break;
-        case 'animal-created-deleted':
+        case 'animal-changed':
           queryClient.invalidateQueries({
             queryKey: ['animals'],
           });
@@ -119,24 +119,7 @@ const AppLayout = () => {
             queryKey: ['user-notifications'],
           });
           break;
-        case 'user-connected':
-          queryClient.invalidateQueries({
-            queryKey: ['shelters'],
-          });
-          queryClient.invalidateQueries({
-            queryKey: ['shelter-details', message.username],
-          });
-          queryClient.invalidateQueries({
-            queryKey: ['animals'],
-          });
-          queryClient.invalidateQueries({
-            queryKey: ['animal-details'],
-          });
-          queryClient.invalidateQueries({
-            queryKey: ['shelters-animals', message.username],
-          });
-          break;
-        case 'user-disconnected':
+        case 'user-online-status-changed':
           queryClient.invalidateQueries({
             queryKey: ['shelters'],
           });

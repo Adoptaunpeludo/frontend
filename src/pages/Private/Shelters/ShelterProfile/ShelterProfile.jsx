@@ -42,6 +42,8 @@ export const action =
     let formData = await request.formData();
     let intent = formData.get('intent');
 
+    if (intent === null) return null;
+
     if (intent === 'shelter-profile' || intent === 'user-profile') {
       try {
         await updateProfile(formData, intent);

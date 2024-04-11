@@ -157,7 +157,7 @@ const AnimalForm = () => {
           id=" AnimalTitle"
         />
         <section id="AnimalDataForm">
-          <Form method="post">
+          <Form method="post" onKeyDown={() => {}}>
             <H2Title
               title={
                 slug
