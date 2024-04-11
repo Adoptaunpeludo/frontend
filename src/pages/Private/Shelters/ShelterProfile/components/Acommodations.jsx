@@ -23,6 +23,7 @@ const Accommodations = ({ facilities, isDisabled = true, className }) => {
             name="facilities"
             value={facility.value}
             classNames={checkBoxStyleConfig}
+            className="cursor-default"
           >
             {facility.label}
           </Checkbox>

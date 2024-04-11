@@ -200,7 +200,7 @@ const AdoptionChatPage = () => {
                     src={`${BUCKET_URL}/${
                       chat.animal[0]?.images[0]
                         ? chat.animal[0]?.images[0]
-                        : chat.users[0].avatar[0]
+                        : chat.users[0]?.avatar[0]
                     }`}
                     className="min-w-10"
                     fallback={<IconUserFilled />}
@@ -209,7 +209,7 @@ const AdoptionChatPage = () => {
                   <div className="flex flex-col  w-full sm:w-36">
                     <span className="font-poppins font-semibold text-sm line-clamp-1">{`${
                       chat.animal[0] !== undefined
-                        ? chat.animal[0].name.toUpperCase()
+                        ? chat.animal[0]?.name.toUpperCase()
                         : ''
                     }`}</span>
                     <span
@@ -218,7 +218,7 @@ const AdoptionChatPage = () => {
                           ? 'font-poppins font-semibold text-sm line-clamp-1'
                           : 'font-poppins text-sm line-clamp-1'
                       }`}
-                    >{`${chat.users[0].username}`}</span>
+                    >{`${chat.users[0]?.username}`}</span>
                   </div>
 
                   <span className="flex items-center  h-full w-1/6">

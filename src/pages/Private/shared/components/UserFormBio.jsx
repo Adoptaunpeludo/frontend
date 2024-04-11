@@ -105,7 +105,7 @@ export const UserFormBio = ({ data }) => {
         size="3xl"
         portalContainer={document.body}
       >
-        <Form method="post" preventScrollReset={true}>
+        <Form method="post" preventScrollReset={true} onKeyDown={() => {}}>
           <ModalContent>
             <>
               <ModalHeader className="flex flex-col gap-1">
@@ -144,7 +144,7 @@ export const UserFormBio = ({ data }) => {
                         />
                         <Input
                           isRequired
-                          isDisabled={isSubmitting}
+                          isDisabled={true}
                           className="min-w-72 "
                           type="text"
                           label="Nombre de usuario"

@@ -14,21 +14,29 @@ import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import { deleteUser } from '../service/userService';
+import { logout } from '../../../Auth/authService';
+import { deleteChatHistory } from '../../Assistant/service';
+import { useUser } from '../../useUser';
 
 export default function DeleteUserModal() {
   const { isOpen, onOpen, onOpenChange } = useDisclosure();
+  const { data: user } = useUser();
   const [isLoading, setIsLoading] = useState(false);
   const queryClient = useQueryClient();
   const navigate = useNavigate();
 
   const handleDeleteUser = async () => {
+    localStorage.setItem('isLoggedIn', false);
     try {
       setIsLoading(true);
-      await deleteUser();
-      toast.success('Usuario Borrada con exito');
-      queryClient.removeQueries({
-        queryKey: ['user'],
-      });
+      await Promise.all([
+        logout(),
+        deleteChatHistory(user.wsToken),
+        deleteUser(),
+      ]);
+
+      toast.success('Usuario Borrado con exito');
+      queryClient.removeQueries();
       navigate('/');
     } catch (error) {
       toast.error('Error al borrar el usuario');

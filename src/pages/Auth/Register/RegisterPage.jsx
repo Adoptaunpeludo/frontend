@@ -6,7 +6,13 @@ import {
   Skeleton,
   Spinner,
 } from '@nextui-org/react';
-import { IconLogin2 as LoginIcon } from '@tabler/icons-react';
+import { GoogleLogin } from '@react-oauth/google';
+import {
+  IconBrandGoogle,
+  IconMail,
+  IconLogin2 as LoginIcon,
+} from '@tabler/icons-react';
+import { useQueryClient } from '@tanstack/react-query';
 import { useState } from 'react';
 import {
   Form,
@@ -25,9 +31,6 @@ import {
 import { handleAuthError } from '../../../utils/handleError';
 import { validateField } from '../../../utils/validateField';
 import { googleAuthRegister, register } from '../authService';
-import { GoogleLogin } from '@react-oauth/google';
-import { useQueryClient } from '@tanstack/react-query';
-import { userQuery } from '../../Private/useUser';
 
 export const action = async (data) => {
   const { request } = data;
@@ -59,10 +62,9 @@ export const action = async (data) => {
 
 const RegisterPage = () => {
   const [credentials, setCredentials] = useState({});
+  const [errors, setErrors] = useState({});
   const [isLoadingOauth, setIsLoadingOauth] = useState(false);
-  const [errors, setErrors] = useState({
-    role: '',
-  });
+
   const navigation = useNavigation();
   const navigate = useNavigate();
   const queryClient = useQueryClient();
@@ -71,17 +73,24 @@ const RegisterPage = () => {
 
   const handleChange = (event) => {
     const { name, value } = event.target;
-    setCredentials({ ...credentials, [name]: value });
+    setCredentials((prevCredentials) => ({
+      ...prevCredentials,
+      [name]: value,
+    }));
     setErrors({
       ...errors,
       [name]: validateField(name, value, credentials.password),
     });
   };
-
-  const isFormValid = Object.values(errors).every((error) => error === '');
-  const enableButton = !(
-    credentials.password === credentials.repeatPassword && isFormValid
+  const emptyForm = !(
+    credentials.username &&
+    credentials.email &&
+    credentials.password &&
+    credentials.repeatPassword
   );
+  const isFormValid =
+    Object.values(errors).every((error) => error === '') && !emptyForm;
+  const enableButton = isFormValid;
 
   const responseMessage = async (response) => {
     if (!credentials?.role)
@@ -94,7 +103,9 @@ const RegisterPage = () => {
       queryClient.invalidateQueries({
         queryKey: ['user'],
       });
-      await queryClient.ensureQueryData(userQuery);
+      queryClient.invalidateQueries({
+        queryKey: ['user-notifications'],
+      });
       setIsLoadingOauth(false);
       navigate('/');
     } catch (error) {
@@ -106,6 +117,10 @@ const RegisterPage = () => {
   const errorMessage = (error) => {
     setIsLoadingOauth(false);
     console.log(error);
+  };
+  const [loginOrigin, setLoginOrigin] = useState('');
+  const onPressLoginOrigin = (origin) => {
+    setLoginOrigin(origin);
   };
 
   return (
@@ -124,11 +139,11 @@ const RegisterPage = () => {
               method="post"
               className="flex flex-col gap-6  mx-auto px-10 py-8 justify-center"
             >
-              <H2Title title={'Regístrate'} className={'mx-auto'} />
+              <H2Title title={'Registro'} className={'mx-auto'} />
               {(isLoading || isLoadingOauth) && <Spinner />}
               <RadioGroup
                 name="role"
-                label="Perfil"
+                label="Selecciona tu perfil"
                 orientation="horizontal"
                 errorMessage={errors.role}
                 onChange={handleChange}
@@ -143,11 +158,57 @@ const RegisterPage = () => {
                   Adoptante
                 </Radio>
               </RadioGroup>
-
-              <div className="flex flex-col w-full gap-4">
+              <div>Regístrate con:</div>
+              <div className="flex gap-4 justify-center">
+                <Button
+                  isIconOnly
+                  radius="full"
+                  color="primary"
+                  variant="ghost"
+                  className="border-primary border-1 w-16 h-16"
+                  onPress={() => {
+                    onPressLoginOrigin('google');
+                  }}
+                >
+                  <IconBrandGoogle stroke={1} className="stroke-foreground" />
+                </Button>
+                <Button
+                  isIconOnly
+                  radius="full"
+                  color="primary"
+                  variant="ghost"
+                  className="border-primary border-1 w-16 h-16"
+                  onPress={() => {
+                    onPressLoginOrigin('mail');
+                  }}
+                >
+                  <IconMail stroke={1} className="stroke-foreground" />
+                </Button>
+              </div>
+              <div
+                className={`${
+                  loginOrigin === 'google' ? 'flex' : 'hidden'
+                } justify-center`}
+              >
+                <GoogleLogin
+                  onSuccess={responseMessage}
+                  onError={errorMessage}
+                  theme="outline"
+                  size="large"
+                  text="signin_with"
+                  type="standard"
+                  shape="pill"
+                  width={'100%'}
+                />
+              </div>
+              <div
+                className={` ${loginOrigin === 'mail' ? 'flex' : 'hidden'}
+               flex-col w-full gap-4 `}
+              >
                 <div className="flex w-full flex-wrap md:flex-nowrap gap-4">
                   <Input
                     name="username"
+                    isDisabled={!credentials.role}
                     className="min-w-72 "
                     classNames={inputStyleConfig}
                     type="text"
@@ -167,6 +228,7 @@ const RegisterPage = () => {
 
                   <Input
                     name="email"
+                    isDisabled={!credentials.role}
                     className="min-w-72 "
                     classNames={inputStyleConfig}
                     type="email"
@@ -181,6 +243,7 @@ const RegisterPage = () => {
                 <div className="flex w-full flex-wrap md:flex-nowrap gap-4">
                   <Input
                     name="password"
+                    isDisabled={!credentials.role}
                     className="min-w-72 "
                     classNames={inputStyleConfig}
                     type="password"
@@ -194,6 +257,7 @@ const RegisterPage = () => {
 
                   <Input
                     name="repeatPassword"
+                    isDisabled={!credentials.role}
                     className="min-w-72 "
                     classNames={inputStyleConfig}
                     type="password"
@@ -205,28 +269,19 @@ const RegisterPage = () => {
                     isRequired
                   />
                 </div>
-              </div>
-              <GoogleLogin
-                onSuccess={responseMessage}
-                onError={errorMessage}
-                theme="outline"
-                size="large"
-                text="continue_with"
-                width={'100%'}
-              />
-
-              <div className="flex justify-center">
-                <Button
-                  isDisabled={enableButton}
-                  type="submit"
-                  color="primary"
-                  variant="solid"
-                  size="lg"
-                  endContent={<LoginIcon />}
-                  className="px-10 font-poppins"
-                >
-                  Regístrate
-                </Button>
+                <div className="flex justify-center">
+                  <Button
+                    isDisabled={!enableButton}
+                    type="submit"
+                    color="primary"
+                    variant="solid"
+                    size="lg"
+                    endContent={<LoginIcon />}
+                    className="px-10 font-poppins"
+                  >
+                    Regístrate
+                  </Button>
+                </div>
               </div>
               <div className="flex justify-center gap-1 font-medium font-poppins">
                 <span>¿Ya tienes una cuenta?</span>
