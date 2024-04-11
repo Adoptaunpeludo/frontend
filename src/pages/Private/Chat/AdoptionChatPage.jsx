@@ -95,6 +95,7 @@ const AdoptionChatPage = () => {
         JSON.stringify({
           type: 'join-chat-room',
           username: user.username,
+          senderUsername: receiver.username,
           room: chat,
           role: user.role,
         })

@@ -79,6 +79,7 @@ const AppLayout = () => {
           queryClient.invalidateQueries({
             queryKey: ['user-chats', data.username],
           });
+
           break;
         case 'user-changed':
           if (data.action === 'user-deleted')
