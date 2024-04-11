@@ -83,6 +83,9 @@ const AppLayout = () => {
           queryClient.invalidateQueries({
             queryKey: ['shelters'],
           });
+          queryClient.invalidateQueries({
+            queryKey: ['shelter-details', data.username],
+          });
           break;
         case 'animal-changed':
           queryClient.invalidateQueries({
