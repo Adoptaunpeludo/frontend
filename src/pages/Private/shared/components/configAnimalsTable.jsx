@@ -1,19 +1,3 @@
-export const statusColorMap = {
-  fostered: 'success',
-  'en acogida': 'success',
-  awaiting_home: 'success',
-  'esperando un hogar': 'success',
-  published: 'success',
-  publicado: 'success',
-  reservado: 'warning',
-  reserved: 'warning',
-  pending: 'warning',
-  pendiente: 'warning',
-  adopted: 'danger',
-  adoptado: 'danger',
-  rejected: 'danger',
-  rechazado: 'danger',
-};
 import {
   UilMapMarker,
   UilMars,
