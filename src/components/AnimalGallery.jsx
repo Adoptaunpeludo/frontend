@@ -15,7 +15,7 @@ export const AnimalGallery = ({ animalImages, onSetImages }) => {
   };
 
   return (
-    <div id="gallery" className="flex py-4 justify-start gap-4">
+    <div id="gallery" className="flex py-4 justify-center gap-2 mx-2 sm:gap-4">
       {animalImages?.map(
         (image, index) =>
           index !== 0 && (

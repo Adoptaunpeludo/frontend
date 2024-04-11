@@ -16,13 +16,13 @@ import {
 } from '../../../../utils/asideDataFields';
 import { handleNotFoundError } from '../../../../utils/handleError';
 
+import { useUser } from '../../../Private/useUser';
 import {
   FacilitiesAsideColumn,
   ShelterRescues,
   SocialMediaAsideColumn,
 } from './components/';
 import { shelterDetailsQuery, useShelterDetails } from './useShelterDetails';
-import { useUser } from '../../../Private/useUser';
 
 export const loader =
   (queryClient) =>
@@ -88,8 +88,10 @@ const ShelterDetailsPage = () => {
 
           <AnimalGallery animalImages={images} onSetImages={setImages} />
 
-          <p className="p-2">{data?.description}</p>
-          <ContactShelter className="mx-auto" username={username} />
+          <p className="p-2 lg:w-172">{data?.description}</p>
+          {user?.role === 'adopter' && (
+            <ContactShelter className="mx-auto" username={username} />
+          )}
         </section>
         <section
           id="aside-column"
