@@ -1,21 +1,20 @@
-import { H2Title, TitleSection } from '../../../../components';
-import { DeleteUserModal, ImagesFrame, StatusAnimalsTable } from '../../shared';
-import { userAnimalsQuery } from '../../Shelters/useUserAnimals';
-import { useNavigation } from 'react-router-dom';
 import { Skeleton } from '@nextui-org/skeleton';
 import { isAxiosError } from 'axios';
-import { Form } from 'react-router-dom';
+import { Form, useNavigation } from 'react-router-dom';
 import { toast } from 'react-toastify';
+import { H2Title, TitleSection } from '../../../../components';
+import { userAnimalsQuery } from '../../Shelters/useUserAnimals';
+import { DeleteUserModal, ImagesFrame, StatusAnimalsTable } from '../../shared';
 //import { useWebSocketContext } from '../../../../context/WebSocketContext';
+import { isMatchFormData } from '../../../../utils/isMatchFormData';
 import { deleteFav } from '../../../Public/Animals/service';
+import UserBioInfo from '../../Shelters/ShelterProfile/components/UserBioInfo';
+import { userChatsQuery } from '../../Shelters/useUserChats';
+import { getCurrentUser } from '../../service';
 import { UserChangePassword } from '../../shared/components/UserChangePassword';
 import { updatePassword } from '../../shared/service/ChangePasswordService';
 import { updateProfile } from '../../shared/service/updateUserService';
-import UserBioInfo from '../../Shelters/ShelterProfile/components/UserBioInfo';
-import { userChatsQuery } from '../../Shelters/useUserChats';
 import { useUser } from '../../useUser';
-import { isMatchFormData } from '../../../../utils/isMatchFormData';
-import { getCurrentUser } from '../../service';
 
 export const loader =
   (queryClient) =>
@@ -113,7 +112,7 @@ const AdopterProfile = () => {
             className="flex gap-12 max-lg:flex-col "
           >
             <main className="flex flex-col max-w-3xl order-1 max-lg:order-2 mx-auto">
-              <section className="mt-5">
+              <section className="my-5">
                 <ImagesFrame
                   images={data.avatar}
                   page="update-user"
@@ -130,8 +129,14 @@ const AdopterProfile = () => {
               <Skeleton isLoaded={!isFetching}>
                 <UserBioInfo data={data} isLoading={isFetching} />
               </Skeleton>
-              <H2Title title="Seguridad" className="" />
-              <UserChangePassword isDisabled={data.accountType === 'google'} />
+              <section
+                className={`${
+                  data.accountType === 'google' && 'hidden'
+                } w-96 flex flex-col mx-auto`}
+              >
+                <H2Title title="Seguridad" className="" />
+                <UserChangePassword />
+              </section>
             </aside>
           </section>
 

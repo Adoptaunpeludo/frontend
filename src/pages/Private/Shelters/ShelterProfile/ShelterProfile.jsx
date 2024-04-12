@@ -2,11 +2,13 @@ import { Button, Skeleton } from '@nextui-org/react';
 import { IconEdit } from '@tabler/icons-react';
 import { isAxiosError } from 'axios';
 import { useEffect } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigation } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import { H2Title, TitleSection } from '../../../../components';
 import { useAnimalImagesContext } from '../../../../context/AnimalImagesContext';
 import { buttonStyleConfig } from '../../../../utils/configFormFields';
+import { isMatchFormData } from '../../../../utils/isMatchFormData';
+import { getCurrentUser } from '../../service';
 import { DeleteUserModal, StatusAnimalsTable } from '../../shared';
 import { UserChangePassword } from '../../shared/components/UserChangePassword';
 import { updatePassword } from '../../shared/service/ChangePasswordService';
@@ -17,9 +19,6 @@ import { userAnimalsQuery } from '../useUserAnimals';
 import { userChatsQuery } from '../useUserChats';
 import ShelterProfileInfo from './components/ShelterProfileInfo';
 import UserBioInfo from './components/UserBioInfo';
-import { getCurrentUser } from '../../service';
-import { isMatchFormData } from '../../../../utils/isMatchFormData';
-import { useNavigation } from 'react-router-dom';
 
 export const loader =
   (queryClient) =>
@@ -132,8 +131,14 @@ const ShelterProfile = () => {
               <Skeleton isLoaded={!isFetchingUser}>
                 <UserBioInfo data={user} isLoading={isFetchingUser} />
               </Skeleton>
-              <H2Title title="Seguridad" className="" />
-              <UserChangePassword isDisabled={user.accountType === 'google'} />
+              <section
+                className={`${
+                  user.accountType === 'google' && 'hidden'
+                } w-96 flex flex-col mx-auto`}
+              >
+                <H2Title title="Seguridad" className="" />
+                <UserChangePassword />
+              </section>
             </aside>
           </section>
 
