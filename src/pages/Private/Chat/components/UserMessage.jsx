@@ -38,7 +38,7 @@ const UserMessage = ({ text, isSender, avatar, user = '', isRead, date }) => {
           <p className="font-poppins text-xs font-semibold">
             {!isSender ? user : ''}
           </p>
-          <p>{text} </p>
+          <p className="break-all">{text} </p>
           <div className="flex gap-1">
             <span className="text-sm opacity-40">
               {new Date(date).toLocaleTimeString()}
