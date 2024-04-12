@@ -27,7 +27,6 @@ import {
   selectStyleConfig,
 } from '../../../../utils/configFormFields';
 import { validateField } from '../../../../utils/validateField';
-// import { isMatchFormData } from '../../../../utils/isMatchFormData';
 // import { updateData } from '../../../../api/client';
 // import { toast } from 'react-toastify';
 
@@ -49,21 +48,12 @@ export const UserFormBio = ({ data }) => {
   });
 
   const [errors, setErrors] = useState({});
-  // const [noChanges, setNoChanges] = useState(true);
 
   const handleChange = (event) => {
     const { name, value } = event.target;
     setCredentials({ ...credentials, [name]: value });
     setErrors({ ...errors, [name]: validateField(name, value) });
   };
-
-  // useEffect(() => {
-  //   if (isMatchFormData(data, credentials)) {
-  //     setNoChanges(true);
-  //   } else {
-  //     setNoChanges(false);
-  //   }
-  // }, [credentials]);
 
   useEffect(() => {
     setErrors({});
@@ -209,9 +199,6 @@ export const UserFormBio = ({ data }) => {
                           classNames={selectStyleConfig}
                         />
                       </div>
-                      {/* <p style={{ color: 'red', textAlign: 'right' }}>
-                        {noChanges && 'No hay cambios en el formulario'}
-                      </p> */}
                     </div>
                   </div>
                 </Panel>
