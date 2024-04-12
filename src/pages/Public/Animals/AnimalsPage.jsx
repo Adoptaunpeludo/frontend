@@ -1,5 +1,5 @@
 import { useLoaderData } from 'react-router';
-
+import { useNavigation } from 'react-router-dom';
 import { Skeleton } from '@nextui-org/react';
 import {
   FilterBar,
@@ -28,11 +28,11 @@ export const loader =
   };
 
 const AnimalsPage = ({ page }) => {
-  const { data: user, isFetching: isLoading } = useUser();
+  const { data: user } = useUser();
   const { params, filters } = useLoaderData();
-
+  const navigation = useNavigation();
   const { shelterName } = params;
-
+  const isLoading = navigation.state === 'loading';
   const { data: animals } = useAnimals(page, filters, params);
   const isLogged = user !== null;
 
