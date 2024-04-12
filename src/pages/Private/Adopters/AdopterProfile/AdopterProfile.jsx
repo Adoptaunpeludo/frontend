@@ -1,7 +1,7 @@
 import { H2Title, TitleSection } from '../../../../components';
 import { DeleteUserModal, ImagesFrame, StatusAnimalsTable } from '../../shared';
 import { userAnimalsQuery } from '../../Shelters/useUserAnimals';
-
+import { useNavigation } from 'react-router-dom';
 import { Skeleton } from '@nextui-org/skeleton';
 import { isAxiosError } from 'axios';
 import { Form } from 'react-router-dom';
@@ -44,8 +44,6 @@ export const action =
     let intent = formData.get('intent');
     const newData = Object.fromEntries(formData);
     const currentData = await getCurrentUser();
-
-    // console.log({ intent });
 
     if (intent === 'user-profile') {
       try {
@@ -96,59 +94,53 @@ export const action =
   };
 
 const AdopterProfile = () => {
-  // const params = useParams();
   const { data, isFetching } = useUser();
-  //const { isReady, send } = useWebSocketContext();
-  // const navigate = useNavigate();
-  // const { data: chats, isFetching: isFetchingChats } = useUserChats(
-  //   params.username
-  // );
   const { username } = data;
+  const navigation = useNavigation();
 
-  // const handleCreateChat = (slug) => {
-  //   if (isReady) {
-  //     send(
-  //       JSON.stringify({
-  //         type: 'create-chat-room',
-  //         room: slug,
-  //       })
-  //     );
-  //   }
-  //   navigate(`/private/chat/${slug}`);
-  // };
+  const isLoading = navigation.state === 'loading';
 
   return (
-    <main className="bg-default-100 flex-grow">
-      <section
-        id="adopterProfile"
-        className="max-w-screen-xl w-full flex  flex-col justify-center  gap-12 h-full  py-12  mx-auto "
-      >
-        <TitleSection title={username} id="adopterTitle" />
-        <section id="sheltersProfile" className="flex gap-12 max-lg:flex-col ">
-          <main className="flex flex-col max-w-3xl order-1 max-lg:order-2 mx-auto">
-            <section className="mt-5">
-              <ImagesFrame images={data.avatar} page="update-user" limit={1} />
-            </section>
-            <section id="petsTable" className="lg:pt-16 max-sm:w-96">
-              <Form method="POST" preventScrollReset={true}>
-                <StatusAnimalsTable role={'adopter'} />
-              </Form>
-            </section>
-          </main>
-          <aside>
-            <Skeleton isLoaded={!isFetching}>
-              <UserBioInfo data={data} isLoading={isFetching} />
-            </Skeleton>
-            <H2Title title="Seguridad" className="" />
-            <UserChangePassword isDisabled={data.accountType === 'google'} />
-          </aside>
-        </section>
+    <Skeleton isLoaded={!isLoading}>
+      <main className="bg-default-100 flex-grow">
+        <section
+          id="adopterProfile"
+          className="max-w-screen-xl w-full flex  flex-col justify-center  gap-12 h-full  py-12  mx-auto "
+        >
+          <TitleSection title={username} id="adopterTitle" />
+          <section
+            id="sheltersProfile"
+            className="flex gap-12 max-lg:flex-col "
+          >
+            <main className="flex flex-col max-w-3xl order-1 max-lg:order-2 mx-auto">
+              <section className="mt-5">
+                <ImagesFrame
+                  images={data.avatar}
+                  page="update-user"
+                  limit={1}
+                />
+              </section>
+              <section id="petsTable" className="lg:pt-16 max-sm:w-96">
+                <Form method="POST" preventScrollReset={true}>
+                  <StatusAnimalsTable role={'adopter'} />
+                </Form>
+              </section>
+            </main>
+            <aside>
+              <Skeleton isLoaded={!isFetching}>
+                <UserBioInfo data={data} isLoading={isFetching} />
+              </Skeleton>
+              <H2Title title="Seguridad" className="" />
+              <UserChangePassword isDisabled={data.accountType === 'google'} />
+            </aside>
+          </section>
 
-        <footer className="border-solid border-t-1 border-t-danger py-8 h-100 flex justify-center">
-          <DeleteUserModal />
-        </footer>
-      </section>
-    </main>
+          <footer className="border-solid border-t-1 border-t-danger py-8 h-100 flex justify-center">
+            <DeleteUserModal />
+          </footer>
+        </section>
+      </main>
+    </Skeleton>
   );
 };
 
