@@ -193,7 +193,7 @@ const AdoptionChatPage = () => {
         id="chats"
         className="max-w-screen-xl w-full flex  flex-col justify-center  h-full  py-12  mx-auto gap-5"
       >
-        <TitleSection title={chat} className={'break-all text-wrap'} />
+        <TitleSection title={chat} />
       </section>
       <section
         id="central"
