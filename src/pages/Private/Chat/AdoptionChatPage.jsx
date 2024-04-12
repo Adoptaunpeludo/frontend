@@ -205,7 +205,9 @@ const AdoptionChatPage = () => {
               key={chat.slug}
               to={`/private/chat/${chat.slug}`}
               onClick={() => handleCreateChat(chat.slug)}
-              className="bg-primary bg-opacity-50 rounded-xl"
+              className={`${
+                !chat.users[0]?.username && 'hidden'
+              } bg-primary bg-opacity-50 rounded-xl`}
             >
               <Badge
                 content={chat._count.messages}
