@@ -44,13 +44,16 @@ export const action =
     let formData = await request.formData();
     let intent = formData.get('intent');
     const newData = Object.fromEntries(formData);
-    const facilities = Array.from(formData.getAll('facilities'));
-    newData.facilities = facilities;
     const currentData = await getCurrentUser();
 
     if (intent === null) return null;
 
     if (intent === 'shelter-profile' || intent === 'user-profile') {
+      if (intent === 'shelter-profile') {
+        const facilities = Array.from(formData.getAll('facilities'));
+        newData.facilities = facilities;
+      }
+
       try {
         if (isMatchFormData(newData, currentData))
           return toast.error('Ningun dato modificado');
