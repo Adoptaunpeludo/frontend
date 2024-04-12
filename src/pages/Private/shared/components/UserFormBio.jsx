@@ -27,6 +27,7 @@ import {
   selectStyleConfig,
 } from '../../../../utils/configFormFields';
 import { validateField } from '../../../../utils/validateField';
+import { isMatchFormData } from '../../../../utils/isMatchFormData';
 // import { updateData } from '../../../../api/client';
 // import { toast } from 'react-toastify';
 
@@ -57,15 +58,7 @@ export const UserFormBio = ({ data }) => {
   };
 
   useEffect(() => {
-    if (
-      credentials.username === data.username &&
-      credentials.dni === data.dni &&
-      credentials.firstName === data.firstName &&
-      credentials.lastName === data.lastName &&
-      credentials.phoneNumber === data.phoneNumber &&
-      credentials.city === data.city &&
-      credentials.username === data.username
-    ) {
+    if (isMatchFormData(data, credentials)) {
       setNoChanges(true);
     } else {
       setNoChanges(false);
