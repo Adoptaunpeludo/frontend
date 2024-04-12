@@ -1,10 +1,11 @@
-import { Avatar, Card, CardBody, Badge } from '@nextui-org/react';
+import { Avatar, Card, CardBody, Badge, Skeleton } from '@nextui-org/react';
 
 import {
   NavLink,
   useLoaderData,
   useNavigate,
   useParams,
+  useNavigation,
 } from 'react-router-dom';
 import { useWebSocketContext } from '../../../context/WebSocketContext';
 import TextMessageBox from '../Assistant/components/TextMessageBox';
@@ -68,10 +69,12 @@ const AdoptionChatPage = () => {
     useChatHistory(chat);
   const navigate = useNavigate();
   const [isFirstLoad, setIsFirstLoad] = useState(false);
+  const navigation = useNavigation();
+  const isLoading = navigation.state === 'loading';
   const { messagesEndRef } = useScroll(
     chatMessages,
     isFirstLoad,
-    isFetchingChatHistory
+    isFetchingChatHistory || isLoading
   );
   const { data: chats } = useUserChats(sender.username);
 
@@ -252,50 +255,55 @@ const AdoptionChatPage = () => {
           ))}
         </aside>
         <main className="order-1 sm:order-2 w-full px-5 pb-5">
-          <div className="flex flex-col flex-1 background-panel rounded-xl h-132 overflow-y-hidden">
-            <div className="flex flex-col flex-1 overflow-x-auto mb-4">
-              <div className="grid grid-cols-12 gap-y-2">
-                {chatMessages.map((message, index) =>
-                  !message.isSender ? (
-                    <UserMessage
-                      key={index}
-                      text={message.text}
-                      isSender={message.isSender}
-                      user={receiver.username}
-                      isRead={message.isRead}
-                      date={message.date}
-                      avatar={
-                        message.isSender ? user.avatar : receiver?.avatar[0]
-                      }
-                    />
-                  ) : (
-                    <UserMessage
-                      key={index}
-                      text={message.text}
-                      isSender={message.isSender}
-                      isRead={message.isRead}
-                      date={message.date}
-                      avatar={
-                        message.isSender ? user.avatar : receiver?.avatar[0]
-                      }
-                    />
-                  )
-                )}
+          <Skeleton
+            className="flex flex-col flex-1 overflow-x-auto mb-4"
+            isLoaded={!isLoading}
+          >
+            <div className="flex flex-col flex-1 background-panel rounded-xl h-132 overflow-y-hidden">
+              <div className="flex flex-col flex-1 overflow-x-auto mb-4">
+                <div className="grid grid-cols-12 gap-y-2">
+                  {chatMessages.map((message, index) =>
+                    !message.isSender ? (
+                      <UserMessage
+                        key={index}
+                        text={message.text}
+                        isSender={message.isSender}
+                        user={receiver.username}
+                        isRead={message.isRead}
+                        date={message.date}
+                        avatar={
+                          message.isSender ? user.avatar : receiver?.avatar[0]
+                        }
+                      />
+                    ) : (
+                      <UserMessage
+                        key={index}
+                        text={message.text}
+                        isSender={message.isSender}
+                        isRead={message.isRead}
+                        date={message.date}
+                        avatar={
+                          message.isSender ? user.avatar : receiver?.avatar[0]
+                        }
+                      />
+                    )
+                  )}
+                </div>
+
+                <div ref={messagesEndRef} />
               </div>
 
-              <div ref={messagesEndRef} />
+              <div className="bg-white">
+                <TextMessageBox
+                  onSendMessage={handlePost}
+                  onDeleteMessages={handleDeleteMessages}
+                  placeholder="Escribe aquí tu pregunta"
+                  disableCorrections
+                  page={'adoption-chat'}
+                />
+              </div>
             </div>
-
-            <div className="bg-white">
-              <TextMessageBox
-                onSendMessage={handlePost}
-                onDeleteMessages={handleDeleteMessages}
-                placeholder="Escribe aquí tu pregunta"
-                disableCorrections
-                page={'adoption-chat'}
-              />
-            </div>
-          </div>
+          </Skeleton>
         </main>
       </section>
     </main>
