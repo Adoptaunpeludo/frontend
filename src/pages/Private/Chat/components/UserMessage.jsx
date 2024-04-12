@@ -26,7 +26,7 @@ const UserMessage = ({ text, isSender, avatar, user = '', isRead, date }) => {
           fallback={<IconUserFilled />}
           isBordered
           color="primary"
-          className={`${isSender ? 'hidden' : ''}`}
+          className={`${isSender ? 'hidden' : ''} min-w-10`}
         />
         <div
           className={
