@@ -27,7 +27,7 @@ import {
   selectStyleConfig,
 } from '../../../../utils/configFormFields';
 import { validateField } from '../../../../utils/validateField';
-import { isMatchFormData } from '../../../../utils/isMatchFormData';
+// import { isMatchFormData } from '../../../../utils/isMatchFormData';
 // import { updateData } from '../../../../api/client';
 // import { toast } from 'react-toastify';
 
@@ -49,7 +49,7 @@ export const UserFormBio = ({ data }) => {
   });
 
   const [errors, setErrors] = useState({});
-  const [noChanges, setNoChanges] = useState(true);
+  // const [noChanges, setNoChanges] = useState(true);
 
   const handleChange = (event) => {
     const { name, value } = event.target;
@@ -57,20 +57,19 @@ export const UserFormBio = ({ data }) => {
     setErrors({ ...errors, [name]: validateField(name, value) });
   };
 
-  useEffect(() => {
-    if (isMatchFormData(data, credentials)) {
-      setNoChanges(true);
-    } else {
-      setNoChanges(false);
-    }
-  }, [credentials]);
+  // useEffect(() => {
+  //   if (isMatchFormData(data, credentials)) {
+  //     setNoChanges(true);
+  //   } else {
+  //     setNoChanges(false);
+  //   }
+  // }, [credentials]);
 
   useEffect(() => {
     setErrors({});
   }, [isOpen]);
 
-  const isFormValid =
-    Object.values(errors).every((error) => error === '') && !noChanges;
+  const isFormValid = Object.values(errors).every((error) => error === '');
 
   const navigation = useNavigation();
 
@@ -136,7 +135,7 @@ export const UserFormBio = ({ data }) => {
                           classNames={inputStyleConfig}
                         />
                         <Input
-                          isRequired
+                          // isRequired
                           isDisabled={true}
                           className="min-w-72 "
                           type="text"
@@ -210,9 +209,9 @@ export const UserFormBio = ({ data }) => {
                           classNames={selectStyleConfig}
                         />
                       </div>
-                      <p style={{ color: 'red', textAlign: 'right' }}>
+                      {/* <p style={{ color: 'red', textAlign: 'right' }}>
                         {noChanges && 'No hay cambios en el formulario'}
-                      </p>
+                      </p> */}
                     </div>
                   </div>
                 </Panel>

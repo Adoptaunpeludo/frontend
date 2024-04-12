@@ -25,7 +25,7 @@ import {
   selectStyleConfig,
 } from '../../../../utils/configFormFields';
 import { validateField } from '../../../../utils/validateField';
-import { isMatchFormData } from '../../../../utils/isMatchFormData';
+// import { isMatchFormData } from '../../../../utils/isMatchFormData';
 
 const ShelterForm = ({ isSubmitting, data }) => {
   const updateShelterModal = useDisclosure();
@@ -53,7 +53,7 @@ const ShelterForm = ({ isSubmitting, data }) => {
   });
 
   const [errors, setErrors] = useState('');
-  const [noChanges, setNoChanges] = useState(true);
+  // const [noChanges, setNoChanges] = useState(true);
 
   const navigation = useNavigation();
 
@@ -78,20 +78,19 @@ const ShelterForm = ({ isSubmitting, data }) => {
     }
   };
 
-  useEffect(() => {
-    if (isMatchFormData(data, formData)) {
-      setNoChanges(true);
-    } else {
-      setNoChanges(false);
-    }
-  }, [formData]);
+  // useEffect(() => {
+  //   if (isMatchFormData(data, formData)) {
+  //     setNoChanges(true);
+  //   } else {
+  //     setNoChanges(false);
+  //   }
+  // }, [formData]);
 
   useEffect(() => {
     setErrors('');
   }, [isOpen]);
 
-  const isFormValid =
-    Object.values(errors).every((error) => error === '') && !noChanges;
+  const isFormValid = Object.values(errors).every((error) => error === '');
 
   useEffect(() => {
     saveShelterModal(updateShelterModal);
@@ -209,9 +208,9 @@ const ShelterForm = ({ isSubmitting, data }) => {
                           classNames={inputStyleConfig}
                         />
                       </div>
-                      <p style={{ color: 'red', textAlign: 'right' }}>
+                      {/* <p style={{ color: 'red', textAlign: 'right' }}>
                         {noChanges && 'No hay cambios en el formulario'}
-                      </p>
+                      </p> */}
                     </div>
                   </div>
                 </Panel>
