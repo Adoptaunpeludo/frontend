@@ -14,6 +14,8 @@ import { updateProfile } from '../../shared/service/updateUserService';
 import UserBioInfo from '../../Shelters/ShelterProfile/components/UserBioInfo';
 import { userChatsQuery } from '../../Shelters/useUserChats';
 import { useUser } from '../../useUser';
+import { isMatchFormData } from '../../../../utils/isMatchFormData';
+import { getCurrentUser } from '../../service';
 
 export const loader =
   (queryClient) =>
@@ -40,11 +42,15 @@ export const action =
   async ({ request }) => {
     let formData = await request.formData();
     let intent = formData.get('intent');
+    const newData = Object.fromEntries(formData);
+    const currentData = await getCurrentUser();
 
-    console.log({ intent });
+    // console.log({ intent });
 
     if (intent === 'user-profile') {
       try {
+        if (isMatchFormData(newData, currentData))
+          return toast.error('Ningun dato modificado');
         await updateProfile(formData, intent);
         queryClient.invalidateQueries({ queryKey: ['user'] });
         toast.success('Perfil actualizado');

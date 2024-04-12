@@ -25,6 +25,7 @@ import {
   selectStyleConfig,
 } from '../../../../utils/configFormFields';
 import { validateField } from '../../../../utils/validateField';
+// import { isMatchFormData } from '../../../../utils/isMatchFormData';
 
 const ShelterForm = ({ isSubmitting, data }) => {
   const updateShelterModal = useDisclosure();
@@ -52,39 +53,44 @@ const ShelterForm = ({ isSubmitting, data }) => {
   });
 
   const [errors, setErrors] = useState('');
-  const [noChanges, setNoChanges] = useState(true);
+  // const [noChanges, setNoChanges] = useState(true);
 
   const navigation = useNavigation();
 
   isSubmitting = navigation.state === 'submitting';
 
   const handleChange = (event) => {
-    const { name, value } = event.target;
-    setFormData({ ...formData, [name]: value });
-    setErrors({ ...errors, [name]: validateField(name, value) });
+    const { name, value, type, checked } = event.target;
+    if (type === 'checkbox') {
+      const updatedFacilities = [...formData.facilities];
+      if (checked) {
+        updatedFacilities.push(value);
+      } else {
+        const index = updatedFacilities.indexOf(value);
+        if (index !== -1) {
+          updatedFacilities.splice(index, 1);
+        }
+      }
+      setFormData({ ...formData, facilities: updatedFacilities });
+    } else {
+      setFormData({ ...formData, [name]: value });
+      setErrors({ ...errors, [name]: validateField(name, value) });
+    }
   };
 
-  useEffect(() => {
-    if (
-      formData.cif === data.cif &&
-      formData.legalForms === data.legalForms &&
-      formData.ownVet === data.ownVet &&
-      formData.description === data.description &&
-      formData.veterinaryFacilities === data.veterinaryFacilities
-    ) {
-      setNoChanges(true);
-    } else {
-      setNoChanges(false);
-    }
-    console.log(formData.facilities);
-  }, [formData]);
+  // useEffect(() => {
+  //   if (isMatchFormData(data, formData)) {
+  //     setNoChanges(true);
+  //   } else {
+  //     setNoChanges(false);
+  //   }
+  // }, [formData]);
 
   useEffect(() => {
     setErrors('');
   }, [isOpen]);
 
-  const isFormValid =
-    Object.values(errors).every((error) => error === '') && !noChanges;
+  const isFormValid = Object.values(errors).every((error) => error === '');
 
   useEffect(() => {
     saveShelterModal(updateShelterModal);
@@ -184,6 +190,7 @@ const ShelterForm = ({ isSubmitting, data }) => {
                       <Accommodations
                         facilities={facilities}
                         isDisabled={isSubmitting}
+                        handleChange={handleChange}
                       />
                       <div className="flex w-full flex-col  gap-4">
                         <H3Title title="Descripción:" className="mx-2" />
@@ -201,9 +208,9 @@ const ShelterForm = ({ isSubmitting, data }) => {
                           classNames={inputStyleConfig}
                         />
                       </div>
-                      <p style={{ color: 'red', textAlign: 'right' }}>
+                      {/* <p style={{ color: 'red', textAlign: 'right' }}>
                         {noChanges && 'No hay cambios en el formulario'}
-                      </p>
+                      </p> */}
                     </div>
                   </div>
                 </Panel>

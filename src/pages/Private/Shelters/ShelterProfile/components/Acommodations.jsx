@@ -4,7 +4,12 @@ import { H4Title } from '../../../../../components';
 import { checkBoxStyleConfig } from '../../../../../utils/configFormFields';
 import { facilitiesEnum } from '../../../../../utils/enumData';
 
-const Accommodations = ({ facilities, isDisabled = true, className }) => {
+const Accommodations = ({
+  facilities,
+  isDisabled = true,
+  className,
+  handleChange,
+}) => {
   return (
     <div
       id="accommodations"
@@ -24,6 +29,7 @@ const Accommodations = ({ facilities, isDisabled = true, className }) => {
             value={facility.value}
             classNames={checkBoxStyleConfig}
             className="cursor-default"
+            onChange={handleChange}
           >
             {facility.label}
           </Checkbox>

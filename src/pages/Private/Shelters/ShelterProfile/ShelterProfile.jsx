@@ -17,6 +17,8 @@ import { userAnimalsQuery } from '../useUserAnimals';
 import { userChatsQuery } from '../useUserChats';
 import ShelterProfileInfo from './components/ShelterProfileInfo';
 import UserBioInfo from './components/UserBioInfo';
+import { getCurrentUser } from '../../service';
+import { isMatchFormData } from '../../../../utils/isMatchFormData';
 
 export const loader =
   (queryClient) =>
@@ -41,11 +43,21 @@ export const action =
   async ({ request }) => {
     let formData = await request.formData();
     let intent = formData.get('intent');
+    const newData = Object.fromEntries(formData);
+    const currentData = await getCurrentUser();
 
     if (intent === null) return null;
 
     if (intent === 'shelter-profile' || intent === 'user-profile') {
+      if (intent === 'shelter-profile') {
+        const facilities = Array.from(formData.getAll('facilities'));
+        newData.facilities = facilities;
+      }
+
       try {
+        if (isMatchFormData(newData, currentData))
+          return toast.error('Ningun dato modificado');
+
         await updateProfile(formData, intent);
         queryClient.invalidateQueries({ queryKey: ['user'] });
         toast.success('Perfil del Refugio actualizado');
