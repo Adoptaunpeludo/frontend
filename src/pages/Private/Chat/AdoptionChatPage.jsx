@@ -1,11 +1,11 @@
-import { Avatar, Card, CardBody, Badge, Skeleton } from '@nextui-org/react';
+import { Avatar, Badge, Card, CardBody, Skeleton } from '@nextui-org/react';
 
 import {
   NavLink,
   useLoaderData,
   useNavigate,
-  useParams,
   useNavigation,
+  useParams,
 } from 'react-router-dom';
 import { useWebSocketContext } from '../../../context/WebSocketContext';
 import TextMessageBox from '../Assistant/components/TextMessageBox';
@@ -229,7 +229,7 @@ const AdoptionChatPage = () => {
                       showFallback
                     />
                     <div className="flex flex-col  w-full sm:w-36">
-                      <span className="font-poppins font-semibold text-sm line-clamp-1">{`${
+                      <span className="font-poppins font-semibold text-sm line-clamp-1 break-all">{`${
                         chat.animal[0] !== undefined
                           ? chat.animal[0]?.name.toUpperCase()
                           : ''
