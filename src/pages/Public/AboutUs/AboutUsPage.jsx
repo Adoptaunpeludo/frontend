@@ -1,19 +1,22 @@
-import { TitleSection } from '../../../components';
+import BackendArchitecture from './components/BackendArchitecture';
+import DatabaseAndOtherServices from './components/DatabaseAndOtherServices';
+import { FrontendArchitecture } from './components/FrontendArchitecture';
+import OurTeam from './components/OurTeam';
+import Technologies from './components/Technologies';
 
 const AboutUsPage = () => {
   return (
-    <main className="max-w-screen-xl w-full flex  flex-col justify-center  gap-12 h-full  py-12  mx-auto flex-grow">
-      <header>
-        <TitleSection title={'data?.name'} />
-      </header>
+    <>
+      <header className="w-full bg-[url('/public/backgrounds/aboutus.png')] h-96 bg-center bg-cover bg-no-repeat" />
 
-      <section className="flex gap-12 max-xl:flex-col mx-auto">
-        <section id="central-column" className="flex flex-col flex-1">
-          <div className="relative container lg:w-164 rounded-lg bg-detail bg-cover bg-center"></div>
-        </section>
-        <section></section>
-      </section>
-    </main>
+      <main className=" w-full flex  flex-col justify-center  mx-auto flex-grow">
+        <Technologies />
+        <FrontendArchitecture />
+        <BackendArchitecture />
+        <DatabaseAndOtherServices />
+        <OurTeam />
+      </main>
+    </>
   );
 };
 
