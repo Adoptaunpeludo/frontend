@@ -1,11 +1,11 @@
-import { Avatar, Card, CardBody, Badge, Skeleton } from '@nextui-org/react';
+import { Avatar, Badge, Skeleton } from '@nextui-org/react';
 
 import {
   NavLink,
   useLoaderData,
   useNavigate,
-  useParams,
   useNavigation,
+  useParams,
 } from 'react-router-dom';
 import { useWebSocketContext } from '../../../context/WebSocketContext';
 import TextMessageBox from '../Assistant/components/TextMessageBox';
@@ -193,13 +193,13 @@ const AdoptionChatPage = () => {
         id="chats"
         className="max-w-screen-xl w-full flex  flex-col justify-center  h-full  py-12  mx-auto gap-5"
       >
-        <TitleSection title={chat} />
+        <TitleSection title={chat} className=" line-clamp-3 break-words" />
       </section>
       <section
         id="central"
         className="max-w-screen-xl mx-auto flex  flex-col sm:flex-row"
       >
-        <aside className="flex flex-col gap-2 mb-5 max-sm:px-5 sm:max-w-72  order-2 sm:order-1">
+        <aside className="flex flex-col gap-4 mb-5 max-sm:px-5 sm:max-w-72  order-2 sm:order-1 mx-1">
           {chats.map((chat) => (
             <NavLink
               key={chat.slug}
@@ -207,7 +207,7 @@ const AdoptionChatPage = () => {
               onClick={() => handleCreateChat(chat.slug)}
               className={`${
                 !chat.users[0]?.username && 'hidden'
-              } bg-primary bg-opacity-50 rounded-xl`}
+              } bg-primary bg-opacity-50 rounded-xl flex w-full`}
             >
               <Badge
                 content={chat._count.messages}
@@ -215,21 +215,24 @@ const AdoptionChatPage = () => {
                 color="primary"
                 placement="top-right"
                 // isInvisible={isFetchingNotifications}
+                className="sm:mr-5"
               >
-                <Card className="flex justify-between gap-1 bg-transparent flex-row">
-                  <CardBody className=" flex flex-start flex-row gap-2 items-center">
+                <div className=" flex flex-row gap-2 justify-evenly h-20 max-sm:w-[90dvw] chat-button ">
+                  <section className="flex items-center pl-5 max-w-16">
                     <Avatar
                       src={`${BUCKET_URL}/${
                         chat.animal[0]?.images[0]
                           ? chat.animal[0]?.images[0]
                           : chat.users[0]?.avatar[0]
                       }`}
-                      className="min-w-10"
+                      className="min-w-10 "
                       fallback={<IconUserFilled />}
                       showFallback
                     />
-                    <div className="flex flex-col  w-full sm:w-36">
-                      <span className="font-poppins font-semibold text-sm line-clamp-1">{`${
+                  </section>
+                  <section className="flex items-center w-full flex-grow">
+                    <div className="flex flex-col w-full sm:w-36">
+                      <span className="font-poppins font-semibold text-sm line-clamp-1 break-all w-full">{`${
                         chat.animal[0] !== undefined
                           ? chat.animal[0]?.name.toUpperCase()
                           : ''
@@ -242,16 +245,15 @@ const AdoptionChatPage = () => {
                         }`}
                       >{`${chat.users[0]?.username}`}</span>
                     </div>
-
-                    <span className="flex items-center  h-full w-1/6">
-                      <IconArrowBadgeRight
-                        size={50}
-                        stroke={1}
-                        className="stroke-tertiary"
-                      />
-                    </span>
-                  </CardBody>
-                </Card>
+                  </section>
+                  <section className="flex items-center justify-end h-full mr-10">
+                    <IconArrowBadgeRight
+                      size={50}
+                      stroke={1}
+                      className="stroke-tertiary"
+                    />
+                  </section>
+                </div>
               </Badge>
             </NavLink>
           ))}
