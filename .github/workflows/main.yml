@@ -41,9 +41,9 @@ jobs:
           echo "${AWS_PRIVATE_KEY}" > key.pem
           chmod 600 key.pem
           
-      # - name: Generate environment file
-      #   run: |
-      #     echo "${{ secrets.ENVIRONMENT }}" > .env
+      - name: Generate environment file
+        run: |
+          echo "${{ secrets.ENVIRONMENT }}" > .env
 
       - name: Cache dependencies
         uses: actions/cache@v4
