@@ -1,5 +1,5 @@
 import { createContext, useContext, useEffect, useRef, useState } from 'react';
-import { WB_SERVER } from '../config/config';
+import { WS_SERVER } from '../config/config';
 
 const WebSocketContext = createContext();
 
@@ -11,7 +11,7 @@ const WebSocketContextProvider = ({ children }) => {
 
   useEffect(() => {
     const connectToServer = () => {
-      const socket = new WebSocket(WB_SERVER);
+      const socket = new WebSocket(WS_SERVER);
       let interval;
       socket.onopen = () => {
         console.log('Connected to ws server');
