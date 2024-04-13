@@ -1,5 +1,5 @@
 # Frontend
-(Adopta un Peludo)[https://www.adoptaunpeludo.com/] es el frontend de un proyecto más amplio destinado a facilitar la adopción de animales. Las protectoras de animales pueden subir anuncios de mascotas disponibles para adopción, mientras que los potenciales adoptantes pueden buscar animales, ver detalles y contactar a las protectoras para iniciar el proceso de adopción.
+[Adopta un Peludo](https://www.adoptaunpeludo.com/) es el frontend de un proyecto más amplio destinado a facilitar la adopción de animales. Las protectoras de animales pueden subir anuncios de mascotas disponibles para adopción, mientras que los potenciales adoptantes pueden buscar animales, ver detalles y contactar a las protectoras para iniciar el proceso de adopción.
 
 ## Tecnologías Utilizadas
 - [React](https://es.react.dev/): Framework de JavaScript para construir interfaces de usuario.
