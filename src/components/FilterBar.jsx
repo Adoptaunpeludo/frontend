@@ -80,7 +80,7 @@ export function FilterBar({ page }) {
 
   return (
     <form
-      className="bg-gray-100 p-4 rounded-lg flex items-center space-x-2"
+      className="bg-gray-100 p-4 rounded-lg flex flex-col md:flex-row items-center space-x-0 space-y-2 md:space-y-0 md:space-x-2"
       onSubmit={handleSubmit}
     >
       <Input
@@ -187,19 +187,23 @@ export function FilterBar({ page }) {
         ))}
       </Select>
 
-      <Button type="submit" color="primary" className={buttonStyleConfig}>
-        Buscar
-      </Button>
-      <Button
-        onPress={handleReset}
-        color="primary"
-        type="reset"
-        className={buttonStyleConfig}
-      >
-        Reset
-      </Button>
+      <div className="flex justify-around w-full space-x-2 md:w-auto">
+        <Button type="submit" color="primary" className={`${buttonStyleConfig} w-full md:w-auto`}>
+          Buscar
+        </Button>
+        <Button
+          onPress={handleReset}
+          color="primary"
+          type="reset"
+          className={`${buttonStyleConfig} w-full md:w-auto`}>
+          Reset
+        </Button>
+      </div>
       {/* TODO:Dont remove without final layout  */}
       {/* <PagePagination page={page} /> */}
     </form>
   );
 }
+
+
+// "sm:flex sm:justify-around flex justify-between"
