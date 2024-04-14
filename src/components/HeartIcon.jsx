@@ -1,24 +1,44 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useReducer } from 'react';
 import { useQueryClient } from '@tanstack/react-query';
 import { addFav, deleteFav } from '../pages/Public/Animals/service';
 import Heart from 'react-animated-heart';
 import { toast } from 'react-toastify';
 
+const initialState = {
+  liked: false,
+  isLoading: false,
+};
+
+const reducer = (state, action) => {
+  switch (action.type) {
+    case 'toggleLike':
+      return { ...state, isLoading: true };
+    case 'toggleLikeSuccess':
+      return { liked: !state.liked, isLoading: false };
+    case 'toggleLikeError':
+      return { ...state, isLoading: false };
+    case 'initialLiked':
+      return { liked: action.payload, isLoading: false };
+    default:
+      throw new Error('Acción desconocida: ', action.type);
+  }
+};
+
 export const HeartIcon = ({ numFavs, userFavs, id, data }) => {
-  const [liked, setLiked] = useState(userFavs.includes(data?.id));
-  const [isLoading, setIsLoading] = useState(false);
+  const [state, dispatch] = useReducer(reducer, initialState);
+
   const queryClient = useQueryClient();
 
   useEffect(() => {
-    setLiked(userFavs.includes(data?.id));
+    dispatch({ type: 'initialLiked', payload: userFavs.includes(data?.id) });
   }, [data?.id, userFavs]);
 
   const toggleLike = async () => {
     if (!data) return toast.warn('Loguea primero por favor');
     try {
-      setIsLoading(true);
-      if (!liked) await addFav(id);
-      if (liked) await deleteFav(id);
+      dispatch({ type: 'toggleLike' });
+      if (!state.liked) await addFav(id);
+      if (state.liked) await deleteFav(id);
       queryClient.invalidateQueries({
         queryKey: ['animals'],
       });
@@ -28,19 +48,19 @@ export const HeartIcon = ({ numFavs, userFavs, id, data }) => {
       queryClient.invalidateQueries({
         queryKey: ['shelters-animals'],
       });
+      dispatch({ type: 'toggleLikeSuccess' });
     } catch (error) {
       toast.error(error.response.data.message);
+      dispatch({ type: 'toggleLikeError' });
       throw error;
-    } finally {
-      setIsLoading(false);
     }
   };
 
   return (
     <div className="flex items-center justify-start ml-[-40px]">
       <Heart
-        {...{ isClick: liked }}
-        onClick={isLoading ? () => {} : toggleLike}
+        {...{ isClick: state.liked }}
+        onClick={state.isLoading ? () => {} : toggleLike}
       />
       <span className="ml-[-25px] font-poppins text-xl">{numFavs}</span>
     </div>
