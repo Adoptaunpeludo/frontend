@@ -1,5 +1,7 @@
 import { Avatar, Badge, Skeleton } from '@nextui-org/react';
-
+import { useEffect, useState } from 'react';
+import { useQueryClient } from '@tanstack/react-query';
+import { IconArrowBadgeRight, IconUserFilled } from '@tabler/icons-react';
 import {
   NavLink,
   useLoaderData,
@@ -7,22 +9,19 @@ import {
   useNavigation,
   useParams,
 } from 'react-router-dom';
-import { useWebSocketContext } from '../../../context/WebSocketContext';
-import TextMessageBox from '../Assistant/components/TextMessageBox';
-import { useUser, userQuery } from '../useUser';
-import UserMessage from './components/UserMessage';
 
-import { useEffect, useState } from 'react';
+import { useWebSocketContext } from '../../../context/WebSocketContext';
+import { useUser, userQuery } from '../useUser';
 import { receiverDataQuery } from './useReceiverData';
 import { chatHistoryQuery, useChatHistory } from './useUserChatHistory';
+import { useScroll } from '../../../hooks/useScroll';
+import { useUserChats, userChatsQuery } from '../Shelters/useUserChats';
 
-import { IconArrowBadgeRight, IconUserFilled } from '@tabler/icons-react';
-import { useQueryClient } from '@tanstack/react-query';
+import TextMessageBox from '../Assistant/components/TextMessageBox';
+import UserMessage from './components/UserMessage';
 import { TitleSection } from '../../../components';
 import { BUCKET_URL } from '../../../config/config';
-import { useScroll } from '../../../hooks/useScroll';
 import { mapUserChatHistory } from '../../../utils/mapUserChatHistory';
-import { useUserChats, userChatsQuery } from '../Shelters/useUserChats';
 
 export const loader =
   (queryClient) =>
@@ -55,28 +54,32 @@ export const loader =
   };
 
 const AdoptionChatPage = () => {
+  const { send, isReady, val } = useWebSocketContext();
+  const [chatMessages, setChatMessages] = useState([]);
+  const [isFirstLoad, setIsFirstLoad] = useState(false);
+
   const queryClient = useQueryClient();
+  const { data: chatHistory, isFetching: isFetchingChatHistory } =
+    useChatHistory(chat);
+  const { data: user } = useUser();
+  const { data: chats } = useUserChats(sender.username);
+  const { receiver, sender } = useLoaderData();
+
+  const navigation = useNavigation();
+  const isLoading = navigation.state === 'loading';
+
   const params = useParams();
   const { chat } = params;
   const parts = chat.split('-');
   const shelter = parts.at(0);
   const adopter = parts.at(-1);
-  const { receiver, sender } = useLoaderData();
-  const [chatMessages, setChatMessages] = useState([]);
-  const { send, isReady, val } = useWebSocketContext();
-  const { data: user } = useUser();
-  const { data: chatHistory, isFetching: isFetchingChatHistory } =
-    useChatHistory(chat);
+
   const navigate = useNavigate();
-  const [isFirstLoad, setIsFirstLoad] = useState(false);
-  const navigation = useNavigation();
-  const isLoading = navigation.state === 'loading';
   const { messagesEndRef } = useScroll(
     chatMessages,
     isFirstLoad,
     isFetchingChatHistory || isLoading
   );
-  const { data: chats } = useUserChats(sender.username);
 
   useEffect(() => {
     if (chatHistory) {
