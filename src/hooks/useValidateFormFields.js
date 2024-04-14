@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { validateField } from '../utils/validateField';
 
-export const useValidateFormFields = (initialValues, isOpen) => {
+export const useValidateFormFields = (initialValues, isOpen = '') => {
   const [credentials, setCredentials] = useState(initialValues);
   const [errors, setErrors] = useState([]);
 
