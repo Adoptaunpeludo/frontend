@@ -10,11 +10,12 @@ const AboutUsPage = () => {
       <header className="w-full bg-[url('/public/backgrounds/aboutus.png')] h-96 bg-center bg-cover bg-no-repeat" />
 
       <main className=" w-full flex  flex-col justify-center  mx-auto flex-grow">
-        <Technologies />
+        <OurTeam />
+
         <FrontendArchitecture />
         <BackendArchitecture />
         <DatabaseAndOtherServices />
-        <OurTeam />
+        <Technologies />
       </main>
     </>
   );
