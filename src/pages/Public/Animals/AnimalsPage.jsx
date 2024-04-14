@@ -1,5 +1,5 @@
 import { useLoaderData } from 'react-router';
-
+import { useNavigation } from 'react-router-dom';
 import { Skeleton } from '@nextui-org/react';
 import {
   FilterBar,
@@ -7,9 +7,9 @@ import {
   PagePagination,
   TitleSection,
 } from '../../../components';
+import { useUser } from '../../Private/useUser';
 import { animalsQuery, useAnimals } from '../Landing/useAnimals';
 import { PetCard } from './components/PetCard';
-import { useUser } from '../../Private/useUser';
 
 export const loader =
   (queryClient, page) =>
@@ -28,11 +28,11 @@ export const loader =
   };
 
 const AnimalsPage = ({ page }) => {
-  const { data: user, isFetching: isLoading } = useUser();
+  const { data: user } = useUser();
   const { params, filters } = useLoaderData();
-
+  const navigation = useNavigation();
   const { shelterName } = params;
-
+  const isLoading = navigation.state === 'loading';
   const { data: animals } = useAnimals(page, filters, params);
   const isLogged = user !== null;
 
@@ -49,7 +49,7 @@ const AnimalsPage = ({ page }) => {
           <FilterBar page={shelterName ? shelterName : page} />
         </header>
         <section className="flex flex-col flex-auto">
-          <ul className="flex justify-center gap-4 flex-wrap p-6">
+          <ul className="flex justify-center gap-4 flex-wrap p-6 gap-y-6">
             {animals?.animals.length > 0 ? (
               animals?.animals.map((animal) => {
                 if (animal.status !== 'adopted') {

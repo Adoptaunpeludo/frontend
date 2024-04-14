@@ -58,6 +58,7 @@ import NotFoundPage from './pages/Error/NotFound/NotFoundPage.jsx';
 import AssistantPage from './pages/Private/Assistant/AssistantPage.jsx';
 import AdoptionChatPage from './pages/Private/Chat/AdoptionChatPage.jsx';
 import ProtectedRoute from './pages/Private/ProtectedRoute.jsx';
+import { ErrorsProvider } from './context/FormErrorsContext.jsx';
 
 export const queryClient = new QueryClient({
   defaultOptions: {
@@ -233,15 +234,16 @@ function App() {
   return (
     <QueryClientProvider client={queryClient}>
       <ReactQueryDevtools initialIsOpen={false} />
-
-      <RouterProvider
-        router={router(
-          bioModal.onClose,
-          shelterModal.onClose,
-          updatePasswordModal.onClose,
-          animalImages
-        )}
-      />
+      <ErrorsProvider>
+        <RouterProvider
+          router={router(
+            bioModal.onClose,
+            shelterModal.onClose,
+            updatePasswordModal.onClose,
+            animalImages
+          )}
+        />
+      </ErrorsProvider>
     </QueryClientProvider>
   );
 }

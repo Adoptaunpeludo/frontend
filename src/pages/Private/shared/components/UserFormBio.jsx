@@ -48,7 +48,6 @@ export const UserFormBio = ({ data }) => {
   });
 
   const [errors, setErrors] = useState({});
-  const [noChanges, setNoChanges] = useState(true);
 
   const handleChange = (event) => {
     const { name, value } = event.target;
@@ -57,27 +56,10 @@ export const UserFormBio = ({ data }) => {
   };
 
   useEffect(() => {
-    if (
-      credentials.username === data.username &&
-      credentials.dni === data.dni &&
-      credentials.firstName === data.firstName &&
-      credentials.lastName === data.lastName &&
-      credentials.phoneNumber === data.phoneNumber &&
-      credentials.city === data.city &&
-      credentials.username === data.username
-    ) {
-      setNoChanges(true);
-    } else {
-      setNoChanges(false);
-    }
-  }, [credentials]);
-
-  useEffect(() => {
     setErrors({});
   }, [isOpen]);
 
-  const isFormValid =
-    Object.values(errors).every((error) => error === '') && !noChanges;
+  const isFormValid = Object.values(errors).every((error) => error === '');
 
   const navigation = useNavigation();
 
@@ -105,7 +87,7 @@ export const UserFormBio = ({ data }) => {
         size="3xl"
         portalContainer={document.body}
       >
-        <Form method="post" preventScrollReset={true}>
+        <Form method="post" preventScrollReset={true} onKeyDown={() => {}}>
           <ModalContent>
             <>
               <ModalHeader className="flex flex-col gap-1">
@@ -143,8 +125,8 @@ export const UserFormBio = ({ data }) => {
                           classNames={inputStyleConfig}
                         />
                         <Input
-                          isRequired
-                          isDisabled={isSubmitting}
+                          // isRequired
+                          isDisabled={true}
                           className="min-w-72 "
                           type="text"
                           label="Nombre de usuario"
@@ -217,9 +199,6 @@ export const UserFormBio = ({ data }) => {
                           classNames={selectStyleConfig}
                         />
                       </div>
-                      <p style={{ color: 'red', textAlign: 'right' }}>
-                        {noChanges && 'No hay cambios en el formulario'}
-                      </p>
                     </div>
                   </div>
                 </Panel>

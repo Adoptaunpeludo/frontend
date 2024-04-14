@@ -1,8 +1,14 @@
-import { deleteData, fetchData, postData } from '../../../api/client';
+import {
+  deleteData,
+  fetchData,
+  postData,
+  setAuthorizationHeader,
+} from '../../../api/client';
 import { ASSISTANT_SERVER } from '../../../config/config';
 
-export const deleteChatHistory = async () => {
+export const deleteChatHistory = async (token) => {
   try {
+    setAuthorizationHeader(token);
     const { data } = await deleteData(`${ASSISTANT_SERVER}/chat-history`);
     return data;
   } catch (error) {
@@ -23,7 +29,8 @@ export const getChatHistory = async () => {
 
 export const createChat = async (token) => {
   try {
-    const { data } = await postData(`${ASSISTANT_SERVER}/create-chat/${token}`);
+    setAuthorizationHeader(token);
+    const { data } = await postData(`${ASSISTANT_SERVER}/create-chat/`);
     return data;
   } catch (error) {
     console.log(error);
@@ -31,12 +38,13 @@ export const createChat = async (token) => {
   }
 };
 
-export async function* chatStreamGenerator(payload) {
+export async function* chatStreamGenerator(payload, token) {
   try {
     const res = await fetch(`${ASSISTANT_SERVER}/user-question`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
+        Authorization: `Bearer ${token}`,
       },
       body: JSON.stringify(payload),
     });

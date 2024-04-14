@@ -1,9 +1,10 @@
-import { Avatar, Card, CardBody, Spinner } from '@nextui-org/react';
+import { Avatar, Badge, Skeleton } from '@nextui-org/react';
 
 import {
   NavLink,
   useLoaderData,
   useNavigate,
+  useNavigation,
   useParams,
 } from 'react-router-dom';
 import { useWebSocketContext } from '../../../context/WebSocketContext';
@@ -63,15 +64,17 @@ const AdoptionChatPage = () => {
   const { receiver, sender } = useLoaderData();
   const [chatMessages, setChatMessages] = useState([]);
   const { send, isReady, val } = useWebSocketContext();
-  const { data: user, isFetching: isFetchingUser } = useUser();
+  const { data: user } = useUser();
   const { data: chatHistory, isFetching: isFetchingChatHistory } =
     useChatHistory(chat);
   const navigate = useNavigate();
   const [isFirstLoad, setIsFirstLoad] = useState(false);
+  const navigation = useNavigation();
+  const isLoading = navigation.state === 'loading';
   const { messagesEndRef } = useScroll(
     chatMessages,
     isFirstLoad,
-    isFetchingChatHistory
+    isFetchingChatHistory || isLoading
   );
   const { data: chats } = useUserChats(sender.username);
 
@@ -95,6 +98,7 @@ const AdoptionChatPage = () => {
         JSON.stringify({
           type: 'join-chat-room',
           username: user.username,
+          senderUsername: receiver.username,
           room: chat,
           role: user.role,
         })
@@ -122,12 +126,21 @@ const AdoptionChatPage = () => {
         if (message.room === chat) {
           setChatMessages((prev) => [
             ...prev,
-            { text: message.message, isSender: false, isRead: message.isRead },
+            {
+              text: message.message,
+              isSender: false,
+              isRead: message.isRead,
+              date: message.createdAt,
+            },
           ]);
           setIsFirstLoad(false);
         }
+      if (message.type === 'message-readd')
+        queryClient.invalidateQueries({
+          queryKey: ['chat-history', message.room],
+        });
     }
-  }, [chat, setChatMessages, isReady, val]);
+  }, [chat, setChatMessages, isReady, val, queryClient]);
 
   const handleDeleteMessages = () => {
     setChatMessages([]);
@@ -143,7 +156,10 @@ const AdoptionChatPage = () => {
 
   const handlePost = async (text) => {
     setIsFirstLoad(false);
-    setChatMessages((prev) => [...prev, { text, isSender: true }]);
+    setChatMessages((prev) => [
+      ...prev,
+      { text, isSender: true, date: new Date() },
+    ]);
     if (isReady) {
       send(
         JSON.stringify({
@@ -161,9 +177,6 @@ const AdoptionChatPage = () => {
 
   const handleCreateChat = (slug) => {
     if (isReady) {
-      queryClient.invalidateQueries({
-        queryKey: ['user-chats', sender.username],
-      });
       send(
         JSON.stringify({
           type: 'create-chat-room',
@@ -180,65 +193,78 @@ const AdoptionChatPage = () => {
         id="chats"
         className="max-w-screen-xl w-full flex  flex-col justify-center  h-full  py-12  mx-auto gap-5"
       >
-        <TitleSection title={chat} />
+        <TitleSection title={chat} className=" line-clamp-3 break-words" />
       </section>
       <section
         id="central"
         className="max-w-screen-xl mx-auto flex  flex-col sm:flex-row"
       >
-        <aside className="flex flex-col gap-2 mb-5 max-sm:px-5 sm:max-w-72  order-2 sm:order-1">
+        <aside className="flex flex-col gap-4 mb-5 max-sm:px-5 sm:max-w-72  order-2 sm:order-1 mx-1">
           {chats.map((chat) => (
             <NavLink
               key={chat.slug}
               to={`/private/chat/${chat.slug}`}
               onClick={() => handleCreateChat(chat.slug)}
-              className="bg-primary bg-opacity-50 rounded-xl"
+              className={`${
+                !chat.users[0]?.username && 'hidden'
+              } bg-primary bg-opacity-50 rounded-xl flex w-full`}
             >
-              <Card className="flex justify-between gap-1 bg-transparent flex-row">
-                <CardBody className=" flex flex-start flex-row gap-2 items-center">
-                  <Avatar
-                    src={`${BUCKET_URL}/${
-                      chat.animal[0]?.images[0]
-                        ? chat.animal[0]?.images[0]
-                        : chat.users[0].avatar[0]
-                    }`}
-                    className="min-w-10"
-                    fallback={<IconUserFilled />}
-                    showFallback
-                  />
-                  <div className="flex flex-col  w-full sm:w-36">
-                    <span className="font-poppins font-semibold text-sm line-clamp-1">{`${
-                      chat.animal[0] !== undefined
-                        ? chat.animal[0].name.toUpperCase()
-                        : ''
-                    }`}</span>
-                    <span
-                      className={`${
-                        chat.animal[0] === undefined
-                          ? 'font-poppins font-semibold text-sm line-clamp-1'
-                          : 'font-poppins text-sm line-clamp-1'
+              <Badge
+                content={chat._count.messages}
+                size="lg"
+                color="primary"
+                placement="top-right"
+                // isInvisible={isFetchingNotifications}
+                className="sm:mr-5"
+              >
+                <div className=" flex flex-row gap-2 justify-evenly h-20 max-sm:w-[90dvw] chat-button ">
+                  <section className="flex items-center pl-5 max-w-16">
+                    <Avatar
+                      src={`${BUCKET_URL}/${
+                        chat.animal[0]?.images[0]
+                          ? chat.animal[0]?.images[0]
+                          : chat.users[0]?.avatar[0]
                       }`}
-                    >{`${chat.users[0].username}`}</span>
-                  </div>
-
-                  <span className="flex items-center  h-full w-1/6">
+                      className="min-w-10 "
+                      fallback={<IconUserFilled />}
+                      showFallback
+                    />
+                  </section>
+                  <section className="flex items-center w-full flex-grow">
+                    <div className="flex flex-col w-full sm:w-36">
+                      <span className="font-poppins font-semibold text-sm line-clamp-1 break-all w-full">{`${
+                        chat.animal[0] !== undefined
+                          ? chat.animal[0]?.name.toUpperCase()
+                          : ''
+                      }`}</span>
+                      <span
+                        className={`${
+                          chat.animal[0] === undefined
+                            ? 'font-poppins font-semibold text-sm line-clamp-1'
+                            : 'font-poppins text-sm line-clamp-1'
+                        }`}
+                      >{`${chat.users[0]?.username}`}</span>
+                    </div>
+                  </section>
+                  <section className="flex items-center justify-end h-full mr-10">
                     <IconArrowBadgeRight
                       size={50}
                       stroke={1}
                       className="stroke-tertiary"
                     />
-                  </span>
-                </CardBody>
-              </Card>
+                  </section>
+                </div>
+              </Badge>
             </NavLink>
           ))}
         </aside>
         <main className="order-1 sm:order-2 w-full px-5 pb-5">
-          <div className="flex flex-col flex-1 background-panel rounded-xl h-132 overflow-y-hidden">
-            <div className="flex flex-col flex-1 overflow-x-auto mb-4">
-              {isFetchingUser || isFetchingChatHistory ? (
-                <Spinner className="self-center flex-1 flex-col sm:w-3.5" />
-              ) : (
+          <Skeleton
+            className="flex flex-col flex-1 overflow-x-auto mb-4"
+            isLoaded={!isLoading}
+          >
+            <div className="flex flex-col flex-1 background-panel rounded-xl h-132 overflow-y-hidden">
+              <div className="flex flex-col flex-1 overflow-x-auto mb-4">
                 <div className="grid grid-cols-12 gap-y-2">
                   {chatMessages.map((message, index) =>
                     !message.isSender ? (
@@ -248,6 +274,7 @@ const AdoptionChatPage = () => {
                         isSender={message.isSender}
                         user={receiver.username}
                         isRead={message.isRead}
+                        date={message.date}
                         avatar={
                           message.isSender ? user.avatar : receiver?.avatar[0]
                         }
@@ -258,6 +285,7 @@ const AdoptionChatPage = () => {
                         text={message.text}
                         isSender={message.isSender}
                         isRead={message.isRead}
+                        date={message.date}
                         avatar={
                           message.isSender ? user.avatar : receiver?.avatar[0]
                         }
@@ -265,20 +293,21 @@ const AdoptionChatPage = () => {
                     )
                   )}
                 </div>
-              )}
-              <div ref={messagesEndRef} />
-            </div>
 
-            <div className="bg-white">
-              <TextMessageBox
-                onSendMessage={handlePost}
-                onDeleteMessages={handleDeleteMessages}
-                placeholder="Escribe aquí tu pregunta"
-                disableCorrections
-                page={'adoption-chat'}
-              />
+                <div ref={messagesEndRef} />
+              </div>
+
+              <div className="bg-white">
+                <TextMessageBox
+                  onSendMessage={handlePost}
+                  onDeleteMessages={handleDeleteMessages}
+                  placeholder="Escribe aquí tu pregunta"
+                  disableCorrections
+                  page={'adoption-chat'}
+                />
+              </div>
             </div>
-          </div>
+          </Skeleton>
         </main>
       </section>
     </main>

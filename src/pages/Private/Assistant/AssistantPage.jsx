@@ -55,9 +55,12 @@ const AssistantPage = () => {
     setMessages((prev) => [...prev, { text, isGpt: false }]);
 
     try {
-      const stream = chatStreamGenerator({
-        question: text,
-      });
+      const stream = chatStreamGenerator(
+        {
+          question: text,
+        },
+        user.wsToken
+      );
 
       setMessages((prev) => [...prev, { text: '', isGpt: true }]);
 

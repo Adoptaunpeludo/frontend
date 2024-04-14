@@ -73,8 +73,32 @@ const AppLayout = () => {
       const message = JSON.parse(val);
       const { type, ...data } = message;
 
+      console.log({ message });
       switch (type) {
-        case 'animal-created-deleted':
+        case 'user-joined-room':
+          data.action === 'read-messages' &&
+            queryClient.invalidateQueries({
+              queryKey: ['user-chats', data.username],
+            });
+
+          data.action === 'double-check' &&
+            queryClient.invalidateQueries({
+              queryKey: ['chat-history', data.room],
+            });
+          break;
+        case 'user-changed':
+          if (data.action === 'user-deleted')
+            queryClient.invalidateQueries({
+              queryKey: ['animals'],
+            });
+          queryClient.invalidateQueries({
+            queryKey: ['shelters'],
+          });
+          queryClient.invalidateQueries({
+            queryKey: ['shelter-details', data.username],
+          });
+          break;
+        case 'animal-changed':
           queryClient.invalidateQueries({
             queryKey: ['animals'],
           });
@@ -101,6 +125,11 @@ const AppLayout = () => {
             queryKey: ['user-notifications'],
           });
           break;
+        case 'unread-chat-message':
+          queryClient.invalidateQueries({
+            queryKey: ['user-chats', data.receiver],
+          });
+          break;
         case 'new-chat-push-notification':
           queryClient.invalidateQueries({
             queryKey: ['user-chats', data.username],
@@ -109,24 +138,7 @@ const AppLayout = () => {
             queryKey: ['user-notifications'],
           });
           break;
-        case 'user-connected':
-          queryClient.invalidateQueries({
-            queryKey: ['shelters'],
-          });
-          queryClient.invalidateQueries({
-            queryKey: ['shelter-details', message.username],
-          });
-          queryClient.invalidateQueries({
-            queryKey: ['animals'],
-          });
-          queryClient.invalidateQueries({
-            queryKey: ['animal-details'],
-          });
-          queryClient.invalidateQueries({
-            queryKey: ['shelters-animals', message.username],
-          });
-          break;
-        case 'user-disconnected':
+        case 'user-online-status-changed':
           queryClient.invalidateQueries({
             queryKey: ['shelters'],
           });

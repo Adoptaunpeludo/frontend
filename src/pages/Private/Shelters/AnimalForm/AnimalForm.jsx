@@ -6,7 +6,7 @@ import {
   Textarea,
 } from '@nextui-org/react';
 import { IconCircleX, IconSend2 } from '@tabler/icons-react';
-import { useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import {
   Form,
   redirect,
@@ -44,15 +44,20 @@ import {
   updatePetAdoption,
   uploadAnimalImages,
 } from './service';
+import { useGetErrors } from '../../../../context/FormErrorsContext';
+import { isMatchFormData } from '../../../../utils/isMatchFormData';
+import { getAnimalDetails } from '../../../Public/Animals/service';
 
 export const action =
   (animalImages, queryClient) =>
   async ({ request, params }) => {
     let formData = await request.formData();
     let intent = formData.get('intent');
+    const compareData = Object.fromEntries(formData);
+    const { slug } = params;
+    const fetchData = await getAnimalDetails(slug);
 
     console.log({ intent });
-
     if (intent === 'create-animal') {
       const imagesData = new FormData();
 
@@ -76,9 +81,10 @@ export const action =
     }
 
     if (intent === 'update-animal') {
-      const { slug } = params;
-
+      // const { slug } = params;
       try {
+        if (isMatchFormData(compareData, fetchData))
+          return toast.error('Ningun dato modificado');
         const animal = await updatePetAdoption(formData, slug);
         queryClient.invalidateQueries((queryKey) =>
           queryKey.includes('animal')
@@ -127,11 +133,18 @@ const AnimalForm = () => {
 
   const [pet, usePet] = useState(data?.type || '');
 
-  const [isFormValid, setIsFormValid] = useState(true);
+  const [isRadioChecked, setIsRadioChecked] = useState(!!pet);
+  const { errors } = useGetErrors();
 
-  const validateForm = (isValid) => {
-    setIsFormValid(isValid);
-  };
+  const isFormValid = Object.values(errors).every((error) => error === '');
+  const isFirstRender = useRef(true);
+
+  useEffect(() => {
+    if (!isFirstRender.current) {
+      setIsRadioChecked(true);
+    }
+    isFirstRender.current = false;
+  }, [pet]);
 
   return (
     <main className="bg-default-100 flex-grow">
@@ -144,7 +157,7 @@ const AnimalForm = () => {
           id=" AnimalTitle"
         />
         <section id="AnimalDataForm">
-          <Form method="post">
+          <Form method="post" onKeyDown={() => {}}>
             <H2Title
               title={
                 slug
@@ -164,8 +177,9 @@ const AnimalForm = () => {
                     value={pet}
                     onValueChange={usePet}
                     isReadOnly={data?.type}
-                    label="Peludo"
+                    label={slug ? 'Peludo' : 'Seleccione peludo'}
                     classNames={radioGroupStyleConfig}
+                    isRequired
                   >
                     <Radio value={'cat'} classNames={radioStyleConfig}>
                       Gato
@@ -178,8 +192,7 @@ const AnimalForm = () => {
                 <Skeleton isLoaded={!isLoading}>
                   <AnimalBioForm
                     data={data ? data : {}}
-                    isDisabled={isSubmitting}
-                    validateForm={validateForm}
+                    isDisabled={isSubmitting || !isRadioChecked}
                   />
                 </Skeleton>
                 <Skeleton isLoaded={!isLoading}>
@@ -203,7 +216,7 @@ const AnimalForm = () => {
                   <section id="shelterStatus">
                     <StatusShelterForm
                       data={data ? data : {}}
-                      isDisabled={isSubmitting}
+                      isDisabled={isSubmitting || !isRadioChecked}
                     />
                   </section>
                 </Skeleton>
@@ -216,7 +229,7 @@ const AnimalForm = () => {
                     className="w-full border-primary border-t-1 pt-3"
                     name="description"
                     label="Descripción"
-                    isDisabled={isSubmitting}
+                    isDisabled={isSubmitting || !isRadioChecked}
                     defaultValue={data?.description ? data?.description : ''}
                     classNames={inputStyleConfig}
                     isRequired
@@ -244,7 +257,7 @@ const AnimalForm = () => {
                     Cancelar
                   </Button>
                   <Button
-                    isDisabled={!isFormValid}
+                    isDisabled={!isFormValid || !isRadioChecked}
                     color="primary"
                     variant="solid"
                     size="sm"

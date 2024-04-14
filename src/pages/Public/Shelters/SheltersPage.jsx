@@ -1,4 +1,4 @@
-import { Skeleton, Spinner } from '@nextui-org/react';
+import { Skeleton } from '@nextui-org/react';
 import { useLoaderData } from 'react-router';
 import { useNavigation } from 'react-router-dom';
 import {
@@ -41,12 +41,11 @@ const SheltersPage = ({ page }) => {
         <TitleSection title={'asociaciones'} />
         <FilterBar page={page} className="" />
       </header>
-      {isFetching && <Spinner />}
       <section className="flex flex-col flex-auto">
         <ul className="flex justify-center gap-4 flex-wrap p-6">
           {data?.users.length > 0 ? (
             data?.users.map((shelter) => (
-              <Skeleton isLoaded={!isLoading} key={shelter.id}>
+              <Skeleton isLoaded={!isLoading || isFetching} key={shelter.id}>
                 <ShelterCard
                   key={shelter.id}
                   shelter={shelter}

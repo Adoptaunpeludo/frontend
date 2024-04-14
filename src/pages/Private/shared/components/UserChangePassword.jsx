@@ -74,7 +74,7 @@ export const UserChangePassword = ({ isDisabled }) => {
         className={`text-foreground bg-background border border-white`}
         size="lg"
       >
-        <Form className="mt-4" method="post">
+        <Form className="mt-4" method="post" onKeyDown={() => {}}>
           <ModalContent>
             {(onClose) => (
               <>

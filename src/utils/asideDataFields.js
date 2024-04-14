@@ -6,6 +6,7 @@ import {
   legalFormEnum,
   moltingEnum,
   potentialEnum,
+  statusPetEnum,
 } from './enumData';
 
 export const isNullDataField = (field, dataEnum) => {
@@ -46,7 +47,7 @@ export const userInformation = ({
   return userInformation;
 };
 
-export const animalShelterInfo = ({ createdAt, user, city }) => {
+export const animalShelterInfo = ({ createdAt, user, city, status }) => {
   const entryDate = new Date(createdAt);
   const animalShelterInfo = [
     {
@@ -57,6 +58,7 @@ export const animalShelterInfo = ({ createdAt, user, city }) => {
     },
     { fieldName: 'Protectora: ', value: user.username },
     { fieldName: 'Ciudad: ', value: city },
+    { fieldName: 'Estado:', value: isNullDataField(status, statusPetEnum) },
   ];
   return animalShelterInfo;
 };
