@@ -1,6 +1,6 @@
 import { Button, Link } from '@nextui-org/react';
 
-export const BackendArchitecture = () => {
+export const Backend = () => {
   return (
     <section className="w-full min-h-80 bg-black flex flex-col justify-center px-10">
       <section className=" max-w-screen-xl w-full   mx-auto">
@@ -35,4 +35,4 @@ export const BackendArchitecture = () => {
     </section>
   );
 };
-export default BackendArchitecture;
+export default Backend;
