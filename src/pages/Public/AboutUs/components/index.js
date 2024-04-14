@@ -1,0 +1,13 @@
+export { Architecture } from './Architecture';
+export { Backend } from './Backend';
+export { DatabaseAndOtherServices } from './DatabaseAndOtherServices';
+export { DoplaxCard } from './DoplaxCard';
+export { Frontend } from './Frontend';
+export { JaderoCard } from './JaderoCard';
+export { JmacostaCard } from './JmacostaCard';
+export { MemberTeam } from './MemberTeam';
+export { ModalTeam } from './ModalTeam';
+export { ModalTechnologies } from './ModalTechnologies';
+export { OurTeam } from './OurTeam';
+export { PaquitoGRCard } from './PaquitoGRCard';
+export { Technologies } from './Technologies';
