@@ -1,12 +1,12 @@
 import { Avatar, Link } from '@nextui-org/react';
 import {
-  IconArrowRight,
   IconBrandGithub,
   IconBrandLinkedin,
   IconMail,
 } from '@tabler/icons-react';
 import { H2Title, H3Title } from '../../../../components';
 import { team } from '../data/team';
+import ModalTeam from './ModalTeam';
 export const OurTeam = () => {
   return (
     <section className=" w-full  py-10 flex flex-col justify-center mx-auto px-10">
@@ -19,7 +19,13 @@ export const OurTeam = () => {
             <article key={index} className="flex  lg:w-128 pb-10 ">
               <div className="flex gap-3 ">
                 <div className="w-20 h-20">
-                  <Avatar isBordered color="primary" size="lg" className="" />
+                  <Avatar
+                    isBordered
+                    color="primary"
+                    size="lg"
+                    src={member.img}
+                    className="bg-white"
+                  />
                 </div>
 
                 <section>
@@ -32,28 +38,14 @@ export const OurTeam = () => {
                       {member.description}
                     </p>
                     <div className="flex justify-end">
-                      <Link
-                        className="text-tertiary flex items-center gap-2 py-3"
-                        href="#"
-                      >
-                        Leer más
-                        <IconArrowRight
-                          stroke={1}
-                          className="stroke-tertiary"
-                        />
-                      </Link>
-                      <section
-                        dangerouslySetInnerHTML={{
-                          __html: member.readMore,
-                        }}
-                      />
+                      <ModalTeam member={member} />
                     </div>
                   </main>
                   <footer className="flex justify-center gap-10">
                     <Link href={member.github} target="_blank">
                       <IconBrandGithub className="stroke-white fill-tertiary size-10" />
                     </Link>
-                    <Link href={member.linkdin} target="_blank">
+                    <Link href={member.linkedin} target="_blank">
                       <IconBrandLinkedin
                         stroke={1}
                         className="stroke-tertiary size-10"
