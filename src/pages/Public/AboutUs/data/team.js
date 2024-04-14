@@ -1,0 +1,59 @@
+export const team = [
+  {
+    img: 'https://avatars.githubusercontent.com/u/128265706?v=4',
+    person: 'José Alberto Delgado',
+    position: 'Backend Lead',
+    description:
+      'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque pharetra dui ac ante viverra vestibulum. Suspendisse non orci eget ipsum venenatis egestas ut a odio. Suspendisse finibus placerat lectus vel vulputate. Sed sodales a est et sodales. In hac habitasse platea dictumst. Sed velit neque, imperdiet sed fringilla mattis, consequat nec ligula. Praesent molestie libero nibh, sed sollicitudin dolor faucibus ut.',
+    link: 'dsds',
+    github: 'https://github.com/JoseAlbDR',
+    linkedin: 'https://www.linkedin.com/in/jalbertodelgado/',
+    mailto: 'mailto:josealbdr84@gmail.com',
+    readMore: 'jadero',
+    portFolio: 'https://www.jadero.dev/home',
+    resume: 'https://www.jadero.dev/assets/CVJAlbertoDelgado-40457fb4.pdf',
+  },
+  {
+    img: 'https://avatars.githubusercontent.com/u/9013532?v=4',
+    person: 'Juan Manuel Acosta',
+    position: 'UX/UI, Fronted dev ',
+    description:
+      'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque pharetra dui ac ante viverra vestibulum. Suspendisse non orci eget ipsum venenatis egestas ut a odio. Suspendisse finibus placerat lectus vel vulputate. Sed sodales a est et sodales. In hac habitasse platea dictumst. Sed velit neque, imperdiet sed fringilla mattis, consequat nec ligula. Praesent molestie libero nibh, sed sollicitudin dolor faucibus ut.',
+    link: 'dsds',
+    github: 'https://github.com/jmacosta',
+    linkedin: 'https://www.linkedin.com/in/juan-manuel-acosta-benitez/',
+    mailto: 'mailto:jmab2k@gmail.com',
+    readMore: 'jmacosta',
+    portFolio: '',
+    resume: '',
+  },
+
+  {
+    img: 'https://avatars.githubusercontent.com/u/88944769?v=4',
+    person: 'Pol Valle',
+    position: 'Frontend dev',
+    description:
+      'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque pharetra dui ac ante viverra vestibulum. Suspendisse non orci eget ipsum venenatis egestas ut a odio. Suspendisse finibus placerat lectus vel vulputate. Sed sodales a est et sodales. In hac habitasse platea dictumst. Sed velit neque, imperdiet sed fringilla mattis, consequat nec ligula. Praesent molestie libero nibh, sed sollicitudin dolor faucibus ut.',
+    link: 'dsds',
+    github: 'https://github.com/Doplax',
+    linkedin: 'https://www.linkedin.com/in/pol-valle-montes/',
+    mailto: 'mailto:doplax@gmail.com ',
+    readMore: 'doplax',
+    portFolio: '',
+    resume: '',
+  },
+  {
+    img: 'https://avatars.githubusercontent.com/u/113923902?v=4',
+    person: 'Francisco Suárez',
+    position: 'Frontend dev',
+    description:
+      'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque pharetra dui ac ante viverra vestibulum. Suspendisse non orci eget ipsum venenatis egestas ut a odio. Suspendisse finibus placerat lectus vel vulputate. Sed sodales a est et sodales. In hac habitasse platea dictumst. Sed velit neque, imperdiet sed fringilla mattis, consequat nec ligula. Praesent molestie libero nibh, sed sollicitudin dolor faucibus ut.',
+    link: 'dsds',
+    github: 'https://github.com/PaquitoGR',
+    linkedin: 'https://www.linkedin.com/in/francisco-a-suarez/',
+    mailto: '',
+    readMore: 'paquitoGR',
+    portFolio: '',
+    resume: '',
+  },
+];

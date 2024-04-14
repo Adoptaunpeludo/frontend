@@ -8,6 +8,7 @@ import {
 import 'react-toastify/dist/ReactToastify.css';
 import './index.css';
 import {
+  AboutUsPage,
   AdopterProfile,
   AnimalDetailsPage,
   AnimalForm,
@@ -149,6 +150,10 @@ const router = (
           path: 'animals/dogs/:slug',
           element: <AnimalDetailsPage />,
           loader: animalDetailsLoader(queryClient),
+        },
+        {
+          path: 'about',
+          element: <AboutUsPage />,
         },
 
         //* End Public Routes
