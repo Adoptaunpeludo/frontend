@@ -12,7 +12,9 @@ import { userNotificationsQuery } from '../Private/useNotifications';
 
 export const loader = (queryClient) => async () => {
   const isLoggedIn = localStorage.getItem('isLoggedIn') === 'true';
-  if (!isLoggedIn) return { user: null, chats: null, notifications: null };
+  const isFirstLoad = localStorage.getItem('isFirstLoad') === 'true';
+  if (!isLoggedIn || isFirstLoad)
+    return { user: null, chats: null, notifications: null };
 
   try {
     const user = await queryClient.ensureQueryData(userQuery);
@@ -22,6 +24,7 @@ export const loader = (queryClient) => async () => {
     const chats = await queryClient.ensureQueryData(
       userChatsQuery(user.username)
     );
+
     return { user, chats, notifications };
   } catch (error) {
     return { user: null, notifications: null };
@@ -160,6 +163,7 @@ const AppLayout = () => {
   }, [isReady, val, queryClient]);
 
   useEffect(() => {
+    localStorage.setItem('isFirstLoad', false);
     localStorage.setItem('isLoggedIn', user ? true : false);
   }, [user]);
 

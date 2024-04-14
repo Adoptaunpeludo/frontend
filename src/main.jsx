@@ -9,6 +9,9 @@ import { WebSocketContextProvider } from './context/WebSocketContext.jsx';
 import { NotificationsContextProvider } from './context/NotificationsContext.jsx';
 import { GoogleOAuthProvider } from '@react-oauth/google';
 
+const isLoggedIn = localStorage.getItem('isLoggedIn');
+localStorage.setItem('isFirstLoad', isLoggedIn === null);
+
 ReactDOM.createRoot(document.getElementById('root')).render(
   <>
     <GoogleOAuthProvider clientId="158620306115-psjd1a4oei4ustp9mach8b74m7i8pdfh.apps.googleusercontent.com">

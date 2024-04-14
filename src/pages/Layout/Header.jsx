@@ -26,6 +26,7 @@ const Header = () => {
   const { data: chats, isLoading: isLoadingChats } = useUserChats(
     user?.username
   );
+  const isFirstLoad = localStorage.getItem('isFirstLoad') === 'true';
 
   const handleMenuOpenChange = (open) => {
     setIsMenuOpen(open);
@@ -114,7 +115,7 @@ const Header = () => {
       </NavbarContent>
       <NavbarContent justify="end">
         <NavbarItem>
-          {isLoadingUser || isLoadingChats ? (
+          {!isFirstLoad && (isLoadingUser || isLoadingChats) ? (
             <Spinner />
           ) : !user ? (
             <Button
