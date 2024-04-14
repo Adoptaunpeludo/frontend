@@ -2,13 +2,17 @@ export const team = [
   {
     img: 'https://avatars.githubusercontent.com/u/128265706?v=4',
     person: 'José Alberto Delgado',
-    position: 'Backend Lead',
-    description:
-      'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque pharetra dui ac ante viverra vestibulum. Suspendisse non orci eget ipsum venenatis egestas ut a odio. Suspendisse finibus placerat lectus vel vulputate. Sed sodales a est et sodales. In hac habitasse platea dictumst. Sed velit neque, imperdiet sed fringilla mattis, consequat nec ligula. Praesent molestie libero nibh, sed sollicitudin dolor faucibus ut.',
+    position: 'Backend Lead, DevOps, Frontend dev',
+    description: `¡Hola! Soy Jose Alberto, un desarrollador fullstack apasionado
+          por crear soluciones tecnológicas innovadoras. Mi experiencia se
+          centra en el desarrollo de aplicaciones web complejas, y mi último
+          proyecto, <strong>adoptaunpeludo.com</strong>, es un claro ejemplo de
+          mi habilidad para gestionar equipos y recursos y llevar a cabo proyectos desde la
+          conceptualización hasta la implementación.`,
     link: 'dsds',
     github: 'https://github.com/JoseAlbDR',
     linkedin: 'https://www.linkedin.com/in/jalbertodelgado/',
-    mailto: 'mailto:josealbdr84@gmail.com',
+    mailto: 'mailto:jaderodev@gmail.com',
     readMore: 'jadero',
     portFolio: 'https://www.jadero.dev/home',
     resume: 'https://www.jadero.dev/assets/CVJAlbertoDelgado-40457fb4.pdf',

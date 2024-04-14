@@ -1,60 +1,101 @@
+import { Link } from 'react-router-dom';
+
 export const JaderoCard = () => {
   return (
-    <p className="">
-      <h1>Er Jose</h1>
-      Lorem ipsum dolor sit amet, consectetur adipiscing elit. In eget efficitur
-      sem. Sed efficitur urna ac purus tincidunt, a hendrerit nibh posuere. Sed
-      convallis rhoncus nulla. Cras purus metus, malesuada sed suscipit vitae,
-      porta eget turpis. Cras placerat dui vitae libero interdum gravida. Nunc
-      id lectus eget augue semper ultrices vitae non arcu. Pellentesque nibh
-      erat, interdum sed ornare tempor, facilisis in quam. Integer nec mattis
-      velit, sit amet venenatis eros. Quisque luctus molestie dui ac
-      scelerisque. Mauris tempor ex ut orci ullamcorper, sodales suscipit lorem
-      suscipit. Maecenas libero tellus, pulvinar interdum faucibus sit amet,
-      ultricies ac orci. Praesent tempor felis at tortor ornare, ut maximus elit
-      mollis. Vivamus suscipit nisl turpis, ut imperdiet quam dignissim a.
-      Phasellus dignissim tellus sit amet erat molestie aliquam. Integer
-      malesuada ex ac est tristique, quis facilisis nulla efficitur. Donec
-      vulputate est dolor, sed convallis nibh finibus ut. Duis et felis at neque
-      commodo aliquam et sit amet nunc. Aliquam ultricies fermentum risus, in
-      elementum massa facilisis in. Curabitur vulputate ligula quis augue
-      sodales consequat. Curabitur eu faucibus metus. Mauris ultrices libero
-      feugiat ante facilisis iaculis. Nam luctus tellus quis ex ornare rutrum.
-      Cras nisi quam, tempor in tempor non, varius ac tellus. Nullam et arcu non
-      velit laoreet congue vitae sit amet nibh. Etiam euismod ex sagittis,
-      efficitur neque nec, iaculis odio. Suspendisse in tortor condimentum,
-      ultricies velit a, facilisis purus. Cras in nulla lobortis, pretium nisl
-      non, fermentum justo. Aliquam erat volutpat. Suspendisse euismod semper
-      mollis. Aliquam vehicula iaculis mauris sit amet pulvinar. Suspendisse
-      potenti. Class aptent taciti sociosqu ad litora torquent per conubia
-      nostra, per inceptos himenaeos. Nullam tincidunt nisi fringilla nisi
-      ultrices, et bibendum mauris molestie. Mauris ullamcorper dolor lectus, id
-      consequat diam auctor egestas. Nam et imperdiet risus, eu vulputate
-      mauris. Nunc et nibh diam. Proin vitae tristique urna, sed sagittis ante.
-      Curabitur ut cursus risus. Suspendisse quis viverra augue. Pellentesque
-      vel magna luctus ex dapibus malesuada. Curabitur bibendum consequat leo.
-      In quis facilisis diam. Integer sodales a tortor sed congue. Ut ultricies,
-      erat id pretium iaculis, dolor odio aliquet urna, ac ultrices tellus nisi
-      sit amet nulla. Ut elit metus, auctor ut purus facilisis, tristique
-      gravida metus. Curabitur tincidunt mattis maximus. Etiam scelerisque orci
-      est, nec sagittis nisi dignissim in. Integer id iaculis mauris,
-      pellentesque pretium massa. Nulla egestas erat id mauris mollis ornare.
-      Nunc a urna in tortor vestibulum iaculis. Mauris sit amet neque at metus
-      tincidunt sollicitudin a vel lacus. Proin scelerisque, lorem quis
-      imperdiet pellentesque, ex elit semper diam, ut dapibus enim ante vel mi.
-      Aenean volutpat vestibulum malesuada. Nulla eu nunc quis augue pretium
-      ornare ac vel enim. Nam ac justo eu dolor pretium tempor. Morbi non enim
-      ac leo convallis eleifend. Nam feugiat bibendum turpis quis porta. Fusce
-      non faucibus eros. Donec congue neque lorem, non fermentum massa posuere
-      in. In tincidunt ornare diam, sed blandit ligula hendrerit euismod.
-      Aliquam venenatis convallis arcu id mollis. Praesent aliquet dui a
-      vehicula vestibulum. Donec molestie orci sem. Integer elementum orci sem,
-      vitae fringilla nulla mollis a. Aliquam augue arcu, dictum at felis vitae,
-      scelerisque aliquam neque. Cras id vestibulum tortor, nec imperdiet quam.
-      Proin volutpat efficitur nisi id posuere. Phasellus euismod ac mauris vel
-      aliquet. Quisque volutpat hendrerit magna, quis eleifend lectus commodo
-      vitae. Ut a tempus tellus. Donec at lobortis turpis. Vestibulum viverra
-      condimentum tempus.
+    <p className="text-pretty leading-5 flex flex-col gap-3">
+      <h1 className="mb-4">Jadero</h1>
+      <div>
+        <h2>Sobre mí</h2>
+        <p>
+          ¡Hola! Soy Jose Alberto, un desarrollador fullstack apasionado por
+          crear soluciones tecnológicas innovadoras. Mi experiencia se centra en
+          el desarrollo de aplicaciones web complejas, y mi último proyecto,{' '}
+          <strong>adoptaunpeludo.com</strong>, es un claro ejemplo de mi
+          habilidad para gestionar equipos y recursos y llevar a cabo proyectos
+          desde la conceptualización hasta la implementación.
+        </p>
+
+        <h3>Backend Wizard 🧙‍♂️</h3>
+        <p>
+          Como arquitecto del backend de <strong>adoptaunpeludo.com</strong>,
+          tuve el privilegio de tomar decisiones clave en cuanto a tecnologías y
+          arquitecturas. Diseñé y desarrollé una arquitectura de microservicios
+          utilizando <strong>RabbitMQ</strong>, donde cada servicio tiene su
+          propia responsabilidad:
+        </p>
+        <ul>
+          <li>
+            <Link to="https://github.com/Adoptaunpeludo/backend">API:</Link>
+            Desarrollé una API robusta con Node.js, utilizando una base de datos
+            relacional <strong>PostgreSQL</strong> y <strong>Prisma</strong>{' '}
+            como ORM para manejar todas las solicitudes relacionadas con la
+            autenticación, el CRUD de usuarios y animales, y los chats en tiempo
+            real.
+          </li>
+          <li>
+            <Link to="https://github.com/Adoptaunpeludo/email-service">
+              Servicio de envío de emails:
+            </Link>
+            Notifica a los usuarios sobre eventos importantes incluso cuando
+            están offline.
+          </li>
+          <li>
+            <Link to="https://github.com/Adoptaunpeludo/websocket-service">
+              Servidor de websockets:
+            </Link>
+            Facilita las comunicaciones en tiempo real entre usuarios,
+            incluyendo los chats y las notificaciones en la página.
+          </li>
+          <li>
+            <Link to="https://github.com/Adoptaunpeludo/chatbot-service">
+              Asistente:
+            </Link>
+            Desarrollé un servicio de asistente con Express y{' '}
+            <strong>LangChain</strong> para proporcionar una experiencia de
+            usuario mejorada a través de la inteligencia artificial.
+          </li>
+          <li>
+            <Link href="https://github.com/Adoptaunpeludo/noc-service">
+              Servicio de monitorización:
+            </Link>
+            Almacena y gestiona todos los errores que se produzcan en la API y
+            los servicios anteriores para garantizar la estabilidad del sistema.
+          </li>
+        </ul>
+
+        <h3>DevOps Guru 🛠️</h3>
+        <p>
+          Mi experiencia no se limita al desarrollo, también tengo sólidos
+          conocimientos en DevOps. Lideré la creación de una instancia de{' '}
+          <strong>AWS EC2</strong> y dockericé todo el backend, utilizando
+          DockerHub para alojar los contenedores. Configuré{' '}
+          <strong>NGINX</strong> como proxy inverso para servir todos los
+          servicios, incluido el frontend, y establecí un sólido flujo de
+          integración y entrega continua (CICD) con GitHub Actions para
+          garantizar despliegues sin problemas.
+        </p>
+
+        <h3>Frontend Maestro 🎨</h3>
+        <p>
+          En el frontend, me encargué de implementar la lógica detrás de las
+          páginas privadas, el asistente de IA y los chats. Opté por tecnologías
+          como <strong>React Query</strong> para optimizar el rendimiento y{' '}
+          <strong>React Router</strong> para la gestión de la navegación. Mi
+          enfoque en la gestión eficiente del estado y la resolución de
+          conflictos durante el desarrollo me permitió mantener un código limpio
+          y escalable.
+        </p>
+
+        <h3>¿Por qué contar conmigo?</h3>
+        <p>
+          Mi enfoque en la innovación, combinado con mi experiencia técnica y mi
+          capacidad para gestionar recursos e implementar soluciones, me
+          convierte en un activo valioso para cualquier proyecto. Estoy
+          constantemente buscando nuevos desafíos y oportunidades para aprender
+          y crecer como profesional. Si estás buscando un desarrollador que
+          pueda llevar tu proyecto al siguiente nivel, ¡no dudes en contactarme!
+        </p>
+      </div>
     </p>
   );
 };
