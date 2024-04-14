@@ -39,18 +39,20 @@ export const ModalTeam = ({ member = '' }) => {
         <ModalContent>
           {(onClose) => (
             <>
-              <ModalHeader className="flex flex-col gap-1">
-                <div className="w-full flex justify-center py-3">
+              <ModalHeader className="flex  gap-3 justify-start items-center">
+                <div className=" flex  py-3">
                   <Avatar
                     isBordered
                     color="primary"
                     size="lg"
-                    className="bg-white"
+                    className="bg-white w-24 h-24"
                     src={member.img}
                   />
                 </div>
-                <H2Title title={member.person} />
-                <H3Title title={member.position} />
+                <div className="flex flex-col pt-5">
+                  <H2Title title={member.person} />
+                  <H3Title title={member.position} />
+                </div>
               </ModalHeader>
               <ModalBody className="">
                 <main className="p-2">
