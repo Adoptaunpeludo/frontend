@@ -1,13 +1,8 @@
 import { useEffect, useState } from 'react';
-
 import { useQueryClient } from '@tanstack/react-query';
-import { addFav } from '../pages/Public/Animals/service';
-
-//import { Button, Spinner } from '@nextui-org/react';
-import { isAxiosError } from 'axios';
+import { addFav, deleteFav } from '../pages/Public/Animals/service';
 import Heart from 'react-animated-heart';
 import { toast } from 'react-toastify';
-import { handleFavError } from '../utils/handleFavsError';
 
 export const HeartIcon = ({ numFavs, userFavs, id, data }) => {
   const [liked, setLiked] = useState(userFavs.includes(data?.id));
@@ -22,7 +17,8 @@ export const HeartIcon = ({ numFavs, userFavs, id, data }) => {
     if (!data) return toast.warn('Loguea primero por favor');
     try {
       setIsLoading(true);
-      await addFav(id);
+      if (!liked) await addFav(id);
+      if (liked) await deleteFav(id);
       queryClient.invalidateQueries({
         queryKey: ['animals'],
       });
@@ -33,8 +29,7 @@ export const HeartIcon = ({ numFavs, userFavs, id, data }) => {
         queryKey: ['shelters-animals'],
       });
     } catch (error) {
-      if (isAxiosError(error) && error.response.status === 400)
-        await handleFavError(error, id, queryClient);
+      toast.error(error.response.data.message);
       throw error;
     } finally {
       setIsLoading(false);
