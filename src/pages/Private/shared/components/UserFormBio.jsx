@@ -76,7 +76,13 @@ export const UserFormBio = ({ data }) => {
         size="3xl"
         portalContainer={document.body}
       >
-        <Form method="post" preventScrollReset={true} onKeyDown={() => {}}>
+        <Form
+          method="post"
+          preventScrollReset={true}
+          onKeyDown={(event) => {
+            if (event.key === 'Enter') event.preventDefault();
+          }}
+        >
           <ModalContent>
             <>
               <ModalHeader className="flex flex-col gap-1">

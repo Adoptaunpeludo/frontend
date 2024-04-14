@@ -66,7 +66,13 @@ export const UserChangePassword = ({ isDisabled }) => {
         className={`text-foreground bg-background border border-white`}
         size="lg"
       >
-        <Form className="mt-4" method="post" onKeyDown={() => {}}>
+        <Form
+          className="mt-4"
+          method="post"
+          onKeyDown={(event) => {
+            if (event.key === 'Enter') event.preventDefault();
+          }}
+        >
           <ModalContent>
             {(onClose) => (
               <>

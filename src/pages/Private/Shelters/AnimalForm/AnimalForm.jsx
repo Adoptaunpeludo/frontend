@@ -157,7 +157,12 @@ const AnimalForm = () => {
           id=" AnimalTitle"
         />
         <section id="AnimalDataForm">
-          <Form method="post" onKeyDown={() => {}}>
+          <Form
+            method="post"
+            onKeyDown={(event) => {
+              if (event.key === 'Enter') event.preventDefault();
+            }}
+          >
             <H2Title
               title={
                 slug

@@ -113,7 +113,13 @@ const ShelterForm = ({ isSubmitting, data }) => {
         className={`text-foreground bg-background border border-white`}
         size="3xl"
       >
-        <Form method="post" preventScrollReset={true}>
+        <Form
+          method="post"
+          preventScrollReset={true}
+          onKeyDown={(event) => {
+            if (event.key === 'Enter') event.preventDefault();
+          }}
+        >
           <ModalContent>
             <>
               <ModalHeader className="flex flex-col gap-1">

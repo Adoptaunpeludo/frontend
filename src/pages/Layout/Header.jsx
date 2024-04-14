@@ -26,6 +26,7 @@ const Header = () => {
   const { data: chats, isLoading: isLoadingChats } = useUserChats(
     user?.username
   );
+  const isFirstLoad = localStorage.getItem('isFirstLoad') === 'true';
 
   const handleMenuOpenChange = (open) => {
     setIsMenuOpen(open);
@@ -37,6 +38,12 @@ const Header = () => {
       href: '/',
       color: 'foreground',
     },
+    {
+      name: 'Conócenos',
+      href: '/about',
+      color: 'foreground',
+    },
+
     {
       name: 'Perros',
       href: '/animals/dogs',
@@ -52,6 +59,7 @@ const Header = () => {
       href: '/shelters',
       color: 'foreground',
     },
+
     {
       name: 'Asistente',
       href: `/private/assistant`,
@@ -107,7 +115,7 @@ const Header = () => {
       </NavbarContent>
       <NavbarContent justify="end">
         <NavbarItem>
-          {isLoadingUser || isLoadingChats ? (
+          {!isFirstLoad && (isLoadingUser || isLoadingChats) ? (
             <Spinner />
           ) : !user ? (
             <Button
