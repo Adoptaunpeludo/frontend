@@ -14,12 +14,8 @@ import { animalsQuery } from './useAnimals';
 import { Skeleton } from '@nextui-org/react';
 
 export const loader = (queryClient) => () => {
-  const { data: cats } = queryClient.ensureQueryData(
-    animalsQuery('cats', { limit: 4 })
-  );
-  const { data: dogs } = queryClient.ensureQueryData(
-    animalsQuery('dogs', { limit: 4 })
-  );
+  const { data: cats } = queryClient.ensureQueryData(animalsQuery('cats'));
+  const { data: dogs } = queryClient.ensureQueryData(animalsQuery('dogs'));
   const { data: animals } = queryClient.ensureQueryData(animalsQuery('all'));
 
   return { cats, dogs, animals };
