@@ -190,3 +190,35 @@ export const technologiesFrontend = [
       'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque pharetra dui ac ante viverra vestibulum. Suspendisse non orci eget ipsum venenatis egestas ut a odio. Suspendisse finibus placerat lectus vel vulputate. Sed sodales a est et sodales. In hac habitasse platea dictumst. Sed velit neque, imperdiet sed fringilla mattis, consequat nec ligula. Praesent molestie libero nibh, sed sollicitudin dolor faucibus ut.',
   },
 ];
+
+export const technologiesManagement = [
+  {
+    img: '/logoTech/figma.svg',
+    title: 'Figma',
+    description: `
+    <p><strong>Figma</strong> es nuestra herramienta principal para el diseño de interfaces de usuario y la colaboración en diseño. </p>
+    <p>Su enfoque basado en la nube permite a nuestro equipo trabajar en conjunto en tiempo real, lo que ha agilizado enormemente nuestro proceso de diseño y prototipado. </p>
+    <p>Además, <strong>Figma</strong> nos ha permitido crear diseños iterativos y realizar pruebas de usuario de forma rápida y eficiente.</p>
+    <p><a href='https://www.figma.com/file/hrtuLqd3baM1SXYRsLhJMI/Adopta-un-peludo----landing?type=design&node-id=489%3A17650&mode=design&t=j9I6NDs5FrRKIsgU-1' target="_blank" style="color:#3E73C7">https://figma.com/Adoptaunpeludo</a></p>
+    
+`,
+  },
+  {
+    img: '/logoTech/github.svg',
+    title: 'Github',
+    description: `
+    <p><strong>GitHub</strong> es nuestra plataforma central para el control de versiones del código, la colaboración y la gestión de problemas. </p>
+    <p>Utilizamos <strong>GitHub</strong> para alojar nuestro repositorio de código, realizar revisiones de código, gestionar problemas y seguir el progreso del proyecto a lo largo del tiempo. </p>
+    <p>Su integración con herramientas de integración continua y entrega continua (CI/CD) también ha mejorado nuestra capacidad para implementar cambios de manera rápida y segura.</p>
+    <p><a href='https://github.com/Adoptaunpeludo' target="_blank" style="color:#3E73C7">https://github.com/Adoptaunpeludo</a></p>
+    `,
+  },
+  {
+    img: '/logoTech/trello.svg',
+    title: 'Trello',
+    description: `
+    <p><strong>Trello</strong> nos proporcionó un tablero visual y flexible con metodología <strong>Kanban</strong> para organizar nuestras tareas y proyectos.</p> 
+    <p>Su sistema de listas y tarjetas nos permite crear y asignar tareas, establecer prioridades y realizar un seguimiento del progreso en tiempo real. </p>
+    <p>Esta plataforma ha mejorado nuestra capacidad para gestionar de manera efectiva los sprints de desarrollo y mantener a todo el equipo informado sobre el estado de cada tarea.</p>`,
+  },
+];
