@@ -33,12 +33,12 @@ const UserMessage = ({ text, isSender, avatar, user = '', isRead, date }) => {
               : 'relative ml-3 text-medium bg-primary bg-opacity-25 pt-3 pb-2 px-4 shadow-xl rounded-xl flex flex-col'
           }
         >
-          <p className="font-poppins text-xs font-semibold">
+          <span className="font-poppins text-xs font-semibold">
             {!isSender ? user : ''}
-          </p>
-          <p className="break-all">{text} </p>
-          <div className="flex gap-1">
-            <span className="text-sm opacity-40">
+          </span>
+          <span className="break-all">{text} </span>
+          <div className="flex gap-1 justify-end">
+            <span className="text-xs  opacity-40">
               {new Date(date).toLocaleTimeString()}
             </span>
             {isSender &&
