@@ -37,7 +37,7 @@ const UserMessage = ({ text, isSender, avatar, user = '', isRead, date }) => {
             {!isSender ? user : ''}
           </span>
           <span className="break-all">{text} </span>
-          <div className="flex gap-1 justify-end">
+          <div className="flex gap-1 justify-end ">
             <span className="text-xs  opacity-40">
               {new Date(date).toLocaleTimeString()}
             </span>
