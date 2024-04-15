@@ -106,8 +106,9 @@ export const JaderoCard = () => {
         DockerHub para alojar los contenedores. Configuré
         <strong> NGINX</strong> como proxy inverso para servir todos los
         servicios, incluido el frontend, y establecí un sólido flujo de
-        integración y entrega continua (CICD) con GitHub Actions para garantizar
-        despliegues sin problemas.
+        integración y entrega continua (CICD) con{' '}
+        <strong>GitHub Actions</strong> para garantizar despliegues sin
+        problemas.
       </p>
       <H2Title
         title="Frontend Maestro 🎨"
@@ -117,7 +118,7 @@ export const JaderoCard = () => {
         En el frontend, me encargué de implementar la lógica detrás de las
         páginas privadas, el asistente de IA y los chats. Opté por tecnologías
         como <strong>React Query</strong> para optimizar el rendimiento y
-        <strong>React Router</strong> para la gestión de la navegación. Mi
+        <strong> React Router</strong> para la gestión de la navegación. Mi
         enfoque en la gestión eficiente del estado y la resolución de conflictos
         durante el desarrollo me permitió mantener un código limpio y escalable.
       </p>
