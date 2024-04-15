@@ -56,6 +56,9 @@ const ForgotPasswordPage = () => {
           <Form
             method="post"
             className="flex flex-col gap-6  mx-auto px-10 py-8"
+            onKeyDown={(event) => {
+              if (event.key === 'Enter') event.preventDefault();
+            }}
           >
             <H3Title
               title="Por favor, introduce tu correo electrónico para restablecer tu
