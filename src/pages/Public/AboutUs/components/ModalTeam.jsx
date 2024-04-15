@@ -59,35 +59,43 @@ export const ModalTeam = ({ member = '' }) => {
                   <MemberTeam member={member.readMore} />
                 </main>
                 <footer className="flex justify-center gap-10">
-                  <Link href={member.github} isExternal>
-                    <IconBrandGithub className="stroke-white fill-tertiary size-10" />
+                  <Link
+                    href={member.github}
+                    isExternal
+                    className="text-tertiary font-poppins font-semibold mr-1 flex self-baseline pt-3"
+                  >
+                    <IconBrandGithub stroke={1} /> Github
                   </Link>
-                  <Link href={member.linkedin} isExternal>
-                    <IconBrandLinkedin
-                      stroke={1}
-                      className="stroke-tertiary size-10"
-                    />
+                  <Link
+                    href={member.linkedin}
+                    isExternal
+                    className="text-tertiary font-poppins font-semibold mr-1 flex self-baseline pt-3"
+                  >
+                    <IconBrandLinkedin stroke={1} /> Linkedin
                   </Link>
-                  <Link href={member.mailto} isExternal>
-                    <IconMail
-                      stroke={1}
-                      className="stroke-white fill-tertiary size-10"
-                    />
+                  <Link
+                    href={member.mailto}
+                    isExternal
+                    className="text-tertiary font-poppins font-semibold mr-1 flex self-baseline pt-3"
+                  >
+                    <IconMail stroke={1} /> Mail
                   </Link>
                   {member.portFolio !== '' && (
-                    <Link href={member.portFolio} target="_blank">
-                      <IconClipboard
-                        stroke={1}
-                        className="stroke-tertiary size-10"
-                      />
+                    <Link
+                      href={member.portFolio}
+                      target="_blank"
+                      className="text-tertiary font-poppins font-semibold mr-1 flex self-baseline pt-3"
+                    >
+                      <IconClipboard stroke={1} /> Portfolio
                     </Link>
                   )}
                   {member.resume !== '' && (
-                    <Link href={member.resume} isExternal>
-                      <IconUserSquare
-                        stroke={1}
-                        className="stroke-tertiary size-10"
-                      />
+                    <Link
+                      href={member.resume}
+                      isExternal
+                      className="text-tertiary font-poppins font-semibold mr-1 flex self-baseline pt-3"
+                    >
+                      <IconUserSquare stroke={1} /> CV
                     </Link>
                   )}
                 </footer>

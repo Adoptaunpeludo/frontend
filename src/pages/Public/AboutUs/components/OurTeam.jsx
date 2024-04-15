@@ -42,20 +42,26 @@ export const OurTeam = () => {
                     </div>
                   </main>
                   <footer className="flex justify-center gap-10">
-                    <Link href={member.github} target="_blank">
-                      <IconBrandGithub className="stroke-white fill-tertiary size-10" />
+                    <Link
+                      href={member.github}
+                      target="_blank"
+                      className="text-tertiary font-poppins font-semibold mr-1 flex self-baseline pt-3"
+                    >
+                      <IconBrandGithub /> Github
                     </Link>
-                    <Link href={member.linkedin} target="_blank">
-                      <IconBrandLinkedin
-                        stroke={1}
-                        className="stroke-tertiary size-10"
-                      />
+                    <Link
+                      href={member.linkedin}
+                      target="_blank"
+                      className="text-tertiary font-poppins font-semibold mr-1 flex self-baseline pt-3"
+                    >
+                      <IconBrandLinkedin stroke={1} /> Linkedin
                     </Link>
-                    <Link href={member.mailto} target="_blank">
-                      <IconMail
-                        stroke={1}
-                        className="stroke-white fill-tertiary size-10"
-                      />
+                    <Link
+                      href={member.mailto}
+                      target="_blank"
+                      className="text-tertiary font-poppins font-semibold mr-1 flex self-baseline pt-3"
+                    >
+                      <IconMail stroke={1} /> Mail
                     </Link>
                   </footer>
                 </section>

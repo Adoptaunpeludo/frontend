@@ -100,6 +100,9 @@ const AppLayout = () => {
           queryClient.invalidateQueries({
             queryKey: ['shelter-details', data.username],
           });
+          queryClient.invalidateQueries({
+            queryKey: ['user-chats'],
+          });
           break;
         case 'animal-changed':
           queryClient.invalidateQueries({
@@ -108,17 +111,14 @@ const AppLayout = () => {
           queryClient.invalidateQueries({
             queryKey: ['shelter-animals', data.createdBy],
           });
+          queryClient.invalidateQueries({
+            queryKey: ['animal-details', data.animalSlug],
+          });
+          queryClient.invalidateQueries({
+            queryKey: ['user-chats'],
+          });
           break;
         case 'animal-changed-push-notification':
-          queryClient.invalidateQueries({
-            queryKey: ['animals'],
-          });
-          queryClient.invalidateQueries({
-            queryKey: ['animal-details', data.data.animalSlug],
-          });
-          queryClient.invalidateQueries({
-            queryKey: ['shelters-animals', data.createdBy],
-          });
           queryClient.invalidateQueries({
             queryKey: ['user-notifications'],
           });

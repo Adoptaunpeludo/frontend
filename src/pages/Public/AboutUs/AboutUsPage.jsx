@@ -1,9 +1,12 @@
-import Architecture from './components/Architecture';
-import BackendArchitecture from './components/BackendArchitecture';
-import DatabaseAndOtherServices from './components/DatabaseAndOtherServices';
-import { FrontendArchitecture } from './components/FrontendArchitecture';
-import OurTeam from './components/OurTeam';
-import Technologies from './components/Technologies';
+import {
+  Architecture,
+  Backend,
+  DatabaseAndOtherServices,
+  DevOps,
+  Frontend,
+  Management,
+  OurTeam,
+} from './components';
 
 const AboutUsPage = () => {
   return (
@@ -13,10 +16,11 @@ const AboutUsPage = () => {
       <main className=" w-full flex  flex-col justify-center  mx-auto flex-grow">
         <OurTeam />
         <Architecture />
-        <FrontendArchitecture />
-        <BackendArchitecture />
         <DatabaseAndOtherServices />
-        <Technologies />
+        <Frontend />
+        <Backend />
+        <DevOps />
+        <Management />
       </main>
     </>
   );
