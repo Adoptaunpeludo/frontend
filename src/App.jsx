@@ -42,15 +42,15 @@ import { loader as verifyEmailLoader } from './pages/Auth/VerifyEmail/loader.js'
 import { loader as userFavsLoader } from './pages/Private/Adopters/AdopterProfile/loader.js';
 import { loader as updateAnimalLoader } from './pages/Private/Shelters/AnimalForm/loader.js';
 import { loader as userAnimalsLoader } from './pages/Private/Shelters/ShelterProfile/loader.js';
-import { loader as animalDetailsLoader } from './pages/Public/Animals/AnimalDetails/AnimalDetailsPage.jsx';
-import { loader as animalsLoader } from './pages/Public/Animals/AnimalsPage.jsx';
-import { loader as landingAnimalsLoader } from './pages/Public/Landing/LandingPage.jsx';
-import { loader as shelterDetailsLoader } from './pages/Public/Shelters/ShelterDetails/ShelterDetailsPage.jsx';
-import { loader as sheltersLoader } from './pages/Public/Shelters/SheltersPage.jsx';
-//import { loader as resetPasswordLoader } from './pages/Auth/ResetPassword/ResetPasswordPage.jsx';
-import { loader as userDataLoader } from './pages/Layout/AppLayout.jsx';
-import { loader as assistantChatLoader } from './pages/Private/Assistant/AssistantPage.jsx';
-import { loader as currentChatLoader } from './pages/Private/Chat/AdoptionChatPage.jsx';
+import { loader as animalDetailsLoader } from './pages/Public/Animals/AnimalDetails/loader.js';
+import { loader as animalsLoader } from './pages/Public/Animals/loader.js';
+import { loader as landingAnimalsLoader } from './pages/Public/Landing/loader.js';
+import { loader as shelterDetailsLoader } from './pages/Public/Shelters/ShelterDetails/loader.js';
+import { loader as sheltersLoader } from './pages/Public/Shelters/loader.js';
+// import { loader as resetPasswordLoader } from './pages/Auth/ResetPassword/ResetPasswordPage.jsx';
+import { loader as userDataLoader } from './pages/Layout/loader.js';
+import { loader as assistantChatLoader } from './pages/Private/Assistant/loader.js';
+import { loader as currentChatLoader } from './pages/Private/Chat/loader.js';
 
 import { useAnimalImagesContext } from './context/AnimalImagesContext.jsx';
 import { useModalContext } from './context/ModalContext.jsx';

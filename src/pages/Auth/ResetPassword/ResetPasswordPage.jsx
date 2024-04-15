@@ -9,7 +9,6 @@ import {
 } from '../../../utils/configFormFields.js';
 import { action } from './action.js';
 
-action;
 const ResetPasswordPage = () => {
   const navigation = useNavigation();
   const isSubmitting = navigation.state === 'submitting';

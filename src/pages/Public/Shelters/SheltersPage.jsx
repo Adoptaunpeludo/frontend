@@ -8,23 +8,8 @@ import {
   TitleSection,
 } from '../../../components';
 import { ShelterCard } from './components';
-import { sheltersQuery, useShelters } from './useShelters';
+import { useShelters } from './useShelters';
 import { useUser } from '../../Private/useUser';
-
-export const loader =
-  (queryClient) =>
-  async ({ request }) => {
-    const params = Object.fromEntries([
-      ...new URL(request.url).searchParams.entries(),
-    ]);
-    try {
-      await queryClient.ensureQueryData(sheltersQuery(params));
-      return { params };
-    } catch (error) {
-      console.log(error);
-      throw error;
-    }
-  };
 
 const SheltersPage = ({ page }) => {
   const { params } = useLoaderData();
