@@ -114,6 +114,9 @@ const AppLayout = () => {
           queryClient.invalidateQueries({
             queryKey: ['animal-details', data.animalSlug],
           });
+          queryClient.invalidateQueries({
+            queryKey: ['user-chats'],
+          });
           break;
         case 'animal-changed-push-notification':
           queryClient.invalidateQueries({
