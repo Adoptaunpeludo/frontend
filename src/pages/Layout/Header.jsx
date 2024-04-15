@@ -54,15 +54,15 @@ const Header = () => {
       href: '/shelters',
       color: 'foreground',
     },
+    {
+      name: 'Conócenos',
+      href: '/about',
+      color: 'foreground',
+    },
 
     {
       name: 'Asistente',
       href: `/private/assistant`,
-      color: 'foreground',
-    },
-    {
-      name: 'Conócenos',
-      href: '/about',
       color: 'foreground',
     },
   ];
