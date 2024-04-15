@@ -7,14 +7,14 @@ import {
   Link,
   User,
 } from '@nextui-org/react';
+import { googleLogout } from '@react-oauth/google';
 import { IconUserFilled } from '@tabler/icons-react';
 import { useQueryClient } from '@tanstack/react-query';
 import { useNavigate } from 'react-router-dom';
-import { BUCKET_URL } from '../config/config.js';
-import { logout } from '../pages/Auth/authService.js';
 import { toast } from 'react-toastify';
+import { BUCKET_URL } from '../config/config.js';
 import { useWebSocketContext } from '../context/WebSocketContext.jsx';
-import { googleLogout } from '@react-oauth/google';
+import { logout } from '../pages/Auth/authService.js';
 import { useNotifications } from '../pages/Private/useNotifications.js';
 
 export const UserAreaMenu = ({ user, chats }) => {
@@ -95,13 +95,11 @@ export const UserAreaMenu = ({ user, chats }) => {
         </DropdownTrigger>
       </Badge>
       <DropdownMenu aria-label="Profile Actions" variant="flat">
-        <DropdownItem
-          key="signedMail"
-          className="h-14 gap-2"
-          textValue="user email"
-        >
-          <p className="font-semibold capitalize">has iniciado sesión como</p>
-          <p className="font-semibold">{user?.email}</p>
+        <DropdownItem key="signedMail" className="h-14 " textValue="user email">
+          <div className="flex flex-col gap-1">
+            <span className="font-semibold ">Has iniciado sesión como</span>
+            <span className="font-semibold">{user?.email}</span>
+          </div>
         </DropdownItem>
         <DropdownItem key="profile" textValue="user profile">
           <Link

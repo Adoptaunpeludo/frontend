@@ -199,7 +199,7 @@ const AdoptionChatPage = () => {
         id="central"
         className="max-w-screen-xl mx-auto flex  flex-col sm:flex-row"
       >
-        <aside className="flex flex-col gap-4 mb-5 max-sm:px-5 sm:max-w-72  order-2 sm:order-1 mx-1">
+        <aside className="flex flex-col gap-4 mb-5 max-sm:px-5 sm:w-128  order-2 sm:order-1 mx-1 sm:overflow-y-scroll pt-2 sm:h-132">
           {chats.map((chat) => (
             <NavLink
               key={chat.slug}
@@ -207,7 +207,7 @@ const AdoptionChatPage = () => {
               onClick={() => handleCreateChat(chat.slug)}
               className={`${
                 !chat.users[0]?.username && 'hidden'
-              } bg-primary bg-opacity-50 rounded-xl flex w-full`}
+              } bg-primary bg-opacity-50 rounded-xl flex sm:max-w-72`}
             >
               <Badge
                 content={chat._count.messages}
@@ -231,7 +231,7 @@ const AdoptionChatPage = () => {
                     />
                   </section>
                   <section className="flex items-center w-full flex-grow">
-                    <div className="flex flex-col w-full sm:w-36">
+                    <div className="flex flex-col w-full sm:w-32">
                       <span className="font-poppins font-semibold text-sm line-clamp-1 break-all w-full">{`${
                         chat.animal[0] !== undefined
                           ? chat.animal[0]?.name.toUpperCase()
