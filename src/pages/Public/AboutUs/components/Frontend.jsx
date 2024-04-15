@@ -45,6 +45,7 @@ export const Frontend = () => {
                         __html: technology.description,
                       }}
                     />
+                    <span>...</span>
                   </div>
                   <div className="flex justify-end mr-16 ">
                     <ModalTechnologies technology={technology} />
