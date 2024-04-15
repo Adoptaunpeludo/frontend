@@ -10,4 +10,4 @@ export { ModalTeam } from './ModalTeam';
 export { ModalTechnologies } from './ModalTechnologies';
 export { OurTeam } from './OurTeam';
 export { PaquitoGRCard } from './PaquitoGRCard';
-export { Technologies } from './Technologies';
+export { DevOps } from './DevOps';
