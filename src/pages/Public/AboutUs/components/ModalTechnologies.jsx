@@ -29,8 +29,8 @@ export const ModalTechnologies = ({ technology = '' }) => {
         <ModalContent>
           {(onClose) => (
             <>
-              <ModalHeader className="flex flex-col gap-1">
-                <div className="flex items-center gap-3 pb-5">
+              <ModalHeader className="flex flex-col gap-1 border-b-1 border-primary mb-2 pb-1">
+                <div className="flex items-center gap-3 ">
                   <Image
                     src={technology.img}
                     width={'50px'}
