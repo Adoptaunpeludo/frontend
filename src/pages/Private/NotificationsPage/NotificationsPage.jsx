@@ -109,6 +109,18 @@ const NotificationsPage = () => {
     }
   };
 
+  const handleReadAllNotifications = async () => {
+    try {
+      await readNotification('all');
+      queryClient.invalidateQueries({
+        queryKey: ['user-notifications'],
+      });
+    } catch (error) {
+      console.log(error);
+      toast.error(error.response.data.message);
+    }
+  };
+
   return (
     <main className="bg-default-100 flex-grow ">
       <section
@@ -116,6 +128,12 @@ const NotificationsPage = () => {
         className="max-w-screen-xl w-full flex  flex-col justify-center  h-full  py-12  mx-auto gap-5"
       >
         <TitleSection title={user.username} />
+        <Button
+          onClick={handleReadAllNotifications}
+          isDisabled={userNotifications.unread === 0}
+        >
+          Marcar como leidas
+        </Button>
         <div className="flex w-full flex-col ">
           <Skeleton isLoaded={!isFetching}>
             <Tabs
