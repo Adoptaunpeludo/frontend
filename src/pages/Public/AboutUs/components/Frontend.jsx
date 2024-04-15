@@ -25,7 +25,10 @@ export const Frontend = () => {
           <article className="flex flex-wrap justify-center xl:justify-start max-w-screen-xl mx-auto">
             {technologiesFrontend.map((technology, index) => {
               return (
-                <article key={index} className="flex flex-col w-96 p-5">
+                <article
+                  key={index}
+                  className="flex flex-col w-96 p-5 self-end"
+                >
                   <div className="flex items-center gap-3 pb-5">
                     <Image
                       src={technology.img}
