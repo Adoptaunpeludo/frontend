@@ -1,11 +1,16 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<svg id="Capa_1" data-name="Capa 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200">
-  <defs>
-    <style>
-      .cls-1 {
-        fill: #231f20;
-      }
-    </style>
-  </defs>
-  <path class="cls-1" d="M150.34,137.96h24.83v-59.61l-27.97-27.97-17.56,17.56,20.7,20.7v49.33h0Zm24.89,12.45H88.63l-20.7-20.7,8.78-8.78,17.1,17.1h35.18l-34.65-34.72,8.84-8.84,34.65,34.65v-35.18l-17.03-17.03,8.71-8.71L86.47,24.96H0l24.76,24.76v.07h51.36l18.15,18.15-26.53,26.53-18.15-18.15v-14.08H24.76v24.37l42.97,42.97-17.49,17.49,27.97,27.97h121.78l-24.76-24.63h0Z"/>
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Generator: Adobe Illustrator 26.5.0, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
+<svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+	 viewBox="0 0 200 200" style="enable-background:new 0 0 200 200;" xml:space="preserve">
+<style type="text/css">
+	.st0{fill:#FFFFFF;}
+</style>
+<g id="Capa_2">
+	<rect width="200" height="200"/>
+</g>
+<g id="Capa_1">
+	<path class="st0" d="M150.3,138h24.8V78.4l-28-28l-17.6,17.6l20.7,20.7V138L150.3,138L150.3,138z M175.2,150.4H88.6l-20.7-20.7
+		l8.8-8.8L93.8,138H129l-34.7-34.7l8.8-8.8l34.6,34.7V93.9l-17-17l8.7-8.7L86.5,25H0l24.8,24.8v0.1h51.4l18.2,18.2L67.7,94.5
+		L49.6,76.3V62.2H24.8v24.4l43,43l-17.5,17.5l28,28H200L175.2,150.4L175.2,150.4L175.2,150.4z"/>
+</g>
 </svg>

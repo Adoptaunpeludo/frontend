@@ -2,7 +2,7 @@ export const team = [
   {
     img: 'https://avatars.githubusercontent.com/u/128265706?v=4',
     person: 'José Alberto Delgado',
-    position: 'Backend Lead, DevOps, Frontend dev',
+    position: 'Backend dev, Frontend dev, DevOps',
     description: `¡Hola! Soy Jose Alberto, un desarrollador fullstack apasionado
           por crear soluciones tecnológicas innovadoras. Mi experiencia se
           centra en el desarrollo de aplicaciones web complejas, y mi último
