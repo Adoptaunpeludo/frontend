@@ -31,7 +31,6 @@ export const action =
     }
 
     if (intent === 'remove-fav') {
-      console.log({ formData });
       const id = formData.get('id');
       try {
         await deleteFav(id);

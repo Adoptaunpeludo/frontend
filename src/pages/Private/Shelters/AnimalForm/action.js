@@ -18,7 +18,6 @@ export const action =
     const { slug } = params;
     const fetchData = await getAnimalDetails(slug);
 
-    // console.log({ intent });
     if (intent === 'create-animal') {
       const imagesData = new FormData();
 

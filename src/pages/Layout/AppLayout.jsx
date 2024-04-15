@@ -53,7 +53,6 @@ const AppLayout = () => {
       const message = JSON.parse(val);
       const { type, ...data } = message;
 
-      console.log({ message });
       switch (type) {
         case 'user-joined-room':
           data.action === 'read-messages' &&

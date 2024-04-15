@@ -4,7 +4,6 @@ import JmacostaCard from './JmacostaCard';
 import PaquitoGRCard from './PaquitoGRCard';
 
 export const MemberTeam = ({ member }) => {
-  console.log(member);
   return (
     <>
       {member === 'jmacosta' && <JmacostaCard />}

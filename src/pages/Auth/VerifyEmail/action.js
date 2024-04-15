@@ -9,9 +9,7 @@ export const action = async ({ request }) => {
 
   try {
     const { email } = credentials;
-    console.log(email);
     const res = await resendValidationEmail(email);
-    console.log({ res });
 
     if (res.status === 400) {
       throw new Error(res.response.data.message);
