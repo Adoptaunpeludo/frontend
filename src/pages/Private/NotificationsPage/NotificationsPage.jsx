@@ -14,7 +14,8 @@ import { toast } from 'react-toastify';
 import { TitleSection } from '../../../components';
 import { useNotifications } from '../useNotifications';
 import { useUser } from '../useUser';
-import { readNotification } from './service';
+import { deleteNotification, readNotification } from './service';
+import TrashCan from '../Assistant/components/TrashCan';
 
 const TabTitle = ({ label, count }) => {
   return (
@@ -121,6 +122,18 @@ const NotificationsPage = () => {
     }
   };
 
+  const handleDeleteNotification = async (id) => {
+    try {
+      await deleteNotification(id);
+      queryClient.invalidateQueries({
+        queryKey: ['user-notifications'],
+      });
+    } catch (error) {
+      console.log(error);
+      toast.error(error.response.data.message);
+    }
+  };
+
   return (
     <main className="bg-default-100 flex-grow ">
       <section
@@ -176,37 +189,50 @@ const NotificationsPage = () => {
                       } rounded-none border-b-1 border-primary py-5`}
                       radius="none"
                     >
-                      <Button
-                        onClick={() =>
-                          handleReadNotification(
-                            notification.link,
-                            notification.id,
-                            notification.isRead
-                          )
-                        }
-                        radius="none"
-                        className={`py-5 ${
-                          !notification.isRead
-                            ? 'bg-default-300'
-                            : 'bg-default-200'
-                        }`}
-                      >
-                        <CardBody className="flex flex-row flex-start align-middle gap-1 ">
-                          <span className="text-lg truncate">
-                            {notification.message}
-                          </span>
-                          {!notification.isRead ? (
-                            <Chip
-                              color="secondary"
-                              size="sm"
-                              variant="dot"
-                              className="border-default-300"
-                            />
-                          ) : (
-                            ''
-                          )}
-                        </CardBody>
-                      </Button>
+                      <div>
+                        <Button
+                          isIconOnly
+                          aria-label="trash"
+                          className="bg-terciary z-50"
+                          color="danger"
+                          onClick={() =>
+                            handleDeleteNotification(notification.id)
+                          }
+                        >
+                          <TrashCan />
+                        </Button>
+                        <Button
+                          onClick={() =>
+                            handleReadNotification(
+                              notification.link,
+                              notification.id,
+                              notification.isRead
+                            )
+                          }
+                          radius="none"
+                          className={`py-5 ${
+                            !notification.isRead
+                              ? 'bg-default-300'
+                              : 'bg-default-200'
+                          }`}
+                        >
+                          <CardBody className="flex flex-row flex-start align-middle gap-1 ">
+                            <span className="text-lg truncate">
+                              {notification.message}
+                            </span>
+                            {!notification.isRead ? (
+                              <Chip
+                                color="secondary"
+                                size="sm"
+                                variant="dot"
+                                className="border-default-300"
+                              />
+                            ) : (
+                              ''
+                            )}
+                          </CardBody>
+                        </Button>
+                      </div>
                     </Card>
                   ))}
                 </Tab>

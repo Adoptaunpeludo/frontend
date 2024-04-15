@@ -45,7 +45,7 @@ export default function DeleteModal({ deleteMessages }) {
       <Button
         onPress={onOpen}
         isIconOnly
-        aria-label="Like"
+        aria-label="trash"
         className="bg-terciary"
         color="danger"
       >
