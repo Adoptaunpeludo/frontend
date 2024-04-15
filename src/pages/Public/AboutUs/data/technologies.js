@@ -156,7 +156,7 @@ export const technologiesFrontend = [
     img: '/logoTech/react-query.svg',
     title: 'React Query',
     description: `
-    <p><strong>React Query</strong> es una librería de gestión de estado para <strong>React</strong> que simplifica la gestión de datos en nuestra aplicación. </p>
+    <p><strong>React Query</strong> es una librería de gestión de estado para <strong>React</strong> que simplifica la gestión de datos en nuestra aplicación y nos permite gestionar el estado remoto. </p>
      <p>Nos permite realizar consultas de datos de forma declarativa, manejar el caché de datos de manera eficiente y gestionar automáticamente las solicitudes de datos en función de la lógica de nuestra aplicación. </p>
     <p>Esto nos ayuda a mantener nuestro código limpio y desacoplado, facilitando el mantenimiento y la escalabilidad de nuestra aplicación.</p>`,
   },
@@ -191,6 +191,16 @@ export const technologiesFrontend = [
     <p><strong>Vite.js </strong> es un build tool  ultrarrápido para aplicaciones web modernas. </p>
     <p>En adoptaunpeludo.com, utilizamos Vite.js como nuestro entorno de desarrollo para compilar y construir nuestra aplicación de manera eficiente. </p>
     <p>Su capacidad para realizar actualizaciones en caliente (hot module replacement) y su integración con React y Next.js nos permiten desarrollar rápidamente nuestra aplicación sin sacrificar el rendimiento.</p>`,
+  },
+  {
+    img: '/logoTech/oauth.svg',
+    title: 'Google Oauth',
+    description: `
+    <p><strong>OAuth</strong> es un protocolo de autorización ampliamente utilizado en el desarrollo de aplicaciones web y móviles.</p> 
+    <p>En nuestra aplicación, adoptaunpeludo.com, implementamos <strong>OAuth</strong> para facilitar el registro y el inicio de sesión de los usuarios de manera segura y conveniente. </p>
+    <p>Este protocolo permite a nuestros usuarios autenticarse en nuestra plataforma utilizando sus credenciales de <strong>Google</strong>, sin necesidad de compartir sus contraseñas con nosotros.</p>
+     <p><strong>OAuth</strong> proporciona un mecanismo robusto para gestionar el acceso a los datos del usuario de manera segura, lo que garantiza la privacidad y la protección de la información personal. </p>
+     <p>Además, al utilizar <strong>OAuth</strong>, podemos ofrecer a nuestros usuarios una experiencia de inicio de sesión fluida y sin problemas, mejorando así la usabilidad de nuestra aplicación.</p>`,
   },
   {
     img: '/logoTech/zod.svg',
