@@ -8,24 +8,8 @@ import {
   TitleSection,
 } from '../../../components';
 import { useUser } from '../../Private/useUser';
-import { animalsQuery, useAnimals } from '../Landing/useAnimals';
+import { useAnimals } from '../Landing/useAnimals';
 import { PetCard } from './components/PetCard';
-
-export const loader =
-  (queryClient, page) =>
-  async ({ request, params }) => {
-    const filters = Object.fromEntries([
-      ...new URL(request.url).searchParams.entries(),
-    ]);
-    if (filters.name) filters.name = filters.name.toLowerCase();
-    try {
-      await queryClient.ensureQueryData(animalsQuery(page, filters, params));
-      return { filters, params };
-    } catch (error) {
-      console.log(error);
-      throw error;
-    }
-  };
 
 const AnimalsPage = ({ page }) => {
   const { data: user } = useUser();

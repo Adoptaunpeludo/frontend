@@ -3,28 +3,12 @@ import { useEffect, useState } from 'react';
 import { toast } from 'react-toastify';
 import { useScroll } from '../../../hooks/useScroll';
 import { mapChatHistory } from '../../../utils/mapChatHistory';
-import { useUser, userQuery } from '../useUser';
+import { useUser } from '../useUser';
 import GptMessage from './components/GptMessage';
 import TextMessageBox from './components/TextMessageBox';
 import UserMessage from './components/UserMessage';
-import { chatStreamGenerator, createChat } from './service';
-import { chatHistoryQuery, useChatHistory } from './useChatHistory';
-import { redirect } from 'react-router-dom';
-
-export const loader = (queryClient) => async () => {
-  try {
-    const user = await queryClient.ensureQueryData(userQuery);
-    await createChat(user.wsToken);
-    const history = await queryClient.ensureQueryData(
-      chatHistoryQuery(user.username)
-    );
-    return history;
-  } catch (error) {
-    console.log(error);
-    toast.error('El servicio de asistente no está disponible actualmente');
-    return redirect(-1);
-  }
-};
+import { chatStreamGenerator } from './service';
+import { useChatHistory } from './useChatHistory';
 
 const AssistantPage = () => {
   const { data: user } = useUser();

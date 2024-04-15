@@ -14,7 +14,6 @@ import {
   shelterInformation,
   vetInformation,
 } from '../../../../utils/asideDataFields';
-import { handleNotFoundError } from '../../../../utils/handleError';
 
 import { useUser } from '../../../Private/useUser';
 import {
@@ -22,24 +21,7 @@ import {
   ShelterRescues,
   SocialMediaAsideColumn,
 } from './components/';
-import { shelterDetailsQuery, useShelterDetails } from './useShelterDetails';
-
-export const loader =
-  (queryClient) =>
-  async ({ params }) => {
-    try {
-      const { username } = params;
-      await queryClient.ensureQueryData(shelterDetailsQuery(username));
-      return params;
-    } catch (error) {
-      if (error.response.status === 404) {
-        const notFoundError = handleNotFoundError(error);
-        throw notFoundError;
-      }
-
-      throw error;
-    }
-  };
+import { useShelterDetails } from './useShelterDetails';
 
 const ShelterDetailsPage = () => {
   const params = useLoaderData();

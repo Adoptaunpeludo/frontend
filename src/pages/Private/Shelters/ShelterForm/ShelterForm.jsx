@@ -25,9 +25,8 @@ import {
   selectStyleConfig,
 } from '../../../../utils/configFormFields';
 import { validateField } from '../../../../utils/validateField';
-// import { isMatchFormData } from '../../../../utils/isMatchFormData';
 
-const ShelterForm = ({ isSubmitting, data }) => {
+const ShelterForm = ({ isSubmitting, data, action }) => {
   const updateShelterModal = useDisclosure();
   const { isOpen, onOpen, onOpenChange, onClose } = updateShelterModal;
   const { saveShelterModal } = useModalContext();
@@ -53,7 +52,6 @@ const ShelterForm = ({ isSubmitting, data }) => {
   });
 
   const [errors, setErrors] = useState('');
-  // const [noChanges, setNoChanges] = useState(true);
 
   const navigation = useNavigation();
 
@@ -77,14 +75,6 @@ const ShelterForm = ({ isSubmitting, data }) => {
       setErrors({ ...errors, [name]: validateField(name, value) });
     }
   };
-
-  // useEffect(() => {
-  //   if (isMatchFormData(data, formData)) {
-  //     setNoChanges(true);
-  //   } else {
-  //     setNoChanges(false);
-  //   }
-  // }, [formData]);
 
   useEffect(() => {
     setErrors('');
@@ -119,6 +109,7 @@ const ShelterForm = ({ isSubmitting, data }) => {
           onKeyDown={(event) => {
             if (event.key === 'Enter') event.preventDefault();
           }}
+          action={action}
         >
           <ModalContent>
             <>

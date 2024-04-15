@@ -18,7 +18,7 @@ import {
 import { H2Title, H3Title, Panel, SelectField } from '../../../../components';
 import { cities } from '../../../../utils/enumData';
 
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import { Form, useNavigation } from 'react-router-dom';
 import { BUCKET_URL } from '../../../../config/config';
 import { useModalContext } from '../../../../context/ModalContext';
@@ -26,40 +26,29 @@ import {
   inputStyleConfig,
   selectStyleConfig,
 } from '../../../../utils/configFormFields';
-import { validateField } from '../../../../utils/validateField';
-// import { updateData } from '../../../../api/client';
-// import { toast } from 'react-toastify';
+import { useValidateFormFields } from '../../../../hooks/useValidateFormFields';
 
-export const UserFormBio = ({ data }) => {
+export const UserFormBio = ({ data, action }) => {
   const updateBioModal = useDisclosure();
   const { isOpen, onOpen, onOpenChange, onClose } = updateBioModal;
   const { saveBioModal } = useModalContext();
 
-  const { username, avatar, dni, firstName, lastName, phoneNumber, city } =
+  const { username, dni, firstName, lastName, phoneNumber, city, avatar } =
     data;
 
-  const [credentials, setCredentials] = useState({
+  const initialValues = {
     username,
     dni,
     firstName,
     lastName,
     phoneNumber,
     city,
-  });
-
-  const [errors, setErrors] = useState({});
-
-  const handleChange = (event) => {
-    const { name, value } = event.target;
-    setCredentials({ ...credentials, [name]: value });
-    setErrors({ ...errors, [name]: validateField(name, value) });
   };
 
-  useEffect(() => {
-    setErrors({});
-  }, [isOpen]);
-
-  const isFormValid = Object.values(errors).every((error) => error === '');
+  const { errors, handleChange, isFormValid } = useValidateFormFields(
+    initialValues,
+    isOpen
+  );
 
   const navigation = useNavigation();
 
@@ -93,6 +82,7 @@ export const UserFormBio = ({ data }) => {
           onKeyDown={(event) => {
             if (event.key === 'Enter') event.preventDefault();
           }}
+          action={action}
         >
           <ModalContent>
             <>

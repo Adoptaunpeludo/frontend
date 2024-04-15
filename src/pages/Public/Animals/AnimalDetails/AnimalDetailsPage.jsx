@@ -18,26 +18,9 @@ import {
   catDescription,
   dogDescription,
 } from '../../../../utils/asideDataFields';
-import { handleNotFoundError } from '../../../../utils/handleError';
 import { useUser } from '../../../Private/useUser';
-import { animalDetailsQuery, useAnimalDetails } from '../useAnimalDetails';
+import { useAnimalDetails } from '../useAnimalDetails';
 import { AnimalFavs, ShareSocialMedia } from './components';
-export const loader =
-  (queryClient) =>
-  async ({ params }) => {
-    try {
-      const { slug } = params;
-      await queryClient.ensureQueryData(animalDetailsQuery(slug));
-      return params;
-    } catch (error) {
-      if (error.response.status === 404) {
-        const notFoundError = handleNotFoundError(error);
-        throw notFoundError;
-      }
-
-      throw error;
-    }
-  };
 
 const AnimalDetailsPage = () => {
   const params = useLoaderData();

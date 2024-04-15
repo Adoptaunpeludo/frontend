@@ -9,12 +9,11 @@ import {
 } from 'react-router-dom';
 import { useWebSocketContext } from '../../../context/WebSocketContext';
 import TextMessageBox from '../Assistant/components/TextMessageBox';
-import { useUser, userQuery } from '../useUser';
+import { useUser } from '../useUser';
 import UserMessage from './components/UserMessage';
 
 import { useEffect, useState } from 'react';
-import { receiverDataQuery } from './useReceiverData';
-import { chatHistoryQuery, useChatHistory } from './useUserChatHistory';
+import { useChatHistory } from './useUserChatHistory';
 
 import { IconArrowBadgeRight, IconUserFilled } from '@tabler/icons-react';
 import { useQueryClient } from '@tanstack/react-query';
@@ -22,37 +21,7 @@ import { TitleSection } from '../../../components';
 import { BUCKET_URL } from '../../../config/config';
 import { useScroll } from '../../../hooks/useScroll';
 import { mapUserChatHistory } from '../../../utils/mapUserChatHistory';
-import { useUserChats, userChatsQuery } from '../Shelters/useUserChats';
-
-export const loader =
-  (queryClient) =>
-  async ({ params }) => {
-    try {
-      const { chat } = params;
-      const parts = chat.split('-');
-      const shelter = parts.at(0);
-      const adopter = parts.at(-1);
-      const sender = await queryClient.ensureQueryData(userQuery);
-      const username = sender?.role === 'shelter' ? adopter : shelter;
-
-      const receiver = await queryClient.ensureQueryData(
-        receiverDataQuery(username)
-      );
-
-      const history = await queryClient.ensureQueryData(
-        chatHistoryQuery(params.chat)
-      );
-
-      const chats = await queryClient.ensureQueryData(
-        userChatsQuery(sender.username)
-      );
-
-      return { history, receiver, chats, sender };
-    } catch (error) {
-      console.log(error);
-      throw error;
-    }
-  };
+import { useUserChats } from '../Shelters/useUserChats';
 
 const AdoptionChatPage = () => {
   const queryClient = useQueryClient();

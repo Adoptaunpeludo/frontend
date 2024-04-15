@@ -9,7 +9,6 @@ import { IconCircleX, IconSend2 } from '@tabler/icons-react';
 import { useEffect, useRef, useState } from 'react';
 import {
   Form,
-  redirect,
   useLoaderData,
   useNavigate,
   useNavigation,
@@ -25,96 +24,16 @@ import {
 
 import { UploadImagesForm } from './Components/UploadImagesForm';
 
-import { isAxiosError } from 'axios';
-import { toast } from 'react-toastify';
 import { useAnimalImagesContext } from '../../../../context/AnimalImagesContext';
 import {
   inputStyleConfig,
   radioGroupStyleConfig,
   radioStyleConfig,
 } from '../../../../utils/configFormFields';
-import { handleNotFoundError } from '../../../../utils/handleError';
-import {
-  animalDetailsQuery,
-  useAnimalDetails,
-} from '../../../Public/Animals/useAnimalDetails';
+import { useAnimalDetails } from '../../../Public/Animals/useAnimalDetails';
 import { ImagesFrame } from '../../shared';
-import {
-  createPetAdoption,
-  updatePetAdoption,
-  uploadAnimalImages,
-} from './service';
 import { useGetErrors } from '../../../../context/FormErrorsContext';
-import { isMatchFormData } from '../../../../utils/isMatchFormData';
-import { getAnimalDetails } from '../../../Public/Animals/service';
-
-export const action =
-  (animalImages, queryClient) =>
-  async ({ request, params }) => {
-    let formData = await request.formData();
-    let intent = formData.get('intent');
-    const compareData = Object.fromEntries(formData);
-    const { slug } = params;
-    const fetchData = await getAnimalDetails(slug);
-
-    console.log({ intent });
-    if (intent === 'create-animal') {
-      const imagesData = new FormData();
-
-      animalImages?.forEach((image) => {
-        imagesData.append('images', image);
-      });
-
-      try {
-        const animal = await createPetAdoption(formData);
-        await uploadAnimalImages(imagesData, animal.id);
-        queryClient.invalidateQueries((queryKey) =>
-          queryKey.includes('animal')
-        );
-        toast.success(`Animal ${animal.name} puesto en adopción`);
-        return redirect(`/animals/${animal.type}s/${animal.slug}`);
-      } catch (error) {
-        if (isAxiosError(error) && error.response.status === 400)
-          return toast.error('Error creando el anuncio de adopción');
-        throw error;
-      }
-    }
-
-    if (intent === 'update-animal') {
-      // const { slug } = params;
-      try {
-        if (isMatchFormData(compareData, fetchData))
-          return toast.error('Ningun dato modificado');
-        const animal = await updatePetAdoption(formData, slug);
-        queryClient.invalidateQueries((queryKey) =>
-          queryKey.includes('animal')
-        );
-        toast.success(`Animal ${animal.name} Actualizado`);
-        return redirect(`/animals/${animal.type}s/${animal.slug}`);
-      } catch (error) {
-        if (isAxiosError(error) && error.response.status === 400)
-          return toast.error('Error actualizando el anuncio de adopción');
-        throw error;
-      }
-    }
-  };
-
-export const loader =
-  (queryClient) =>
-  async ({ params }) => {
-    console.log({ params });
-    try {
-      const { slug } = params;
-      await queryClient.ensureQueryData(animalDetailsQuery(slug));
-      return params;
-    } catch (error) {
-      if (error.response.status === 404) {
-        const notFoundError = handleNotFoundError(error);
-        throw notFoundError;
-      }
-      return error;
-    }
-  };
+import { action } from './action';
 
 const AnimalForm = () => {
   const { images, setImages } = useAnimalImagesContext();
@@ -162,6 +81,7 @@ const AnimalForm = () => {
             onKeyDown={(event) => {
               if (event.key === 'Enter') event.preventDefault();
             }}
+            action={action}
           >
             <H2Title
               title={

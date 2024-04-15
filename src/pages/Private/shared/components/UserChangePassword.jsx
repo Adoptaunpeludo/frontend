@@ -11,7 +11,6 @@ import {
 } from '@nextui-org/react';
 import { IconCircleX, IconKey, IconSend2 } from '@tabler/icons-react';
 
-import { useState } from 'react';
 import { Form, useNavigation } from 'react-router-dom';
 
 import { useEffect } from 'react';
@@ -21,7 +20,7 @@ import {
   buttonStyleConfig,
   inputStyleConfig,
 } from '../../../../utils/configFormFields';
-import { validateField } from '../../../../utils/validateField';
+import { useValidateFormFields } from '../../../../hooks/useValidateFormFields';
 
 export const UserChangePassword = ({ isDisabled }) => {
   const updatePasswordModal = useDisclosure();
@@ -31,27 +30,20 @@ export const UserChangePassword = ({ isDisabled }) => {
 
   const isLoading = navigation.state === 'submitting';
 
-  const [credentials, setCredentials] = useState({});
-  const [errors, setErrors] = useState({});
-
-  const handleChange = (event) => {
-    const { name, value } = event.target;
-    setCredentials({ ...credentials, [name]: value });
-    setErrors({
-      ...errors,
-      [name]: validateField(name, value, credentials.newPassword),
-    });
+  const initialValues = {
+    oldPassword: '',
+    newPassword: '',
+    repeatPassword: '',
   };
-  const isFormValid = Object.values(errors).every((error) => error === '');
+
+  const { credentials, errors, handleChange, isFormValid } =
+    useValidateFormFields(initialValues, isOpen);
+
   const enableButton = !(
     credentials.newPassword &&
     credentials.newPassword === credentials.repeatPassword &&
     isFormValid
   );
-
-  useEffect(() => {
-    setCredentials({});
-  }, [onOpenChange]);
 
   useEffect(() => {
     saveUpdatePasswordModal(updatePasswordModal);

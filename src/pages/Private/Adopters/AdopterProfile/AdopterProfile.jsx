@@ -1,96 +1,12 @@
 import { Skeleton } from '@nextui-org/skeleton';
-import { isAxiosError } from 'axios';
 import { Form, useNavigation } from 'react-router-dom';
-import { toast } from 'react-toastify';
 import { H2Title, TitleSection } from '../../../../components';
-import { userAnimalsQuery } from '../../Shelters/useUserAnimals';
 import { DeleteUserModal, ImagesFrame, StatusAnimalsTable } from '../../shared';
 //import { useWebSocketContext } from '../../../../context/WebSocketContext';
-import { isMatchFormData } from '../../../../utils/isMatchFormData';
-import { deleteFav } from '../../../Public/Animals/service';
 import UserBioInfo from '../../Shelters/ShelterProfile/components/UserBioInfo';
-import { userChatsQuery } from '../../Shelters/useUserChats';
-import { getCurrentUser } from '../../service';
 import { UserChangePassword } from '../../shared/components/UserChangePassword';
-import { updatePassword } from '../../shared/service/ChangePasswordService';
-import { updateProfile } from '../../shared/service/updateUserService';
 import { useUser } from '../../useUser';
-
-export const loader =
-  (queryClient) =>
-  async ({ params }) => {
-    try {
-      const data = await queryClient.ensureQueryData(
-        userAnimalsQuery('adopter')
-      );
-
-      const chats = await queryClient.ensureQueryData(
-        userChatsQuery(params.username)
-      );
-
-      return { data, chats };
-    } catch (error) {
-      console.log({ error });
-      toast.error('Error cargando perfil, ¿Estás logueado?');
-      return error;
-    }
-  };
-
-export const action =
-  (closeBioModal, closeUpdatePasswordModal, queryClient) =>
-  async ({ request }) => {
-    let formData = await request.formData();
-    let intent = formData.get('intent');
-    const newData = Object.fromEntries(formData);
-    const currentData = await getCurrentUser();
-
-    if (intent === 'user-profile') {
-      try {
-        if (isMatchFormData(newData, currentData))
-          return toast.error('Ningun dato modificado');
-        await updateProfile(formData, intent);
-        queryClient.invalidateQueries({ queryKey: ['user'] });
-        toast.success('Perfil actualizado');
-        closeBioModal();
-        return null;
-      } catch (error) {
-        if (isAxiosError(error) && error.response.status === 400)
-          return toast.error('Error actualizando perfil');
-        throw error;
-      }
-    }
-
-    if (intent === 'remove-fav') {
-      console.log({ formData });
-      const id = formData.get('id');
-      try {
-        await deleteFav(id);
-        queryClient.invalidateQueries({
-          queryKey: ['animals'],
-        });
-        queryClient.invalidateQueries({
-          queryKey: ['user-favs'],
-        });
-        return null;
-      } catch (error) {
-        if (isAxiosError(error) && error.response.status === 400)
-          return toast.error('Error al borrar de favoritos');
-        throw error;
-      }
-    }
-    if (intent === 'change-password') {
-      try {
-        await updatePassword(formData);
-        toast.success(`Password cambiada con éxito`);
-        closeUpdatePasswordModal();
-        return null;
-      } catch (error) {
-        if (isAxiosError(error) && error.response.status === 400)
-          return toast.error('Error cambiando password');
-        throw error;
-      }
-    }
-  };
+import { action } from './action';
 
 const AdopterProfile = () => {
   const { data, isFetching } = useUser();
@@ -127,7 +43,11 @@ const AdopterProfile = () => {
             </main>
             <aside>
               <Skeleton isLoaded={!isFetching}>
-                <UserBioInfo data={data} isLoading={isFetching} />
+                <UserBioInfo
+                  data={data}
+                  isLoading={isFetching}
+                  action={action}
+                />
               </Skeleton>
               <section
                 className={`${

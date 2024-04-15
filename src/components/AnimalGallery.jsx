@@ -3,10 +3,8 @@ import { BUCKET_URL } from '../config/config';
 
 export const AnimalGallery = ({ animalImages, onSetImages }) => {
   const handleImageChange = (image, index) => {
-    console.log({ index });
     onSetImages((images) => {
       const newImages = [...images];
-      console.log(newImages, ' newImages');
       const aux = newImages[0];
       newImages[0] = newImages[index];
       newImages[index] = aux;
