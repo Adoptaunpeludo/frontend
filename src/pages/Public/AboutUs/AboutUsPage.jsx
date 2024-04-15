@@ -2,9 +2,10 @@ import {
   Architecture,
   Backend,
   DatabaseAndOtherServices,
-  Frontend,
-  OurTeam,
   DevOps,
+  Frontend,
+  Management,
+  OurTeam,
 } from './components';
 
 const AboutUsPage = () => {
@@ -19,6 +20,7 @@ const AboutUsPage = () => {
         <Frontend />
         <Backend />
         <DevOps />
+        <Management />
       </main>
     </>
   );
