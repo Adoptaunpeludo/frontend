@@ -7,47 +7,16 @@ import {
 } from '@tabler/icons-react';
 import { useQueryClient } from '@tanstack/react-query';
 import { useState } from 'react';
-import {
-  Form,
-  Link,
-  redirect,
-  useNavigate,
-  useNavigation,
-} from 'react-router-dom';
+import { Form, Link, useNavigate, useNavigation } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import { H2Title, LogoHeader, Panel } from '../../../components';
 import {
   buttonStyleConfig,
   inputStyleConfig,
 } from '../../../utils/configFormFields';
-import { handleAuthError } from '../../../utils/handleError';
 import { validateField } from '../../../utils/validateField';
-import { googleAuthLogin, login } from '../authService';
-
-export const action =
-  (queryClient) =>
-  async ({ request }) => {
-    const formData = await request.formData();
-    const credentials = Object.fromEntries(formData);
-    credentials.email = credentials.email.toLowerCase();
-
-    try {
-      await login(credentials);
-      localStorage.setItem('isLoggedIn', true);
-      queryClient.invalidateQueries({
-        queryKey: ['user'],
-      });
-      queryClient.invalidateQueries({
-        queryKey: ['user-notifications'],
-      });
-      return redirect('/');
-    } catch (error) {
-      const message = handleAuthError(error);
-      toast.error(message);
-
-      return redirect('/login');
-    }
-  };
+import { googleAuthLogin } from '../authService';
+import { action } from './action';
 
 const LoginPage = () => {
   const [credentials, setCredentials] = useState({
@@ -124,6 +93,7 @@ const LoginPage = () => {
             onKeyDown={(event) => {
               if (event.key === 'Enter') event.preventDefault();
             }}
+            action={action}
           >
             <H2Title
               title="Inicia sesión "

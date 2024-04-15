@@ -1,38 +1,13 @@
 import { Button, Input } from '@nextui-org/react';
-import { Form, redirect, useNavigation } from 'react-router-dom';
-import { toast } from 'react-toastify';
+import { Form, useNavigation } from 'react-router-dom';
 import { H3Title, LogoHeader, Panel } from '../../../components';
 import {
   buttonStyleConfig,
   inputStyleConfig,
 } from '../../../utils/configFormFields';
-import { ForgotPassword } from '../authService';
 import { useState } from 'react';
 import { validateField } from '../../../utils/validateField';
-
-export const action = async ({ request }) => {
-  const formData = await request.formData();
-  const credentials = Object.fromEntries(formData);
-  credentials.email = credentials.email.toLowerCase();
-
-  try {
-    const { email } = credentials;
-    const res = await ForgotPassword(email);
-
-    if (res.status === 400) {
-      throw new Error(res.response.data.message);
-    }
-    if (res.status === 500) {
-      throw new Error(res.response.data.message);
-    }
-    toast.success('Email para resetear el password enviado');
-    return redirect('/login');
-  } catch (error) {
-    console.log({ error });
-    toast.error(error.response.data.message);
-    return null;
-  }
-};
+import { action } from './action';
 
 const ForgotPasswordPage = () => {
   const navigation = useNavigation();
@@ -59,6 +34,7 @@ const ForgotPasswordPage = () => {
             onKeyDown={(event) => {
               if (event.key === 'Enter') event.preventDefault();
             }}
+            action={action}
           >
             <H3Title
               title="Por favor, introduce tu correo electrónico para restablecer tu

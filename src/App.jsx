@@ -28,9 +28,9 @@ import {
 } from './pages/index.js';
 
 // Actions
-import { action as forgotPasswordAction } from './pages/Auth/ForgotPassword/ForgotPasswordPage.jsx';
-import { action as loginAction } from './pages/Auth/Login/LoginPage.jsx';
-import { action as registerAction } from './pages/Auth/Register/RegisterPage.jsx';
+import { action as forgotPasswordAction } from './pages/Auth/ForgotPassword/action.js';
+import { action as loginAction } from './pages/Auth/Login/action.js';
+import { action as registerAction } from './pages/Auth/Register/action.js';
 import { action as resetPasswordAction } from './pages/Auth/ResetPassword/ResetPasswordPage.jsx';
 import { action as verifyEmailAction } from './pages/Auth/VerifyEmail/VerifyEmailPage.jsx';
 import { action as adopterProfileAction } from './pages/Private/Adopters/AdopterProfile/AdopterProfile.jsx';

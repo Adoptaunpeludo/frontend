@@ -14,13 +14,7 @@ import {
 } from '@tabler/icons-react';
 import { useQueryClient } from '@tanstack/react-query';
 import { useState } from 'react';
-import {
-  Form,
-  Link,
-  redirect,
-  useNavigate,
-  useNavigation,
-} from 'react-router-dom';
+import { Form, Link, useNavigate, useNavigation } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import { H2Title, LogoHeader, Panel } from '../../../components';
 import {
@@ -28,37 +22,9 @@ import {
   radioGroupStyleConfig,
   radioStyleConfig,
 } from '../../../utils/configFormFields';
-import { handleAuthError } from '../../../utils/handleError';
 import { validateField } from '../../../utils/validateField';
-import { googleAuthRegister, register } from '../authService';
-
-export const action = async (data) => {
-  const { request } = data;
-  const formData = await request.formData();
-  const registerData = Object.fromEntries(formData);
-
-  try {
-    const isEqualPass = registerData.password === registerData.repeatPassword;
-
-    if (!isEqualPass) {
-      throw new Error('Los passwords no coinciden!');
-    }
-
-    delete registerData.repeatPassword;
-    registerData.username = registerData.username.toLowerCase();
-    registerData.email = registerData.email.toLowerCase();
-
-    await register(registerData);
-
-    toast.success('Usuario creado, por favor valida tu email');
-
-    return redirect('/login');
-  } catch (error) {
-    const message = handleAuthError(error);
-    toast.error(message);
-    return redirect('/register');
-  }
-};
+import { googleAuthRegister } from '../authService';
+import { action } from './action';
 
 const RegisterPage = () => {
   const [credentials, setCredentials] = useState({});
@@ -141,6 +107,7 @@ const RegisterPage = () => {
               onKeyDown={(event) => {
                 if (event.key === 'Enter') event.preventDefault();
               }}
+              action={action}
             >
               <H2Title title={'Registro'} className={'mx-auto'} />
               {(isLoading || isLoadingOauth) && <Spinner />}
