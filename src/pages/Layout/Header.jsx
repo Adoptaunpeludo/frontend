@@ -38,11 +38,6 @@ const Header = () => {
       href: '/',
       color: 'foreground',
     },
-    {
-      name: 'Conócenos',
-      href: '/about',
-      color: 'foreground',
-    },
 
     {
       name: 'Perros',
@@ -63,6 +58,11 @@ const Header = () => {
     {
       name: 'Asistente',
       href: `/private/assistant`,
+      color: 'foreground',
+    },
+    {
+      name: 'Conócenos',
+      href: '/about',
       color: 'foreground',
     },
   ];

@@ -3,8 +3,6 @@ import { IconUserFilled } from '@tabler/icons-react';
 import { BUCKET_URL } from '../../../../config/config';
 
 const UserMessage = ({ text, isSender, avatar, user = '', isRead, date }) => {
-  console.log(date);
-
   return (
     <div
       className={
