@@ -16,7 +16,7 @@ export const ModalTechnologies = ({ technology = '' }) => {
   return (
     <>
       <Button onPress={onOpen} variant="light">
-        <span className="text-tertiary font-poppins">Leer más</span>
+        <span className="text-tertiary font-poppins font-bold">Leer más</span>
 
         <IconArrowRight stroke={1} className="stroke-tertiary" />
       </Button>
