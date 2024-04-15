@@ -147,47 +147,57 @@ export const technologiesFrontend = [
   {
     img: '/logoTech/axios.svg',
     title: 'Axios',
-    description:
-      'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque pharetra dui ac ante viverra vestibulum. Suspendisse non orci eget ipsum venenatis egestas ut a odio. Suspendisse finibus placerat lectus vel vulputate. Sed sodales a est et sodales. In hac habitasse platea dictumst. Sed velit neque, imperdiet sed fringilla mattis, consequat nec ligula. Praesent molestie libero nibh, sed sollicitudin dolor faucibus ut.',
+    description: `
+    <p>Utilizamos <strong>Axios</strong> para interactuar con nuestros servidores API, permitiéndonos enviar y recibir datos de manera eficiente y segura. </p>
+    <p>Su sintaxis simple y su capacidad para manejar promesas lo convierten en una opción ideal para la gestión de solicitudes HTTP en nuestro frontend.</p>`,
   },
 
   {
     img: '/logoTech/react-query.svg',
     title: 'React Query',
-    description:
-      'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque pharetra dui ac ante viverra vestibulum. Suspendisse non orci eget ipsum venenatis egestas ut a odio. Suspendisse finibus placerat lectus vel vulputate. Sed sodales a est et sodales. In hac habitasse platea dictumst. Sed velit neque, imperdiet sed fringilla mattis, consequat nec ligula. Praesent molestie libero nibh, sed sollicitudin dolor faucibus ut.',
+    description: `
+    <p><strong>React Query</strong> es una librería de gestión de estado para <strong>React</strong> que simplifica la gestión de datos en nuestra aplicación. </p>
+     <p>Nos permite realizar consultas de datos de forma declarativa, manejar el caché de datos de manera eficiente y gestionar automáticamente las solicitudes de datos en función de la lógica de nuestra aplicación. </p>
+    <p>Esto nos ayuda a mantener nuestro código limpio y desacoplado, facilitando el mantenimiento y la escalabilidad de nuestra aplicación.</p>`,
   },
   {
     img: '/logoTech/react.png',
     title: 'React',
-    description:
-      'Lorem ipsum dolor sit amet, consectetur adipiscing elit. <p> Pellentesque pharetra dui ac ante viverra vestibulum. </p><br><p>Suspendisse non orci eget ipsum venenatis egestas ut a odio. Suspendisse finibus placerat lectus vel vulputate. Sed sodales a est et sodales. In hac habitasse platea dictumst. Sed velit neque, imperdiet sed fringilla mattis, consequat nec ligula. Praesent molestie libero nibh, sed sollicitudin dolor faucibus ut.</p>',
+    description: `
+    <p>Utilizamos <strong> React</strong> para construir interfaces de usuario interactivas y dinámicas. </p>
+    <p>Es el núcleo de nuestra aplicación adoptaunpeludo.com, ya que nos permite dividir nuestra interfaz de usuario en componentes reutilizables y construir una interfaz de usuario rica y receptiva. </p>
+    <p>Con React, podemos crear una experiencia de usuario fluida y atractiva para nuestros usuarios finales.</p>`,
   },
 
   {
     img: '/logoTech/NextUI.svg',
     title: 'NextUI',
-    description:
-      'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque pharetra dui ac ante viverra vestibulum. Suspendisse non orci eget ipsum venenatis egestas ut a odio. Suspendisse finibus placerat lectus vel vulputate. Sed sodales a est et sodales. In hac habitasse platea dictumst. Sed velit neque, imperdiet sed fringilla mattis, consequat nec ligula. Praesent molestie libero nibh, sed sollicitudin dolor faucibus ut.',
+    description: `
+    <p><strong>NextUI</strong> es una biblioteca de interfaz de usuario (UI) para React que combina el poder de TailwindCSS con React Aria que nos proporcionó componentes completos (lógica y estilos) para construir las interfaces de usuario accesibles y personalizables. </p>
+    <p>Dado que NextUI utiliza TailwindCSS como su motor de estilos, puedimos utilizar todas las clases de TailwindCSS dentro de sus componentes de NextUI, lo que garantizó un tamaño óptimo de CSS compilado.</p>`,
   },
   {
     img: '/logoTech/tailwind.svg',
-    title: 'Tailwind',
-    description:
-      'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque pharetra dui ac ante viverra vestibulum. Suspendisse non orci eget ipsum venenatis egestas ut a odio. Suspendisse finibus placerat lectus vel vulputate. Sed sodales a est et sodales. In hac habitasse platea dictumst. Sed velit neque, imperdiet sed fringilla mattis, consequat nec ligula. Praesent molestie libero nibh, sed sollicitudin dolor faucibus ut.',
+    title: 'Tailwind CSS',
+    description: `<p><strong>Tailwind CSS</strong> es un framework de CSS utilitario que nos permite diseñar rápidamente interfaces de usuario personalizadas y receptivas. </p>
+    <p>En adoptaunpeludo.com, utilizamos <strong>Tailwind CSS</strong> para estilizar nuestros componentes de manera eficiente, aprovechando su enfoque basado en clases y su conjunto completo de utilidades predefinidas. </p>
+    <p>Esto nos permite diseñar una interfaz de usuario única y atractiva sin tener que escribir CSS personalizado.</p>`,
   },
 
   {
     img: '/logoTech/vitejs.svg',
     title: 'Vitejs',
-    description:
-      'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque pharetra dui ac ante viverra vestibulum. Suspendisse non orci eget ipsum venenatis egestas ut a odio. Suspendisse finibus placerat lectus vel vulputate. Sed sodales a est et sodales. In hac habitasse platea dictumst. Sed velit neque, imperdiet sed fringilla mattis, consequat nec ligula. Praesent molestie libero nibh, sed sollicitudin dolor faucibus ut.',
+    description: `
+    <p><strong>Vite.js </strong> es un build tool  ultrarrápido para aplicaciones web modernas. </p>
+    <p>En adoptaunpeludo.com, utilizamos Vite.js como nuestro entorno de desarrollo para compilar y construir nuestra aplicación de manera eficiente. </p>
+    <p>Su capacidad para realizar actualizaciones en caliente (hot module replacement) y su integración con React y Next.js nos permiten desarrollar rápidamente nuestra aplicación sin sacrificar el rendimiento.</p>`,
   },
   {
     img: '/logoTech/zod.svg',
     title: 'Zod',
-    description:
-      'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque pharetra dui ac ante viverra vestibulum. Suspendisse non orci eget ipsum venenatis egestas ut a odio. Suspendisse finibus placerat lectus vel vulputate. Sed sodales a est et sodales. In hac habitasse platea dictumst. Sed velit neque, imperdiet sed fringilla mattis, consequat nec ligula. Praesent molestie libero nibh, sed sollicitudin dolor faucibus ut.',
+    description: `
+    <p><strong>Zod</strong> es una librería de esquemas  que nos ayuda a validar y manipular datos de manera segura y eficiente. </p>
+    <p>En adoptaunpeludo.com, utilizamos Zod para definir y validar los formularios en nuestra aplicación, asegurando que nuestros datos sean coherentes y estén libres de errores. </p>`,
   },
 ];
 
