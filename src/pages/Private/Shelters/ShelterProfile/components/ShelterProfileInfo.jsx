@@ -12,7 +12,7 @@ import ShelterForm from '../../ShelterForm/ShelterForm';
 import SocialMediaForm from '../../ShelterForm/components/SocialMediaForm';
 import Accommodations from './Acommodations';
 
-const ShelterProfileInfo = ({ data, isLoading }) => {
+const ShelterProfileInfo = ({ data, isLoading, action }) => {
   const {
     cif,
     legalForms,
@@ -87,7 +87,7 @@ const ShelterProfileInfo = ({ data, isLoading }) => {
             </section>
 
             {/* Modal for ShelterData edit info  */}
-            <ShelterForm data={data} />
+            <ShelterForm data={data} action={action} />
           </main>
         </Skeleton>
 

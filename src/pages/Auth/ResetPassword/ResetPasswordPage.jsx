@@ -1,6 +1,5 @@
 import { Button, Input } from '@nextui-org/react';
-import { Form, redirect, useNavigation } from 'react-router-dom';
-import { toast } from 'react-toastify';
+import { Form, useNavigation } from 'react-router-dom';
 import { H3Title } from '../../../components/H3Title.jsx';
 import { LogoHeader } from '../../../components/LogoHeader.jsx';
 import { Panel } from '../../../components/Panel.jsx';
@@ -8,32 +7,9 @@ import {
   buttonStyleConfig,
   inputStyleConfig,
 } from '../../../utils/configFormFields.js';
-import { resetPassword } from '../../Auth/authService.js';
+import { action } from './action.js';
 
-export const action = async ({ request, params }) => {
-  const formData = await request.formData();
-  const credentials = Object.fromEntries(formData);
-  const { password, repeatPassword } = credentials;
-  const { token } = params;
-
-  const isEqualPass = password === repeatPassword;
-
-  try {
-    if (isEqualPass) {
-      const res = await resetPassword({ password, token });
-
-      toast.success('Contraseña cambiada');
-      return redirect('/login');
-    } else {
-      toast.error('Las contraseñas no coinciden');
-      return null;
-    }
-  } catch (error) {
-    toast.error(error.response.data.message);
-    return null;
-  }
-};
-
+action;
 const ResetPasswordPage = () => {
   const navigation = useNavigation();
   const isSubmitting = navigation.state === 'submitting';
@@ -51,6 +27,7 @@ const ResetPasswordPage = () => {
             onKeyDown={(event) => {
               if (event.key === 'Enter') event.preventDefault();
             }}
+            action={action}
           >
             <H3Title
               title="Introduce tu nueva contraseña"

@@ -4,7 +4,7 @@ import { AsideDataColumn, H2Title } from '../../../../../components';
 import { BUCKET_URL } from '../../../../../config/config';
 import { UserFormBio, userInformation } from '../../../shared';
 
-const UserBioInfo = ({ data, isLoading }) => {
+const UserBioInfo = ({ data, isLoading, action }) => {
   const { avatar } = data;
 
   const userData = userInformation(data);
@@ -29,7 +29,7 @@ const UserBioInfo = ({ data, isLoading }) => {
             <AsideDataColumn dataColumn={userData} />
           </div>
         </div>
-        <UserFormBio data={data} />
+        <UserFormBio data={data} action={action} />
       </aside>
     </Skeleton>
   );

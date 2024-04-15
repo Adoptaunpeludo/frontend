@@ -31,17 +31,17 @@ import {
 import { action as forgotPasswordAction } from './pages/Auth/ForgotPassword/action.js';
 import { action as loginAction } from './pages/Auth/Login/action.js';
 import { action as registerAction } from './pages/Auth/Register/action.js';
-import { action as resetPasswordAction } from './pages/Auth/ResetPassword/ResetPasswordPage.jsx';
-import { action as verifyEmailAction } from './pages/Auth/VerifyEmail/VerifyEmailPage.jsx';
-import { action as adopterProfileAction } from './pages/Private/Adopters/AdopterProfile/AdopterProfile.jsx';
-import { action as mutateAnimalAction } from './pages/Private/Shelters/AnimalForm/AnimalForm.jsx';
-import { action as shelterProfileAction } from './pages/Private/Shelters/ShelterProfile/ShelterProfile.jsx';
+import { action as resetPasswordAction } from './pages/Auth/ResetPassword/action.js';
+import { action as verifyEmailAction } from './pages/Auth/VerifyEmail/action.js';
+import { action as adopterProfileAction } from './pages/Private/Adopters/AdopterProfile/action.js';
+import { action as mutateAnimalAction } from './pages/Private/Shelters/AnimalForm/action.js';
+import { action as shelterProfileAction } from './pages/Private/Shelters/ShelterProfile/action.js';
 
 // Loaders
-import { loader as verifyEmailLoader } from './pages/Auth/VerifyEmail/VerifyEmailPage.jsx';
-import { loader as userFavsLoader } from './pages/Private/Adopters/AdopterProfile/AdopterProfile.jsx';
-import { loader as updateAnimalLoader } from './pages/Private/Shelters/AnimalForm/AnimalForm.jsx';
-import { loader as userAnimalsLoader } from './pages/Private/Shelters/ShelterProfile/ShelterProfile.jsx';
+import { loader as verifyEmailLoader } from './pages/Auth/VerifyEmail/loader.js';
+import { loader as userFavsLoader } from './pages/Private/Adopters/AdopterProfile/loader.js';
+import { loader as updateAnimalLoader } from './pages/Private/Shelters/AnimalForm/loader.js';
+import { loader as userAnimalsLoader } from './pages/Private/Shelters/ShelterProfile/loader.js';
 import { loader as animalDetailsLoader } from './pages/Public/Animals/AnimalDetails/AnimalDetailsPage.jsx';
 import { loader as animalsLoader } from './pages/Public/Animals/AnimalsPage.jsx';
 import { loader as landingAnimalsLoader } from './pages/Public/Landing/LandingPage.jsx';

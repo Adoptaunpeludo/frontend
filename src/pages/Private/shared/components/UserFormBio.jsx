@@ -28,7 +28,7 @@ import {
 } from '../../../../utils/configFormFields';
 import { useValidateFormFields } from '../../../../hooks/useValidateFormFields';
 
-export const UserFormBio = ({ data }) => {
+export const UserFormBio = ({ data, action }) => {
   const updateBioModal = useDisclosure();
   const { isOpen, onOpen, onOpenChange, onClose } = updateBioModal;
   const { saveBioModal } = useModalContext();
@@ -82,6 +82,7 @@ export const UserFormBio = ({ data }) => {
           onKeyDown={(event) => {
             if (event.key === 'Enter') event.preventDefault();
           }}
+          action={action}
         >
           <ModalContent>
             <>

@@ -1,58 +1,9 @@
 import { TitleSection } from '../../../components';
-import { verifyEmail } from '../../Auth/authService';
 import { Button, Input, Link, Spinner } from '@nextui-org/react';
-import { Form, redirect, useLoaderData } from 'react-router-dom';
-import { resendValidationEmail } from '../authService';
+import { Form, useLoaderData } from 'react-router-dom';
 import { useState } from 'react';
-import { toast } from 'react-toastify';
 import { validateField } from '../../../utils/validateField';
-
-export const action = async ({ request }) => {
-  const formData = await request.formData();
-  const credentials = Object.fromEntries(formData);
-  credentials.email = credentials.email.toLowerCase();
-
-  try {
-    const { email } = credentials;
-    console.log(email);
-    const res = await resendValidationEmail(email);
-    console.log({ res });
-
-    if (res.status === 400) {
-      throw new Error(res.response.data.message);
-    }
-    if (res.status === 500) {
-      throw new Error(res.response.data.message);
-    }
-
-    toast.success('Email de validacion enviado');
-
-    return redirect('/login');
-  } catch (error) {
-    console.log({ error });
-    toast.error(error.response.data.message);
-    return null;
-  }
-};
-
-export const loader = async ({ params }) => {
-  try {
-    const { token } = params;
-    const res = await verifyEmail(token);
-    if (res.status === 200) {
-      return {
-        success: true,
-        message: res?.data?.message,
-      };
-    }
-    throw new Error(res.response.data.message);
-  } catch (error) {
-    return {
-      success: false,
-      message: error.message,
-    };
-  }
-};
+import { action } from './action';
 
 const RenderSuccessMessage = () => (
   <div className="flex flex-col">
@@ -74,7 +25,7 @@ const RenderSuccessMessage = () => (
     </div>
   </div>
 );
-
+action;
 const RenderErrorMessage = () => {
   const [isResendingEmail, setIsResendingEmail] = useState(false);
   const [error, setError] = useState('');
@@ -85,7 +36,11 @@ const RenderErrorMessage = () => {
   };
 
   return (
-    <Form method="post" className="flex flex-col gap-6 max-w-lg  pt-8">
+    <Form
+      method="post"
+      className="flex flex-col gap-6 max-w-lg  pt-8"
+      action={action}
+    >
       <p>
         Hubo un error al validar tu cuenta, por favor introduce tu correo para
         volver a intentarlo:
