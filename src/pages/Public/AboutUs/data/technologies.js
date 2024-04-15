@@ -219,7 +219,7 @@ export const technologiesManagement = [
     <p><strong>Figma</strong> es nuestra herramienta principal para el diseño de interfaces de usuario y la colaboración en diseño. </p>
     <p>Su enfoque basado en la nube permite a nuestro equipo trabajar en conjunto en tiempo real, lo que ha agilizado enormemente nuestro proceso de diseño y prototipado. </p>
     <p>Además, <strong>Figma</strong> nos ha permitido crear diseños iterativos y realizar pruebas de usuario de forma rápida y eficiente.</p>
-    <p><a href='https://www.figma.com/file/hrtuLqd3baM1SXYRsLhJMI/Adopta-un-peludo----landing?type=design&node-id=489%3A17650&mode=design&t=j9I6NDs5FrRKIsgU-1' target="_blank" style="color:#3E73C7">https://figma.com/Adoptaunpeludo</a></p>
+    <p><a href='https://www.figma.com/file/hrtuLqd3baM1SXYRsLhJMI/Adopta-un-peludo----landing?type=design&node-id=0%3A1&mode=design&t=j9I6NDs5FrRKIsgU-1' target="_blank" style="color:#3E73C7">https://figma.com/Adoptaunpeludo</a></p>
     
 `,
   },
