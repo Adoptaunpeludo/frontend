@@ -20,7 +20,7 @@ export const loader = (queryClient) => async () => {
 
     return { user, chats, notifications };
   } catch (error) {
-    if (error.response.status && error.response.status === 401) {
+    if (error?.response?.status && error?.response?.status === 401) {
       return redirect('/login');
     }
     return { user: null, notifications: null };
