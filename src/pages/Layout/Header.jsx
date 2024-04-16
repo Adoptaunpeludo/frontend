@@ -27,6 +27,7 @@ const Header = () => {
     user?.username
   );
   const isFirstLoad = localStorage.getItem('isFirstLoad') === 'true';
+  const isLoggedIn = localStorage.getItem('isLoggedIn') === 'true';
 
   const handleMenuOpenChange = (open) => {
     setIsMenuOpen(open);
@@ -117,7 +118,7 @@ const Header = () => {
         <NavbarItem>
           {!isFirstLoad && (isLoadingUser || isLoadingChats) ? (
             <Spinner />
-          ) : !user ? (
+          ) : !user || !isLoggedIn ? (
             <Button
               as={Link}
               color="primary"

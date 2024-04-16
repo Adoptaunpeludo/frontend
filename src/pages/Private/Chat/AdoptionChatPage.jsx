@@ -171,7 +171,7 @@ const AdoptionChatPage = () => {
         className="max-w-screen-xl mx-auto flex  flex-col sm:flex-row"
       >
         <aside className="flex flex-col gap-4 mb-5 max-sm:px-5 sm:w-128  order-2 sm:order-1 mx-1 sm:overflow-y-scroll pt-2 sm:h-132">
-          {chats.map((chat) => (
+          {chats?.map((chat) => (
             <NavLink
               key={chat.slug}
               to={`/private/chat/${chat.slug}`}

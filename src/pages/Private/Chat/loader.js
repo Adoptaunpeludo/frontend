@@ -1,3 +1,4 @@
+import { redirect } from 'react-router-dom';
 import { userChatsQuery } from '../Shelters/useUserChats';
 import { userQuery } from '../useUser';
 import { receiverDataQuery } from './useReceiverData';
@@ -23,13 +24,15 @@ export const loader =
       );
 
       const chats = await queryClient.ensureQueryData(
-        userChatsQuery(sender.username)
+        userChatsQuery(sender?.username)
       );
 
       return { history, receiver, chats, sender };
     } catch (error) {
       console.log(error);
-
-      throw error;
+      if (error.response.status && error.response.status === 401) {
+        return redirect('/login');
+      }
+      return null;
     }
   };

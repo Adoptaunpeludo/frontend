@@ -1,6 +1,6 @@
-import { toast } from 'react-toastify';
 import { userChatsQuery } from '../useUserChats';
 import { userAnimalsQuery } from '../useUserAnimals';
+import { redirect } from 'react-router-dom';
 
 export const loader =
   (queryClient) =>
@@ -14,8 +14,9 @@ export const loader =
       );
       return { chats, animals };
     } catch (error) {
-      console.log(error);
-      toast.error('Error cargando perfil. ¿Estás logueado?');
+      if (error.response.status && error.response.status === 401) {
+        return redirect('/login');
+      }
       throw error;
     }
   };
