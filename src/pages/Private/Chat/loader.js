@@ -33,6 +33,6 @@ export const loader =
       if (error.response.status && error.response.status === 401) {
         return redirect('/login');
       }
-      return null;
+      return error;
     }
   };

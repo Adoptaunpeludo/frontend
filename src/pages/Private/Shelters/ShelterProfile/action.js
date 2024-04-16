@@ -65,7 +65,7 @@ export const action =
         if (error.response.status && error.response.status === 401) {
           return redirect('/login');
         }
-        return null;
+        return error;
       }
     }
   };

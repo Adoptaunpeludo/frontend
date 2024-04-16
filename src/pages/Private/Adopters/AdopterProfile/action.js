@@ -49,7 +49,7 @@ export const action =
         closeUpdatePasswordModal();
         return null;
       } catch (error) {
-        return null;
+        return error;
       }
     }
   };

@@ -17,6 +17,6 @@ export const loader =
       if (error.response.status && error.response.status === 401) {
         return redirect('/login');
       }
-      throw error;
+      return error;
     }
   };
