@@ -35,7 +35,8 @@ const RegisterPage = () => {
   const navigate = useNavigate();
   const queryClient = useQueryClient();
 
-  const isLoading = navigation.state === 'submitting';
+  const isSubmitting = navigation.state === 'submitting';
+  const isLoading = navigation.state === 'loading';
 
   const handleChange = (event) => {
     const { name, value } = event.target;
@@ -77,7 +78,6 @@ const RegisterPage = () => {
     } catch (error) {
       console.log(error);
       setIsLoadingOauth(false);
-      toast.error(error.response.data.message);
     }
   };
 
@@ -108,7 +108,7 @@ const RegisterPage = () => {
               action={action}
             >
               <H2Title title={'Registro'} className={'mx-auto'} />
-              {(isLoading || isLoadingOauth) && <Spinner />}
+              {(isSubmitting || isLoadingOauth) && <Spinner />}
               <RadioGroup
                 name="role"
                 label="Selecciona tu perfil"
@@ -117,12 +117,21 @@ const RegisterPage = () => {
                 onChange={handleChange}
                 className="mx-auto"
                 classNames={radioGroupStyleConfig}
+                isDisabled={isSubmitting}
                 isRequired
               >
-                <Radio value="shelter" classNames={radioStyleConfig}>
+                <Radio
+                  value="shelter"
+                  classNames={radioStyleConfig}
+                  isDisabled={isSubmitting}
+                >
                   Protectora
                 </Radio>
-                <Radio value="adopter" classNames={radioStyleConfig}>
+                <Radio
+                  value="adopter"
+                  classNames={radioStyleConfig}
+                  isDisabled={isSubmitting}
+                >
                   Adoptante
                 </Radio>
               </RadioGroup>
@@ -137,6 +146,7 @@ const RegisterPage = () => {
                   onPress={() => {
                     onPressLoginOrigin('google');
                   }}
+                  isDisabled={isSubmitting}
                 >
                   <IconBrandGoogle stroke={1} className="stroke-foreground" />
                 </Button>
@@ -149,6 +159,7 @@ const RegisterPage = () => {
                   onPress={() => {
                     onPressLoginOrigin('mail');
                   }}
+                  isDisabled={isSubmitting}
                 >
                   <IconMail stroke={1} className="stroke-foreground" />
                 </Button>
@@ -167,6 +178,7 @@ const RegisterPage = () => {
                   type="standard"
                   shape="pill"
                   width={'100%'}
+                  isDisabled={isSubmitting}
                 />
               </div>
               <div
@@ -176,7 +188,7 @@ const RegisterPage = () => {
                 <div className="flex w-full flex-wrap md:flex-nowrap gap-4">
                   <Input
                     name="username"
-                    isDisabled={!credentials.role}
+                    isDisabled={!credentials.role || isSubmitting}
                     className="min-w-72 "
                     classNames={inputStyleConfig}
                     type="text"
@@ -196,7 +208,7 @@ const RegisterPage = () => {
 
                   <Input
                     name="email"
-                    isDisabled={!credentials.role}
+                    isDisabled={!credentials.role || isSubmitting}
                     className="min-w-72 "
                     classNames={inputStyleConfig}
                     type="email"
@@ -211,7 +223,7 @@ const RegisterPage = () => {
                 <div className="flex w-full flex-wrap md:flex-nowrap gap-4">
                   <Input
                     name="password"
-                    isDisabled={!credentials.role}
+                    isDisabled={!credentials.role || isSubmitting}
                     className="min-w-72 "
                     classNames={inputStyleConfig}
                     type="password"
@@ -225,7 +237,7 @@ const RegisterPage = () => {
 
                   <Input
                     name="repeatPassword"
-                    isDisabled={!credentials.role}
+                    isDisabled={!credentials.role || isSubmitting}
                     className="min-w-72 "
                     classNames={inputStyleConfig}
                     type="password"
@@ -239,7 +251,7 @@ const RegisterPage = () => {
                 </div>
                 <div className="flex justify-center">
                   <Button
-                    isDisabled={!enableButton}
+                    isDisabled={!enableButton || isSubmitting}
                     type="submit"
                     color="primary"
                     variant="solid"

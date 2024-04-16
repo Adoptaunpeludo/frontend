@@ -29,7 +29,8 @@ const LoginPage = () => {
   const queryClient = useQueryClient();
   const navigate = useNavigate();
 
-  const isLoading = navigation.state === 'submitting';
+  const isSubmitting = navigation.state === 'submitting';
+  const isLoading = navigation.state === 'loading';
 
   const handleChange = (event) => {
     const { name, value } = event.target;
@@ -108,6 +109,7 @@ const LoginPage = () => {
                 onPress={() => {
                   onPressLoginOrigin('google');
                 }}
+                isDisabled={isSubmitting}
               >
                 <IconBrandGoogle stroke={1} className="stroke-foreground" />
               </Button>
@@ -120,6 +122,7 @@ const LoginPage = () => {
                 onPress={() => {
                   onPressLoginOrigin('mail');
                 }}
+                isDisabled={isSubmitting}
               >
                 <IconMail stroke={1} className="stroke-foreground" />
               </Button>
@@ -138,6 +141,7 @@ const LoginPage = () => {
                 text="signin_with"
                 type="standard"
                 shape="pill"
+                isDisabled={isSubmitting}
               />
             </div>
             {/* <div className="flex justify-center pb-5 border-b-1 border-primary">
@@ -157,7 +161,7 @@ const LoginPage = () => {
                 errorMessage={errors.email}
                 isRequired
                 classNames={inputStyleConfig}
-                isDisabled={isLoading}
+                isDisabled={isSubmitting}
               />
               <Input
                 type="password"
@@ -169,11 +173,11 @@ const LoginPage = () => {
                 onChange={handleChange}
                 isRequired
                 classNames={inputStyleConfig}
-                isDisabled={isLoading}
+                isDisabled={isSubmitting}
               />
               <div className="flex justify-center">
                 <Button
-                  isDisabled={enableButton || isLoading}
+                  isDisabled={enableButton || isSubmitting}
                   type="submit"
                   color="primary"
                   variant="solid"

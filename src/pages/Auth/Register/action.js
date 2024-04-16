@@ -1,7 +1,6 @@
 import { toast } from 'react-toastify';
 import { register } from '../authService';
 import { redirect } from 'react-router-dom';
-import { handleAuthError } from '../../../utils/handleError';
 
 export const action = async (data) => {
   const { request } = data;
@@ -25,8 +24,6 @@ export const action = async (data) => {
 
     return redirect('/login');
   } catch (error) {
-    const message = handleAuthError(error);
-    toast.error(message);
     return redirect('/register');
   }
 };
