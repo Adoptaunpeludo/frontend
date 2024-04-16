@@ -80,6 +80,7 @@ const RegisterPage = () => {
       toast.error(error.response.data.message);
     }
   };
+
   const errorMessage = (error) => {
     setIsLoadingOauth(false);
     console.log(error);
@@ -104,9 +105,6 @@ const RegisterPage = () => {
             <Form
               method="post"
               className="flex flex-col gap-6  mx-auto px-10 py-8 justify-center"
-              onKeyDown={(event) => {
-                if (event.key === 'Enter') event.preventDefault();
-              }}
               action={action}
             >
               <H2Title title={'Registro'} className={'mx-auto'} />
