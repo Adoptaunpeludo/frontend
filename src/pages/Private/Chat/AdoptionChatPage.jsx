@@ -45,14 +45,14 @@ const AdoptionChatPage = () => {
     isFirstLoad,
     isFetchingChatHistory || isLoading
   );
-  const { data: chats } = useUserChats(sender.username);
+  const { data: chats } = useUserChats(sender?.username);
 
   useEffect(() => {
     if (chatHistory) {
-      const history = mapUserChatHistory(chatHistory, user.username);
+      const history = mapUserChatHistory(chatHistory, user?.username);
       setChatMessages(history);
     }
-  }, [chatHistory, setChatMessages, user.username]);
+  }, [chatHistory, setChatMessages, user?.username]);
 
   useEffect(() => {
     setIsFirstLoad(true);
@@ -66,8 +66,8 @@ const AdoptionChatPage = () => {
       send(
         JSON.stringify({
           type: 'join-chat-room',
-          username: user.username,
-          senderUsername: receiver.username,
+          username: user?.username,
+          senderUsername: receiver?.username,
           room: chat,
           role: user.role,
         })
@@ -79,7 +79,7 @@ const AdoptionChatPage = () => {
         send(
           JSON.stringify({
             type: 'leave-chat-room',
-            username: user.username,
+            username: user?.username,
             room: chat,
             role: user.role,
           })
@@ -118,8 +118,8 @@ const AdoptionChatPage = () => {
   useEffect(() => {
     if (
       !user ||
-      (user.role === 'adopter' && user.username !== adopter) ||
-      (user.role === 'shelter' && user.username !== shelter)
+      (user.role === 'adopter' && user?.username !== adopter) ||
+      (user.role === 'shelter' && user?.username !== shelter)
     ) {
       navigate('/');
     }
@@ -137,9 +137,9 @@ const AdoptionChatPage = () => {
           type: 'chat-message',
           message: text,
           room: chat,
-          senderUsername: user.username,
+          senderUsername: user?.username,
           receiverMail: receiver.email,
-          receiverUsername: receiver.username,
+          receiverUsername: receiver?.username,
           receiverUserId: receiver.id,
         })
       );
@@ -243,7 +243,7 @@ const AdoptionChatPage = () => {
                         key={index}
                         text={message.text}
                         isSender={message.isSender}
-                        user={receiver.username}
+                        user={receiver?.username}
                         isRead={message.isRead}
                         date={message.date}
                         avatar={
