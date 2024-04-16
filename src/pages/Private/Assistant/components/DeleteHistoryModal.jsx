@@ -9,15 +9,17 @@ import {
   Spinner,
 } from '@nextui-org/react';
 import { useQueryClient } from '@tanstack/react-query';
-import { useNavigation, useParams } from 'react-router-dom';
+import { useNavigation } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import TrashCan from './TrashCan';
 import { deleteChatHistory } from '../service';
+import { useUser } from '../../useUser';
+import { useState } from 'react';
 
 export default function DeleteModal({ deleteMessages }) {
   const { isOpen, onOpen, onOpenChange } = useDisclosure();
-  const params = useParams();
-  const { username } = params;
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const { data: user } = useUser();
   const navigation = useNavigation();
 
   const isLoading = navigation.state === 'loading';
@@ -26,16 +28,19 @@ export default function DeleteModal({ deleteMessages }) {
 
   const handleDeleteHistory = async (onClose) => {
     try {
-      const data = await deleteChatHistory();
+      setIsSubmitting(true);
+      const data = await deleteChatHistory(user?.wsToken);
       queryClient.invalidateQueries({
-        queryKey: ['chat-history', username],
+        queryKey: ['chat-history', user?.username],
       });
       deleteMessages();
       toast.success(data.message);
       onClose();
+      setIsSubmitting(false);
     } catch (error) {
       if (error instanceof Error) return toast.error(error.message);
       if (typeof error === 'string') return toast.error(error);
+      setIsSubmitting(false);
       return toast.error('Error desconocido, revise los logs');
     }
   };
@@ -67,10 +72,15 @@ export default function DeleteModal({ deleteMessages }) {
                   <ModalHeader className="flex flex-col gap-1">
                     Borrar Historial
                   </ModalHeader>
-                  <ModalBody>
-                    <p>¿Seguro que deseas borrar el historial del chat?</p>
-                    <small>Esta acción no puede ser deshecha</small>
-                  </ModalBody>
+                  {isSubmitting ? (
+                    <Spinner />
+                  ) : (
+                    <ModalBody>
+                      <p>¿Seguro que deseas borrar el historial del chat?</p>
+                      <small>Esta acción no puede ser deshecha</small>
+                    </ModalBody>
+                  )}
+
                   <ModalFooter>
                     <Button color="default" variant="light" onPress={onClose}>
                       Close
