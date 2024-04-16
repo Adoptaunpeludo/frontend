@@ -9,21 +9,13 @@ export const action = async ({ request }) => {
 
   try {
     const { email } = credentials;
-    const res = await resendValidationEmail(email);
-
-    if (res.status === 400) {
-      throw new Error(res.response.data.message);
-    }
-    if (res.status === 500) {
-      throw new Error(res.response.data.message);
-    }
+    await resendValidationEmail(email);
 
     toast.success('Email de validacion enviado');
 
     return redirect('/login');
   } catch (error) {
-    console.log({ error });
-    toast.error(error.response.data.message);
+    console.log(error);
     return null;
   }
 };

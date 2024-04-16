@@ -12,7 +12,7 @@ export const action = async ({ request, params }) => {
 
   try {
     if (isEqualPass) {
-      const res = await resetPassword({ password, token });
+      await resetPassword({ password, token });
 
       toast.success('Contraseña cambiada');
       return redirect('/login');
@@ -21,7 +21,6 @@ export const action = async ({ request, params }) => {
       return null;
     }
   } catch (error) {
-    toast.error(error.response.data.message);
     return null;
   }
 };

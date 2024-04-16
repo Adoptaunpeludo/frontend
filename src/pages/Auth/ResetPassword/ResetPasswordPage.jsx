@@ -1,4 +1,4 @@
-import { Button, Input } from '@nextui-org/react';
+import { Button, Input, Spinner } from '@nextui-org/react';
 import { Form, useNavigation } from 'react-router-dom';
 import { H3Title } from '../../../components/H3Title.jsx';
 import { LogoHeader } from '../../../components/LogoHeader.jsx';
@@ -29,6 +29,7 @@ const ResetPasswordPage = () => {
               title="Introduce tu nueva contraseña"
               className={'normal-case text-pretty'}
             />
+            {isSubmitting && <Spinner />}
             <Input
               name="password"
               className="min-w-72 "
