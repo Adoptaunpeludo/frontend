@@ -1,10 +1,10 @@
-import { isAxiosError } from 'axios';
 import { toast } from 'react-toastify';
 import { updatePassword } from '../../shared/service/ChangePasswordService';
 import { deleteAnimal } from '../AnimalForm/service';
 import { updateProfile } from '../../shared/service/updateUserService';
 import { isMatchFormData } from '../../../../utils/isMatchFormData';
 import { getCurrentUser } from '../../service';
+import { redirect } from 'react-router-dom';
 
 export const action =
   (closeBioModal, closeShelterModal, closeUpdatePasswordModal, queryClient) =>
@@ -32,9 +32,10 @@ export const action =
         closeShelterModal();
         return null;
       } catch (error) {
-        if (isAxiosError(error) && error.response.status === 400)
-          return toast.error('Error actualizando el perfil del Refugio');
-        throw error;
+        if (error.response.status && error.response.status === 401) {
+          return redirect('/login');
+        }
+        return null;
       }
     }
 
@@ -47,9 +48,10 @@ export const action =
         toast.success(`Anuncio de adopción borrado`);
         return null;
       } catch (error) {
-        if (isAxiosError(error) && error.response.status === 400)
-          return toast.error('Error borrando el anuncio de adopción');
-        throw error;
+        if (error.response.status && error.response.status === 401) {
+          return redirect('/login');
+        }
+        return null;
       }
     }
 
@@ -60,9 +62,10 @@ export const action =
         closeUpdatePasswordModal();
         return null;
       } catch (error) {
-        if (isAxiosError(error) && error.response.status === 400)
-          return toast.error('Error cambiando password');
-        throw error;
+        if (error.response.status && error.response.status === 401) {
+          return redirect('/login');
+        }
+        return error;
       }
     }
   };

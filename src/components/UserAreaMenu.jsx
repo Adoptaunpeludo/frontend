@@ -19,6 +19,7 @@ import { useNotifications } from '../pages/Private/useNotifications.js';
 
 export const UserAreaMenu = ({ user, chats }) => {
   const { isReady, send } = useWebSocketContext();
+
   const navigate = useNavigate();
   const queryClient = useQueryClient();
   const { data: notifications, isFetching: isFetchingNotifications } =
@@ -122,9 +123,9 @@ export const UserAreaMenu = ({ user, chats }) => {
 
         <DropdownItem key="chats" textValue="user chats">
           <Link
-            href={`/private/chat/${chats.at(-1)?.slug}`}
+            href={`/private/chat/${chats?.at(-1)?.slug}`}
             color="foreground"
-            isDisabled={chats.length === 0}
+            isDisabled={chats?.length === 0}
             className="capitalize w-full"
           >
             chats

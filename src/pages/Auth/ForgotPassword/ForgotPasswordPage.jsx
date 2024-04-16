@@ -1,4 +1,4 @@
-import { Button, Input } from '@nextui-org/react';
+import { Button, Input, Spinner } from '@nextui-org/react';
 import { Form, useNavigation } from 'react-router-dom';
 import { H3Title, LogoHeader, Panel } from '../../../components';
 import {
@@ -38,6 +38,7 @@ const ForgotPasswordPage = () => {
                 contraseña"
               className={'normal-case text-pretty'}
             />
+            {isSubmitting && <Spinner />}
             <div className="flex flex-col gap-3">
               <Input
                 placeholder="Introduce tu email"
@@ -56,7 +57,7 @@ const ForgotPasswordPage = () => {
                 color="primary"
                 variant="solid"
                 size="lg"
-                isLoading={isSubmitting}
+                isDisabled={isSubmitting}
                 className={buttonStyleConfig}
               >
                 Enviar

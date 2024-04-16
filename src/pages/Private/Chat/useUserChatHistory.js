@@ -6,6 +6,7 @@ export const chatHistoryQuery = (chat) => {
     queryKey: ['chat-history', chat],
     queryFn: () => getChatHistory(chat),
     staleTime: 1000,
+    retry: false,
   };
 };
 

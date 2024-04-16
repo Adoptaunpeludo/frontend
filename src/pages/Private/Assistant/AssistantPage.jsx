@@ -9,6 +9,7 @@ import TextMessageBox from './components/TextMessageBox';
 import UserMessage from './components/UserMessage';
 import { chatStreamGenerator } from './service';
 import { useChatHistory } from './useChatHistory';
+import { useNavigate } from 'react-router-dom';
 
 const AssistantPage = () => {
   const { data: user } = useUser();
@@ -16,6 +17,7 @@ const AssistantPage = () => {
   const [isFirstLoad, setIsFirstLoad] = useState(false);
   const { data: chatHistory, isFetching } = useChatHistory(user.username);
   const { messagesEndRef } = useScroll(messages, isFirstLoad, isFetching);
+  const navigate = useNavigate();
 
   useEffect(() => {
     if (chatHistory) {
@@ -56,9 +58,8 @@ const AssistantPage = () => {
         });
       }
     } catch (error) {
-      if (error instanceof Error) return toast.error(error.message);
-      if (typeof error === 'string') return toast.error(error);
-      return toast.error('Error desconocido, revise los logs');
+      toast.info('El servicio de asistente no está disponible actualmente');
+      return navigate('/');
     }
   };
 

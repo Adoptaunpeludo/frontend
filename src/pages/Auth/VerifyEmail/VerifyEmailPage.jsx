@@ -27,7 +27,6 @@ const RenderSuccessMessage = () => (
 );
 action;
 const RenderErrorMessage = () => {
-  const [isResendingEmail, setIsResendingEmail] = useState(false);
   const [error, setError] = useState('');
 
   const handleChange = (event) => {
@@ -62,15 +61,9 @@ const RenderErrorMessage = () => {
         color="primary"
         variant="solid"
         size="lg"
-        onClick={() => {
-          setIsResendingEmail(true);
-        }}
       >
         Enviar
       </Button>
-      {isResendingEmail && (
-        <p className="text-center">Tu mensaje se ha enviado correctamente</p>
-      )}
     </Form>
   );
 };

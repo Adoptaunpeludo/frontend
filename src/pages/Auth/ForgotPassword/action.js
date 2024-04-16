@@ -9,19 +9,11 @@ export const action = async ({ request }) => {
 
   try {
     const { email } = credentials;
-    const res = await ForgotPassword(email);
-
-    if (res.status === 400) {
-      throw new Error(res.response.data.message);
-    }
-    if (res.status === 500) {
-      throw new Error(res.response.data.message);
-    }
+    await ForgotPassword(email);
     toast.success('Email para resetear el password enviado');
     return redirect('/login');
   } catch (error) {
     console.log({ error });
-    toast.error(error.response.data.message);
     return null;
   }
 };

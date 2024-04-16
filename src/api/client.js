@@ -1,9 +1,36 @@
 import axios from 'axios';
-
+import { toast } from 'react-toastify';
 const client = axios.create({
   baseURL: '/api',
   // withCredentials: true,
 });
+
+client.interceptors.response.use(
+  (response) => {
+    return response;
+  },
+  (error) => {
+    console.log(error);
+
+    if (error.response.status && error.response.status === 401) {
+      localStorage.setItem('isLoggedIn', false);
+      localStorage.removeItem('accessToken');
+    }
+
+    if (error.response) {
+      const errorMessage =
+        error.response.data.message || 'Error en la solicitud';
+
+      toast(errorMessage);
+    } else if (error.request) {
+      console.error('Error en la solicitud:', error.request);
+    } else {
+      console.error('Error:', error.message);
+    }
+
+    return Promise.reject(error);
+  }
+);
 
 export const setAuthorizationHeader = (token) => {
   client.defaults.headers.common['Authorization'] = `Bearer ${token}`;

@@ -3,6 +3,7 @@ import { useQueryClient } from '@tanstack/react-query';
 import { addFav, deleteFav } from '../pages/Public/Animals/service';
 import Heart from 'react-animated-heart';
 import { toast } from 'react-toastify';
+import { useNavigate } from 'react-router-dom';
 
 const initialState = {
   liked: false,
@@ -26,6 +27,7 @@ const reducer = (state, action) => {
 
 export const HeartIcon = ({ numFavs, userFavs, id, data }) => {
   const [state, dispatch] = useReducer(reducer, initialState);
+  const navigate = useNavigate();
 
   const queryClient = useQueryClient();
 
@@ -50,8 +52,10 @@ export const HeartIcon = ({ numFavs, userFavs, id, data }) => {
       });
       dispatch({ type: 'toggleLikeSuccess' });
     } catch (error) {
-      toast.error(error.response.data.message);
       dispatch({ type: 'toggleLikeError' });
+      if (error.response.status && error.response.status === 401) {
+        return navigate('/login');
+      }
       throw error;
     }
   };

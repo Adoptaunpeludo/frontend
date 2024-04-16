@@ -1,4 +1,3 @@
-import { isAxiosError } from 'axios';
 import { toast } from 'react-toastify';
 import { updatePassword } from '../../shared/service/ChangePasswordService';
 import { deleteFav } from '../../../Public/Animals/service';
@@ -24,9 +23,7 @@ export const action =
         closeBioModal();
         return null;
       } catch (error) {
-        if (isAxiosError(error) && error.response.status === 400)
-          return toast.error('Error actualizando perfil');
-        throw error;
+        return null;
       }
     }
 
@@ -42,9 +39,7 @@ export const action =
         });
         return null;
       } catch (error) {
-        if (isAxiosError(error) && error.response.status === 400)
-          return toast.error('Error al borrar de favoritos');
-        throw error;
+        return null;
       }
     }
     if (intent === 'change-password') {
@@ -54,9 +49,7 @@ export const action =
         closeUpdatePasswordModal();
         return null;
       } catch (error) {
-        if (isAxiosError(error) && error.response.status === 400)
-          return toast.error('Error cambiando password');
-        throw error;
+        return error;
       }
     }
   };
