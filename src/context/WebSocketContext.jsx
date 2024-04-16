@@ -27,8 +27,8 @@ const WebSocketContextProvider = ({ children }) => {
         console.log('Disconnected from ws server');
         clearInterval(interval);
         setIsReady(false);
-        const minReconnectDelay = 10000;
-        const maxReconnectDelay = 30000;
+        const minReconnectDelay = 1000;
+        const maxReconnectDelay = 3000;
         const reconnectDelay =
           Math.floor(
             Math.random() * (maxReconnectDelay - minReconnectDelay + 1)
