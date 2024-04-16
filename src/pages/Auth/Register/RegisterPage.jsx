@@ -117,20 +117,20 @@ const RegisterPage = () => {
                 onChange={handleChange}
                 className="mx-auto"
                 classNames={radioGroupStyleConfig}
-                isDisabled={isSubmitting}
+                isDisabled={isSubmitting || isLoadingOauth}
                 isRequired
               >
                 <Radio
                   value="shelter"
                   classNames={radioStyleConfig}
-                  isDisabled={isSubmitting}
+                  isDisabled={isSubmitting || isLoadingOauth}
                 >
                   Protectora
                 </Radio>
                 <Radio
                   value="adopter"
                   classNames={radioStyleConfig}
-                  isDisabled={isSubmitting}
+                  isDisabled={isSubmitting || isLoadingOauth}
                 >
                   Adoptante
                 </Radio>
@@ -146,7 +146,7 @@ const RegisterPage = () => {
                   onPress={() => {
                     onPressLoginOrigin('google');
                   }}
-                  isDisabled={isSubmitting}
+                  isDisabled={isSubmitting || isLoadingOauth}
                 >
                   <IconBrandGoogle stroke={1} className="stroke-foreground" />
                 </Button>
@@ -159,7 +159,7 @@ const RegisterPage = () => {
                   onPress={() => {
                     onPressLoginOrigin('mail');
                   }}
-                  isDisabled={isSubmitting}
+                  isDisabled={isSubmitting || isLoadingOauth}
                 >
                   <IconMail stroke={1} className="stroke-foreground" />
                 </Button>
@@ -178,7 +178,7 @@ const RegisterPage = () => {
                   type="standard"
                   shape="pill"
                   width={'100%'}
-                  isDisabled={isSubmitting}
+                  isDisabled={isSubmitting || isLoadingOauth}
                 />
               </div>
               <div
@@ -188,7 +188,9 @@ const RegisterPage = () => {
                 <div className="flex w-full flex-wrap md:flex-nowrap gap-4">
                   <Input
                     name="username"
-                    isDisabled={!credentials.role || isSubmitting}
+                    isDisabled={
+                      !credentials.role || isSubmitting || isLoadingOauth
+                    }
                     className="min-w-72 "
                     classNames={inputStyleConfig}
                     type="text"
@@ -208,7 +210,9 @@ const RegisterPage = () => {
 
                   <Input
                     name="email"
-                    isDisabled={!credentials.role || isSubmitting}
+                    isDisabled={
+                      !credentials.role || isSubmitting || isLoadingOauth
+                    }
                     className="min-w-72 "
                     classNames={inputStyleConfig}
                     type="email"
@@ -223,7 +227,9 @@ const RegisterPage = () => {
                 <div className="flex w-full flex-wrap md:flex-nowrap gap-4">
                   <Input
                     name="password"
-                    isDisabled={!credentials.role || isSubmitting}
+                    isDisabled={
+                      !credentials.role || isSubmitting || isLoadingOauth
+                    }
                     className="min-w-72 "
                     classNames={inputStyleConfig}
                     type="password"
@@ -237,7 +243,9 @@ const RegisterPage = () => {
 
                   <Input
                     name="repeatPassword"
-                    isDisabled={!credentials.role || isSubmitting}
+                    isDisabled={
+                      !credentials.role || isSubmitting || isLoadingOauth
+                    }
                     className="min-w-72 "
                     classNames={inputStyleConfig}
                     type="password"
@@ -251,7 +259,7 @@ const RegisterPage = () => {
                 </div>
                 <div className="flex justify-center">
                   <Button
-                    isDisabled={!enableButton || isSubmitting}
+                    isDisabled={!enableButton || isSubmitting || isLoadingOauth}
                     type="submit"
                     color="primary"
                     variant="solid"

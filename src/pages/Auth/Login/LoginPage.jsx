@@ -1,4 +1,4 @@
-import { Button, Input, Spinner } from '@nextui-org/react';
+import { Button, Input, Spinner, Skeleton } from '@nextui-org/react';
 import { GoogleLogin } from '@react-oauth/google';
 import {
   IconBrandGoogle,
@@ -61,7 +61,6 @@ const LoginPage = () => {
     } catch (error) {
       console.log(error);
       setIsLoadingOauth(false);
-      toast.error(error.response.data.message);
     }
   };
   const errorMessage = (error) => {
@@ -82,131 +81,136 @@ const LoginPage = () => {
 
   return (
     <main className="bg-default-100 flex-grow">
-      <section
-        id="login"
-        className="max-w-screen-xl w-full flex flex-col gap-3 justify-center py-10 mx-auto  "
+      <Skeleton
+        isLoaded={!isLoading}
+        className="max-w-screen-xl w-full flex flex-col gap-3 justify-center py-10 mx-auto"
       >
-        <LogoHeader className={'mx-auto'} />
-        <Panel className={'max-w-md mx-auto'}>
-          <Form
-            method="post"
-            className="flex flex-col gap-6  mx-auto px-10 py-8"
-            action={action}
-          >
-            <H2Title
-              title="Inicia sesión "
-              className={'normal-case text-center'}
-            />
-            {(isLoading || isLoadingOauth) && <Spinner />}
-
-            <div className="flex gap-4 justify-center">
-              <Button
-                isIconOnly
-                radius="full"
-                color="primary"
-                variant="ghost"
-                className="border-primary border-1 w-16 h-16"
-                onPress={() => {
-                  onPressLoginOrigin('google');
-                }}
-                isDisabled={isSubmitting}
-              >
-                <IconBrandGoogle stroke={1} className="stroke-foreground" />
-              </Button>
-              <Button
-                isIconOnly
-                radius="full"
-                color="primary"
-                variant="ghost"
-                className="border-primary border-1 w-16 h-16"
-                onPress={() => {
-                  onPressLoginOrigin('mail');
-                }}
-                isDisabled={isSubmitting}
-              >
-                <IconMail stroke={1} className="stroke-foreground" />
-              </Button>
-            </div>
-
-            <div
-              className={`${
-                loginOrigin === 'google' ? 'flex' : 'hidden'
-              } justify-center`}
+        <section
+          id="login"
+          className="max-w-screen-xl w-full flex flex-col gap-3 justify-center py-10 mx-auto "
+        >
+          <LogoHeader className={'mx-auto'} />
+          <Panel className={'max-w-md mx-auto'}>
+            <Form
+              method="post"
+              className="flex flex-col gap-6  mx-auto px-10 py-8"
+              action={action}
             >
-              <GoogleLogin
-                onSuccess={responseMessage}
-                onError={errorMessage}
-                theme="outline"
-                size="large"
-                text="signin_with"
-                type="standard"
-                shape="pill"
-                isDisabled={isSubmitting}
+              <H2Title
+                title="Inicia sesión "
+                className={'normal-case text-center'}
               />
-            </div>
-            {/* <div className="flex justify-center pb-5 border-b-1 border-primary">
-              O con tu email
-            </div> */}
-            <div
-              className={` ${loginOrigin === 'mail' ? 'flex' : 'hidden'}
-               flex-col gap-3 `}
-            >
-              <Input
-                type="email"
-                label="Email"
-                name="email"
-                placeholder="Introduce tu email"
-                color={errors.email ? 'danger' : 'none'}
-                onChange={handleChange}
-                errorMessage={errors.email}
-                isRequired
-                classNames={inputStyleConfig}
-                isDisabled={isSubmitting}
-              />
-              <Input
-                type="password"
-                name="password"
-                label="Password"
-                placeholder="Introduce tu password"
-                color={errors.password ? 'danger' : 'none'}
-                errorMessage={errors.password}
-                onChange={handleChange}
-                isRequired
-                classNames={inputStyleConfig}
-                isDisabled={isSubmitting}
-              />
-              <div className="flex justify-center">
+              {(isSubmitting || isLoadingOauth) && <Spinner />}
+
+              <div className="flex gap-4 justify-center">
                 <Button
-                  isDisabled={enableButton || isSubmitting}
-                  type="submit"
+                  isIconOnly
+                  radius="full"
                   color="primary"
-                  variant="solid"
-                  size="lg"
-                  endContent={<LoginIcon />}
-                  className={buttonStyleConfig}
+                  variant="ghost"
+                  className="border-primary border-1 w-16 h-16"
+                  onPress={() => {
+                    onPressLoginOrigin('google');
+                  }}
+                  isDisabled={isSubmitting || isLoadingOauth}
                 >
-                  Iniciar sesión
+                  <IconBrandGoogle stroke={1} className="stroke-foreground" />
+                </Button>
+                <Button
+                  isIconOnly
+                  radius="full"
+                  color="primary"
+                  variant="ghost"
+                  className="border-primary border-1 w-16 h-16"
+                  onPress={() => {
+                    onPressLoginOrigin('mail');
+                  }}
+                  isDisabled={isSubmitting || isLoadingOauth}
+                >
+                  <IconMail stroke={1} className="stroke-foreground" />
                 </Button>
               </div>
-              <div className="flex justify-end">
-                <Link
-                  to="/forgot-password"
-                  className="text-tertiary font-poppins"
-                >
-                  ¿Olvidaste tu password?
+
+              <div
+                className={`${
+                  loginOrigin === 'google' ? 'flex' : 'hidden'
+                } justify-center`}
+              >
+                <GoogleLogin
+                  onSuccess={responseMessage}
+                  onError={errorMessage}
+                  theme="outline"
+                  size="large"
+                  text="signin_with"
+                  type="standard"
+                  shape="pill"
+                  isDisabled={isSubmitting || isLoadingOauth}
+                />
+              </div>
+              {/* <div className="flex justify-center pb-5 border-b-1 border-primary">
+              O con tu email
+            </div> */}
+              <div
+                className={` ${loginOrigin === 'mail' ? 'flex' : 'hidden'}
+               flex-col gap-3 `}
+              >
+                <Input
+                  type="email"
+                  label="Email"
+                  name="email"
+                  placeholder="Introduce tu email"
+                  color={errors.email ? 'danger' : 'none'}
+                  onChange={handleChange}
+                  errorMessage={errors.email}
+                  isRequired
+                  classNames={inputStyleConfig}
+                  isDisabled={isSubmitting || isLoadingOauth}
+                />
+                <Input
+                  type="password"
+                  name="password"
+                  label="Password"
+                  placeholder="Introduce tu password"
+                  color={errors.password ? 'danger' : 'none'}
+                  errorMessage={errors.password}
+                  onChange={handleChange}
+                  isRequired
+                  classNames={inputStyleConfig}
+                  isDisabled={isSubmitting || isLoadingOauth}
+                />
+                <div className="flex justify-center">
+                  <Button
+                    isDisabled={enableButton || isSubmitting || isLoadingOauth}
+                    type="submit"
+                    color="primary"
+                    variant="solid"
+                    size="lg"
+                    endContent={<LoginIcon />}
+                    className={buttonStyleConfig}
+                  >
+                    Iniciar sesión
+                  </Button>
+                </div>
+                <div className="flex justify-end">
+                  <Link
+                    to="/forgot-password"
+                    className="text-tertiary font-poppins"
+                  >
+                    ¿Olvidaste tu password?
+                  </Link>
+                </div>
+              </div>
+
+              <div className="flex justify-center gap-1 font-medium font-poppins">
+                <span>¿Necesitas crear una cuenta?</span>
+                <Link to="/register" className="text-tertiary">
+                  Regístrate
                 </Link>
               </div>
-            </div>
-
-            <div className="flex justify-center gap-1 font-medium font-poppins">
-              <span>¿Necesitas crear una cuenta?</span>
-              <Link to="/register" className="text-tertiary">
-                Regístrate
-              </Link>
-            </div>
-          </Form>
-        </Panel>
-      </section>
+            </Form>
+          </Panel>
+        </section>
+      </Skeleton>
     </main>
   );
 };
