@@ -29,6 +29,7 @@ export const loader =
       return { history, receiver, chats, sender };
     } catch (error) {
       console.log(error);
+
       throw error;
     }
   };

@@ -115,13 +115,15 @@ const AdoptionChatPage = () => {
     setChatMessages([]);
   };
 
-  if (
-    !user ||
-    (user.role === 'adopter' && user.username !== adopter) ||
-    (user.role === 'shelter' && user.username !== shelter)
-  ) {
-    navigate(-1);
-  }
+  useEffect(() => {
+    if (
+      !user ||
+      (user.role === 'adopter' && user.username !== adopter) ||
+      (user.role === 'shelter' && user.username !== shelter)
+    ) {
+      navigate('/');
+    }
+  }, [adopter, navigate, user, shelter]);
 
   const handlePost = async (text) => {
     setIsFirstLoad(false);
