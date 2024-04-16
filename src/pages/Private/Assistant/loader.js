@@ -14,7 +14,7 @@ export const loader = (queryClient) => async () => {
     return history;
   } catch (error) {
     console.log(error);
-    toast.error('El servicio de asistente no está disponible actualmente');
-    return redirect(-1);
+    toast.info('El servicio de asistente no está disponible actualmente');
+    return redirect('/');
   }
 };
