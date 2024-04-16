@@ -40,26 +40,16 @@ Para configurar y ejecutar el proyecto de manera tradicional, sigue estos pasos:
 3. **Configurar las variables de entorno:**
    - Copia el archivo `.env.template` a un nuevo archivo llamado `.env`.
    - Ajusta las variables según sea necesario.
-
+   ```
+   VITE_API_URL=<url de la API> Ejemplo: https://www.adoptaunpeludo.com/api
+   VITE_BUCKET_URL=<url del bucket para las imagenes> Ejemplo: https://aup-s3images.s3.eu-west-3.amazonaws.com
+   VITE_WS_SERVICE=<url del servidor de websockets> Ejemplo: wss://websocket.adoptaunpeludo.com/
+   VITE_ASSISTANT_SERVICE=<url del servicio de asistente> Ejemplo: https://www.adoptaunpeludo.com/assistant
+   ```
+4.
 4. **Ejecutar el proyecto:**
    ```bash
    npm run dev
    ```
-   Esto iniciará el servidor de desarrollo en `http://localhost:3000` o en otro puerto especificado en tu archivo `.env`.
+   Esto iniciará el servidor de desarrollo en `http://localhost:5173` por defecto.
 
-## Instalación con Docker
-
-Si prefieres usar Docker para la instalación y ejecución del proyecto, sigue estos pasos:
-
-1. **Construir la imagen de Docker:**
-   - Asegúrate de que Docker esté instalado en tu sistema.
-   - Corre el siguiente comando en la raíz del proyecto para construir la imagen Docker:
-     ```bash
-     docker build -t adopta-un-peludo .
-     ```
-
-2. **Ejecutar el contenedor de Docker:**
-   ```bash
-   docker run -p 3000:3000 adopta-un-peludo
-   ```
-   Esto ejecutará la aplicación y la hará accesible en `http://localhost:3000` en tu navegador.
