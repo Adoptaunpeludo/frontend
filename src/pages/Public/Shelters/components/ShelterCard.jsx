@@ -63,11 +63,11 @@ export const ShelterCard = ({ shelter, isLogged }) => {
         </section>
         <section className="h-20">
           {/* description */}
-          <p className="line-clamp-4 ">
+          <span className="line-clamp-4 ">
             {shelter.description !== ''
               ? shelter.description
               : `Protectora ${shelter.username}`}
-          </p>
+          </span>
         </section>
 
         {/* Icons */}

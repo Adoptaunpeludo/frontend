@@ -104,7 +104,7 @@ export const animalSizeEnum = [
   { label: 'Pequeño', value: 'small' },
   {
     label: 'Mediano',
-    value: 'Medium',
+    value: 'medium',
   },
   { label: 'Grande', value: 'big' },
   { label: 'Muy Grande', value: 'very_big' },
@@ -176,17 +176,17 @@ export const ageRanges = [
 
 export const statusColorMap = {
   fostered: 'success',
-  'en acogida': 'success',
+  'En Acogida': 'success',
   awaiting_home: 'success',
-  'esperando un hogar': 'success',
+  'Esperando un hogar': 'success',
   published: 'success',
   publicado: 'success',
-  reservado: 'warning',
+  Reservado: 'warning',
   reserved: 'warning',
   pending: 'warning',
   pendiente: 'warning',
   adopted: 'danger',
-  adoptado: 'danger',
+  Adoptado: 'danger',
   rejected: 'danger',
   rechazado: 'danger',
 };
