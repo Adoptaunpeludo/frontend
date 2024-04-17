@@ -19,7 +19,10 @@ client.interceptors.response.use(
 
     if (error.response) {
       const errorMessage =
-        error.response.data.message || 'Error en la solicitud';
+        error.response.data?.message ||
+        error.response.data?.msg ||
+        error.message ||
+        'Error en la solicitud';
 
       toast(errorMessage);
     } else if (error.request) {
