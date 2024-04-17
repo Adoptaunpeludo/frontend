@@ -1,10 +1,6 @@
-import {
-  IconBrandFacebook,
-  IconBrandInstagram,
-  IconBrandX,
-} from '@tabler/icons-react';
-
+import { IconUser } from '@tabler/icons-react';
 import { Copyright } from './components/Copyright';
+import { Link } from 'react-router-dom';
 
 const Footer = () => {
   return (
@@ -13,10 +9,9 @@ const Footer = () => {
         <div id="DevelopedBy" className="">
           <Copyright className="w-60" />
         </div>
-        <div id="SocialIcons" className="flex justify-center ">
-          <IconBrandX className="max-h-9" />
-          <IconBrandInstagram className="max-h-9" />
-          <IconBrandFacebook className="max-h-9" />
+        <div id="SocialIcons" className="flex justify-center items-center">
+          <IconUser />
+          <Link to={'/about'}>Conócenos</Link>
         </div>
       </div>
     </div>
