@@ -73,13 +73,15 @@ export const ModalTeam = ({ member = '' }) => {
                   >
                     <IconBrandLinkedin stroke={1} /> Linkedin
                   </Link>
-                  <Link
-                    href={member.mailto}
-                    isExternal
-                    className="text-tertiary font-poppins font-semibold mr-1 flex self-baseline pt-3"
-                  >
-                    <IconMail stroke={1} /> Mail
-                  </Link>
+                  {member.mailto !== '' && (
+                    <Link
+                      href={member.mailto}
+                      isExternal
+                      className="text-tertiary font-poppins font-semibold mr-1 flex self-baseline pt-3"
+                    >
+                      <IconMail stroke={1} /> Mail
+                    </Link>
+                  )}
                   {member.portFolio !== '' && (
                     <Link
                       href={member.portFolio}

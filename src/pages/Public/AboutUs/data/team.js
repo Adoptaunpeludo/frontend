@@ -41,7 +41,7 @@ export const team = [
     person: 'Pol Valle',
     position: 'Frontend dev',
     description:
-      'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque pharetra dui ac ante viverra vestibulum. Suspendisse non orci eget ipsum venenatis egestas ut a odio. Suspendisse finibus placerat lectus vel vulputate. Sed sodales a est et sodales. In hac habitasse platea dictumst. Sed velit neque, imperdiet sed fringilla mattis, consequat nec ligula. Praesent molestie libero nibh, sed sollicitudin dolor faucibus ut.',
+      'Me propongo diseñar experiencias de usuario fluidas y agradables mediante la creación de aplicaciones atractivas y funcionales centradas en el usuario. Me siento especialmente atraído por desarrollar aplicaciones que no solo sean funcionales, sino también visualmente atractivas y fáciles de usar. Logro esto implementando principios SOLID y una arquitectura limpia, y aplicando pruebas para garantizar la calidad. También utilizo metodologías ágiles para la adaptabilidad y la mejora continua.',
     link: 'dsds',
     github: 'https://github.com/Doplax',
     linkedin: 'https://www.linkedin.com/in/pol-valle-montes/',
@@ -54,8 +54,11 @@ export const team = [
     img: 'https://avatars.githubusercontent.com/u/113923902?v=4',
     person: 'Francisco Suárez',
     position: 'Frontend dev',
-    description:
-      'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque pharetra dui ac ante viverra vestibulum. Suspendisse non orci eget ipsum venenatis egestas ut a odio. Suspendisse finibus placerat lectus vel vulputate. Sed sodales a est et sodales. In hac habitasse platea dictumst. Sed velit neque, imperdiet sed fringilla mattis, consequat nec ligula. Praesent molestie libero nibh, sed sollicitudin dolor faucibus ut.',
+    description: `Desde pequeño he sentido una pasión por la tecnología, aunque las circunstancias me llevaron por el camino de la hostelería. Sin embargo, ahora me he propuesto seguir mi verdadera vocación y dedicarme a lo que realmente me entusiasma: las tecnologías de la información.
+
+A pesar de no haber trabajado en el campo de la informática desde que obtuve mi título de formación profesional de grado superior, nunca he dejado de interesarme y aprender sobre los fundamentos del desarrollo de software con varios lenguajes. También he explorado áreas como la contenerización de aplicaciones y la automatización de procesos. Además, siempre he tenido habilidades para la resolución de problemas matemáticos y lógicos, así como una curiosidad por comprender cómo funcionan los sistemas y qué papel juega cada componente, tanto a nivel de software como de hardware.
+
+Aparte del ámbito tecnológico (aunque no tan aparte), me apasiona la ciencia y el progreso en general. Disfruto escuchando varios podcasts sobre astrofísica, cosmología y aeronáutica. Los videojuegos me fascinan, no solo como entretenimiento, sino como una forma de expresión artística. Me gusta viajar y conocer personas de diferentes culturas, y creo firmemente en un mundo sin fronteras, donde todos deberíamos trabajar juntos independientemente de nuestro lugar de nacimiento, color de piel o identidad de género.`,
     link: 'dsds',
     github: 'https://github.com/PaquitoGR',
     linkedin: 'https://www.linkedin.com/in/francisco-a-suarez/',
