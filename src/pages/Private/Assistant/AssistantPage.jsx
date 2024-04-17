@@ -14,6 +14,7 @@ import { useNavigate } from 'react-router-dom';
 const AssistantPage = () => {
   const { data: user } = useUser();
   const [messages, setMessages] = useState([]);
+  const [isAnswering, setIsAnswering] = useState(false);
   const [isFirstLoad, setIsFirstLoad] = useState(false);
   const { data: chatHistory, isFetching } = useChatHistory(user.username);
   const { messagesEndRef } = useScroll(messages, isFirstLoad, isFetching);
@@ -41,6 +42,7 @@ const AssistantPage = () => {
     setMessages((prev) => [...prev, { text, isGpt: false }]);
 
     try {
+      setIsAnswering(true);
       const stream = chatStreamGenerator(
         {
           question: text,
@@ -57,8 +59,10 @@ const AssistantPage = () => {
           return newMessages;
         });
       }
+      setIsAnswering(false);
     } catch (error) {
       toast.info('El servicio de asistente no está disponible actualmente');
+      setIsAnswering(false);
       return navigate('/');
     }
   };
@@ -92,6 +96,7 @@ const AssistantPage = () => {
             onSendMessage={handlePost}
             onDeleteMessages={handleDeleteMessages}
             placeholder="Escribe aquí tu pregunta"
+            isDisabled={isAnswering}
             disableCorrections
           />
         </div>

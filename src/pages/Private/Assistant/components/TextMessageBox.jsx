@@ -9,6 +9,7 @@ const TextMessageBox = ({
   placeholder = '',
   disableCorrections = false,
   onDeleteMessages,
+  isDisabled,
   page = '',
 }) => {
   const [message, setMessage] = useState('');
@@ -45,10 +46,11 @@ const TextMessageBox = ({
             value={message}
             onChange={(e) => setMessage(e.target.value)}
             classNames={inputStyleConfig}
+            isDisabled={isDisabled}
           />
           <div className="">
             <Button
-              isDisabled={!message}
+              isDisabled={!message || isDisabled}
               className="bg-primary font-poppins "
               type="submit"
               endContent={<IconSend2 className="stroke-foreground" />}
