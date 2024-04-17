@@ -104,7 +104,7 @@ export const animalSizeEnum = [
   { label: 'Pequeño', value: 'small' },
   {
     label: 'Mediano',
-    value: 'Medium',
+    value: 'medium',
   },
   { label: 'Grande', value: 'big' },
   { label: 'Muy Grande', value: 'very_big' },
