@@ -22,7 +22,7 @@ const StatusShelterForm = ({ data = {}, isDisabled }) => {
         <SelectField
           isRequired
           label="Ciudad"
-          className="min-w-72"
+          className="min-w-72 capitalize"
           name="city"
           dataField={city}
           dataEnum={cities}

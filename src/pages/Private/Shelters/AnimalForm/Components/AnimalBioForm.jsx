@@ -27,7 +27,7 @@ const AnimalBioForm = ({ data = {}, isDisabled }) => {
         <Input
           isRequired
           isDisabled={isDisabled}
-          className="min-w-72 "
+          className="min-w-72 capitalize"
           type="text"
           label="Nombre"
           name="name"
@@ -40,7 +40,7 @@ const AnimalBioForm = ({ data = {}, isDisabled }) => {
         <Input
           isRequired
           isDisabled={isDisabled}
-          className="min-w-72 "
+          className="min-w-72 capitalize"
           type="text"
           label="Raza"
           name="breed"
@@ -69,7 +69,7 @@ const AnimalBioForm = ({ data = {}, isDisabled }) => {
           isRequired
           isDisabled={isDisabled}
           label="Sexo"
-          className=""
+          className="capitalize"
           name="gender"
           dataField={gender}
           dataEnum={genderEnum}
@@ -79,7 +79,7 @@ const AnimalBioForm = ({ data = {}, isDisabled }) => {
           isRequired
           isDisabled={isDisabled}
           label="Tamaño"
-          className=""
+          className="capitalize"
           name="size"
           dataField={size}
           dataEnum={animalSizeEnum}
