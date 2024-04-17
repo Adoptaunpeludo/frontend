@@ -1,6 +1,6 @@
+import { redirect } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import { resendValidationEmail } from '../authService';
-import { redirect } from 'react-router-dom';
 
 export const action = async ({ request }) => {
   const formData = await request.formData();
@@ -11,7 +11,7 @@ export const action = async ({ request }) => {
     const { email } = credentials;
     await resendValidationEmail(email);
 
-    toast.success('Email de validacion enviado');
+    toast.success('Email de validación enviado');
 
     return redirect('/login');
   } catch (error) {
