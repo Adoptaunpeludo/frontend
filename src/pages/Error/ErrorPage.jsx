@@ -31,7 +31,9 @@ const Error = () => {
         <div className="text-white bg-primary p-4 rounded-md bg-opacity-80">
           <h3 className="mb-2 text-4xl">Algo no ha ido bien...</h3>
           <p className="leading-7 mt-2 mb-6 text-xl text-foreground text-white">
-            Ha ocurrido un error inesperado: {error.message}
+            Estamos experimentando problemas técnicos. Inténtelo de nuevo
+            pasados unos minutos, si el problema persiste contacte con{' '}
+            <a href="mailto:neddry@adoptaunpeludo.com">Soporte</a>
           </p>
           <Link
             className="text-tertiary capitalize bg-white px-4 py-2 rounded-lg"
