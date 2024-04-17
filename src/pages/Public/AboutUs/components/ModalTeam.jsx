@@ -59,7 +59,7 @@ export const ModalTeam = ({ member = '' }) => {
                 <main className="p-2">
                   <MemberTeam member={member.readMore} />
                 </main>
-                <footer className="flex justify-center gap-10">
+                <footer className="flex justify-center gap-10 flex-wrap">
                   <Link
                     href={member.github}
                     isExternal
