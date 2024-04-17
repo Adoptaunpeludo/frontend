@@ -73,11 +73,11 @@ export const PetCard = ({ animal, isLogged }) => {
         </section>
         <section className="h-16">
           {/* description */}
-          <p className="line-clamp-3 ">
+          <span className="line-clamp-3 ">
             {animal.description !== '' && animal.description !== undefined
               ? animal.description
               : `Peludo ${animal.name}`}
-          </p>
+          </span>
         </section>
 
         <section className="flex justify-between   ">
