@@ -9,16 +9,16 @@ import { team } from '../data/team';
 import ModalTeam from './ModalTeam';
 export const OurTeam = () => {
   return (
-    <section className=" w-full  py-10 flex flex-col justify-center mx-auto px-10">
-      <header className="text-center font-lobster text-5xl  text-secondary pb-10">
+    <section className=" w-full  pt-5 pb-10 flex flex-col justify-center mx-auto px-10 bg-[#E4E4E7]">
+      <header className="text-center font-lobster text-7xl  text-secondary pb-20">
         Nuestro equipo
       </header>
       <main className="flex flex-wrap max-w-screen-xl mx-auto justify-center">
         {team.map((member, index) => {
           return (
-            <article key={index} className="flex  lg:w-128 pb-10 ">
-              <div className="flex gap-3 ">
-                <div className="w-20 h-20">
+            <article key={index} className="flex lg:w-128 pb-10 w-full  ">
+              <div className="flex gap-3 flex-col md:flex-row   ">
+                <div className="flex w-full items-center md:w-20 h-20  justify-center">
                   <Avatar
                     isBordered
                     color="primary"

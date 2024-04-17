@@ -1,4 +1,6 @@
+import { Skeleton } from '@nextui-org/react';
 import { useNavigation } from 'react-router-dom';
+import { OurTeam } from '../AboutUs/components/OurTeam';
 import {
   AdoptVsBuy,
   FeaturedAnimals,
@@ -10,7 +12,7 @@ import {
   JoinNewsletter,
   OurRescues,
 } from './sections';
-import { Skeleton } from '@nextui-org/react';
+import OurTeamCta from './sections/OurTeamCta';
 
 const LandingPage = () => {
   const navigation = useNavigation();
@@ -28,6 +30,8 @@ const LandingPage = () => {
         {/* <FeaturedCats /> */}
         <FeaturedAnimals page="cats" />
         <OurRescues />
+        <OurTeam />
+        <OurTeamCta />
         <FeaturedShelters />
         <JoinNewsletter />
       </main>
