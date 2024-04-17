@@ -33,7 +33,7 @@ export const StatusAnimalsTable = ({ role }) => {
     role === 'shelter' && { limit: 100 }
   );
 
-  const animals = translateStatusAnimals(data.animals);
+  const animals = translateStatusAnimals(data?.animals);
   //const
   const renderCell = React.useCallback((animal, columnKey) => {
     const cellValue = animal[columnKey];
@@ -43,7 +43,7 @@ export const StatusAnimalsTable = ({ role }) => {
         return (
           <Chip
             className="capitalize w-full"
-            color={statusColorMap[animal.status]}
+            color={statusColorMap[animal?.status]}
             size="sm"
             variant="flat"
           >
@@ -54,7 +54,7 @@ export const StatusAnimalsTable = ({ role }) => {
         return (
           <Chip
             className="capitalize w-full"
-            color={statusColorMap[animal.publishStatus]}
+            color={statusColorMap[animal?.publishStatus]}
             size="sm"
             variant="flat"
           >
@@ -68,7 +68,7 @@ export const StatusAnimalsTable = ({ role }) => {
               <Button
                 isIconOnly
                 as={Link}
-                href={`/animals/${animal.type}s/${animal.slug}`}
+                href={`/animals/${animal?.type}s/${animal?.slug}`}
                 variant="solid"
                 color="primary"
                 size="sm"
@@ -83,13 +83,13 @@ export const StatusAnimalsTable = ({ role }) => {
                 color="primary"
                 size="sm"
                 as={Link}
-                href={`/private/shelter/update-animal/${animal.slug}`}
+                href={`/private/shelter/update-animal/${animal?.slug}`}
               >
                 <IconEdit />
               </Button>
             </Tooltip>
 
-            <DeleteAnimalModal slug={animal.slug} />
+            <DeleteAnimalModal slug={animal?.slug} />
           </div>
         );
       case 'actionsAdopter':
@@ -99,7 +99,7 @@ export const StatusAnimalsTable = ({ role }) => {
               <Button
                 isIconOnly
                 as={Link}
-                href={`/animals/${animal.type}s/${animal.slug}`}
+                href={`/animals/${animal?.type}s/${animal?.slug}`}
                 variant="solid"
                 color="primary"
                 size="sm"
@@ -120,7 +120,7 @@ export const StatusAnimalsTable = ({ role }) => {
                 <IconHeartFilled />
               </Button>
             </Tooltip>
-            <input type="hidden" name="id" value={animal.id} />
+            <input type="hidden" name="id" value={animal?.id} />
           </div>
         );
       default:
