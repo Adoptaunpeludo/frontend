@@ -36,7 +36,7 @@ export const HeartIcon = ({ numFavs, userFavs, id, data }) => {
   }, [data?.id, userFavs]);
 
   const toggleLike = async () => {
-    if (!data) return toast.warn('Loguea primero por favor');
+    if (!data) return toast.warn('Solo para usuarios registrados');
     try {
       dispatch({ type: 'toggleLike' });
       if (!state.liked) await addFav(id);
