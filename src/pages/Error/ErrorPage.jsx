@@ -1,6 +1,10 @@
+import { Button, Image, Link } from '@nextui-org/react';
+import { IconMail } from '@tabler/icons-react';
 import { useQueryClient } from '@tanstack/react-query';
-import { Link, Navigate, useRouteError } from 'react-router-dom';
-// import img from '../assets/images/not-found.svg';
+import { Navigate, useRouteError } from 'react-router-dom';
+import { H2Title } from '../../components';
+import { buttonStyleConfig } from '../../utils/configFormFields';
+
 const Error = () => {
   const error = useRouteError();
   const queryClient = useQueryClient();
@@ -21,35 +25,38 @@ const Error = () => {
     return <Navigate to="/404" />;
   } else
     return (
-      <main
-        className="text-center flex items-center justify-center flex-grow bg-cover h-dvh w-dvw"
-        style={{
-          backgroundImage: "url('/error/error-page.jpg')",
-          backgroundOpacity: 0.7,
-        }}
-      >
-        <div className="text-white bg-primary p-4 rounded-md bg-opacity-80">
-          <h3 className="mb-2 text-4xl">Algo no ha ido bien...</h3>
-          <p className="leading-7 mt-2 mb-6 text-xl text-foreground text-white">
-            Estamos experimentando problemas técnicos.
-          </p>
-          <p className="leading-7 mt-2 mb-6 text-xl text-foreground text-white">
-            Inténtelo de nuevo pasados unos minutos, si el problema persiste
-            contacte con
-            <a
+      <main className="text-center flex items-center justify-center flex-grow bg-contain h-dvh bg-white">
+        <section className="max-w-[80vw] max-h-[80vh] w-full h-full  bg-no-repeat bg-center mx-auto flex items-center justify-center">
+          <div className="max-w-xl flex flex-col justify-center ">
+            <Image src="/error/error-page.jpg" />
+
+            <H2Title title="Algo no ha ido bien..." className="normal-case" />
+            <span className="leading-7 mt-2 text-xl text-foreground font-poppins">
+              Estamos experimentando problemas técnicos. Inténtelo de nuevo
+              pasados unos minutos, si el problema persiste
+            </span>
+
+            <Link
               href="mailto:neddry@adoptaunpeludo.com"
-              className="text-blue-700"
+              isExternal
+              className="text-tertiary flex justify-center"
             >
-              Soporte
-            </a>
-          </p>
-          <Link
-            className="text-tertiary capitalize bg-white px-4 py-2 rounded-lg"
-            to="/"
-          >
-            Sácame de aquí
-          </Link>
-        </div>
+              <IconMail className="stroke-tertiary size-8" stroke={1} />
+              <span className="text-xl font-medium">Contacte con soporte</span>
+            </Link>
+            <div>
+              <Button
+                className={`${buttonStyleConfig} mt-5 max-w-52 `}
+                color="primary"
+                size="lg"
+                as={Link}
+                href={'/'}
+              >
+                Sácame de aquí
+              </Button>
+            </div>
+          </div>
+        </section>
       </main>
     );
 };
