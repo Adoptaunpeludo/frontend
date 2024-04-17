@@ -88,7 +88,7 @@ const AppLayout = () => {
             queryKey: ['shelter-animals', data.createdBy],
           });
           queryClient.invalidateQueries({
-            queryKey: ['animal-details', data.animalSlug],
+            queryKey: ['animal-details', data.slug],
           });
           queryClient.invalidateQueries({
             queryKey: ['user-chats'],
