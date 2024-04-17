@@ -52,7 +52,6 @@ const AppLayout = () => {
     if (val && isReady) {
       const message = JSON.parse(val);
       const { type, ...data } = message;
-
       switch (type) {
         case 'user-joined-room':
           data.action === 'read-messages' &&
@@ -87,7 +86,7 @@ const AppLayout = () => {
           queryClient.invalidateQueries({
             queryKey: ['shelter-animals', data.createdBy],
           });
-          queryClient.invalidateQueries({
+          queryClient.removeQueries({
             queryKey: ['animal-details', data.slug],
           });
           queryClient.invalidateQueries({
