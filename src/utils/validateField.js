@@ -37,7 +37,7 @@ export const validateField = (name, value, password) => {
         ? 'El DNI no es válido.'
         : '';
     case 'phoneNumber':
-      return !/^(\+[0-9]{1,3})?[0-9]{8,14}$/.test(value.trim())
+      return !/^(\+[0-9]{1,3})?[0-9]{9,14}$/.test(value.trim())
         ? 'No es un número de teléfono válido.'
         : '';
     default:
