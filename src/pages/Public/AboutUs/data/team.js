@@ -15,7 +15,7 @@ export const team = [
     mailto: 'mailto:jaderodev@gmail.com',
     readMore: 'jadero',
     portFolio: 'https://www.jadero.dev/home',
-    resume: 'https://www.jadero.dev/assets/CVJAlbertoDelgado-40457fb4.pdf',
+    resume: '/cvs/CV-Jose_Alberto.pdf',
   },
   {
     img: 'https://avatars.githubusercontent.com/u/9013532?v=4',

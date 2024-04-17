@@ -11,13 +11,12 @@ export const JaderoCard = () => {
       </p>
       <p>
         Mi experiencia se centra en el desarrollo de aplicaciones web complejas,
-        y mi último proyecto,
-        <strong>adoptaunpeludo.com</strong>, es un claro ejemplo de mi habilidad
-        para gestionar equipos y recursos y llevar a cabo proyectos desde la
-        conceptualización hasta la implementación.
+        y mi último proyecto, <strong>adoptaunpeludo.com</strong>, es un claro
+        ejemplo de mi habilidad para gestionar equipos y recursos y llevar a
+        cabo proyectos desde la conceptualización hasta la implementación.
       </p>
       <H2Title
-        title="Backend Wizard 🧙‍♂️"
+        title="Backend ⚙"
         className={'border-b-1 border-primary mb-5 ml-0'}
       />
       <p>
@@ -97,43 +96,108 @@ export const JaderoCard = () => {
         </p>
       </div>
       <H2Title
-        title="DevOps Guru 🛠️"
+        title="DevOps 🛠️"
         className={'border-b-1 border-primary mb-5 ml-0'}
       />
       <p>
-        Mi experiencia no se limita al desarrollo, también tengo sólidos
-        conocimientos en DevOps. Lideré la creación de una instancia de
-        <strong> AWS EC2</strong> y dockericé todo el backend, utilizando
-        DockerHub para alojar los contenedores. Configuré
-        <strong> NGINX</strong> como proxy inverso para servir todos los
-        servicios, incluido el frontend, y establecí un sólido flujo de
-        integración y entrega continua (CICD) con{' '}
-        <strong>GitHub Actions</strong> para garantizar despliegues sin
-        problemas.
+        Como parte de mi rol como DevOps, contribuí al proyecto
+        adoptaunpeludo.com en varias áreas clave:
       </p>
+      <div className="pl-5">
+        <p className="flex flex-col justify-start gap-3">
+          <span>
+            <strong>Creación de la instancia de AWS EC2:</strong> Establecí una
+            instancia de AWS EC2 para alojar y ejecutar el proyecto. Esta
+            instancia proporciona una infraestructura escalable y confiable para
+            el despliegue de la aplicación, asegurando su disponibilidad y
+            rendimiento.
+          </span>
+        </p>
+        <p className="flex flex-col justify-start gap-3">
+          <span>
+            <strong>Dockerización del backend:</strong> Utilicé Docker para
+            containerizar todas las partes del backend, lo que facilita la
+            gestión de dependencias, la portabilidad y la replicabilidad del
+            entorno de desarrollo. Esto garantiza una mayor consistencia entre
+            los diferentes entornos y simplifica el despliegue del sistema en
+            diferentes plataformas.
+          </span>
+        </p>
+        <p className="flex flex-col justify-start gap-3">
+          <span>
+            <strong>Configuración de NGINX como proxy inverso:</strong>{' '}
+            Implementé NGINX como un servidor proxy inverso para dirigir el
+            tráfico entrante a los diferentes servicios del proyecto, incluido
+            el frontend. Esto mejora la seguridad, el rendimiento y la
+            escalabilidad del sistema al permitir la gestión centralizada del
+            tráfico y la carga balanceada entre los servidores backend.
+          </span>
+        </p>
+        <p className="flex flex-col justify-start gap-3">
+          <span>
+            <strong>Implementación de CICD con GitHub Actions:</strong>{' '}
+            Establecí un flujo de integración y entrega continua (CICD)
+            utilizando GitHub Actions. Esto automatiza el proceso de prueba,
+            compilación y despliegue de la aplicación, lo que garantiza
+            despliegues más rápidos y consistentes. Además, proporciona una
+            mayor visibilidad y control sobre el ciclo de vida del software,
+            mejorando la colaboración y la calidad del código.
+          </span>
+        </p>
+      </div>
       <H2Title
-        title="Frontend Maestro 🎨"
+        title="Frontend 🎨"
         className={'border-b-1 border-primary mb-5 ml-0'}
       />
       <p>
-        En el frontend, me encargué de implementar la lógica detrás de las
-        páginas privadas, el asistente de IA y los chats. Opté por tecnologías
-        como <strong>React Query</strong> para optimizar el rendimiento y
-        <strong> React Router</strong> para la gestión de la navegación. Mi
-        enfoque en la gestión eficiente del estado y la resolución de conflictos
-        durante el desarrollo me permitió mantener un código limpio y escalable.
+        En el frontend, contribuí al proyecto adoptaunpeludo.com con las
+        siguientes mejoras clave:
       </p>
+      <div className="pl-5">
+        <p className="flex flex-col justify-start gap-3">
+          <span>
+            <strong>Implementación de páginas privadas:</strong> Desarrollé la
+            lógica necesaria para las páginas que requieren autenticación,
+            garantizando la seguridad y la privacidad de los usuarios al
+            restringir el acceso a contenido sensible. Esto mejora la
+            experiencia del usuario al proporcionar un entorno seguro y
+            personalizado.
+          </span>
+        </p>
+        <p className="flex flex-col justify-start gap-3">
+          <span>
+            <strong>Desarrollo del asistente de IA y los chats:</strong> Utilicé
+            tecnologías como React Query para optimizar el rendimiento al
+            realizar consultas a la API de manera eficiente, mejorando así la
+            velocidad y la capacidad de respuesta de la aplicación. Además,
+            empleé React Router para gestionar la navegación entre las
+            diferentes secciones del sitio, lo que proporciona una experiencia
+            de usuario fluida y coherente.
+          </span>
+        </p>
+        <p className="flex flex-col justify-start gap-3">
+          <span>
+            <strong>Enfoque en la gestión eficiente del estado:</strong> Mi
+            atención a la gestión del estado y la resolución de conflictos
+            durante el desarrollo contribuyó a mantener un código limpio y
+            escalable. Esto facilita el mantenimiento futuro de la aplicación y
+            permite una evolución más fluida a medida que se agregan nuevas
+            funcionalidades.
+          </span>
+        </p>
+      </div>
       <H2Title
         title="¿Por qué contar conmigo?"
         className={'border-b-1 border-primary mb-5 ml-0'}
       />
       <p>
-        Mi enfoque en la innovación, combinado con mi experiencia técnica y mi
-        capacidad para gestionar recursos e implementar soluciones, me convierte
-        en un activo valioso para cualquier proyecto. Estoy constantemente
-        buscando nuevos desafíos y oportunidades para aprender y crecer como
-        profesional. Si estás buscando un desarrollador que pueda llevar tu
-        proyecto al siguiente nivel, ¡no dudes en contactarme!
+        Soy un apasionado de la programación y disfruto resolviendo problemas a
+        través del código. Mi curiosidad insaciable y mi compromiso con el
+        aprendizaje continuo me mantienen siempre actualizado sobre las últimas
+        tecnologías y metodologías de desarrollo. Además, mi capacidad para
+        adaptarme rápidamente a nuevos desafíos y mi enfoque en el crecimiento
+        profesional me hacen un candidato ideal para equipos que valoran la
+        innovación y el progreso constante.
       </p>
     </div>
   );
