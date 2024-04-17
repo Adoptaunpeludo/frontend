@@ -16,7 +16,7 @@ export const JaderoCard = () => {
         cabo proyectos desde la conceptualización hasta la implementación.
       </p>
       <H2Title
-        title="Backend ⚙"
+        title="Backend ⚙️"
         className={'border-b-1 border-primary mb-5 ml-0'}
       />
       <p>
