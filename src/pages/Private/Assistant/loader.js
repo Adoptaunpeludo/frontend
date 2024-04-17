@@ -1,8 +1,9 @@
 import { toast } from 'react-toastify';
+import { redirect } from 'react-router-dom';
+
+import { chatHistoryQuery } from './useChatHistory';
 import { userQuery } from '../useUser';
 import { createChat } from './service';
-import { chatHistoryQuery } from './useChatHistory';
-import { redirect } from 'react-router-dom';
 
 export const loader = (queryClient) => async () => {
   try {

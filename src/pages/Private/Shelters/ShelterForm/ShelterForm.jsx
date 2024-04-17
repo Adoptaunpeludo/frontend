@@ -1,3 +1,5 @@
+import { useEffect, useState } from 'react';
+import { Form, useNavigation } from 'react-router-dom';
 import {
   Button,
   Input,
@@ -13,18 +15,15 @@ import { IconCircleX, IconEdit, IconSend2 } from '@tabler/icons-react';
 
 import { H2Title, H3Title, Panel, SelectField } from '../../../../components';
 import { boolDataEnum, legalFormEnum } from '../../../../utils/enumData';
-
-import Accommodations from '../ShelterProfile/components/Acommodations';
-
-import { useEffect, useState } from 'react';
-import { Form, useNavigation } from 'react-router-dom';
-import { useModalContext } from '../../../../context/ModalContext';
 import {
   buttonStyleConfig,
   inputStyleConfig,
   selectStyleConfig,
 } from '../../../../utils/configFormFields';
 import { validateField } from '../../../../utils/validateField';
+import Accommodations from '../ShelterProfile/components/Acommodations';
+
+import { useModalContext } from '../../../../context/ModalContext';
 
 const ShelterForm = ({ isSubmitting, data, action }) => {
   const updateShelterModal = useDisclosure();

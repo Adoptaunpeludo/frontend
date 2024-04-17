@@ -1,4 +1,5 @@
 import { Button, Link } from '@nextui-org/react';
+
 import { BUCKET_URL } from '../../../../config/config.js';
 import PetCardLanding from '../components/PetCardLanding.jsx';
 const FeaturedPets = ({ title, pets }) => {

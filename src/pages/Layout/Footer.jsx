@@ -3,6 +3,7 @@ import {
   IconBrandInstagram,
   IconBrandX,
 } from '@tabler/icons-react';
+
 import { Copyright } from './components/Copyright';
 
 const Footer = () => {

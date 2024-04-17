@@ -1,4 +1,5 @@
 import { useQuery } from '@tanstack/react-query';
+
 import { getUserData } from './service';
 
 export const userDataQuery = (username) => {

@@ -1,6 +1,7 @@
 import { Skeleton } from '@nextui-org/react';
 import { useLoaderData } from 'react-router';
 import { useNavigation } from 'react-router-dom';
+
 import {
   FilterBar,
   NoData,
@@ -8,6 +9,7 @@ import {
   TitleSection,
 } from '../../../components';
 import { ShelterCard } from './components';
+
 import { useShelters } from './useShelters';
 import { useUser } from '../../Private/useUser';
 

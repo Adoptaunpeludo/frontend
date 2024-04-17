@@ -1,4 +1,5 @@
 import { handleNotFoundError } from '../../../../utils/handleError';
+
 import { shelterDetailsQuery } from './useShelterDetails';
 
 export const loader =

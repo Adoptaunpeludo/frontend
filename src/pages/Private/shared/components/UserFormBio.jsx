@@ -1,3 +1,5 @@
+import { useEffect } from 'react';
+import { Form, useNavigation } from 'react-router-dom';
 import {
   Avatar,
   Button,
@@ -15,18 +17,17 @@ import {
   IconSend2,
   IconUserFilled,
 } from '@tabler/icons-react';
+
 import { H2Title, H3Title, Panel, SelectField } from '../../../../components';
 import { cities } from '../../../../utils/enumData';
-
-import { useEffect } from 'react';
-import { Form, useNavigation } from 'react-router-dom';
 import { BUCKET_URL } from '../../../../config/config';
-import { useModalContext } from '../../../../context/ModalContext';
 import {
   inputStyleConfig,
   selectStyleConfig,
 } from '../../../../utils/configFormFields';
+
 import { useValidateFormFields } from '../../../../hooks/useValidateFormFields';
+import { useModalContext } from '../../../../context/ModalContext';
 
 export const UserFormBio = ({ data, action }) => {
   const updateBioModal = useDisclosure();

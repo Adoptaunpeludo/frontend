@@ -2,6 +2,7 @@ import { Avatar, Button, Image, Link, Spinner } from '@nextui-org/react';
 import { IconHome } from '@tabler/icons-react';
 import { useState } from 'react';
 import { useLoaderData } from 'react-router-dom';
+
 import {
   AnimalGallery,
   AsideDataColumn,
@@ -14,13 +15,13 @@ import {
   shelterInformation,
   vetInformation,
 } from '../../../../utils/asideDataFields';
-
-import { useUser } from '../../../Private/useUser';
 import {
   FacilitiesAsideColumn,
   ShelterRescues,
   SocialMediaAsideColumn,
 } from './components/';
+
+import { useUser } from '../../../Private/useUser';
 import { useShelterDetails } from './useShelterDetails';
 
 const ShelterDetailsPage = () => {

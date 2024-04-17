@@ -1,15 +1,18 @@
 import { Spinner } from '@nextui-org/react';
 import { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
+
 import { useScroll } from '../../../hooks/useScroll';
 import { mapChatHistory } from '../../../utils/mapChatHistory';
-import { useUser } from '../useUser';
+
 import GptMessage from './components/GptMessage';
 import TextMessageBox from './components/TextMessageBox';
 import UserMessage from './components/UserMessage';
-import { chatStreamGenerator } from './service';
+
 import { useChatHistory } from './useChatHistory';
-import { useNavigate } from 'react-router-dom';
+import { useUser } from '../useUser';
+import { chatStreamGenerator } from './service';
 
 const AssistantPage = () => {
   const { data: user } = useUser();

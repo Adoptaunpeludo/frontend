@@ -1,5 +1,6 @@
-import { Input } from '@nextui-org/react';
 import { useState } from 'react';
+import { Input } from '@nextui-org/react';
+
 import { H2Title, SelectField } from '../../../../../components';
 import {
   inputStyleConfig,

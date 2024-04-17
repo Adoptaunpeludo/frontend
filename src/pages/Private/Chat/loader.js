@@ -1,8 +1,9 @@
 import { redirect } from 'react-router-dom';
-import { userChatsQuery } from '../Shelters/useUserChats';
-import { userQuery } from '../useUser';
+
 import { receiverDataQuery } from './useReceiverData';
 import { chatHistoryQuery } from './useUserChatHistory';
+import { userChatsQuery } from '../Shelters/useUserChats';
+import { userQuery } from '../useUser';
 
 export const loader =
   (queryClient) =>

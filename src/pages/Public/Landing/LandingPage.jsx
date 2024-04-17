@@ -1,11 +1,10 @@
 import { Skeleton } from '@nextui-org/react';
 import { useNavigation } from 'react-router-dom';
+
 import { OurTeam } from '../AboutUs/components/OurTeam';
 import {
   AdoptVsBuy,
   FeaturedAnimals,
-  // FeaturedCats,
-  // FeaturedDogs,
   FeaturedShelters,
   GetInvolved,
   HeroHome,

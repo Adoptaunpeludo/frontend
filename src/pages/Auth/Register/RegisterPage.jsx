@@ -16,6 +16,7 @@ import { useQueryClient } from '@tanstack/react-query';
 import { useState } from 'react';
 import { Form, Link, useNavigate, useNavigation } from 'react-router-dom';
 import { toast } from 'react-toastify';
+
 import { H2Title, LogoHeader, Panel } from '../../../components';
 import {
   inputStyleConfig,
@@ -23,6 +24,7 @@ import {
   radioStyleConfig,
 } from '../../../utils/configFormFields';
 import { validateField } from '../../../utils/validateField';
+
 import { googleAuthRegister } from '../authService';
 import { action } from './action';
 

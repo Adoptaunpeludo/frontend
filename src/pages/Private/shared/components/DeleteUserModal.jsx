@@ -1,3 +1,5 @@
+import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import {
   Button,
   Modal,
@@ -10,9 +12,8 @@ import {
 } from '@nextui-org/react';
 import { IconAlertTriangle, IconTrashXFilled } from '@tabler/icons-react';
 import { useQueryClient } from '@tanstack/react-query';
-import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
+
 import { deleteUser } from '../service/userService';
 import { logout } from '../../../Auth/authService';
 import { deleteChatHistory } from '../../Assistant/service';

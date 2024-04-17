@@ -1,6 +1,7 @@
 import { toast } from 'react-toastify';
-import { resetPassword } from '../authService';
 import { redirect } from 'react-router-dom';
+
+import { resetPassword } from '../authService';
 
 export const action = async ({ request, params }) => {
   const formData = await request.formData();

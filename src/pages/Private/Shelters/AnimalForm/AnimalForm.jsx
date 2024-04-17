@@ -1,3 +1,4 @@
+import { useEffect, useRef, useState } from 'react';
 import {
   Button,
   Radio,
@@ -6,33 +7,31 @@ import {
   Textarea,
 } from '@nextui-org/react';
 import { IconCircleX, IconSend2 } from '@tabler/icons-react';
-import { useEffect, useRef, useState } from 'react';
 import {
   Form,
   useLoaderData,
   useNavigate,
   useNavigation,
 } from 'react-router-dom';
-import { H2Title, Panel, TitleSection } from '../../../../components';
 
+import { H2Title, Panel, TitleSection } from '../../../../components';
 import {
   AnimalBioForm,
   OtherPropertiesCatForm,
   OtherPropertiesDogForm,
   StatusShelterForm,
 } from './Components';
-
 import { UploadImagesForm } from './Components/UploadImagesForm';
-
-import { useAnimalImagesContext } from '../../../../context/AnimalImagesContext';
 import {
   inputStyleConfig,
   radioGroupStyleConfig,
   radioStyleConfig,
 } from '../../../../utils/configFormFields';
-import { useAnimalDetails } from '../../../Public/Animals/useAnimalDetails';
 import { ImagesFrame } from '../../shared';
+
+import { useAnimalDetails } from '../../../Public/Animals/useAnimalDetails';
 import { useGetErrors } from '../../../../context/FormErrorsContext';
+import { useAnimalImagesContext } from '../../../../context/AnimalImagesContext';
 import { action } from './action';
 
 const AnimalForm = () => {

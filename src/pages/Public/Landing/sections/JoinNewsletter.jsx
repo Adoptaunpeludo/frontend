@@ -1,9 +1,11 @@
 import { Button, Input } from '@nextui-org/react';
 import { IconMailFilled } from '@tabler/icons-react';
+
 import {
   buttonStyleConfig,
   inputStyleConfig,
 } from '../../../../utils/configFormFields';
+
 const JoinNewsletter = () => {
   return (
     <section

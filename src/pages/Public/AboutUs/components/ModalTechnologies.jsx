@@ -9,6 +9,7 @@ import {
   useDisclosure,
 } from '@nextui-org/react';
 import { IconArrowRight } from '@tabler/icons-react';
+
 import { H2Title } from '../../../../components';
 
 export const ModalTechnologies = ({ technology = '' }) => {

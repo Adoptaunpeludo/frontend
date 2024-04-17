@@ -1,14 +1,14 @@
 import { Button } from '@nextui-org/react';
-import { H2Title } from '.';
-import { ChatIcon } from '../assets/svg';
-import { useUser } from '../pages/Private/useUser';
-import { useNavigate } from 'react-router-dom';
-
-import { useWebSocketContext } from '../context/WebSocketContext';
-import { useState } from 'react';
-import { createChat } from '../pages/Public/Animals/service';
-import { toast } from 'react-toastify';
 import { useQueryClient } from '@tanstack/react-query';
+import { toast } from 'react-toastify';
+import { useNavigate } from 'react-router-dom';
+import { useState } from 'react';
+
+import { ChatIcon } from '../assets/svg';
+import { H2Title } from '.';
+import { useUser } from '../pages/Private/useUser';
+import { useWebSocketContext } from '../context/WebSocketContext';
+import { createChat } from '../pages/Public/Animals/service';
 
 export const ContactShelter = ({ className, slug, username }) => {
   const { data: user } = useUser();

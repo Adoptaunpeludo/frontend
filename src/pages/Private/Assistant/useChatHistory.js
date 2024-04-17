@@ -1,5 +1,6 @@
-import { getChatHistory } from './service';
 import { useQuery } from '@tanstack/react-query';
+
+import { getChatHistory } from './service';
 
 export const chatHistoryQuery = (username) => {
   return {

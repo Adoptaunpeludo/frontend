@@ -1,8 +1,6 @@
-import { Button, Image, Link, useDisclosure } from '@nextui-org/react';
+import { Button, Image, Link } from '@nextui-org/react';
 
 export const Architecture = () => {
-  const { isOpen, onOpen, onOpenChange } = useDisclosure();
-
   return (
     <section className="w-full min-h-80 bg-white flex flex-col justify-center mx-auto px-10">
       <section className=" max-w-screen-xl w-full   mx-auto">

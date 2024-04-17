@@ -1,6 +1,7 @@
+import { redirect } from 'react-router-dom';
+
 import { userChatsQuery } from '../useUserChats';
 import { userAnimalsQuery } from '../useUserAnimals';
-import { redirect } from 'react-router-dom';
 
 export const loader =
   (queryClient) =>

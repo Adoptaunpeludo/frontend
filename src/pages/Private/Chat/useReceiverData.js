@@ -1,4 +1,5 @@
 import { useQuery } from '@tanstack/react-query';
+
 import { getReceiverData } from './service';
 
 export const receiverDataQuery = (username) => {

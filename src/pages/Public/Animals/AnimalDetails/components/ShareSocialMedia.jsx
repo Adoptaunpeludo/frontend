@@ -4,7 +4,9 @@ import {
   IconBrandLinkedin,
   IconBrandX,
 } from '@tabler/icons-react';
+
 import { H2Title } from '../../../../../components';
+
 export const ShareSocialMedia = ({ url }) => {
   return (
     <section id="share-rrss" className="flex items-center justify-start">

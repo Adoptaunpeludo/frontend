@@ -17,6 +17,7 @@ import {
   IconMail,
   IconUserSquare,
 } from '@tabler/icons-react';
+
 import { H2Title, H3Title } from '../../../../components';
 import { MemberTeam } from './MemberTeam';
 

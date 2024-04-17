@@ -1,12 +1,14 @@
 import { Button, Input, Spinner } from '@nextui-org/react';
 import { Form, useNavigation } from 'react-router-dom';
+import { useState } from 'react';
+
 import { H3Title, LogoHeader, Panel } from '../../../components';
 import {
   buttonStyleConfig,
   inputStyleConfig,
 } from '../../../utils/configFormFields';
-import { useState } from 'react';
 import { validateField } from '../../../utils/validateField';
+
 import { action } from './action';
 
 const ForgotPasswordPage = () => {

@@ -1,15 +1,17 @@
 import { useLoaderData } from 'react-router';
 import { useNavigation } from 'react-router-dom';
 import { Skeleton } from '@nextui-org/react';
+
 import {
   FilterBar,
   NoData,
   PagePagination,
   TitleSection,
 } from '../../../components';
+import { PetCard } from './components/PetCard';
+
 import { useUser } from '../../Private/useUser';
 import { useAnimals } from '../Landing/useAnimals';
-import { PetCard } from './components/PetCard';
 
 const AnimalsPage = ({ page }) => {
   const { data: user } = useUser();

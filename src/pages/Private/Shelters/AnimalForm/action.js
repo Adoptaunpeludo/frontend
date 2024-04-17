@@ -1,13 +1,15 @@
 import { isAxiosError } from 'axios';
 import { redirect } from 'react-router-dom';
 import { toast } from 'react-toastify';
+
+import { isMatchFormData } from '../../../../utils/isMatchFormData';
+import { getAnimalDetails } from '../../../Public/Animals/service';
+
 import {
   updatePetAdoption,
   uploadAnimalImages,
   createPetAdoption,
 } from './service';
-import { isMatchFormData } from '../../../../utils/isMatchFormData';
-import { getAnimalDetails } from '../../../Public/Animals/service';
 
 export const action =
   (animalImages, queryClient) =>

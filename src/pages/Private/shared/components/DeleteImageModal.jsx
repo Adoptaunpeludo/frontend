@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import {
   Button,
   Modal,
@@ -10,8 +11,8 @@ import {
 } from '@nextui-org/react';
 import { IconTrashXFilled } from '@tabler/icons-react';
 import { useQueryClient } from '@tanstack/react-query';
-import { useState } from 'react';
 import { toast } from 'react-toastify';
+
 import { deleteAnimalFile } from '../../Shelters/AnimalForm/service';
 import { deleteUserFile } from '../service/imagesService';
 

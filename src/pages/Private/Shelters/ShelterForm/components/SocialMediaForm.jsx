@@ -1,3 +1,5 @@
+import { useEffect, useState } from 'react';
+import { Form } from 'react-router-dom';
 import {
   Button,
   Input,
@@ -27,15 +29,15 @@ import {
   IconTrashXFilled,
 } from '@tabler/icons-react';
 import { useQueryClient } from '@tanstack/react-query';
-import { useEffect, useState } from 'react';
-import { Form } from 'react-router-dom';
 import { toast } from 'react-toastify';
+
 import { H3Title } from '../../../../../components';
 import {
   buttonStyleConfig,
   inputStyleConfig,
   tableStyleConfig,
 } from '../../../../../utils/configFormFields';
+
 import { updateSocialMedia } from '../service';
 
 export const SocialMediaForm = ({ socialMedia = [] }) => {

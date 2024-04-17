@@ -1,7 +1,9 @@
 import { Image } from '@nextui-org/react';
+
 import { H2Title } from '../../../../components';
 import { technologiesManagement } from '../data/technologies';
 import ModalTechnologies from './ModalTechnologies';
+
 export const Management = () => {
   return (
     <section className="w-full min-h-80 bg-white flex flex-col justify-center mx-auto px-10 pb-10">

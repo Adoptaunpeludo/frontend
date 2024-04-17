@@ -8,12 +8,12 @@ import {
   Image,
   Link,
 } from '@nextui-org/react';
-
 import { UilMapMarker, UilPlay } from '@iconscout/react-unicons';
-
 import { IconHome } from '@tabler/icons-react';
+
 import { UnderlineVector } from '../../../../assets/svg';
 import { BUCKET_URL, FALLBACK_IMAGE_CARD } from '../../../../config/config';
+
 import { useUser } from '../../../Private/useUser';
 
 export const ShelterCard = ({ shelter, isLogged }) => {

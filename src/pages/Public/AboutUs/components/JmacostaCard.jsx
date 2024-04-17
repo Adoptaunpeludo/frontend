@@ -1,5 +1,6 @@
 import { Link } from '@nextui-org/react';
 import { IconBrandFigma, IconBrandGithub } from '@tabler/icons-react';
+
 import { H2Title, H3Title } from '../../../../components';
 export const JmacostaCard = () => {
   return (

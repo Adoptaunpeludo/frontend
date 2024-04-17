@@ -1,5 +1,6 @@
 import { Button, Card, CardBody, Image, Link } from '@nextui-org/react';
 import { IconPawFilled } from '@tabler/icons-react';
+
 import { isNullDataField } from '../../../../utils/asideDataFields';
 import { buttonStyleConfig } from '../../../../utils/configFormFields';
 import { genderEnum } from '../../../../utils/enumData';

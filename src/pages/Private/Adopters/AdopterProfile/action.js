@@ -1,9 +1,11 @@
 import { toast } from 'react-toastify';
-import { updatePassword } from '../../shared/service/ChangePasswordService';
-import { deleteFav } from '../../../Public/Animals/service';
+
 import { isMatchFormData } from '../../../../utils/isMatchFormData';
-import { getCurrentUser } from '../../service';
+
+import { updatePassword } from '../../shared/service/ChangePasswordService';
 import { updateProfile } from '../../shared/service/updateUserService';
+import { deleteFav } from '../../../Public/Animals/service';
+import { getCurrentUser } from '../../service';
 
 export const action =
   (closeBioModal, closeUpdatePasswordModal, queryClient) =>

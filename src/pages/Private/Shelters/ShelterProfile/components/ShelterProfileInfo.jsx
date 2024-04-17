@@ -4,10 +4,12 @@ import {
   IconBrandInstagram,
   IconBrandX,
 } from '@tabler/icons-react';
+
 import { H2Title, H3Title } from '../../../../../components';
 import { isNullDataField } from '../../../../../utils/asideDataFields';
 import { boolDataEnum, legalFormEnum } from '../../../../../utils/enumData';
 import { ImagesFrame } from '../../../shared';
+
 import ShelterForm from '../../ShelterForm/ShelterForm';
 import SocialMediaForm from '../../ShelterForm/components/SocialMediaForm';
 import Accommodations from './Acommodations';

@@ -9,7 +9,6 @@ import {
   Image,
   Link,
 } from '@nextui-org/react';
-
 import {
   UilMapMarker,
   UilMars,
@@ -17,8 +16,8 @@ import {
   UilSchedule,
   UilVenus,
 } from '@iconscout/react-unicons';
-
 import { IconHome } from '@tabler/icons-react';
+
 import { HeartIcon, PetSize, UnderlineVector } from '../../../../assets/svg';
 import { BUCKET_URL, FALLBACK_IMAGE_CARD } from '../../../../config/config';
 import {
@@ -27,7 +26,9 @@ import {
 } from '../../../../utils/asideDataFields';
 import { buttonStyleConfig } from '../../../../utils/configFormFields';
 import { animalSizeEnum, genderEnum } from '../../../../utils/enumData';
+
 import { useUser } from '../../../Private/useUser';
+
 export const PetCard = ({ animal, isLogged }) => {
   const { data: user } = useUser();
 

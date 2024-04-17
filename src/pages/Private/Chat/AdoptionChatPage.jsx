@@ -1,5 +1,6 @@
+import { useEffect, useState } from 'react';
+import { useQueryClient } from '@tanstack/react-query';
 import { Avatar, Badge, Skeleton } from '@nextui-org/react';
-
 import {
   NavLink,
   useLoaderData,
@@ -7,21 +8,20 @@ import {
   useNavigation,
   useParams,
 } from 'react-router-dom';
-import { useWebSocketContext } from '../../../context/WebSocketContext';
-import TextMessageBox from '../Assistant/components/TextMessageBox';
-import { useUser } from '../useUser';
-import UserMessage from './components/UserMessage';
-
-import { useEffect, useState } from 'react';
-import { useChatHistory } from './useUserChatHistory';
-
 import { IconArrowBadgeRight, IconUserFilled } from '@tabler/icons-react';
-import { useQueryClient } from '@tanstack/react-query';
+
+import { useWebSocketContext } from '../../../context/WebSocketContext';
 import { TitleSection } from '../../../components';
 import { BUCKET_URL } from '../../../config/config';
-import { useScroll } from '../../../hooks/useScroll';
 import { mapUserChatHistory } from '../../../utils/mapUserChatHistory';
+
+import TextMessageBox from '../Assistant/components/TextMessageBox';
+import UserMessage from './components/UserMessage';
+
+import { useChatHistory } from './useUserChatHistory';
+import { useScroll } from '../../../hooks/useScroll';
 import { useUserChats } from '../Shelters/useUserChats';
+import { useUser } from '../useUser';
 
 const AdoptionChatPage = () => {
   const queryClient = useQueryClient();

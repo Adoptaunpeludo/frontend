@@ -1,5 +1,6 @@
 import { Avatar, Skeleton } from '@nextui-org/react';
 import { IconUserFilled } from '@tabler/icons-react';
+
 import { AsideDataColumn, H2Title } from '../../../../../components';
 import { BUCKET_URL } from '../../../../../config/config';
 import { UserFormBio, userInformation } from '../../../shared';

@@ -2,11 +2,13 @@ import { NextUIProvider } from '@nextui-org/react';
 import { useQueryClient } from '@tanstack/react-query';
 import { useEffect } from 'react';
 import { Outlet, ScrollRestoration, useNavigate } from 'react-router-dom';
+import { toast } from 'react-toastify';
+
 import { useWebSocketContext } from '../../context/WebSocketContext';
 import { useUser } from '../Private/useUser';
+
 import Footer from './Footer';
 import Header from './Header';
-import { toast } from 'react-toastify';
 
 const AppLayout = () => {
   const navigate = useNavigate();

@@ -1,3 +1,4 @@
+import { useEffect } from 'react';
 import {
   Button,
   Modal,
@@ -7,7 +8,7 @@ import {
   ModalHeader,
   useDisclosure,
 } from '@nextui-org/react';
-import { useEffect } from 'react';
+
 import { useImageValidation } from '../../../../../hooks/useImageValidation';
 
 const AddImagesModal = ({ onSetImages }) => {

@@ -1,11 +1,9 @@
 import { Button, Image, Link } from '@nextui-org/react';
-import { useNavigate } from 'react-router-dom';
+
 import { H2Title } from '../../../components';
 import { buttonStyleConfig } from '../../../utils/configFormFields';
 
 const NotFoundPage = () => {
-  const navigate = useNavigate();
-
   return (
     <main className="text-center flex items-center justify-center flex-grow   bg-white">
       <section className=" w-full   mx-auto flex items-center justify-center pb-10">

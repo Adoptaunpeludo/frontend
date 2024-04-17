@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import {
   Modal,
   ModalContent,
@@ -11,10 +12,11 @@ import {
 import { useQueryClient } from '@tanstack/react-query';
 import { useNavigation } from 'react-router-dom';
 import { toast } from 'react-toastify';
+
 import TrashCan from './TrashCan';
-import { deleteChatHistory } from '../service';
+
 import { useUser } from '../../useUser';
-import { useState } from 'react';
+import { deleteChatHistory } from '../service';
 
 export default function DeleteModal({ deleteMessages }) {
   const { isOpen, onOpen, onOpenChange } = useDisclosure();

@@ -1,3 +1,4 @@
+import { useEffect, useState } from 'react';
 import {
   Button,
   Modal,
@@ -9,9 +10,9 @@ import {
   useDisclosure,
 } from '@nextui-org/react';
 import { useQueryClient } from '@tanstack/react-query';
-import { useEffect, useState } from 'react';
 import { Form } from 'react-router-dom';
 import { toast } from 'react-toastify';
+
 import { uploadAnimalFile } from '../../Shelters/AnimalForm/service';
 import { uploadUserFile } from '../service/imagesService';
 import { useImageValidation } from '../../../../hooks/useImageValidation';

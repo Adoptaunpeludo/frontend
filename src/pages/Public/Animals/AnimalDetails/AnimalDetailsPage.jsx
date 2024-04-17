@@ -1,7 +1,8 @@
-import { Avatar, Image } from '@nextui-org/react';
-import { IconHeart, IconHome } from '@tabler/icons-react';
 import { useState } from 'react';
 import { useLoaderData } from 'react-router-dom';
+import { Avatar, Image } from '@nextui-org/react';
+import { IconHeart, IconHome } from '@tabler/icons-react';
+
 import {
   AdoptButton,
   AnimalGallery,
@@ -10,17 +11,18 @@ import {
   H2Title,
   TitleSection,
 } from '../../../../components';
+import { AnimalFavs, ShareSocialMedia } from './components';
 import { BUCKET_URL } from '../../../../config/config';
-import { useMetadata } from '../../../../hooks/useMetadata';
 import {
   animalBioInfo,
   animalShelterInfo,
   catDescription,
   dogDescription,
 } from '../../../../utils/asideDataFields';
+
+import { useMetadata } from '../../../../hooks/useMetadata';
 import { useUser } from '../../../Private/useUser';
 import { useAnimalDetails } from '../useAnimalDetails';
-import { AnimalFavs, ShareSocialMedia } from './components';
 
 const AnimalDetailsPage = () => {
   const params = useLoaderData();

@@ -11,11 +11,14 @@ import {
 import { useQueryClient } from '@tanstack/react-query';
 import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
+
 import { TitleSection } from '../../../components';
-import { useNotifications } from '../useNotifications';
-import { useUser } from '../useUser';
-import { deleteNotification, readNotification } from './service';
+
 import TrashCan from '../Assistant/components/TrashCan';
+
+import { deleteNotification, readNotification } from './service';
+import { useUser } from '../useUser';
+import { useNotifications } from '../useNotifications';
 
 const TabTitle = ({ label, count }) => {
   return (

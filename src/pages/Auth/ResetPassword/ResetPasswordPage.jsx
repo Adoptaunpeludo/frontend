@@ -1,5 +1,6 @@
 import { Button, Input, Spinner } from '@nextui-org/react';
 import { Form, useNavigation } from 'react-router-dom';
+
 import { H3Title } from '../../../components/H3Title.jsx';
 import { LogoHeader } from '../../../components/LogoHeader.jsx';
 import { Panel } from '../../../components/Panel.jsx';
@@ -7,6 +8,7 @@ import {
   buttonStyleConfig,
   inputStyleConfig,
 } from '../../../utils/configFormFields.js';
+
 import { action } from './action.js';
 
 const ResetPasswordPage = () => {

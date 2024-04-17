@@ -1,5 +1,6 @@
 import { Link } from '@nextui-org/react';
 import { IconLink } from '@tabler/icons-react';
+
 import { H2Title } from '../../../../components';
 export const JaderoCard = () => {
   return (

@@ -1,6 +1,7 @@
-import Markdown from 'react-markdown';
-import TypingLoader from './loader/TypingLoader';
 import { Avatar } from '@nextui-org/react';
+import Markdown from 'react-markdown';
+
+import TypingLoader from './loader/TypingLoader';
 
 const GptMessage = ({ text }) => {
   return (

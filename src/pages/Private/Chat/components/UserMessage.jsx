@@ -1,5 +1,6 @@
 import { Avatar } from '@nextui-org/react';
 import { IconUserFilled } from '@tabler/icons-react';
+
 import { BUCKET_URL } from '../../../../config/config';
 
 const UserMessage = ({ text, isSender, avatar, user = '', isRead, date }) => {

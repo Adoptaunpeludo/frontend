@@ -1,10 +1,12 @@
 import { Skeleton } from '@nextui-org/skeleton';
 import { Form, useNavigation } from 'react-router-dom';
+
 import { H2Title, TitleSection } from '../../../../components';
 import { DeleteUserModal, ImagesFrame, StatusAnimalsTable } from '../../shared';
-//import { useWebSocketContext } from '../../../../context/WebSocketContext';
-import UserBioInfo from '../../Shelters/ShelterProfile/components/UserBioInfo';
 import { UserChangePassword } from '../../shared/components/UserChangePassword';
+
+import UserBioInfo from '../../Shelters/ShelterProfile/components/UserBioInfo';
+
 import { useUser } from '../../useUser';
 import { action } from './action';
 

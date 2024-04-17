@@ -2,6 +2,7 @@ import { Button, Image, Link } from '@nextui-org/react';
 import { IconMail } from '@tabler/icons-react';
 import { useQueryClient } from '@tanstack/react-query';
 import { Navigate, useRouteError } from 'react-router-dom';
+
 import { H2Title } from '../../components';
 import { buttonStyleConfig } from '../../utils/configFormFields';
 

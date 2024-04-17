@@ -10,15 +10,15 @@ import {
   NavbarMenuToggle,
   Spinner,
 } from '@nextui-org/react';
-
 import { IconLogin2 as LoginIcon } from '@tabler/icons-react';
 import { useState } from 'react';
-import { UserAreaMenu } from '../../components/UserAreaMenu.jsx';
 
+import { UserAreaMenu } from '../../components/UserAreaMenu.jsx';
 import { useUserChats } from '../Private/Shelters/useUserChats.js';
 import { useUser } from '../Private/useUser.js';
-import BrandNavLogo from './components/BrandNavLogo.jsx';
 import { LogoMobile } from './components/LogoMobile.jsx';
+
+import BrandNavLogo from './components/BrandNavLogo.jsx';
 
 const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);

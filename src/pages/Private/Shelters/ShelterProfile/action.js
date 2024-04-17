@@ -1,10 +1,12 @@
 import { toast } from 'react-toastify';
-import { updatePassword } from '../../shared/service/ChangePasswordService';
-import { deleteAnimal } from '../AnimalForm/service';
-import { updateProfile } from '../../shared/service/updateUserService';
-import { isMatchFormData } from '../../../../utils/isMatchFormData';
-import { getCurrentUser } from '../../service';
 import { redirect } from 'react-router-dom';
+
+import { isMatchFormData } from '../../../../utils/isMatchFormData';
+
+import { updatePassword } from '../../shared/service/ChangePasswordService';
+import { updateProfile } from '../../shared/service/updateUserService';
+import { getCurrentUser } from '../../service';
+import { deleteAnimal } from '../AnimalForm/service';
 
 export const action =
   (closeBioModal, closeShelterModal, closeUpdatePasswordModal, queryClient) =>

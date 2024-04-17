@@ -1,7 +1,8 @@
 import { Avatar } from '@nextui-org/react';
+import { IconUserFilled } from '@tabler/icons-react';
+
 import { BUCKET_URL } from '../../../../config/config';
 import { useUser } from '../../useUser';
-import { IconUserFilled } from '@tabler/icons-react';
 
 const UserMessage = ({ text }) => {
   const { data: user } = useUser();

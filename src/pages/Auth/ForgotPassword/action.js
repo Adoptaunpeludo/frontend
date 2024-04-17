@@ -1,5 +1,6 @@
 import { redirect } from 'react-router-dom';
 import { toast } from 'react-toastify';
+
 import { ForgotPassword } from '../authService';
 
 export const action = async ({ request }) => {

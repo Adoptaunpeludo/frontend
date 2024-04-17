@@ -1,3 +1,4 @@
+import { useEffect } from 'react';
 import {
   Button,
   Input,
@@ -10,17 +11,16 @@ import {
   useDisclosure,
 } from '@nextui-org/react';
 import { IconCircleX, IconKey, IconSend2 } from '@tabler/icons-react';
-
 import { Form, useNavigation } from 'react-router-dom';
 
-import { useEffect } from 'react';
 import { H3Title } from '../../../../components';
-import { useModalContext } from '../../../../context/ModalContext';
 import {
   buttonStyleConfig,
   inputStyleConfig,
 } from '../../../../utils/configFormFields';
+
 import { useValidateFormFields } from '../../../../hooks/useValidateFormFields';
+import { useModalContext } from '../../../../context/ModalContext';
 
 export const UserChangePassword = ({ isDisabled }) => {
   const updatePasswordModal = useDisclosure();

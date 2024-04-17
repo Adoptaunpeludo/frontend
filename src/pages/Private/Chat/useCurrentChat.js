@@ -1,4 +1,5 @@
 import { useQuery } from '@tanstack/react-query';
+
 import { getCurrentChat } from './service';
 
 export const currentChatQuery = (slug) => {

@@ -1,3 +1,4 @@
+import React from 'react';
 import {
   Button,
   Chip,
@@ -11,19 +12,17 @@ import {
   TableRow,
   Tooltip,
 } from '@nextui-org/react';
-
 import { IconEdit, IconEye, IconHeartFilled } from '@tabler/icons-react';
-import React from 'react';
 
 import {
   ColumnsAdopter,
   ColumnsShelter,
 } from '../../../shared/components/configAnimalsTable';
-
 import { statusColorMap } from '../../../../../utils/enumData';
 import { translateStatusAnimals } from '../../../../../utils/translateDataTable';
-import { useUserAnimals } from '../../useUserAnimals';
 import DeleteAnimalModal from './DeleteAnimalModal';
+
+import { useUserAnimals } from '../../useUserAnimals';
 
 export const StatusAnimalsTable = ({ role }) => {
   const headerColumn = role === 'shelter' ? ColumnsShelter : ColumnsAdopter;

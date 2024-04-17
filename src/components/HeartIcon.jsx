@@ -1,9 +1,10 @@
 import { useEffect, useReducer } from 'react';
 import { useQueryClient } from '@tanstack/react-query';
-import { addFav, deleteFav } from '../pages/Public/Animals/service';
-import Heart from 'react-animated-heart';
 import { toast } from 'react-toastify';
+import Heart from 'react-animated-heart';
 import { useNavigate } from 'react-router-dom';
+
+import { addFav, deleteFav } from '../pages/Public/Animals/service';
 
 const initialState = {
   liked: false,

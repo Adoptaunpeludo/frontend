@@ -4,9 +4,11 @@ import {
   IconBrandLinkedin,
   IconMail,
 } from '@tabler/icons-react';
+
 import { H2Title, H3Title } from '../../../../components';
 import { team } from '../data/team';
 import ModalTeam from './ModalTeam';
+
 export const OurTeam = () => {
   return (
     <section className=" w-full  pt-5 pb-10 flex flex-col justify-center mx-auto px-10 bg-[#E4E4E7]">

@@ -1,7 +1,9 @@
+import { useRef, useState } from 'react';
 import { Button, Input } from '@nextui-org/react';
 import { IconSend2 } from '@tabler/icons-react';
-import { useRef, useState } from 'react';
+
 import { inputStyleConfig } from '../../../../utils/configFormFields';
+
 import DeleteModal from './DeleteHistoryModal';
 
 const TextMessageBox = ({

@@ -1,15 +1,17 @@
-import { Button, Skeleton } from '@nextui-org/react';
-import { IconEdit } from '@tabler/icons-react';
 import { useEffect } from 'react';
 import { Link, useNavigation } from 'react-router-dom';
+import { Button, Skeleton } from '@nextui-org/react';
+import { IconEdit } from '@tabler/icons-react';
+
 import { H2Title, TitleSection } from '../../../../components';
-import { useAnimalImagesContext } from '../../../../context/AnimalImagesContext';
 import { buttonStyleConfig } from '../../../../utils/configFormFields';
 import { DeleteUserModal, StatusAnimalsTable } from '../../shared';
 import { UserChangePassword } from '../../shared/components/UserChangePassword';
-import { useUser } from '../../useUser';
 import ShelterProfileInfo from './components/ShelterProfileInfo';
 import UserBioInfo from './components/UserBioInfo';
+
+import { useUser } from '../../useUser';
+import { useAnimalImagesContext } from '../../../../context/AnimalImagesContext';
 import { action } from './action';
 
 const ShelterProfile = () => {

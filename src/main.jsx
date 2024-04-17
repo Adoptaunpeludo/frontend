@@ -1,13 +1,14 @@
+import { GoogleOAuthProvider } from '@react-oauth/google';
 import ReactDOM from 'react-dom/client';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+
 import App from './App.jsx';
 import './index.css';
 import { AnimalImagesContextProvider } from './context/AnimalImagesContext.jsx';
 import { ModalContextProvider } from './context/ModalContext.jsx';
 import { WebSocketContextProvider } from './context/WebSocketContext.jsx';
 import { NotificationsContextProvider } from './context/NotificationsContext.jsx';
-import { GoogleOAuthProvider } from '@react-oauth/google';
 
 const isLoggedIn = localStorage.getItem('isLoggedIn');
 localStorage.setItem('isFirstLoad', isLoggedIn === null);

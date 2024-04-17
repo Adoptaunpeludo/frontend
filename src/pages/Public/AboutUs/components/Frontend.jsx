@@ -1,4 +1,5 @@
 import { Image } from '@nextui-org/react';
+
 import { H2Title } from '../../../../components';
 import { technologiesFrontend } from '../data/technologies';
 import ModalTechnologies from './ModalTechnologies';
