@@ -19,16 +19,6 @@ export const DoplaxCard = () => {
         aplicando pruebas para garantizar la calidad. También utilizo
         metodologías ágiles para la adaptabilidad y la mejora continua.
       </p>
-      <p>
-        Aparte del ámbito tecnológico (aunque no tan aparte), me apasiona la
-        ciencia y el progreso en general. Disfruto escuchando varios podcasts
-        sobre astrofísica, cosmología y aeronáutica. Los videojuegos me
-        fascinan, no solo como entretenimiento, sino como una forma de expresión
-        artística. Me gusta viajar y conocer personas de diferentes culturas, y
-        creo firmemente en un mundo sin fronteras, donde todos deberíamos
-        trabajar juntos independientemente de nuestro lugar de nacimiento, color
-        de piel o identidad de género.
-      </p>
     </div>
   );
 };
