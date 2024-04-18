@@ -54,11 +54,7 @@ export const team = [
     img: 'https://avatars.githubusercontent.com/u/113923902?v=4',
     person: 'Francisco Suárez',
     position: 'Frontend dev',
-    description: `Desde pequeño he sentido una pasión por la tecnología, aunque las circunstancias me llevaron por el camino de la hostelería. Sin embargo, ahora me he propuesto seguir mi verdadera vocación y dedicarme a lo que realmente me entusiasma: las tecnologías de la información.
-
-A pesar de no haber trabajado en el campo de la informática desde que obtuve mi título de formación profesional de grado superior, nunca he dejado de interesarme y aprender sobre los fundamentos del desarrollo de software con varios lenguajes. También he explorado áreas como la contenerización de aplicaciones y la automatización de procesos. Además, siempre he tenido habilidades para la resolución de problemas matemáticos y lógicos, así como una curiosidad por comprender cómo funcionan los sistemas y qué papel juega cada componente, tanto a nivel de software como de hardware.
-
-Aparte del ámbito tecnológico (aunque no tan aparte), me apasiona la ciencia y el progreso en general. Disfruto escuchando varios podcasts sobre astrofísica, cosmología y aeronáutica. Los videojuegos me fascinan, no solo como entretenimiento, sino como una forma de expresión artística. Me gusta viajar y conocer personas de diferentes culturas, y creo firmemente en un mundo sin fronteras, donde todos deberíamos trabajar juntos independientemente de nuestro lugar de nacimiento, color de piel o identidad de género.`,
+    description: `Desde temprana edad, he sentido una ferviente pasión por la tecnología, una llama que ha permanecido encendida a pesar de haber tomado un camino distinto en el ámbito de la hostelería. Sin embargo, he llegado a un punto en el que estoy decidido a seguir mi verdadera vocación: las tecnologías de la información.`,
     link: 'dsds',
     github: 'https://github.com/PaquitoGR',
     linkedin: 'https://www.linkedin.com/in/francisco-a-suarez/',
