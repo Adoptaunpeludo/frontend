@@ -38,7 +38,7 @@ export const Management = () => {
               return (
                 <article
                   key={index}
-                  className="flex flex-col w-96 p-5 self-end"
+                  className="flex flex-col w-80 p-5 self-end"
                 >
                   <div className="flex items-center gap-3 pb-5">
                     <Image
@@ -58,7 +58,7 @@ export const Management = () => {
                     />
                     <span>...</span>
                   </div>
-                  <div className="flex justify-end mr-16 ">
+                  <div className="flex justify-end mr-8 ">
                     <ModalTechnologies technology={technology} />
                   </div>
                 </article>
