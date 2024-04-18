@@ -168,6 +168,17 @@ export const technologiesFrontend = [
     <p>Es el núcleo de nuestra aplicación adoptaunpeludo.com, ya que nos permite dividir nuestra interfaz de usuario en componentes reutilizables y construir una interfaz de usuario rica y receptiva. </p>
     <p>Con React, podemos crear una experiencia de usuario fluida y atractiva para nuestros usuarios finales.</p>`,
   },
+  {
+    img: '/logoTech/react-router.svg',
+    title: 'React Router',
+    description: `
+    <p>En sitios web tradicionales, el navegador solicita un documento de un servidor web, descarga y evalúa activos CSS y JavaScript, y renderiza el HTML enviado desde el servidor. Cuando el usuario hace clic en un enlace, comienza el proceso nuevamente para una nueva página.</p>
+
+
+<p>El enrutamiento del lado del cliente permite que nuestra aplicación actualice la URL desde un clic en un enlace sin hacer otra solicitud de otro documento al servidor. En cambio, nuestra aplicación puede renderizar inmediatamente una nueva interfaz de usuario y realizar solicitudes de datos con fetch para actualizar la página con nueva información.</p>
+
+<p>Esto permite experiencias de usuario más rápidas porque el navegador no necesita solicitar un documento completamente nuevo o volver a evaluar activos CSS y JavaScript para la próxima página. También permite experiencias de usuario más dinámicas con cosas como animaciones.</p>`,
+  },
 
   {
     img: '/logoTech/NextUI.svg',
