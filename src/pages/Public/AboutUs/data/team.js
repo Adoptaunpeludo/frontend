@@ -53,7 +53,7 @@ export const team = [
   {
     img: 'https://avatars.githubusercontent.com/u/113923902?v=4',
     person: 'Francisco Suárez',
-    position: 'Frontend dev',
+    position: 'QA, Frontend dev',
     description: `Desde temprana edad, he sentido una ferviente pasión por la tecnología, una llama que ha permanecido encendida a pesar de haber tomado un camino distinto en el ámbito de la hostelería. Sin embargo, he llegado a un punto en el que estoy decidido a seguir mi verdadera vocación: las tecnologías de la información.`,
     link: 'dsds',
     github: 'https://github.com/PaquitoGR',
