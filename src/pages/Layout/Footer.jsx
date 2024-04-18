@@ -1,6 +1,6 @@
 import { IconUser } from '@tabler/icons-react';
-import { Copyright } from './components/Copyright';
 import { Link } from 'react-router-dom';
+import { Copyright } from './components/Copyright';
 
 const Footer = () => {
   return (
@@ -9,7 +9,7 @@ const Footer = () => {
         <div id="DevelopedBy" className="">
           <Copyright className="w-60" />
         </div>
-        <div id="SocialIcons" className="flex justify-center items-center">
+        <div id="SocialIcons" className="flex justify-center items-center mr-8">
           <IconUser />
           <Link to={'/about'}>Conócenos</Link>
         </div>
